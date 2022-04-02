@@ -1,4 +1,4 @@
-#Git Konvention
+# Git Konvention
 
 **Namenskonvention für Branches: **
 Konvention:	Art/SWP_Ticketnummer_Tickettitel 
