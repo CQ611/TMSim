@@ -8,20 +8,22 @@ namespace TMSim.model
 {
     class TuringTransition
     {
-        public enum Direction {Right, Left}
+        public enum Direction {Right, Left, Neutral}
 
         public TuringState Source { get; }
         public TuringState Target { get; }
-        public char Symbol { get; }
+        public char SymbolRead { get; }
+        public char SymbolWrite {get; }
         
         public Direction MoveDirection { get; }
 
         public TuringTransition(TuringState source, TuringState target,
-            char symbol, Direction dir)
+            char symbolRead, char symbolWrite, Direction dir)
         {
             this.Source = source;
             this.Target = target;
-            this.Symbol = symbol;
+            this.SymbolRead = symbolRead;
+            this.SymbolWrite = symbolWrite;
             this.MoveDirection = dir;
         }
     }

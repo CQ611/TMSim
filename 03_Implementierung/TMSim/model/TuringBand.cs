@@ -13,9 +13,9 @@ namespace TMSim.model
 
         public int HeadIndex { get; private set; }
 
-        public TuringBand(string Content, char Blank){
-            this.Content = Content;
-            this.Blank = Blank;
+        public TuringBand(string content, char blank){
+            this.Content = content;
+            this.Blank = blank;
         }
 
 
@@ -42,7 +42,6 @@ namespace TMSim.model
         public void MoveRight()
         {
             HeadIndex++;
-            
             if(HeadIndex == Content.Length){
                 Content = Content + Blank;
             }
