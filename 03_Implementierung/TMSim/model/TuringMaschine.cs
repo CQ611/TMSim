@@ -59,7 +59,7 @@ namespace TMSim.model
         public bool AdvanceState()
         {
             try{
-                TuringTransition transition = getTransition();
+                TuringTransition transition = GetTransition();
                 Bands[0].SetCurrentSymbol(transition.SymbolWrite);
                 if (transition.MoveDirection == TuringTransition.Direction.Right) Bands[0].MoveRight();
                 else if (transition.MoveDirection == TuringTransition.Direction.Left) Bands[0].MoveLeft();
@@ -71,14 +71,14 @@ namespace TMSim.model
             return true;
         }
 
-        public bool checkIsEndState(){
+        public bool CheckIsEndState(){
             if (EndStates.Contains(CurrentState)){
                 return true;
             }
             return false;
         }
 
-        private TuringTransition getTransition(){
+        private TuringTransition GetTransition(){
             foreach(TuringTransition transition in Transitions){
                 if (transition.Source == CurrentState && transition.SymbolRead == Bands[0].GetCurrentSymbol()) return transition;
             }

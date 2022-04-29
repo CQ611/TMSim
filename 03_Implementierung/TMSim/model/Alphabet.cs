@@ -19,7 +19,7 @@ namespace TMSim.model
             }
         }
 
-        public bool wordIsContainedIn(string word)
+        public bool WordIsContainedIn(string word)
         {
             foreach(char c in word){
                 if(!Symbols.Contains(c)) return false;
