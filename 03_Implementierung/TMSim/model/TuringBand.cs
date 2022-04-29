@@ -9,21 +9,43 @@ namespace TMSim.model
     class TuringBand
     {
         public string Content { get; set; }
+        private char Blank {get; set;}
 
         public int HeadIndex { get; private set; }
+
+        public TuringBand(string Content, char Blank){
+            this.Content = Content;
+            this.Blank = Blank;
+        }
+
+
         public char GetCurrentSymbol()
         {
-            throw new NotImplementedException("lulz");
+            return Content[HeadIndex];
+        }
+
+        public void SetCurrentSymbol(char newSymbol){//need to be added in "Schnittstellenuebersicht"
+            char[] chars = Content.ToCharArray();
+            chars[HeadIndex] = newSymbol;
+            Content = new string(chars);
         }
 
         public void MoveLeft()
         {
-
+            if(HeadIndex == 0){
+                Content = Blank + Content;
+            }else{
+                HeadIndex--;
+            }
         }
 
         public void MoveRight()
         {
-
+            HeadIndex++;
+            
+            if(HeadIndex == Content.Length){
+                Content = Content + Blank;
+            }
         }
     }
 }
