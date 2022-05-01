@@ -1,15 +1,95 @@
-﻿<Window x:Class="TMSim.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMSim"
+        xmlns:ui="clr-namespace:TMSim.ui"
+        x:Class="TMSim.MainWindow"
         mc:Ignorable="d"
         Title="TMSim" Height="800" Width="800">
+    <Window.DataContext>
+        <ui:ViewModel/>
+    </Window.DataContext>
     <Grid>
-        <local:Diagram x:Name="diagram"/>
-        <Button x:Name="randomize_btn" Content="_Randomize" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="randomize_btn_Click"/>
-        <Button x:Name="arrange_btn" Content="_Arrange" HorizontalAlignment="Left" Margin="10,35,0,0" VerticalAlignment="Top" Width="63" Click="arrange_btn_Click"/>
-        <CheckBox x:Name="animate_chk" Content="Animate" HorizontalAlignment="Left" Margin="10,60,0,0" VerticalAlignment="Top" Checked="checkBox_Update" Unchecked="checkBox_Update" Foreground="White"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <Menu.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <DockPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </Menu.ItemsPanel>
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" />
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="E_xamples" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Preferences">
+                <MenuItem Header="_Highlight State"/>
+                <MenuItem Header="_Language"/>
+            </MenuItem>
+            <MenuItem Header="?" HorizontalAlignment="Right"/>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Button x:Name="play_pause_cmd" Content="_Play/Pause" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Height="50" Width="50" Command="{Binding StartPauseSimulation}"/>
+            <Button x:Name="stop_cmd" Content="Stop" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Height="50" Width="50" Command="{Binding StopSimulation}"/>
+            <Button x:Name="step_cmd" Content="Step" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" Height="50" Width="50" Command="{Binding StepSimulation}"/>
+            <Slider x:Name="speed_slider" HorizontalAlignment="Left" Margin="184,25,0,0" VerticalAlignment="Top" Width="120"/>
+            <Label x:Name="speedLabel" Content="_Speed" HorizontalAlignment="Left" Margin="222,10,0,0" VerticalAlignment="Top" Target="{Binding ElementName=speed_slider}"/>
+        </Grid>
+        <Grid Grid.Row="2">
+            <ui:Table x:Name="table" Margin="42,41,43,47" Visibility="Hidden"/>
+            <ui:Diagram x:Name="diagram" Margin="42,41,43,47" Visibility="Visible"/>
+            <Button x:Name="randomize_btn" Content="_Randomize" HorizontalAlignment="Left" Margin="126,64,0,0" VerticalAlignment="Top" Click="randomize_btn_Click" Height="20" Width="63" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="51.242"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <Button x:Name="arrange_btn" Content="_Arrange" HorizontalAlignment="Left" Margin="54,64,0,0" VerticalAlignment="Top" Width="62" Click="arrange_btn_Click" Height="20" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="-32.045"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
+            <CheckBox x:Name="animate_chk" Content="Animate" HorizontalAlignment="Left" Margin="92,112,0,0" VerticalAlignment="Top" Checked="checkBox_Update" Unchecked="checkBox_Update" Foreground="White" Height="15" Width="64" RenderTransformOrigin="0.5,0.5">
+                <CheckBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="44.349"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </CheckBox.RenderTransform>
+            </CheckBox>
+            <Button x:Name="switch1_cmd" Content="Switch" HorizontalAlignment="Left" Margin="762,0,0,0" VerticalAlignment="Center" Height="145" Width="33" Click="switch1_cmd_Click"/>
+            <Button x:Name="switch2_cmd" Content="Switch" HorizontalAlignment="Left" VerticalAlignment="Center" Height="145" Width="33" Margin="4,0,0,0" Click="switch2_cmd_Click" IsEnabled="False"/>
+
+        </Grid>
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <ui:Band Grid.Row="0" Margin="0,0,0,0" />
+            <!--Command="{Binding WriteBandWord}"-->
+        </Grid>
+
     </Grid>
 </Window>
