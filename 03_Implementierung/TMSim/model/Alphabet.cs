@@ -8,14 +8,23 @@ namespace TMSim.model
 {
     class Alphabet
     {
-        public Alphabet(string chars)
+        private List<char> Symbols = new List<char>();
+        
+        public Alphabet(string chars) 
         {
-            throw new NotImplementedException("hi");
+            foreach(char c in chars){
+                if(!Symbols.Contains(c)){
+                    Symbols.Add(c);
+                }
+            }
         }
 
-        public bool wordIsContainedIn(string word)
+        public bool WordIsContainedIn(string word)
         {
-            throw new NotImplementedException("hi");
+            foreach(char c in word){
+                if(!Symbols.Contains(c)) return false;
+            }
+            return true;
         }
     }
 }

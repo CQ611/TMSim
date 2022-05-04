@@ -8,6 +8,13 @@ namespace TMSim.model
 {
     class TuringMaschine
     {
+        private class TransitionNotFound : Exception
+        {
+            public TransitionNotFound(string message) : base(message)
+            {
+            }
+        }
+
         public Alphabet BandAlphabet { get; set; }
         public char BlankChar { get; set; }
         public Alphabet InputAlphabet { get; set; }
@@ -19,17 +26,18 @@ namespace TMSim.model
         public TuringState CurrentState { get; private set; }
         public List<TuringBand> Bands { get; set; }
 
-        public TuringMaschine(Alphabet BandAlphabet, char BlankChar, Alphabet InputAlphabet, 
-            List<TuringState> States, TuringState StartState, List<TuringState> EndStates, 
-            List<TuringTransition> Transitions)
+        public TuringMaschine(Alphabet bandAlphabet, char blankChar, Alphabet inputAlphabet, 
+            List<TuringState> states, TuringState startState, List<TuringState> endStates, 
+            List<TuringTransition> transitions)
         {
-            this.BandAlphabet = BandAlphabet;
-            this.BlankChar = BlankChar;
-            this.InputAlphabet = InputAlphabet;
-            this.States = States;
-            this.StartState = StartState;
-            this.EndStates = EndStates;
-            this.Transitions = Transitions;
+            this.BandAlphabet = bandAlphabet;
+            this.BlankChar = blankChar;
+            this.InputAlphabet = inputAlphabet;
+            this.States = states;
+            this.StartState = startState;
+            this.CurrentState = startState;
+            this.EndStates = endStates;
+            this.Transitions = transitions;
         }
 
 
@@ -50,9 +58,31 @@ namespace TMSim.model
 
         public bool AdvanceState()
         {
-            throw new NotImplementedException("Ajo");
-            // true while running
-            // updates CurrentState
+            try{
+                TuringTransition transition = GetTransition();
+                Bands[0].SetCurrentSymbol(transition.SymbolWrite);
+                if (transition.MoveDirection == TuringTransition.Direction.Right) Bands[0].MoveRight();
+                else if (transition.MoveDirection == TuringTransition.Direction.Left) Bands[0].MoveLeft();
+                CurrentState = transition.Target;
+            }
+            catch(TransitionNotFound){
+                return false;
+            }
+            return true;
+        }
+
+        public bool CheckIsEndState(){
+            if (EndStates.Contains(CurrentState)){
+                return true;
+            }
+            return false;
+        }
+
+        private TuringTransition GetTransition(){
+            foreach(TuringTransition transition in Transitions){
+                if (transition.Source == CurrentState && transition.SymbolRead == Bands[0].GetCurrentSymbol()) return transition;
+            }
+            throw new TransitionNotFound("Can not find transition");
         }
     }
 }
