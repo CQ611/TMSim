@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace TMSim.ui
 {
-    class ViewModel
+    class ViewModel : ObservableObject
     {
         public ViewModel()
         {
-
+            StartPauseSimulation = new RelayCommand((o) => { OnStartPauseSimulation(); });
+            StepSimulation = new RelayCommand((o) => { OnStepSimulation(); });
+            StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
+            WriteBandWord = new RelayCommand((o) => { OnWriteBandWord(); });
         }
+
         public bool HighlightCurrentState { get; set; } = true;
+        public bool IsSimulationRunning { get; set; } = true;
+        public RelayCommand StartPauseSimulation { get; set; }
+        public RelayCommand StepSimulation { get; set; }
+        public RelayCommand StopSimulation { get; set; }
+        public RelayCommand WriteBandWord { get; set; }
 
         public model.TuringMaschine TM
         {
@@ -28,34 +38,29 @@ namespace TMSim.ui
             }
         }
 
-        public void WriteBandWord()
+        private void OnStartPauseSimulation()
         {
-
+            throw new NotImplementedException("Hi");
         }
 
-        public void StartSimulation()
+        public void OnStopSimulation()
         {
-
+            throw new NotImplementedException("Hi");
         }
 
-        public void PauseSimulation()
+        public void OnStepSimulation()
         {
-
+            throw new NotImplementedException("Hi");
         }
 
-        public void StopSimulation()
+        public void OnWriteBandWord()
         {
-
-        }
-
-        public void StepSimulation()
-        {
-
+            throw new NotImplementedException("Hi");
         }
 
         public void SetSimulationTimerInterval()
         {
-
+            throw new NotImplementedException("Hi");
         }
 
         public void TansformTuringMaschine()

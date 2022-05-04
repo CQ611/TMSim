@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 
 using System.Globalization;
 
-namespace TMSim
+namespace TMSim.ui
 {
     public partial class Diagram : UserControl
     {
