@@ -14,7 +14,7 @@ namespace TMSim.ui
             StartPauseSimulation = new RelayCommand((o) => { OnStartPauseSimulation(); });
             StepSimulation = new RelayCommand((o) => { OnStepSimulation(); });
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
-            WriteTapeWord = new RelayCommand((o) => { OnWriteBandWord(); });
+            WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
         }
 
         public bool HighlightCurrentState { get; set; } = true;
@@ -53,7 +53,7 @@ namespace TMSim.ui
             throw new NotImplementedException("Hi");
         }
 
-        public void OnWriteBandWord()
+        public void OnWriteTapeWord()
         {
             throw new NotImplementedException("Hi");
         }
