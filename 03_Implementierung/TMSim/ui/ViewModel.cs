@@ -14,7 +14,7 @@ namespace TMSim.ui
             StartPauseSimulation = new RelayCommand((o) => { OnStartPauseSimulation(); });
             StepSimulation = new RelayCommand((o) => { OnStepSimulation(); });
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
-            WriteBandWord = new RelayCommand((o) => { OnWriteBandWord(); });
+            WriteTapeWord = new RelayCommand((o) => { OnWriteBandWord(); });
         }
 
         public bool HighlightCurrentState { get; set; } = true;
@@ -22,7 +22,7 @@ namespace TMSim.ui
         public RelayCommand StartPauseSimulation { get; set; }
         public RelayCommand StepSimulation { get; set; }
         public RelayCommand StopSimulation { get; set; }
-        public RelayCommand WriteBandWord { get; set; }
+        public RelayCommand WriteTapeWord { get; set; }
 
         public model.TuringMaschine TM
         {

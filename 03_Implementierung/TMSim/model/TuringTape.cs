@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace TMSim.model
 {
-    class TuringBand
+    class TuringTape
     {
         public string Content { get; set; }
         private char Blank {get; set;}
 
         public int HeadIndex { get; private set; }
 
-        public TuringBand(string content, char blank){
+        public TuringTape(string content, char blank){
             this.Content = content;
             this.Blank = blank;
         }
@@ -24,7 +24,7 @@ namespace TMSim.model
             return Content[HeadIndex];
         }
 
-        public void SetCurrentSymbol(char newSymbol){//need to be added in "Schnittstellenuebersicht"
+        public void SetCurrentSymbol(char newSymbol){
             char[] chars = Content.ToCharArray();
             chars[HeadIndex] = newSymbol;
             Content = new string(chars);

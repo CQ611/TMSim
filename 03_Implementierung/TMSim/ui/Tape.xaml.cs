@@ -16,16 +16,13 @@ using System.Windows.Shapes;
 
 namespace TMSim.ui
 {
-    /// <summary>
-    /// Interaction logic for Band.xaml
-    /// </summary>
-    public partial class Band : UserControl
+    public partial class Tape : UserControl
     {
         [Bindable(true)]
         [Category("Action")]
         public RelayCommand Command { get; set; }        
         public string BandContent { get; set; }
-        public Band()
+        public Tape()
         {
             InitializeComponent();
         }

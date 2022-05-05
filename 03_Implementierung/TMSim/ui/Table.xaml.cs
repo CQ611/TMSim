@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace TMSim.ui
 {
-    /// <summary>
-    /// Interaction logic for TableUserControl.xaml
-    /// </summary>
     public partial class Table : UserControl
     {
         public Table()
