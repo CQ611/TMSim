@@ -13,7 +13,7 @@ namespace TMSim.model
         public TuringState Source { get; }
         public TuringState Target { get; }
         public char SymbolRead { get; }
-        public char SymbolWrite {get; }
+        public char SymbolWrite { get; }
         
         public Direction MoveDirection { get; }
 

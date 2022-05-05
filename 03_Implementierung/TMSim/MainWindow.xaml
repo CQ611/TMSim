@@ -87,7 +87,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <ui:Band Grid.Row="0" Margin="0,0,0,0" />
+            <ui:Tape Grid.Row="0" Margin="0,0,0,0" />
             <!--Command="{Binding WriteBandWord}"-->
         </Grid>
 

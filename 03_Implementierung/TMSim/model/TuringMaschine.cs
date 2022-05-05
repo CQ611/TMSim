@@ -15,7 +15,7 @@ namespace TMSim.model
             }
         }
 
-        public Alphabet BandAlphabet { get; set; }
+        public Alphabet TapeAlphabet { get; set; }
         public char BlankChar { get; set; }
         public Alphabet InputAlphabet { get; set; }
         public List<TuringState> States { get; set; }
@@ -24,13 +24,13 @@ namespace TMSim.model
         public List<TuringTransition> Transitions { get; set; }
 
         public TuringState CurrentState { get; private set; }
-        public List<TuringBand> Bands { get; set; }
+        public List<TuringTape> Tapes { get; set; }
 
-        public TuringMaschine(Alphabet bandAlphabet, char blankChar, Alphabet inputAlphabet, 
+        public TuringMaschine(Alphabet tapeAlphabet, char blankChar, Alphabet inputAlphabet, 
             List<TuringState> states, TuringState startState, List<TuringState> endStates, 
             List<TuringTransition> transitions)
         {
-            this.BandAlphabet = bandAlphabet;
+            this.TapeAlphabet = tapeAlphabet;
             this.BlankChar = blankChar;
             this.InputAlphabet = inputAlphabet;
             this.States = states;
@@ -60,9 +60,9 @@ namespace TMSim.model
         {
             try{
                 TuringTransition transition = GetTransition();
-                Bands[0].SetCurrentSymbol(transition.SymbolWrite);
-                if (transition.MoveDirection == TuringTransition.Direction.Right) Bands[0].MoveRight();
-                else if (transition.MoveDirection == TuringTransition.Direction.Left) Bands[0].MoveLeft();
+                Tapes[0].SetCurrentSymbol(transition.SymbolWrite);
+                if (transition.MoveDirection == TuringTransition.Direction.Right) Tapes[0].MoveRight();
+                else if (transition.MoveDirection == TuringTransition.Direction.Left) Tapes[0].MoveLeft();
                 CurrentState = transition.Target;
             }
             catch(TransitionNotFound){
@@ -80,7 +80,7 @@ namespace TMSim.model
 
         private TuringTransition GetTransition(){
             foreach(TuringTransition transition in Transitions){
-                if (transition.Source == CurrentState && transition.SymbolRead == Bands[0].GetCurrentSymbol()) return transition;
+                if (transition.Source == CurrentState && transition.SymbolRead == Tapes[0].GetCurrentSymbol()) return transition;
             }
             throw new TransitionNotFound("Can not find transition");
         }
