@@ -2,12 +2,34 @@ image: microsoft/dotnet:latest
 stages:
   - build
   - test
+  - deploy
+  - deploycake
 
 before_script:
-  - "cd 03_Implementierung/TMSim"
+  - "cd 03_Implementierung"
   - "dotnet restore"
 
 build:
   stage: build
   script:
     - "dotnet build"
+    
+test:
+  stage: test
+  script:
+  - "dotnet test"
+  dependencies:
+  - build
+
+deploy:
+  stage: deploy
+  script:
+  - "cd"
+  dependencies:
+  - build
+  - test
+
+deploycake:
+  stage: deploycake
+  script:
+  - "cd"
