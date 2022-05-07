@@ -12,19 +12,19 @@ namespace TMSim.model
 
         public TuringState Source { get; }
         public TuringState Target { get; }
-        public char SymbolRead { get; }
-        public char SymbolWrite { get; }
+        public List<char> SymbolsRead { get; }
+        public List<char> SymbolsWrite { get; }
         
-        public Direction MoveDirection { get; }
+        public List<Direction> MoveDirections { get; }
 
         public TuringTransition(TuringState source, TuringState target,
-            char symbolRead, char symbolWrite, Direction dir)
+            List<char> symbolsRead, List<char> symbolsWrite, List<Direction> dirs)
         {
             this.Source = source;
             this.Target = target;
-            this.SymbolRead = symbolRead;
-            this.SymbolWrite = symbolWrite;
-            this.MoveDirection = dir;
+            this.SymbolsRead = symbolsRead;
+            this.SymbolsWrite = symbolsWrite;
+            this.MoveDirections = dirs;
         }
     }
 }

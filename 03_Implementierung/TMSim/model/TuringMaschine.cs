@@ -28,7 +28,7 @@ namespace TMSim.model
 
         public TuringMaschine(Alphabet tapeAlphabet, char blankChar, Alphabet inputAlphabet, 
             List<TuringState> states, TuringState startState, List<TuringState> endStates, 
-            List<TuringTransition> transitions)
+            List<TuringTransition> transitions, List<TuringTape> tapes)
         {
             this.TapeAlphabet = tapeAlphabet;
             this.BlankChar = blankChar;
@@ -38,6 +38,7 @@ namespace TMSim.model
             this.CurrentState = startState;
             this.EndStates = endStates;
             this.Transitions = transitions;
+            this.Tapes = tapes;
         }
 
 
@@ -60,9 +61,11 @@ namespace TMSim.model
         {
             try{
                 TuringTransition transition = GetTransition();
-                Tapes[0].SetCurrentSymbol(transition.SymbolWrite);
-                if (transition.MoveDirection == TuringTransition.Direction.Right) Tapes[0].MoveRight();
-                else if (transition.MoveDirection == TuringTransition.Direction.Left) Tapes[0].MoveLeft();
+                for (int i = 0; i < Tapes.Count(); i++) {
+                    Tapes[i].SetCurrentSymbol(transition.SymbolsWrite[i]);
+                    if (transition.MoveDirections[i] == TuringTransition.Direction.Right) Tapes[i].MoveRight();
+                    else if (transition.MoveDirections[i] == TuringTransition.Direction.Left) Tapes[i].MoveLeft();
+                }
                 CurrentState = transition.Target;
             }
             catch(TransitionNotFound){
@@ -80,7 +83,15 @@ namespace TMSim.model
 
         private TuringTransition GetTransition(){
             foreach(TuringTransition transition in Transitions){
-                if (transition.Source == CurrentState && transition.SymbolRead == Tapes[0].GetCurrentSymbol()) return transition;
+                if (transition.Source == CurrentState) {
+                    bool flag = true;
+                    for (int i = 0; i < transition.SymbolsRead.Count() && flag; i++) {
+                        if (transition.SymbolsRead[i] != Tapes[i].GetCurrentSymbol()) flag = false;
+                    }
+                    if (flag) {
+                        return transition;
+                    }
+                }
             }
             throw new TransitionNotFound("Can not find transition");
         }

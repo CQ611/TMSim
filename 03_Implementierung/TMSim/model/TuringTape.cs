@@ -16,6 +16,7 @@ namespace TMSim.model
         public TuringTape(string content, char blank){
             this.Content = content;
             this.Blank = blank;
+            this.HeadIndex = 0;
         }
 
 
