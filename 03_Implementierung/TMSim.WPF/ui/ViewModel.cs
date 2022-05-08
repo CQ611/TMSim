@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TMSim.Core;
 
 namespace TMSim.WPF
@@ -11,6 +12,11 @@ namespace TMSim.WPF
             StepSimulation = new RelayCommand((o) => { OnStepSimulation(); });
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
+            SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
+            TransformTuringMaschine = new RelayCommand((o) => { OnTansformTuringMaschine(); });
+            ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
+            ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
+            ClearTuringMaschine = new RelayCommand((o) => { OnClearTuringMaschine(); });
         }
 
         public bool HighlightCurrentState { get; set; } = true;
@@ -19,6 +25,12 @@ namespace TMSim.WPF
         public RelayCommand StepSimulation { get; set; }
         public RelayCommand StopSimulation { get; set; }
         public RelayCommand WriteTapeWord { get; set; }
+        public RelayCommand SetSimulationTimerInterval { get; set; }
+        public RelayCommand TransformTuringMaschine { get; set; }
+        public RelayCommand ImportFromTextFile { get; set; }
+        public RelayCommand ExportToTextFile { get; set; }
+        public RelayCommand ClearTuringMaschine { get; set; }
+
 
         public TuringMaschine TM
         {
@@ -54,24 +66,38 @@ namespace TMSim.WPF
             throw new NotImplementedException("Hi");
         }
 
-        public void SetSimulationTimerInterval()
+        public void OnSetSimulationTimerInterval()
         {
             throw new NotImplementedException("Hi");
         }
 
-        public void TansformTuringMaschine()
+        public void OnTansformTuringMaschine()
         {
             TM.TansformTuringMaschine();
         }
 
-        public void ImportFromTextFile()
+        public void OnImportFromTextFile()
         {
             TM.ImportFromTextFile();
         }
 
-        public void ExportToTextFile()
+        public void OnExportToTextFile()
         {
             TM.ExportToTextFile();
+        }
+
+        public void OnClearTuringMaschine()
+        {
+            TM = new TuringMaschine(
+                new Alphabet(""),
+                ' ',
+                new Alphabet(""),
+                new List<TuringState>(),
+                new TuringState(),
+                new List<TuringState>(),
+                new List<TuringTransition>(),
+                new List<TuringTape>()
+                );
         }
     }
 }

@@ -10,7 +10,7 @@
         <local:ViewModel />
     </Window.DataContext>
     <Grid>
-       <Grid.RowDefinitions>
+        <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -23,9 +23,9 @@
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
             <MenuItem Header="_File">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_New" Command="{Binding ClearTuringMaschine}"/>
+                <MenuItem Header="_Open" Command="{Binding ImportFromTextFile}"/>
+                <MenuItem Header="_Save" Command="{Binding ExportToTextFile}"/>
                 <Separator />
                 <MenuItem Header="E_xamples" />
                 <Separator />
@@ -34,6 +34,12 @@
             <MenuItem Header="_Preferences">
                 <MenuItem Header="_Highlight State"/>
                 <MenuItem Header="_Language"/>
+            </MenuItem>
+            <MenuItem Header="_Transform" Command="{Binding TransformTuringMaschine}">
+                <!--
+                <MenuItem Header="_Left-Right only"/>
+                <MenuItem Header="_No self references"/>
+                -->
             </MenuItem>
             <MenuItem Header="?" HorizontalAlignment="Right"/>
         </Menu>
@@ -47,39 +53,11 @@
         <Grid Grid.Row="2">
             <local:Table x:Name="table" Margin="42,41,43,47" Visibility="Hidden"/>
             <local:Diagram x:Name="diagram" Margin="42,41,43,47" Visibility="Visible"/>
-            <Button x:Name="randomize_btn" Content="_Randomize" HorizontalAlignment="Left" Margin="126,64,0,0" VerticalAlignment="Top" Click="randomize_btn_Click" Height="20" Width="63" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="51.242"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-            <Button x:Name="arrange_btn" Content="_Arrange" HorizontalAlignment="Left" Margin="54,64,0,0" VerticalAlignment="Top" Width="62" Click="arrange_btn_Click" Height="20" RenderTransformOrigin="0.5,0.5">
-                <Button.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="-32.045"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Button.RenderTransform>
-            </Button>
-            <CheckBox x:Name="animate_chk" Content="Animate" HorizontalAlignment="Left" Margin="92,112,0,0" VerticalAlignment="Top" Checked="checkBox_Update" Unchecked="checkBox_Update" Foreground="White" Height="15" Width="64" RenderTransformOrigin="0.5,0.5">
-                <CheckBox.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="44.349"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </CheckBox.RenderTransform>
-            </CheckBox>
+            <Button x:Name="randomize_btn" Content="_Randomize" HorizontalAlignment="Left" Margin="131,49,0,0" VerticalAlignment="Top" Click="randomize_btn_Click" Height="20" Width="63" RenderTransformOrigin="0.5,0.5"/>
+            <Button x:Name="arrange_btn" Content="_Arrange" HorizontalAlignment="Left" Margin="64,49,0,0" VerticalAlignment="Top" Width="62" Click="arrange_btn_Click" Height="20" RenderTransformOrigin="0.5,0.5"/>
+            <CheckBox x:Name="animate_chk" Content="Animate" HorizontalAlignment="Left" Margin="65,77,0,0" VerticalAlignment="Top" Checked="checkBox_Update" Unchecked="checkBox_Update" Foreground="White" Height="15" Width="64" RenderTransformOrigin="0.5,0.5"/>
             <Button x:Name="switch1_cmd" Content="Switch" HorizontalAlignment="Left" Margin="762,0,0,0" VerticalAlignment="Center" Height="145" Width="33" Click="switch1_cmd_Click"/>
             <Button x:Name="switch2_cmd" Content="Switch" HorizontalAlignment="Left" VerticalAlignment="Center" Height="145" Width="33" Margin="4,0,0,0" Click="switch2_cmd_Click" IsEnabled="False"/>
-
         </Grid>
         <Grid Grid.Row="3">
             <Grid.RowDefinitions>
@@ -87,7 +65,6 @@
             </Grid.RowDefinitions>
             <local:Tape Grid.Row="0" Margin="0,0,0,0" />
             <!--Command="{Binding WriteBandWord}"-->
-       </Grid>
-
+        </Grid>
     </Grid>
 </Window>
