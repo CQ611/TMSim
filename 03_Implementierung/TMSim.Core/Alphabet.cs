@@ -8,8 +8,10 @@ namespace TMSim.Core
         
         public Alphabet(string chars) 
         {
-            foreach(char c in chars){
-                if(!Symbols.Contains(c)){
+            foreach(char c in chars)
+            {
+                if(!Symbols.Contains(c))
+                {
                     Symbols.Add(c);
                 }
             }
@@ -17,8 +19,10 @@ namespace TMSim.Core
 
         public bool WordIsContainedIn(string word)
         {
-            foreach(char c in word){
-                if(!Symbols.Contains(c)) return false;
+            foreach(char c in word)
+            {
+                if(!Symbols.Contains(c)) 
+                    return false;
             }
             return true;
         }

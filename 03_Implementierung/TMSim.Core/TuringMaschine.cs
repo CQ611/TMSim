@@ -47,48 +47,58 @@ namespace TMSim.Core
 
         }
 
-        public void ImportFromTextFile()
+        public void ImportFromTextFile(string filePath)
         {
-            //opens dialog here, so no path needed
+            //filePath from FileDialog -> full path with filename
         }
 
-        public void ExportToTextFile()
+        public void ExportToTextFile(string filePath)
         {
-            //opens dialog here, so no path needed
+            //filePath from FileDialog -> full path with filename
         }
 
         public bool AdvanceState()
         {
-            try{
+            try
+            {
                 TuringTransition transition = GetTransition();
-                for (int i = 0; i < Tapes.Count(); i++) {
+                for (int i = 0; i < Tapes.Count(); i++) 
+                {
                     Tapes[i].SetCurrentSymbol(transition.SymbolsWrite[i]);
                     if (transition.MoveDirections[i] == TuringTransition.Direction.Right) Tapes[i].MoveRight();
                     else if (transition.MoveDirections[i] == TuringTransition.Direction.Left) Tapes[i].MoveLeft();
                 }
                 CurrentState = transition.Target;
             }
-            catch(TransitionNotFound){
+            catch(TransitionNotFound)
+            {
                 return false;
             }
             return true;
         }
 
-        public bool CheckIsEndState(){
-            if (EndStates.Contains(CurrentState)){
+        public bool CheckIsEndState()
+        {
+            if (EndStates.Contains(CurrentState))
+            {
                 return true;
             }
             return false;
         }
 
-        private TuringTransition GetTransition(){
-            foreach(TuringTransition transition in Transitions){
-                if (transition.Source == CurrentState) {
+        private TuringTransition GetTransition()
+        {
+            foreach(TuringTransition transition in Transitions)
+            {
+                if (transition.Source == CurrentState) 
+                {
                     bool flag = true;
-                    for (int i = 0; i < transition.SymbolsRead.Count() && flag; i++) {
+                    for (int i = 0; i < transition.SymbolsRead.Count() && flag; i++) 
+                    {
                         if (transition.SymbolsRead[i] != Tapes[i].GetCurrentSymbol()) flag = false;
                     }
-                    if (flag) {
+                    if (flag) 
+                    {
                         return transition;
                     }
                 }
