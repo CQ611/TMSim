@@ -13,7 +13,8 @@ namespace TMSim.Core
 
         public int HeadIndex { get; private set; }
 
-        public TuringTape(string content, char blank){
+        public TuringTape(string content, char blank)
+        {
             this.Content = content;
             this.Blank = blank;
             this.HeadIndex = 0;
@@ -25,7 +26,8 @@ namespace TMSim.Core
             return Content[HeadIndex];
         }
 
-        public void SetCurrentSymbol(char newSymbol){
+        public void SetCurrentSymbol(char newSymbol)
+        {
             char[] chars = Content.ToCharArray();
             chars[HeadIndex] = newSymbol;
             Content = new string(chars);
@@ -33,9 +35,12 @@ namespace TMSim.Core
 
         public void MoveLeft()
         {
-            if(HeadIndex == 0){
+            if(HeadIndex == 0)
+            {
                 Content = Blank + Content;
-            }else{
+            }
+            else
+            {
                 HeadIndex--;
             }
         }
@@ -43,7 +48,8 @@ namespace TMSim.Core
         public void MoveRight()
         {
             HeadIndex++;
-            if(HeadIndex == Content.Length){
+            if(HeadIndex == Content.Length)
+            {
                 Content = Content + Blank;
             }
         }
