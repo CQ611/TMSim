@@ -90,18 +90,7 @@ namespace TMSim.Core
         {
             foreach(TuringTransition transition in Transitions)
             {
-                if (transition.Source == CurrentState) 
-                {
-                    bool flag = true;
-                    for (int i = 0; i < transition.SymbolsRead.Count() && flag; i++) 
-                    {
-                        if (transition.SymbolsRead[i] != Tapes[i].GetCurrentSymbol()) flag = false;
-                    }
-                    if (flag) 
-                    {
-                        return transition;
-                    }
-                }
+                if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
             }
             throw new TransitionNotFound("Can not find transition");
         }

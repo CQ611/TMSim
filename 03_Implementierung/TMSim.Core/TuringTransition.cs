@@ -26,5 +26,21 @@ namespace TMSim.Core
             this.SymbolsWrite = symbolsWrite;
             this.MoveDirections = dirs;
         }
+        public bool CheckIfTransitionShouldBeActive(List<TuringTape> Tapes, TuringState CurrentState)
+        {
+            if (Source == CurrentState)
+            {
+                bool flag = true;
+                for (int i = 0; i < SymbolsRead.Count() && flag; i++)
+                {
+                    if (SymbolsRead[i] != Tapes[i].GetCurrentSymbol()) flag = false;
+                }
+                if (flag)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
