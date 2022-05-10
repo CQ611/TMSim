@@ -8,7 +8,7 @@ namespace TMSim.WPF.Tests
         [TestMethod]
         public void ReturnTrue_ReturnsTrue()
         {
-            ExampleClass mtc = new();
+            var mtc = new ExampleClass();
             Assert.IsTrue(mtc.ReturnTrue);
         }
     }
