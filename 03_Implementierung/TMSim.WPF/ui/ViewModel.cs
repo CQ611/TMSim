@@ -25,46 +25,33 @@ namespace TMSim.WPF
         #endregion
 
         #region BindingProperties
-        //Unicode characters: https://en.wikipedia.org/wiki/List_of_Unicode_characters
-
-        private string _switchLeftContent = char.ConvertFromUtf32(0x226A);
-        public string SwitchLeftContent
+        private Visibility _startVisibility = Visibility.Visible;
+        public Visibility StartVisibility
         {
-            get { return _switchLeftContent; }
-        }
-
-        private string _switchRightContent = char.ConvertFromUtf32(0x226B);
-        public string SwitchRightContent
-        {
-            get { return _switchRightContent; }
-        }
-
-        private string startContent = char.ConvertFromUtf32(0x23F5);
-        private string pauseContent = char.ConvertFromUtf32(0x23F8);
-        private string _startPauseButtonContent = char.ConvertFromUtf32(0x23F5); 
-        public string StartPauseButtonContent
-        {
-            get { return _startPauseButtonContent; }
+            get
+            {
+                return _startVisibility;
+            }
             set
             {
-                _startPauseButtonContent = value;
-                OnPropertyChanged("StartPauseButtonContent");
+                _startVisibility = value;
+                OnPropertyChanged("StartVisibility");
             }
         }
 
-        private string _stopButtonContent = char.ConvertFromUtf32(0x23F9);
-        public string StopButtonContent
+        private Visibility _stopVisibility = Visibility.Hidden;
+        public Visibility StopVisibility
         {
-            get { return _stopButtonContent; }
+            get
+            {
+                return _stopVisibility;
+            }
+            set
+            {
+                _stopVisibility = value;
+                OnPropertyChanged("StopVisibility");
+            }
         }
-
-        private string _stepButtonContent = char.ConvertFromUtf32(0x23EF);
-        public string StepButtonContent
-        {
-            get { return _stepButtonContent; }
-        }
-
-
         #endregion
 
         public ViewModel()
@@ -108,12 +95,14 @@ namespace TMSim.WPF
             if(startIsActive)
             {
                 startIsActive = false;
-                StartPauseButtonContent = startContent;
+                StartVisibility = Visibility.Visible;
+                StopVisibility = Visibility.Hidden;
             }
             else
             {
                 startIsActive = true;
-                StartPauseButtonContent = pauseContent;
+                StartVisibility = Visibility.Hidden;
+                StopVisibility = Visibility.Visible;
             }
             //todo
         }
