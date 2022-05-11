@@ -21,5 +21,28 @@ namespace TMSim.WPF
         {
             InitializeComponent();
         }
+
+        private List<List<string>> tableMatrix = new List<List<string>>();
+
+        private void ButtonAddRow_Click(object sender, RoutedEventArgs e)
+        {
+            TuringTable.RowGroups[0].Rows.Add(new TableRow());
+            var actualRow = TuringTable.RowGroups[0].Rows.Count() - 1;
+            TableRow currentRow = TuringTable.RowGroups[0].Rows[actualRow];
+            if (actualRow % 2 == 1)
+                currentRow.Background = Brushes.Silver;
+            else
+                currentRow.Background = Brushes.Transparent;
+            currentRow.FontSize = 12;
+            currentRow.FontWeight = FontWeights.Normal;
+            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("Neue Zeile"))));
+
+        }
+
+        private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
+        {
+            TuringTable.Columns.Add(new TableColumn());
+            TuringTable.RowGroups[0].Rows[0].Cells.Add(new TableCell(new Paragraph(new Run("Neue Spalte"))));
+        }
     }
 }

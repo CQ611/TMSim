@@ -279,5 +279,20 @@ namespace TMSim.WPF
         {
             heldNode = null;
         }
+
+        private void arrange_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ArrangeDiagram();
+        }
+
+        private void randomize_btn_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateTestDiagram(15, 20);
+        }
+
+        private void checkBox_Update(object sender, RoutedEventArgs e)
+        {
+            Animated = (bool)animate_chk.IsChecked;
+        }
     }
 }
