@@ -9,6 +9,7 @@
     <UserControl.DataContext>
         <local:TableViewModel/>
     </UserControl.DataContext>
-    <Grid Background="Aqua">
+    <Grid Background="Transparent">
+        <TextBlock Text="Tabelle" FontSize="60" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </UserControl>

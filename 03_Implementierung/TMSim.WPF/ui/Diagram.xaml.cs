@@ -27,10 +27,10 @@ namespace TMSim.WPF
 
         private Node heldNode;
         
-        private static readonly Brush bgBrush = Brushes.Black;
+        private static readonly Brush bgBrush = Brushes.Transparent;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
-        private static readonly Brush accentBrush = Brushes.Cyan;
+        private static readonly Brush accentBrush = Brushes.Black;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
         public Diagram()
         {
