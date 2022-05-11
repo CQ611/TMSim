@@ -58,7 +58,7 @@
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
             <local:Table x:Name="table" Grid.Column="1" Margin="0,30,0,30" Visibility="Hidden"/>
-            <local:Diagram x:Name="diagram" Grid.Column="1" Margin="0,30,0,30" Visibility="Visible"/>
+            <local:Diagram x:Name="diagram" DData="{Binding diagramData}" Grid.Column="1" Margin="0,30,0,30" Visibility="Visible"/>
             <Button x:Name="randomize_btn" Grid.Column="1" Content="_Randomize" HorizontalAlignment="Left" Margin="131,49,0,0" VerticalAlignment="Top" Click="randomize_btn_Click" Height="20" Width="63" RenderTransformOrigin="0.5,0.5"/>
             <Button x:Name="arrange_btn" Grid.Column="1" Content="_Arrange" HorizontalAlignment="Left" Margin="64,49,0,0" VerticalAlignment="Top" Width="62" Click="arrange_btn_Click" Height="20" RenderTransformOrigin="0.5,0.5"/>
             <CheckBox x:Name="animate_chk" Grid.Column="1" Content="Animate" HorizontalAlignment="Left" Margin="65,77,0,0" VerticalAlignment="Top" Checked="checkBox_Update" Unchecked="checkBox_Update" Foreground="White" Height="15" Width="64" RenderTransformOrigin="0.5,0.5"/>
