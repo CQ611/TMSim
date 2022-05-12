@@ -3,7 +3,6 @@ stages:
   - build
   - test
   - deploy
-  - deploycake
 
 before_script:
   - "cd 03_Implementierung"
@@ -12,7 +11,7 @@ before_script:
 build:
   stage: build
   script:
-    - "dotnet build"
+    - "dotnet build --output output"
     
 test:
   stage: test
@@ -24,12 +23,11 @@ test:
 deploy:
   stage: deploy
   script:
-  - "cd"
+  - "dotnet build --configuration Release --output output"
+  artifacts:
+    name: "Release"
+    paths:
+      - 03_Implementierung/output/*
   dependencies:
   - build
   - test
-
-deploycake:
-  stage: deploycake
-  script:
-  - "cd"
