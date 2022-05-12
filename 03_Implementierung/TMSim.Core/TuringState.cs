@@ -9,5 +9,10 @@ namespace TMSim.Core
     public class TuringState
     {
         public string Identifier { get; set; }
+
+        public TuringState(string identifier)
+        {
+            this.Identifier = identifier;
+        }
     }
 }

@@ -169,7 +169,7 @@ namespace TMSim.WPF
                 ' ',
                 new Alphabet(""),
                 new List<TuringState>(),
-                new TuringState(),
+                new TuringState(""),
                 new List<TuringState>(),
                 new List<TuringTransition>(),
                 new List<TuringTape>()
