@@ -24,21 +24,6 @@ namespace TMSim.WPF
         {
             InitializeComponent();
         }
-        
-        private void arrange_btn_Click(object sender, RoutedEventArgs e)
-        {
-            diagram.ArrangeDiagram();
-        }
-
-        private void randomize_btn_Click(object sender, RoutedEventArgs e)
-        {
-            diagram.GenerateTestDiagram(15, 20);
-        }
-
-        private void checkBox_Update(object sender, RoutedEventArgs e)
-        {
-            diagram.Animated = (bool)animate_chk.IsChecked;
-        }
 
         private void switch1_cmd_Click(object sender, RoutedEventArgs e)
         {
