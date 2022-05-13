@@ -12,19 +12,21 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMSim.Core;
 
 namespace TMSim.WPF
 {
     public class Node : IEquatable<Node>
     {
-        public string Identifier { get; set; }
+        public TuringState State { get; set; }
+        public string Identifier { get { return State.Identifier; } }
         public bool IsStart { get; set; } = false;
         public bool IsAccepting { get; set; } = false;
         public Point Position { get; set; } = new Point(50, 50);
 
-        public Node(string id, Point pos, bool start = false, bool accepting = false)
+        public Node(TuringState st, Point pos, bool start = false, bool accepting = false)
         {
-            Identifier = id;
+            State = st;
             Position = pos;
             IsStart = start;
             IsAccepting = accepting;

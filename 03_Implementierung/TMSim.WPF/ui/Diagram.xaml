@@ -6,27 +6,20 @@
              xmlns:local="clr-namespace:TMSim.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="700"
-             MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp" MouseLeave="UserControl_MouseLeave"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             MouseRightButtonDown="UserControl_MouseRightButtonDown" MouseRightButtonUp="UserControl_MouseRightButtonUp"
+             MouseLeave="UserControl_MouseLeave"
              >
-    <UserControl.DataContext>
-        <local:DiagramViewModel/>
-    </UserControl.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button x:Name="randomize_btn" Grid.Column="0" Content="_Randomize"  Click="randomize_btn_Click" RenderTransformOrigin="0.5,0.5" Margin="10"/>
-            <Button x:Name="arrange_btn" Grid.Column="1" Content="_Arrange" Click="arrange_btn_Click"  RenderTransformOrigin="0.5,0.5" Margin="10"/>
-            <CheckBox x:Name="animate_chk" Grid.Column="2" Content="Animate"  Checked="checkBox_Update" HorizontalAlignment="Center" VerticalAlignment="Center" Unchecked="checkBox_Update"  RenderTransformOrigin="0.5,0.5"/>
-        </Grid>
-        <Canvas Grid.Row="1"/>
+        <Canvas/>
     </Grid>
+    <UserControl.ContextMenu>
+        <ContextMenu x:Name="ContextMenu">
+            <MenuItem Header="Add state" Click="add_state_btn_Click"/>
+            <MenuItem Header="Remove state"/>
+            <MenuItem Header="Edit state"/>
+            <Separator/>
+            <MenuItem Header="Arrange" Click="arrange_btn_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 </UserControl>

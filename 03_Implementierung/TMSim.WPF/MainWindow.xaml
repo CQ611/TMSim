@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMSim.WPF"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="TMSim" Height="800" Width="800" MinHeight="800" MinWidth="800" Background="#cccccc">
     <Window.DataContext>
@@ -70,7 +71,7 @@
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,0">
                 <Grid>
                     <local:Table x:Name="table" Margin="5" Visibility="Hidden"/>
-                    <local:Diagram x:Name="diagram" Margin="5" Visibility="Visible"  DData="{Binding diagramData}"/>
+                    <local:Diagram x:Name="diagram" Margin="5" Visibility="Visible" DData="{Binding DData}" TMModifier="{Binding TMModifier}"/>
                 </Grid>
             </Border>
             <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="3,0,0,0">
