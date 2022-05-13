@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMSim.WPF
 {
-    class NodeConnection
+    public class NodeConnection
     {
         public Node Node1 { get; set; }
         public Node Node2 { get; set; }

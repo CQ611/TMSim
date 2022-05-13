@@ -14,20 +14,38 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using System.Globalization;
+using System.ComponentModel;
 
 namespace TMSim.WPF
 {
     public partial class Diagram : UserControl
     {
-        private Dictionary<string, Node> nodes; // (Identifier / Node object) pairs
+        #region Dependency properties
+        public static readonly DependencyProperty DDataProperty = DependencyProperty.Register(
+            "DData", typeof(DiagramData), typeof(Diagram),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
 
-        private List<NodeConnection> connections;
-        public double NodeSize { get; set; } = 50f;
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Diagram)d).InvalidateVisual();
+        }
+        #endregion
+
         public bool Animated { get; set; }
+
+        public DiagramData DData
+        {
+            get { return (DiagramData)GetValue(DDataProperty); }
+            set
+            {
+                SetValue(DDataProperty, value);
+                InvalidateVisual();
+            }
+        }
 
         private Node heldNode;
         
-        private static readonly Brush bgBrush = Brushes.Transparent;
+        private static readonly Brush bgBrush = Brushes.White;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
         private static readonly Brush accentBrush = Brushes.Black;
@@ -35,10 +53,15 @@ namespace TMSim.WPF
         public Diagram()
         {
             InitializeComponent();
-            nodes = new Dictionary<string, Node>();
-            connections = new List<NodeConnection>();
             //GenerateTestDiagram();
+            this.Loaded += new RoutedEventHandler(OnDiagramLoaded);
         }
+        private void OnDiagramLoaded(object sender, RoutedEventArgs e)
+        {
+            DData.Width = ActualWidth;
+            DData.Height = ActualHeight;
+        }
+
         protected override async void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
@@ -52,12 +75,12 @@ namespace TMSim.WPF
             }
 
 
-            foreach (NodeConnection con in connections)
+            foreach (NodeConnection con in DData.Connections)
             {
                 DrawNodeConnection(dc, con);
             }
 
-            foreach (Node n in nodes.Values)
+            foreach (Node n in DData.Nodes.Values)
             {
                 DrawNode(dc, n);
             }
@@ -71,13 +94,13 @@ namespace TMSim.WPF
 
         private void DrawNode(DrawingContext dc, Node n)
         {
-            dc.DrawEllipse(bgBrush, accentPen, n.Position, NodeSize / 2, NodeSize / 2);
+            dc.DrawEllipse(bgBrush, accentPen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
             dc.DrawText(new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Courier New"),
-                NodeSize / 3, accentBrush, 1),
-                OffsetPoint(n.Position, -NodeSize / 5, -NodeSize / 5));
+                DData.NodeSize / 3, accentBrush, 1),
+                OffsetPoint(n.Position, -DData.NodeSize / 5, -DData.NodeSize / 5));
         }
 
         private void DrawNodeConnection(DrawingContext dc, NodeConnection con)
@@ -85,39 +108,80 @@ namespace TMSim.WPF
             if (con.IsSelfReferencing())
             {
                 dc.DrawEllipse(Brushes.DarkBlue, accentPen,
-                    OffsetPoint(con.Node1.Position, NodeSize / 2, NodeSize / 2),
-                    NodeSize / 2, NodeSize / 2);
+                    OffsetPoint(con.Node1.Position, DData.NodeSize / 2, DData.NodeSize / 2),
+                    DData.NodeSize / 2, DData.NodeSize / 2);
             }
             else
             {
-                dc.DrawLine(accentPen, con.Node1.Position, con.Node2.Position);
+                dc.DrawLine(accentPen,
+                    PointOnBorderTowards(con.Node1, con.Node2),
+                    PointOnBorderTowards(con.Node2, con.Node1)
+                    );
+                DrawArrwohead(
+                    dc,
+                    PointOnBorderTowards(con.Node2, con.Node1),
+                    con.Node1.Position - con.Node2.Position
+                    );
             }
+        }
+
+        private Point PointOnBorderTowards(Node source, Node target)
+        {
+            Vector direction =  target.Position - source.Position;
+            direction.Normalize();
+            return source.Position + direction * DData.NodeSize/2;
+        }
+
+        private void DrawArrwohead(DrawingContext dc, Point tip, Vector direction)
+        {
+            direction.Normalize();
+            Point corner1 = tip + direction * DData.NodeSize / 6 +
+                PerpendicularVector(direction) * DData.NodeSize / 12;
+            Point corner2 = tip + direction * DData.NodeSize / 6 -
+                PerpendicularVector(direction) * DData.NodeSize / 12;
+
+            StreamGeometry sg = new StreamGeometry();
+            using (StreamGeometryContext ctx = sg.Open())
+            {
+                ctx.BeginFigure(tip, true, true);
+                ctx.LineTo(corner1, false, true);
+                ctx.LineTo(corner2, false, true);
+            }
+            sg.Freeze();
+            dc.DrawGeometry(accentBrush, accentPen, sg);
+        }
+
+        private Vector PerpendicularVector(Vector v)
+        {
+            return new Vector(-v.Y, v.X);
         }
 
         public void GenerateTestDiagram(int nodeCount = 10, int connectionCount = 15)
         {
             var rand = new Random();
+            //DData = new DiagramData();
 
             Node randNode()
             {
-                return nodes[$"q{rand.Next(0, nodeCount - 1)}"];
+                return DData.Nodes[$"q{rand.Next(0, nodeCount - 1)}"];
             }
 
-            nodes = new Dictionary<string, Node>();
-            connections = new List<NodeConnection>();
 
             for (int i = 0; i < nodeCount; i++)
             {
                 Node n = new Node($"q{i}", new Point(
-                    rand.Next((int)NodeSize/2, (int)(ActualWidth - NodeSize/2)),
-                    rand.Next((int)NodeSize / 2, (int)(ActualHeight - NodeSize / 2))),
+                    rand.Next((int)DData.NodeSize / 2,
+                        (int)(DData.Width - DData.NodeSize / 2)),
+                    rand.Next((int)DData.NodeSize / 2,
+                        (int)(DData.Height - DData.NodeSize / 2))),
                     start: i == 0);
-                nodes.Add(n.Identifier, n);
+                DData.Nodes.Add(n.Identifier, n);
             }
             for (int i = 0; i < connectionCount; i++)
             {
-                connections.Add(new NodeConnection("t", randNode(), randNode()));
+                DData.Connections.Add(new NodeConnection("t", randNode(), randNode()));
             }
+
             InvalidateVisual();
         }
 
@@ -125,7 +189,7 @@ namespace TMSim.WPF
         {
             double repulsiveForce = 15000;
             double attractiveForce = 0.07;
-            double relaxedSpringLength = NodeSize * 3;
+            double relaxedSpringLength = DData.NodeSize * 3;
             double gravityStrength = 2;
 
             int iterationCount = 0;
@@ -136,9 +200,9 @@ namespace TMSim.WPF
             {
                 iterationCount++;
                 double coolingFactor = 1 - iterationCount / maxIterations;
-                Vector[] resultingVectors = new Vector[nodes.Count];
+                Vector[] resultingVectors = new Vector[DData.Nodes.Count];
                 int ctr = 0;
-                foreach (Node n in nodes.Values)
+                foreach (Node n in DData.Nodes.Values)
                 {
                     Vector VectorSum = SumVectors(
                         new Vector[]{ GravityForceOn(n), SumOfAttractiveForcesOn(n), SumOfRepulsiveForcesOn(n)}
@@ -149,7 +213,7 @@ namespace TMSim.WPF
 
                 maxForce = 0;
                 ctr = 0;
-                foreach (Node n in nodes.Values)
+                foreach (Node n in DData.Nodes.Values)
                 {
                     maxForce = Math.Max(resultingVectors[ctr].Length, maxForce);
                     n.Position = Vector.Add(resultingVectors[ctr], n.Position);
@@ -169,7 +233,7 @@ namespace TMSim.WPF
             Vector SumOfAttractiveForcesOn(Node n)
             {
                 HashSet<Node> connectedNodes = new HashSet<Node>();
-                foreach (NodeConnection con in connections)
+                foreach (NodeConnection con in DData.Connections)
                 {
                     if (con.IsSelfReferencing()) continue;
                     else if (con.Node1 == n)
@@ -197,7 +261,7 @@ namespace TMSim.WPF
             Vector SumOfRepulsiveForcesOn(Node n)
             {
                 List<Node> otherNodes = new List<Node>();
-                foreach (Node other in nodes.Values)
+                foreach (Node other in DData.Nodes.Values)
                 {
                     if (other != n) otherNodes.Add(other);
                 }
@@ -228,8 +292,8 @@ namespace TMSim.WPF
         private Node ConstrainToScreen(Node n)
         {
             Point tmp = n.Position;
-            double x = Math.Clamp(tmp.X, NodeSize / 2, ActualWidth - NodeSize / 2);
-            double y = Math.Clamp(tmp.Y, NodeSize / 2, ActualHeight - NodeSize / 2);
+            double x = Math.Clamp(tmp.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
+            double y = Math.Clamp(tmp.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
             n.Position = new Point(x, y);
             return n;
         }
@@ -258,9 +322,9 @@ namespace TMSim.WPF
         {
             Vector pos = (Vector)e.GetPosition((IInputElement)sender);
             //MessageBox.Show($"clicked at: {pos}");
-            foreach (Node n in nodes.Values)
+            foreach (Node n in DData.Nodes.Values)
             {
-                if (Vector.Subtract(pos, (Vector)n.Position).Length < NodeSize / 2)
+                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
                 {
                     heldNode = n;
                     //MessageBox.Show($"picked up node {n.Identifier}");

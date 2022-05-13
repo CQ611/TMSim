@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TMSim.WPF
 {
-    class DiagramViewModel : ViewModel
+    public class DiagramViewModel : ViewModel
     {
         public void ConvertTMToNodeNetwork()
         {
