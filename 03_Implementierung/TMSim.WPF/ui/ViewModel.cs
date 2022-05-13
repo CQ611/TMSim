@@ -16,10 +16,10 @@ namespace TMSim.WPF
         public RelayCommand StopSimulation { get; set; }
         public RelayCommand WriteTapeWord { get; set; }
         public RelayCommand SetSimulationTimerInterval { get; set; }
-        public RelayCommand TransformTuringMaschine { get; set; }
+        public RelayCommand TransformTuringMachine { get; set; }
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
-        public RelayCommand ClearTuringMaschine { get; set; }
+        public RelayCommand ClearTuringMachine { get; set; }
         public RelayCommand LoadExample { get; set; }
         public RelayCommand ExitApplication { get; set; }
         #endregion
@@ -61,10 +61,10 @@ namespace TMSim.WPF
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
             SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
-            TransformTuringMaschine = new RelayCommand((o) => { OnTansformTuringMaschine(); });
+            TransformTuringMachine = new RelayCommand((o) => { OnTansformTuringMachine(); });
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
-            ClearTuringMaschine = new RelayCommand((o) => { OnClearTuringMaschine(); });
+            ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
             LoadExample = new RelayCommand((o) => { OnLoadExample(); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
 
@@ -75,8 +75,8 @@ namespace TMSim.WPF
         public bool IsSimulationRunning { get; set; } = true;
         public DiagramData diagramData { get; private set; }
 
-        TuringMaschine tm;
-        public TuringMaschine TM
+        TuringMachine tm;
+        public TuringMachine TM
         {
             get => tm;
             set
@@ -130,9 +130,9 @@ namespace TMSim.WPF
             throw new NotImplementedException("Hi");
         }
 
-        public void OnTansformTuringMaschine()
+        public void OnTansformTuringMachine()
         {
-            TM.TansformTuringMaschine();
+            TM.TansformTuringMachine();
         }
 
         public void OnImportFromTextFile()
@@ -165,14 +165,14 @@ namespace TMSim.WPF
             }
         }
 
-        public void OnClearTuringMaschine()
+        public void OnClearTuringMachine()
         {
-            TM = new TuringMaschine(
+            TM = new TuringMachine(
                 new Alphabet(""),
                 ' ',
                 new Alphabet(""),
                 new List<TuringState>(),
-                new TuringState(),
+                new TuringState(""),
                 new List<TuringState>(),
                 new List<TuringTransition>(),
                 new List<TuringTape>()
