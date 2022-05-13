@@ -8,13 +8,14 @@ namespace TMSim.Core.Tests
 {
     [TestClass]
     [DeploymentItem("res/example_import.xml","res")]
+    [DeploymentItem("res/example_export.xml", "res")]
     public class TuringMachineTests
     {
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_TapeAlphabetIs_abcde_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.TapeAlphabet.WordIsContainedIn("abcde_"));
         }
@@ -36,7 +37,7 @@ namespace TMSim.Core.Tests
             List<TuringTransition> transitions = new List<TuringTransition>();
             transitions.Add(transition);
 
-            TuringMaschine turingMaschine = new TuringMaschine(bandAlphabet, blankChar, inputAlphabet, states, state, endStates, transitions, new List<TuringTape>());
+            TuringMachine turingMaschine = new TuringMachine(bandAlphabet, blankChar, inputAlphabet, states, state, endStates, transitions, new List<TuringTape>());
 
             turingMaschine.ImportFromTextFile(@"res/example_import.tmsim");
             Assert.IsTrue(turingMaschine.BlankChar == '_');
@@ -46,7 +47,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_InputAlphabetIs_abcde_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.InputAlphabet.WordIsContainedIn("abcde"));
         }
@@ -55,7 +56,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_CheckStates_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
 
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
@@ -76,7 +77,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_StartStateIdentifierIs_q0_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.StartState.Identifier == "q0");
         }
@@ -85,7 +86,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_CurrentStateIsStartState_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.CurrentState.Identifier == turingMaschine.StartState.Identifier);
         }
@@ -94,7 +95,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_EndStatesIsCorrect_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<TuringState> testEndStates = new List<TuringState>();
@@ -111,7 +112,7 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_CheckTuringTransition_ReturnsTrue()
         {
 
-            TuringMaschine turingMaschine = new TuringMaschine();
+            TuringMachine turingMaschine = new TuringMachine();
             turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<char> symbolsRead = new List<char>();
@@ -139,6 +140,16 @@ namespace TMSim.Core.Tests
 
             for (int i = 0; i < directions.Count; i++)
                 Assert.IsTrue(turingMaschine.Transitions[0].MoveDirections[i] == turingTransition.MoveDirections[i]);
+        }
+
+        [TestMethod]
+        public void ExportToTextFile_ContentShouldBeTheSameAfterExport() {
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
+            turingMachine.ExportToTextFile(@"res\example_export.tmsim");
+            string contentImport = System.IO.File.ReadAllText(@"res\example_import.tmsim");
+            string contentExport = System.IO.File.ReadAllText(@"res\example_export.tmsim");
+            Assert.IsTrue(string.Equals(contentExport, contentImport));
         }
     }
 }

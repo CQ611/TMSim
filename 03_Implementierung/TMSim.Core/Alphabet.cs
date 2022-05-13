@@ -26,5 +26,9 @@ namespace TMSim.Core
             }
             return true;
         }
+
+        public override string ToString() {
+            return new string(Symbols.ToArray());
+        }
     }
 }
