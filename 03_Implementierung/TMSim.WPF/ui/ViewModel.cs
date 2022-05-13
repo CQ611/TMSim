@@ -8,7 +8,7 @@ using TMSim.Core;
 
 namespace TMSim.WPF
 {
-    class ViewModel : ObservableObject
+    public class ViewModel : ObservableObject
     {
         #region RelayCommands
         public RelayCommand StartPauseSimulation { get; set; }
@@ -16,55 +16,42 @@ namespace TMSim.WPF
         public RelayCommand StopSimulation { get; set; }
         public RelayCommand WriteTapeWord { get; set; }
         public RelayCommand SetSimulationTimerInterval { get; set; }
-        public RelayCommand TransformTuringMaschine { get; set; }
+        public RelayCommand TransformTuringMachine { get; set; }
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
-        public RelayCommand ClearTuringMaschine { get; set; }
+        public RelayCommand ClearTuringMachine { get; set; }
         public RelayCommand LoadExample { get; set; }
         public RelayCommand ExitApplication { get; set; }
         #endregion
 
         #region BindingProperties
-        //Unicode characters: https://en.wikipedia.org/wiki/List_of_Unicode_characters
-
-        private string _switchLeftContent = char.ConvertFromUtf32(0x226A);
-        public string SwitchLeftContent
+        private Visibility _startVisibility = Visibility.Visible;
+        public Visibility StartVisibility
         {
-            get { return _switchLeftContent; }
-        }
-
-        private string _switchRightContent = char.ConvertFromUtf32(0x226B);
-        public string SwitchRightContent
-        {
-            get { return _switchRightContent; }
-        }
-
-        private string startContent = char.ConvertFromUtf32(0x23F5);
-        private string pauseContent = char.ConvertFromUtf32(0x23F8);
-        private string _startPauseButtonContent = char.ConvertFromUtf32(0x23F5); 
-        public string StartPauseButtonContent
-        {
-            get { return _startPauseButtonContent; }
+            get
+            {
+                return _startVisibility;
+            }
             set
             {
-                _startPauseButtonContent = value;
-                OnPropertyChanged("StartPauseButtonContent");
+                _startVisibility = value;
+                OnPropertyChanged("StartVisibility");
             }
         }
 
-        private string _stopButtonContent = char.ConvertFromUtf32(0x23F9);
-        public string StopButtonContent
+        private Visibility _stopVisibility = Visibility.Hidden;
+        public Visibility StopVisibility
         {
-            get { return _stopButtonContent; }
+            get
+            {
+                return _stopVisibility;
+            }
+            set
+            {
+                _stopVisibility = value;
+                OnPropertyChanged("StopVisibility");
+            }
         }
-
-        private string _stepButtonContent = char.ConvertFromUtf32(0x23EF);
-        public string StepButtonContent
-        {
-            get { return _stepButtonContent; }
-        }
-
-
         #endregion
 
         public ViewModel()
@@ -74,30 +61,33 @@ namespace TMSim.WPF
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
             SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
-            TransformTuringMaschine = new RelayCommand((o) => { OnTansformTuringMaschine(); });
+            TransformTuringMachine = new RelayCommand((o) => { OnTansformTuringMachine(); });
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
-            ClearTuringMaschine = new RelayCommand((o) => { OnClearTuringMaschine(); });
+            ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
             LoadExample = new RelayCommand((o) => { OnLoadExample(); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
+
+            diagramData = new DiagramData();
         }
 
         public bool HighlightCurrentState { get; set; } = true;
         public bool IsSimulationRunning { get; set; } = true;
+        public DiagramData diagramData { get; private set; }
 
-
-
-        public TuringMaschine TM
+        TuringMachine tm;
+        public TuringMachine TM
         {
-            get
-            {
-                // get when populating diagram and table
-                throw new NotImplementedException("Hello there");
-            }
+            get => tm;
             set
             {
-                // set when accept button is pressed
-                throw new NotImplementedException("Hello there");
+                if (tm != value)
+                {
+                    // set when accept button is pressed
+                    OnPropertyChanged();
+                    UpdateDiagramData();
+                    tm = value;
+                }
             }
         }
 
@@ -108,12 +98,14 @@ namespace TMSim.WPF
             if(startIsActive)
             {
                 startIsActive = false;
-                StartPauseButtonContent = startContent;
+                StartVisibility = Visibility.Visible;
+                StopVisibility = Visibility.Hidden;
             }
             else
             {
                 startIsActive = true;
-                StartPauseButtonContent = pauseContent;
+                StartVisibility = Visibility.Hidden;
+                StopVisibility = Visibility.Visible;
             }
             //todo
         }
@@ -138,9 +130,9 @@ namespace TMSim.WPF
             throw new NotImplementedException("Hi");
         }
 
-        public void OnTansformTuringMaschine()
+        public void OnTansformTuringMachine()
         {
-            TM.TansformTuringMaschine();
+            TM.TansformTuringMachine();
         }
 
         public void OnImportFromTextFile()
@@ -173,14 +165,14 @@ namespace TMSim.WPF
             }
         }
 
-        public void OnClearTuringMaschine()
+        public void OnClearTuringMachine()
         {
-            TM = new TuringMaschine(
+            TM = new TuringMachine(
                 new Alphabet(""),
                 ' ',
                 new Alphabet(""),
                 new List<TuringState>(),
-                new TuringState(),
+                new TuringState(""),
                 new List<TuringState>(),
                 new List<TuringTransition>(),
                 new List<TuringTape>()
@@ -200,6 +192,12 @@ namespace TMSim.WPF
             {
                 TM.ImportFromTextFile(loadExampleFileDialog.FileName); 
             }
+        }
+
+        private void UpdateDiagramData()
+        {
+            //convert TM data to displayable data here
+            OnPropertyChanged(nameof(diagramData));
         }
 
         public void OnExitApplication()

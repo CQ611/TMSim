@@ -17,4 +17,10 @@
     <ProjectReference Include="..\TMSim.Core\TMSim.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="res\example_import.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
