@@ -75,8 +75,8 @@ namespace TMSim.WPF
         public bool IsSimulationRunning { get; set; } = true;
         public DiagramData diagramData { get; private set; }
 
-        TuringMaschine tm;
-        public TuringMaschine TM
+        TuringMachine tm;
+        public TuringMachine TM
         {
             get => tm;
             set
