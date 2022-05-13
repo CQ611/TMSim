@@ -8,5 +8,6 @@ namespace TMSim.WPF
 {
     class TableViewModel : ViewModel
     {
+
     }
 }
