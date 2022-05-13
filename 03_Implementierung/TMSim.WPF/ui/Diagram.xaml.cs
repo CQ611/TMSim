@@ -45,7 +45,7 @@ namespace TMSim.WPF
 
         private Node heldNode;
         
-        private static readonly Brush bgBrush = Brushes.Transparent;
+        private static readonly Brush bgBrush = Brushes.White;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
         private static readonly Brush accentBrush = Brushes.Black;
@@ -159,6 +159,7 @@ namespace TMSim.WPF
         public void GenerateTestDiagram(int nodeCount = 10, int connectionCount = 15)
         {
             var rand = new Random();
+            //DData = new DiagramData();
 
             Node randNode()
             {
