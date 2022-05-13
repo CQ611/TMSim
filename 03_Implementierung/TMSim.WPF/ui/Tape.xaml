@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:TMSim.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="800">
-    <Grid Background="Red">
-            
+    <Grid Background="Transparent">
+        <TextBlock Text="Band" FontSize="60" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </Grid>
 </UserControl>

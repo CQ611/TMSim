@@ -9,6 +9,90 @@
     <UserControl.DataContext>
         <local:TableViewModel/>
     </UserControl.DataContext>
-    <Grid Background="Aqua">
+    <Grid Background="Transparent">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="ButtonAddRow" Content="AddRow" Grid.Column="0" Click="ButtonAddRow_Click" Margin="10"/>
+            <Button x:Name="ButtonAddColumn" Content="AddColumn" Grid.Column="1" Click="ButtonAddColumn_Click" Margin="10"/>
+        </Grid>
+
+        <FlowDocumentReader Grid.Row="1">
+            <FlowDocument>
+                <Table x:Name="TuringTable">
+                    <Table.Columns>
+                        <TableColumn />
+                        <TableColumn />
+                        <TableColumn />
+                    </Table.Columns>
+                    <TableRowGroup>
+                    </TableRowGroup>
+                </Table>
+            </FlowDocument>
+        </FlowDocumentReader>
+
+        <!--<FlowDocumentReader Grid.Row="1">
+            <FlowDocument>
+
+                <Table x:Name="TuringTable" CellSpacing="5">
+
+                    <Table.Columns>
+                        <TableColumn/>
+                        <TableColumn/>
+                        <TableColumn/>
+                        <TableColumn/>
+                    </Table.Columns>
+
+                    <TableRowGroup>
+
+                        <TableRow Background="SkyBlue">
+                            <TableCell ColumnSpan="4" TextAlignment="Center">
+                                <Paragraph FontSize="24pt" FontWeight="Bold">Turingtable</Paragraph>
+                            </TableCell>
+                        </TableRow>
+
+                        <TableRow>
+                            <TableCell>
+                                <Paragraph>Mercury</Paragraph>
+                            </TableCell>
+                            <TableCell>
+                                <Paragraph>57,910,000 km</Paragraph>
+                            </TableCell>
+                            <TableCell>
+                                <Paragraph>4,880 km</Paragraph>
+                            </TableCell>
+                            <TableCell>
+                                <Paragraph>3.30e23 kg</Paragraph>
+                            </TableCell>
+                        </TableRow>
+
+                        -->
+        <!-- Footer row for the table. -->
+        <!--
+                        <TableRow>
+                            <TableCell ColumnSpan="4">
+                                <Paragraph FontSize="10pt" FontStyle="Italic">
+                                    Information from the
+                                    <Hyperlink NavigateUri="https://docs.microsoft.com/de-de/dotnet/desktop/wpf/advanced/how-to-define-a-table-with-xaml?view=netframeworkdesktop-4.8">Microsoft1</Hyperlink>
+                                    and
+                                    <Hyperlink NavigateUri=" https://docs.microsoft.com/de-de/dotnet/desktop/wpf/advanced/how-to-build-a-table-programmatically?view=netframeworkdesktop-4.8">Microsoft2</Hyperlink>
+                                    web site.
+                                </Paragraph>
+                            </TableCell>
+                        </TableRow>
+
+                    </TableRowGroup>
+                </Table>
+            </FlowDocument>
+        </FlowDocumentReader>-->
+
     </Grid>
 </UserControl>

@@ -45,10 +45,10 @@ namespace TMSim.WPF
 
         private Node heldNode;
         
-        private static readonly Brush bgBrush = Brushes.Black;
+        private static readonly Brush bgBrush = Brushes.Transparent;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
-        private static readonly Brush accentBrush = Brushes.Cyan;
+        private static readonly Brush accentBrush = Brushes.Black;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
         public Diagram()
         {
@@ -341,6 +341,21 @@ namespace TMSim.WPF
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             heldNode = null;
+        }
+
+        private void arrange_btn_Click(object sender, RoutedEventArgs e)
+        {
+            ArrangeDiagram();
+        }
+
+        private void randomize_btn_Click(object sender, RoutedEventArgs e)
+        {
+            GenerateTestDiagram(15, 20);
+        }
+
+        private void checkBox_Update(object sender, RoutedEventArgs e)
+        {
+            Animated = (bool)animate_chk.IsChecked;
         }
     }
 }
