@@ -7,6 +7,7 @@ using System.Resources;
 namespace TMSim.Core.Tests
 {
     [TestClass]
+    [DeploymentItem("res/example_import.xml","res")]
     public class TuringMachineTests
     {
         [TestMethod]
@@ -14,7 +15,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.TapeAlphabet.WordIsContainedIn("abcde_"));
         }
 
@@ -37,8 +38,7 @@ namespace TMSim.Core.Tests
 
             TuringMaschine turingMaschine = new TuringMaschine(bandAlphabet, blankChar, inputAlphabet, states, state, endStates, transitions, new List<TuringTape>());
 
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
-            //turingMaschine.ImportFromTextFile(@"..\TMSim.Core\Resources\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res/example_import.tmsim");
             Assert.IsTrue(turingMaschine.BlankChar == '_');
         }
 
@@ -47,7 +47,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.InputAlphabet.WordIsContainedIn("abcde"));
         }
 
@@ -57,7 +57,7 @@ namespace TMSim.Core.Tests
 
             TuringMaschine turingMaschine = new TuringMaschine();
 
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<TuringState> states = new List<TuringState>();
             states.Add(new TuringState("q0"));
@@ -77,7 +77,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.StartState.Identifier == "q0");
         }
 
@@ -86,7 +86,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
             Assert.IsTrue(turingMaschine.CurrentState.Identifier == turingMaschine.StartState.Identifier);
         }
 
@@ -95,7 +95,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<TuringState> testEndStates = new List<TuringState>();
             testEndStates.Add(new TuringState("q2"));
@@ -112,7 +112,7 @@ namespace TMSim.Core.Tests
         {
 
             TuringMaschine turingMaschine = new TuringMaschine();
-            turingMaschine.ImportFromTextFile(@"C:\Users\tobia\Desktop\Softwareprojekt\swp-team-a\02_Entwurf\Beispiel_import_export.tmsim");
+            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<char> symbolsRead = new List<char>();
             symbolsRead.Add('a');

@@ -1,0 +1,24 @@
+﻿{
+    "states": ["q0", "q1", "q2", "q3", "..."],
+    "inputAlphabet":"abcde",
+    "tapeAlphabet": "abcde_",
+    "transitions": [
+        {
+            "sourceState": "q0",
+            "targetState": "q1",
+            "symbolsRead": ["a", "b"],
+            "symbolsWrite": ["b", "a"],
+            "moveDirections": ["Right", "Left"]
+        },
+        {
+            "sourceState": "q1",
+            "targetState": "q0",
+            "symbolsRead": ["a", "b"],
+            "symbolsWrite": ["b", "a"],
+            "moveDirections": ["Right", "Left"]
+        }
+    ],
+    "startState": "q0",
+    "blank": "_",
+    "endStates": ["q2", "q3"]
+}
