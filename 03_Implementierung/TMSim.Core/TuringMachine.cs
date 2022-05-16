@@ -78,7 +78,7 @@ namespace TMSim.Core
             {
                 States.Add(new TuringState(state));
             }
-            
+
             foreach (TuringState state in States)
             {
                 if (state.Identifier == tm.StartState)
@@ -154,6 +154,27 @@ namespace TMSim.Core
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
             }
             throw new TransitionNotFound("Can not find transition");
+        }
+
+        public void AddState(string identifier, bool isStart = false, bool isAccepting = false)
+        {
+            TuringState ts = new TuringState(identifier);
+            States.Add(ts);
+            if (isStart) { StartState = ts; }
+            if (isAccepting) { EndStates.Add(ts); }
+        }
+
+        public void RemoveState(TuringState ts)
+        {
+            //TODO: remove State from States, EndStates, and StartState
+            // maybe reassign StartState
+        }
+
+        public void AddTransition(TuringTransition tt)
+        {
+            Transitions.Add(tt);
+            //TODO: add new transition to transisions to its references
+            // in its source and target states
         }
     }
 }

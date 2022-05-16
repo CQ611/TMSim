@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using TMSim.Core;
 
@@ -68,27 +69,23 @@ namespace TMSim.WPF
             LoadExample = new RelayCommand((o) => { OnLoadExample(); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
 
-            diagramData = new DiagramData();
+            TM = new TuringMachine();
+
+            TMModifier = new TuringMachineModifier(this, ref TM);
+            DData = new DiagramData();
         }
 
         public bool HighlightCurrentState { get; set; } = true;
         public bool IsSimulationRunning { get; set; } = true;
-        public DiagramData diagramData { get; private set; }
+        public TuringMachineModifier TMModifier { get; }
+        public DiagramData DData { get; private set; }
 
-        TuringMachine tm;
-        public TuringMachine TM
+        private TuringMachine TM;
+
+        public void OnTMChanged()
         {
-            get => tm;
-            set
-            {
-                if (tm != value)
-                {
-                    // set when accept button is pressed
-                    OnPropertyChanged();
-                    UpdateDiagramData();
-                    tm = value;
-                }
-            }
+            UpdateDiagramData();
+            //UpdateTabledata();
         }
 
         private bool startIsActive = false;
@@ -197,7 +194,33 @@ namespace TMSim.WPF
         private void UpdateDiagramData()
         {
             //convert TM data to displayable data here
-            OnPropertyChanged(nameof(diagramData));
+            //maybe move this to own diagrammconverter class
+            var rand = new Random();
+
+            DData.Nodes.Clear();
+            DData.Connections.Clear();
+            foreach(TuringState ts in TM.States)
+            {
+                Node n = new Node(ts, new Point(
+                    rand.Next((int)DData.NodeSize / 2,
+                        (int)(DData.Width - DData.NodeSize / 2)),
+                    rand.Next((int)DData.NodeSize / 2,
+                        (int)(DData.Height - DData.NodeSize / 2))),
+                    TM.StartState == ts);
+                DData.Nodes.Add(n.Identifier, n);
+            }
+
+            foreach(TuringTransition tt in TM.Transitions)
+            {
+                NodeConnection nc = new NodeConnection(
+                    tt,
+                    DData.Nodes[tt.Source.Identifier],
+                    DData.Nodes[tt.Target.Identifier]
+                    );
+                DData.Connections.Add(nc);
+            }
+
+            OnPropertyChanged(nameof(DData));
         }
 
         public void OnExitApplication()

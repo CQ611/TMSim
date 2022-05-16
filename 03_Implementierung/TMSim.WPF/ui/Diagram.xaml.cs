@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMSim.Core;
 
 using System.Globalization;
 using System.ComponentModel;
@@ -21,30 +22,38 @@ namespace TMSim.WPF
     public partial class Diagram : UserControl
     {
         #region Dependency properties
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Diagram)d).InvalidateVisual();
+        }
+
         public static readonly DependencyProperty DDataProperty = DependencyProperty.Register(
             "DData", typeof(DiagramData), typeof(Diagram),
             new PropertyMetadata(null, OnDependencyPropertyChanged));
 
-        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+
+        public static readonly DependencyProperty TMModifierProperty = DependencyProperty.Register(
+         "TMModifier", typeof(TuringMachineModifier), typeof(Diagram),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+        public DiagramData DData
         {
-            ((Diagram)d).InvalidateVisual();
+            get { return (DiagramData)GetValue(DDataProperty); }
+            set { SetValue(DDataProperty, value); }
+        }
+
+        public TuringMachineModifier TMModifier
+        {
+            get { return (TuringMachineModifier)GetValue(TMModifierProperty); }
+            set { SetValue(TMModifierProperty, value); }
         }
         #endregion
 
         public bool Animated { get; set; }
 
-        public DiagramData DData
-        {
-            get { return (DiagramData)GetValue(DDataProperty); }
-            set
-            {
-                SetValue(DDataProperty, value);
-                InvalidateVisual();
-            }
-        }
-
         private Node heldNode;
-        
+        private Node rightClickedNode;
+
         private static readonly Brush bgBrush = Brushes.White;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
@@ -61,6 +70,17 @@ namespace TMSim.WPF
             DData.Width = ActualWidth;
             DData.Height = ActualHeight;
         }
+
+        public void GenerateTestDiagram()
+        {
+            var rand = new Random();
+            //DData = new DiagramData();
+            TMModifier.AddState();
+
+
+            InvalidateVisual();
+        }
+
 
         protected override async void OnRender(DrawingContext dc)
         {
@@ -154,35 +174,6 @@ namespace TMSim.WPF
         private Vector PerpendicularVector(Vector v)
         {
             return new Vector(-v.Y, v.X);
-        }
-
-        public void GenerateTestDiagram(int nodeCount = 10, int connectionCount = 15)
-        {
-            var rand = new Random();
-            //DData = new DiagramData();
-
-            Node randNode()
-            {
-                return DData.Nodes[$"q{rand.Next(0, nodeCount - 1)}"];
-            }
-
-
-            for (int i = 0; i < nodeCount; i++)
-            {
-                Node n = new Node($"q{i}", new Point(
-                    rand.Next((int)DData.NodeSize / 2,
-                        (int)(DData.Width - DData.NodeSize / 2)),
-                    rand.Next((int)DData.NodeSize / 2,
-                        (int)(DData.Height - DData.NodeSize / 2))),
-                    start: i == 0);
-                DData.Nodes.Add(n.Identifier, n);
-            }
-            for (int i = 0; i < connectionCount; i++)
-            {
-                DData.Connections.Add(new NodeConnection("t", randNode(), randNode()));
-            }
-
-            InvalidateVisual();
         }
 
         public async void ArrangeDiagram(int maxIterations = 5000, double stopForce = 0.2)
@@ -339,24 +330,63 @@ namespace TMSim.WPF
             heldNode = null;
         }
 
+        private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Vector pos = (Vector)e.GetPosition((IInputElement)sender);
+            //MessageBox.Show($"clicked at: {pos}");
+            foreach (Node n in DData.Nodes.Values)
+            {
+                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
+                {
+                    rightClickedNode = n;
+                    //MessageBox.Show($"picked up node {n.Identifier}");
+                }
+            }
+
+            InvalidateVisual();
+        }
+
+        private void UserControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Node nodeReleasedOver = null;
+            Vector pos = (Vector)e.GetPosition((IInputElement)sender);
+            //MessageBox.Show($"clicked at: {pos}");
+            foreach (Node n in DData.Nodes.Values)
+            {
+                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
+                {
+                    nodeReleasedOver = n;
+                    //MessageBox.Show($"picked up node {n.Identifier}");
+                }
+            }
+            if (nodeReleasedOver == rightClickedNode)
+            {
+                //Open context menu
+                // with the option of creating a connection (also) to it self
+            }
+            else if (nodeReleasedOver != null)
+            {
+                //create Connection
+                TMModifier.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
+                InvalidateVisual();
+            }
+        }
+
         private void UserControl_MouseLeave(object sender, MouseEventArgs e)
         {
             heldNode = null;
         }
 
+        private void add_state_btn_Click(object sender, RoutedEventArgs e)
+        {
+            TMModifier.AddState();
+            InvalidateVisual();
+        }
+
         private void arrange_btn_Click(object sender, RoutedEventArgs e)
         {
             ArrangeDiagram();
-        }
-
-        private void randomize_btn_Click(object sender, RoutedEventArgs e)
-        {
-            GenerateTestDiagram(15, 20);
-        }
-
-        private void checkBox_Update(object sender, RoutedEventArgs e)
-        {
-            Animated = (bool)animate_chk.IsChecked;
+            InvalidateVisual();
         }
     }
 }
