@@ -21,5 +21,14 @@ namespace TMSim.Core.Tests
             bool isContained = a.WordIsContainedIn("ABD");
             Assert.IsFalse(isContained);
         }
+
+
+        [TestMethod]
+        public void WordIsContainedIn_AlphaABCInputBCA_ReturnsTrue()
+        {
+            Alphabet a = new Alphabet("ABC");
+            bool isContained = a.WordIsContainedIn("BCA");
+            Assert.IsTrue(isContained);
+        }
     }
 }
