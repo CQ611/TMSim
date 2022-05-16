@@ -23,20 +23,24 @@
                     <DockPanel HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
-            <MenuItem Header="_File">
-                <MenuItem Header="_New" Command="{Binding ClearTuringMaschine}"/>
-                <MenuItem Header="_Open" Command="{Binding ImportFromTextFile}"/>
-                <MenuItem Header="_Save" Command="{Binding ExportToTextFile}"/>
+            <MenuItem Header="{Binding FileText}">
+                <MenuItem Header="{Binding NewText}" Command="{Binding ClearTuringMachine}"/>
+                <MenuItem Header="{Binding OpenText}" Command="{Binding ImportFromTextFile}"/>
+                <MenuItem Header="{Binding SaveText}" Command="{Binding ExportToTextFile}"/>
                 <Separator />
-                <MenuItem Header="E_xamples" Command="{Binding LoadExample}"/>
+                <MenuItem Header="{Binding ExamplesText}" Command="{Binding LoadExample}"/>
                 <Separator />
-                <MenuItem Header="_Exit" Command="{Binding ExitApplication}"/>
+                <MenuItem Header="{Binding ExitText}" Command="{Binding ExitApplication}"/>
             </MenuItem>
             <MenuItem Header="_Preferences">
                 <MenuItem Header="_Highlight State"/>
-                <MenuItem Header="_Language"/>
+                <Separator/>
+                <MenuItem Header="Language">
+                    <MenuItem Header="Deutsch" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
+                    <MenuItem Header="Englisch" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
+                </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Transform" Command="{Binding TransformTuringMaschine}">
+            <MenuItem Header="_Transform" Command="{Binding TransformturingMachine}">
                 <!--
                 <MenuItem Header="_Left-Right only"/>
                 <MenuItem Header="_No self references"/>

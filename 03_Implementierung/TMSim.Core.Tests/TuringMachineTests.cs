@@ -15,9 +15,9 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_TapeAlphabetIs_abcde_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
-            Assert.IsTrue(turingMaschine.TapeAlphabet.WordIsContainedIn("abcde_"));
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
+            Assert.IsTrue(turingMachine.TapeAlphabet.WordIsContainedIn("abcde_"));
         }
 
         [TestMethod]
@@ -37,28 +37,28 @@ namespace TMSim.Core.Tests
             List<TuringTransition> transitions = new List<TuringTransition>();
             transitions.Add(transition);
 
-            TuringMachine turingMaschine = new TuringMachine(bandAlphabet, blankChar, inputAlphabet, states, state, endStates, transitions, new List<TuringTape>());
+            TuringMachine turingMachine = new TuringMachine(bandAlphabet, blankChar, inputAlphabet, states, state, endStates, transitions, new List<TuringTape>());
 
-            turingMaschine.ImportFromTextFile(@"res/example_import.tmsim");
-            Assert.IsTrue(turingMaschine.BlankChar == '_');
+            turingMachine.ImportFromTextFile(@"res/example_import.tmsim");
+            Assert.IsTrue(turingMachine.BlankChar == '_');
         }
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_InputAlphabetIs_abcde_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
-            Assert.IsTrue(turingMaschine.InputAlphabet.WordIsContainedIn("abcde"));
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
+            Assert.IsTrue(turingMachine.InputAlphabet.WordIsContainedIn("abcde"));
         }
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_CheckStates_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
+            TuringMachine turingMachine = new TuringMachine();
 
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<TuringState> states = new List<TuringState>();
             states.Add(new TuringState("q0"));
@@ -69,7 +69,7 @@ namespace TMSim.Core.Tests
 
             for (int i = 0; i < states.Count; i++)
             {
-                Assert.IsTrue(states[i].Identifier == turingMaschine.States[i].Identifier);
+                Assert.IsTrue(states[i].Identifier == turingMachine.States[i].Identifier);
             }
         }
 
@@ -77,26 +77,26 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_StartStateIdentifierIs_q0_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
-            Assert.IsTrue(turingMaschine.StartState.Identifier == "q0");
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
+            Assert.IsTrue(turingMachine.StartState.Identifier == "q0");
         }
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_CurrentStateIsStartState_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
-            Assert.IsTrue(turingMaschine.CurrentState.Identifier == turingMaschine.StartState.Identifier);
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
+            Assert.IsTrue(turingMachine.CurrentState.Identifier == turingMachine.StartState.Identifier);
         }
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_EndStatesIsCorrect_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<TuringState> testEndStates = new List<TuringState>();
             testEndStates.Add(new TuringState("q2"));
@@ -104,7 +104,7 @@ namespace TMSim.Core.Tests
 
             for (int i = 0; i < testEndStates.Count; i++)
             {
-                Assert.IsTrue(testEndStates[i].Identifier == turingMaschine.EndStates[i].Identifier);
+                Assert.IsTrue(testEndStates[i].Identifier == turingMachine.EndStates[i].Identifier);
             }
         }
 
@@ -112,8 +112,8 @@ namespace TMSim.Core.Tests
         public void ImportFromTextFile_ReadExampleFile_CheckTuringTransition_ReturnsTrue()
         {
 
-            TuringMachine turingMaschine = new TuringMachine();
-            turingMaschine.ImportFromTextFile(@"res\example_import.tmsim");
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
 
             List<char> symbolsRead = new List<char>();
             symbolsRead.Add('a');
@@ -129,17 +129,17 @@ namespace TMSim.Core.Tests
 
             TuringTransition turingTransition = new TuringTransition(new TuringState("q0"), new TuringState("q1"), symbolsRead, symbolsWrite, directions);
 
-            Assert.IsTrue(turingMaschine.Transitions[0].Source.Identifier == turingTransition.Source.Identifier);
-            Assert.IsTrue(turingMaschine.Transitions[0].Target.Identifier == turingTransition.Target.Identifier);
+            Assert.IsTrue(turingMachine.Transitions[0].Source.Identifier == turingTransition.Source.Identifier);
+            Assert.IsTrue(turingMachine.Transitions[0].Target.Identifier == turingTransition.Target.Identifier);
 
             for (int i = 0; i < symbolsRead.Count; i++)
-                Assert.IsTrue(turingMaschine.Transitions[0].SymbolsRead[i] == turingTransition.SymbolsRead[i]);
+                Assert.IsTrue(turingMachine.Transitions[0].SymbolsRead[i] == turingTransition.SymbolsRead[i]);
 
             for (int i = 0; i < symbolsWrite.Count; i++)
-                Assert.IsTrue(turingMaschine.Transitions[0].SymbolsWrite[i] == turingTransition.SymbolsWrite[i]);
+                Assert.IsTrue(turingMachine.Transitions[0].SymbolsWrite[i] == turingTransition.SymbolsWrite[i]);
 
             for (int i = 0; i < directions.Count; i++)
-                Assert.IsTrue(turingMaschine.Transitions[0].MoveDirections[i] == turingTransition.MoveDirections[i]);
+                Assert.IsTrue(turingMachine.Transitions[0].MoveDirections[i] == turingTransition.MoveDirections[i]);
         }
 
         [TestMethod]
