@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static TMSim.Core.ImportExportStructure;
 
 namespace TMSim.Core
 {
@@ -51,7 +52,11 @@ namespace TMSim.Core
             StartState = startState;
             CurrentState = startState;
             EndStates = endStates;
-            Transitions = transitions;
+            Transitions = new List<TuringTransition>();
+            foreach (TuringTransition transition in transitions) 
+            {
+                AddTransition(transition);
+            }
             Tapes = tapes;
         }
 
@@ -74,9 +79,9 @@ namespace TMSim.Core
             EndStates.Clear();
             Transitions.Clear();
 
-            foreach (string state in tm.States)
+            foreach (State state in tm.States)
             {
-                States.Add(new TuringState(state));
+                States.Add(new TuringState(state.Identifier, state.Comment));
             }
 
             foreach (TuringState state in States)
@@ -149,16 +154,16 @@ namespace TMSim.Core
 
         private TuringTransition GetTransition()
         {
-            foreach (TuringTransition transition in Transitions)
+            foreach (TuringTransition transition in CurrentState.AssignedTransitions)
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
             }
             throw new TransitionNotFound("Can not find transition");
         }
 
-        public void AddState(string identifier, bool isStart = false, bool isAccepting = false)
+        public void AddState(string identifier, bool isStart = false, bool isAccepting = false, string comment = "")
         {
-            TuringState ts = new TuringState(identifier);
+            TuringState ts = new TuringState(identifier, comment);
             States.Add(ts);
             if (isStart) { StartState = ts; }
             if (isAccepting) { EndStates.Add(ts); }
