@@ -88,6 +88,20 @@ namespace TMSim.WPF
                 OnPropertyChanged("EnglishLanguageIsChecked");
             }
         }
+
+        private string _tapeWordInput;
+        public string TapeWordInput 
+        { 
+            get
+            {
+                return _tapeWordInput;
+            }
+            set
+            {
+                _tapeWordInput = value;
+                OnPropertyChanged("TapeWordInput");
+            }
+        }
         #endregion
 
         #region BindedTextPropertys
@@ -258,7 +272,7 @@ namespace TMSim.WPF
 
         public void OnWriteTapeWord()
         {
-            throw new NotImplementedException("Hi");
+            TM.WriteTapeWord(TapeWordInput);
         }
 
         public void OnSetSimulationTimerInterval()

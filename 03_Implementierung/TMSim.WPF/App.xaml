@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="Styles/StartButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/StepButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/StopButtonStyle.xaml"/>
+                <ResourceDictionary Source="Styles/ReadWriteHeadStyle.xaml"/>
+                <ResourceDictionary Source="Styles/TapeGridStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
