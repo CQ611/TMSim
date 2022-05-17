@@ -79,7 +79,7 @@ namespace TMSim.Core
 
         public void TansformTuringMachine()
         {
-
+            
         }
 
         public void ImportFromTextFile(string filePath)

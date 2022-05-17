@@ -45,6 +45,15 @@
                 <MenuItem Header="_Left-Right only"/>
                 <MenuItem Header="_No self references"/>
                 -->
+                <MenuItem Header="{Binding Transformation1Text}"   Command="{Binding Transformation1}"/>
+                <Separator/>
+                <MenuItem Header="{Binding Transformation2Text}" Command="{Binding Transformation2}" />
+                <Separator/>
+                <MenuItem Header="{Binding Transformation3Text}" Command="{Binding Transformation3}" />
+                <Separator/>
+                <MenuItem Header="{Binding Transformation4Text}" Command="{Binding Transformation4}" />
+                <Separator/>
+                <MenuItem Header="{Binding Transformation5Text}" Command="{Binding Transformation5}" />
             </MenuItem>
             <MenuItem Header="?" HorizontalAlignment="Right"/>
         </Menu>
@@ -55,11 +64,7 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="play_cmd" Margin="3" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>

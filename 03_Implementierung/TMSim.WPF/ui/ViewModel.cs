@@ -23,6 +23,11 @@ namespace TMSim.WPF
         public RelayCommand WriteTapeWord { get; set; }
         public RelayCommand SetSimulationTimerInterval { get; set; }
         public RelayCommand TransformTuringMachine { get; set; }
+        public RelayCommand Transformation1 { get; set; }
+        public RelayCommand Transformation2 { get; set; }
+        public RelayCommand Transformation3 { get; set; }
+        public RelayCommand Transformation4 { get; set; }
+        public RelayCommand Transformation5 { get; set; }
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
         public RelayCommand ClearTuringMachine { get; set; }
@@ -161,6 +166,76 @@ namespace TMSim.WPF
             }
         }
 
+        private string _transformation1Text;
+        public string Transformation1Text
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Transformation1");
+            }
+            set
+            {
+                _transformation1Text = value;
+                OnPropertyChanged("Transformation1Text");
+            }
+        }
+
+        private string _transformation2Text;
+        public string Transformation2Text
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Transformation2");
+            }
+            set
+            {
+                _transformation2Text = value;
+                OnPropertyChanged("Transformation2Text");
+            }
+        }
+
+        private string _transformation3Text;
+        public string Transformation3Text
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Transformation3");
+            }
+            set
+            {
+                _transformation3Text = value;
+                OnPropertyChanged("Transformation3Text");
+            }
+        }
+
+        private string _transformation4Text;
+        public string Transformation4Text
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Transformation4");
+            }
+            set
+            {
+                _transformation4Text = value;
+                OnPropertyChanged("Transformation4Text");
+            }
+        }
+
+        private string _transformation5Text;
+        public string Transformation5Text
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Transformation5");
+            }
+            set
+            {
+                _transformation5Text = value;
+                OnPropertyChanged("Transformation5Text");
+            }
+        }
+
         private string _examplesText;
         public string ExamplesText
         {
@@ -188,6 +263,8 @@ namespace TMSim.WPF
                 OnPropertyChanged("ExitText");
             }
         }
+
+  
         #endregion
 
         private ResourceManager resourceManager;
@@ -200,6 +277,11 @@ namespace TMSim.WPF
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
             SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
             TransformTuringMachine = new RelayCommand((o) => { OnTansformTuringMachine(); });
+            Transformation1 = new RelayCommand((o) => { OnTransformation1(); });
+            Transformation2 = new RelayCommand((o) => { OnTransformation2(); });
+            Transformation3 = new RelayCommand((o) => { OnTransformation3(); });
+            Transformation4 = new RelayCommand((o) => { OnTransformation4(); });
+            Transformation5 = new RelayCommand((o) => { OnTransformation5(); });
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
             ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
@@ -282,7 +364,32 @@ namespace TMSim.WPF
 
         public void OnTansformTuringMachine()
         {
-            TM.TansformTuringMachine();
+            //TM.TansformTuringMachine();
+            throw new NotImplementedException("OnTransformTuringMachine >> ViewModel");
+        }
+
+        public void OnTransformation1()
+        {
+            throw new NotImplementedException("OnTransformation1 >> ViewModel");
+        }
+
+        public void OnTransformation2()
+        {
+            throw new NotImplementedException("OnTransformation2 >> ViewModel");
+        }
+
+        public void OnTransformation3()
+        {
+            throw new NotImplementedException("OnTransformation3 >> ViewModel");
+        }
+
+        public void OnTransformation4()
+        {
+            throw new NotImplementedException("OnTransformation4 >> ViewModel");
+        }
+        public void OnTransformation5()
+        {
+            throw new NotImplementedException("OnTransformation5 >> ViewModel");
         }
 
         public void OnImportFromTextFile()
@@ -403,6 +510,11 @@ namespace TMSim.WPF
             NewText = resourceManager.GetString("TEXT_New");
             ExamplesText = resourceManager.GetString("TEXT_Examples");
             ExitText = resourceManager.GetString("TEXT_Exit");
+            Transformation1Text = resourceManager.GetString("TEXT_Transformation1");
+            Transformation2Text = resourceManager.GetString("TEXT_Transformation2");
+            Transformation3Text = resourceManager.GetString("TEXT_Transformation3");
+            Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
+            Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
         }
     }
 }
