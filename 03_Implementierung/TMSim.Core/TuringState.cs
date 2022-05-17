@@ -10,18 +10,25 @@ namespace TMSim.Core
     {
         public string Identifier { get; set; }
         public string Comment { get; set; }
-        public List<TuringTransition> AssignedTransitions { get; private set; }
+        public List<TuringTransition> IncomingTransitions { get; private set; }
+        public List<TuringTransition> OutgoingTransitions { get; private set; }
 
         public TuringState(string identifier, string comment="")
         {
             this.Identifier = identifier;
             this.Comment = comment;
-            AssignedTransitions = new List<TuringTransition>();
+            IncomingTransitions = new List<TuringTransition>();
+            OutgoingTransitions = new List<TuringTransition>();
         }
 
-        public void AssignTransition(TuringTransition tt)
+
+        public void AssignIncomingTransition(TuringTransition tt)
         {
-            AssignedTransitions.Add(tt);
+            IncomingTransitions.Add(tt);
+        }
+        public void AssignOutgoingTransition(TuringTransition tt)
+        {
+            OutgoingTransitions.Add(tt);
         }
     }
 }
