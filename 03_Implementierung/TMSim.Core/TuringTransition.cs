@@ -22,18 +22,22 @@ namespace TMSim.Core
         public TuringState Target { get; }
         public List<char> SymbolsRead { get; }
         public List<char> SymbolsWrite { get; }
+
+        public string Comment { get; set; }
         
         public List<Direction> MoveDirections { get; }
 
         public TuringTransition(TuringState source, TuringState target,
-            List<char> symbolsRead, List<char> symbolsWrite, List<Direction> dirs)
+            List<char> symbolsRead, List<char> symbolsWrite, List<Direction> dirs, string comment="")
         {
             Source = source;
             Target = target;
             SymbolsRead = symbolsRead;
             SymbolsWrite = symbolsWrite;
             MoveDirections = dirs;
+            Comment = comment;
         }
+
 
         public bool CheckIfTransitionShouldBeActive(List<TuringTape> Tapes, TuringState CurrentState)
         {
@@ -54,6 +58,5 @@ namespace TMSim.Core
             }
             return false;
         }
-
     }
 }

@@ -8,7 +8,12 @@ namespace TMSim.Core
 {
     class ImportExportStructure
     {
-        public List<string> States { get; set; }
+        public List<State> States { get; set; }
+        public class State 
+        {
+            public string Identifier { get; set; }
+            public string Comment { get; set; }
+        }
         public string InputAlphabet { get; set; }
         public string TapeAlphabet { get; set; }
         public List<Transition> Transitions { get; set; }
@@ -24,15 +29,21 @@ namespace TMSim.Core
             public List<char> SymbolsWrite { get; set; }
             [JsonProperty(ItemConverterType =typeof(StringEnumConverter))]
             public List<TuringTransition.Direction> MoveDirections { get; set; }
+            public string Comment { get; set; }
         }
 
         public ImportExportStructure() { }
 
         public ImportExportStructure(TuringMachine turingMachine) {
-            States = new List<string>();
+            States = new List<State>();
             Transitions = new List<Transition>();
             EndStates = new List<string>();
-            foreach (TuringState state in turingMachine.States) States.Add(state.Identifier);
+            foreach (TuringState state in turingMachine.States) {
+                State internalState = new State();
+                internalState.Identifier = state.Identifier;
+                internalState.Comment = state.Comment;
+                States.Add(internalState);
+            }
             InputAlphabet = turingMachine.InputAlphabet.ToString();
             TapeAlphabet = turingMachine.TapeAlphabet.ToString();
             foreach (TuringTransition turingTransition in turingMachine.Transitions) {
@@ -42,11 +53,15 @@ namespace TMSim.Core
                 transition.SymbolsRead = turingTransition.SymbolsRead;
                 transition.SymbolsWrite = turingTransition.SymbolsWrite;
                 transition.MoveDirections = turingTransition.MoveDirections;
+                transition.Comment = turingTransition.Comment;
                 Transitions.Add(transition);
             }
             StartState = turingMachine.StartState.Identifier;
             Blank = turingMachine.BlankChar;
-            foreach (TuringState endState in turingMachine.EndStates) EndStates.Add(endState.Identifier);
+            foreach (TuringState endState in turingMachine.EndStates) 
+            {
+                EndStates.Add(endState.Identifier);
+            }
         }
     }
 }
