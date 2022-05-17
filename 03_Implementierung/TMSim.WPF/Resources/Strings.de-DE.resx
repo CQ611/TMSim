@@ -135,4 +135,19 @@
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="TEXT_Transformation1" xml:space="preserve">
+    <value>Transformation #1</value>
+  </data>
+  <data name="TEXT_Transformation2" xml:space="preserve">
+    <value>Transformation #2</value>
+  </data>
+  <data name="TEXT_Transformation3" xml:space="preserve">
+    <value>Transformation #3</value>
+  </data>
+  <data name="TEXT_Transformation4" xml:space="preserve">
+    <value>Transformation #4</value>
+  </data>
+  <data name="TEXT_Transformation5" xml:space="preserve">
+    <value>Transformation #5</value>
+  </data>
 </root>
