@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,14 @@ namespace TMSim.Core
 {
     public class TuringTransition
     {
-        public enum Direction {Right, Left, Neutral}
+        public enum Direction {
+            [EnumMember(Value = "Right")]
+            Right,
+            [EnumMember(Value = "Left")]
+            Left,
+            [EnumMember(Value = "Neutral")]
+            Neutral
+        }
 
         public TuringState Source { get; }
         public TuringState Target { get; }
@@ -20,12 +28,14 @@ namespace TMSim.Core
         public TuringTransition(TuringState source, TuringState target,
             List<char> symbolsRead, List<char> symbolsWrite, List<Direction> dirs)
         {
-            this.Source = source;
-            this.Target = target;
-            this.SymbolsRead = symbolsRead;
-            this.SymbolsWrite = symbolsWrite;
-            this.MoveDirections = dirs;
+            Source = source;
+            Target = target;
+            SymbolsRead = symbolsRead;
+            SymbolsWrite = symbolsWrite;
+            MoveDirections = dirs;
         }
+
+
         public bool CheckIfTransitionShouldBeActive(List<TuringTape> Tapes, TuringState CurrentState)
         {
             if (Source == CurrentState)
@@ -33,7 +43,10 @@ namespace TMSim.Core
                 bool flag = true;
                 for (int i = 0; i < SymbolsRead.Count() && flag; i++)
                 {
-                    if (SymbolsRead[i] != Tapes[i].GetCurrentSymbol()) flag = false;
+                    if (SymbolsRead[i] != Tapes[i].GetCurrentSymbol())
+                    {
+                        flag = false;
+                    }
                 }
                 if (flag)
                 {

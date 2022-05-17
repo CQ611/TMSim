@@ -11,8 +11,8 @@ namespace TMSim.Core.Tests
         [TestMethod]
         public void CheckIfTransitionShouldBeActive_ShouldReturnTrue()
         {
-            TuringState source = new TuringState();
-            TuringState target = new TuringState();
+            TuringState source = new TuringState("");
+            TuringState target = new TuringState("");
             TuringTape tape = new TuringTape("ka", '_');
             TuringTransition transition = new TuringTransition(source, target, new List<char>() {'k'}, new List<char>() {'k'}, new List<TuringTransition.Direction>() { TuringTransition.Direction.Left });
 
@@ -21,8 +21,8 @@ namespace TMSim.Core.Tests
         [TestMethod]
         public void CheckIfTransitionShouldBeActive_ShouldReturnFalse()
         {
-            TuringState source = new TuringState();
-            TuringState target = new TuringState();
+            TuringState source = new TuringState("");
+            TuringState target = new TuringState("");
             TuringTape tape = new TuringTape("ka", '_');
             TuringTransition transition = new TuringTransition(source, target, new List<char>() { 'k' }, new List<char>() { 'k' }, new List<TuringTransition.Direction>() { TuringTransition.Direction.Left });
 

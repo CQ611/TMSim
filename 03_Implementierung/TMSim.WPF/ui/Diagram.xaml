@@ -6,12 +6,20 @@
              xmlns:local="clr-namespace:TMSim.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="700"
-             MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp" MouseLeave="UserControl_MouseLeave"
+             MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
+             MouseRightButtonDown="UserControl_MouseRightButtonDown" MouseRightButtonUp="UserControl_MouseRightButtonUp"
+             MouseLeave="UserControl_MouseLeave"
              >
-    <UserControl.DataContext>
-        <local:DiagramViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Canvas/>
     </Grid>
+    <UserControl.ContextMenu>
+        <ContextMenu x:Name="ContextMenu">
+            <MenuItem Header="Add state" Click="add_state_btn_Click"/>
+            <MenuItem Header="Remove state" Click="remove_state_btn_Click"/>
+            <MenuItem Header="Edit state"/>
+            <Separator/>
+            <MenuItem Header="Arrange" Click="arrange_btn_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 </UserControl>

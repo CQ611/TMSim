@@ -6,7 +6,43 @@
              xmlns:local="clr-namespace:TMSim.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="800">
-    <Grid Background="Red">
-            
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Grid.Column="5">
+            <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
+                <Canvas Name="svg19" Width="576" Height="512">
+                    <Canvas.RenderTransform>
+                        <TranslateTransform X="0" Y="0"/>
+                    </Canvas.RenderTransform>
+                    <Canvas.Resources/>
+                    <!--Unknown tag: sodipodi:namedview-->
+                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path17" Fill="#000000">
+                        <Path.Data>
+                            <PathGeometry Figures="m 418.24759 1.2642669 c 35.3 0 64 28.7000001 64 64.0000001 V 371.96427 c 0 17 -6.7 33.3 -18.7 45.3 l -150.7 150.628 c -6 6.001 -14.1 9.372 -22.6 9.372 -8.5 0 -16.6 -3.372 -22.6 -9.372 l -150.65 -150.628 c -12.01 -12 -18.750004 -28.3 -18.750004 -45.3 V 65.264267 c 0 -35.3 28.650004 -64.0000001 64.000004 -64.0000001 z m -175.9 305.0000031 47.9 -47.1 47 47.1 c 9.4 9.3 24.6 9.3 33.1 0 10.2 -9.4 10.2 -24.6 0 -33.1 l -46.2 -47.9 46.2 -47 c 10.2 -9.4 10.2 -24.6 0 -33.1 -8.5 -10.2 -23.7 -10.2 -33.1 0 l -47 46.2 -47.9 -46.2 c -8.5 -10.2 -23.7 -10.2 -33.1 0 -9.3 8.5 -9.3 23.7 0 33.1 l 47.1 47 -47.1 47.9 c -9.3 8.5 -9.3 23.7 0 33.1 9.4 9.3 24.6 9.3 33.1 0 z" FillRule="NonZero"/>
+                        </Path.Data>
+                    </Path>
+                </Canvas>
+            </Viewbox>
+        </Border>
+        
+        <TextBox Text="" FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center" />
+        <TextBlock Text="B   a   a   n   d   a    s    d    f    g    d     e" FontSize="60" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
     </Grid>
 </UserControl>

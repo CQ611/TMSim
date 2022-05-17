@@ -2,13 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Resources;
+using System.Threading;
 using System.Windows;
+using System.Windows.Markup;
 using TMSim.Core;
 
 namespace TMSim.WPF
 {
-    class ViewModel : ObservableObject
+    public class ViewModel : ObservableObject
     {
         #region RelayCommands
         public RelayCommand StartPauseSimulation { get; set; }
@@ -16,56 +22,161 @@ namespace TMSim.WPF
         public RelayCommand StopSimulation { get; set; }
         public RelayCommand WriteTapeWord { get; set; }
         public RelayCommand SetSimulationTimerInterval { get; set; }
-        public RelayCommand TransformTuringMaschine { get; set; }
+        public RelayCommand TransformTuringMachine { get; set; }
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
-        public RelayCommand ClearTuringMaschine { get; set; }
+        public RelayCommand ClearTuringMachine { get; set; }
         public RelayCommand LoadExample { get; set; }
         public RelayCommand ExitApplication { get; set; }
+        public RelayCommand GermanLanguageSelected { get; set; }
+        public RelayCommand EnglishLanguageSelected { get; set; }
         #endregion
 
         #region BindingProperties
-        //Unicode characters: https://en.wikipedia.org/wiki/List_of_Unicode_characters
-
-        private string _switchLeftContent = char.ConvertFromUtf32(0x226A);
-        public string SwitchLeftContent
+        private Visibility _startVisibility = Visibility.Visible;
+        public Visibility StartVisibility
         {
-            get { return _switchLeftContent; }
-        }
-
-        private string _switchRightContent = char.ConvertFromUtf32(0x226B);
-        public string SwitchRightContent
-        {
-            get { return _switchRightContent; }
-        }
-
-        private string startContent = char.ConvertFromUtf32(0x23F5);
-        private string pauseContent = char.ConvertFromUtf32(0x23F8);
-        private string _startPauseButtonContent = char.ConvertFromUtf32(0x23F5); 
-        public string StartPauseButtonContent
-        {
-            get { return _startPauseButtonContent; }
+            get
+            {
+                return _startVisibility;
+            }
             set
             {
-                _startPauseButtonContent = value;
-                OnPropertyChanged("StartPauseButtonContent");
+                _startVisibility = value;
+                OnPropertyChanged("StartVisibility");
             }
         }
 
-        private string _stopButtonContent = char.ConvertFromUtf32(0x23F9);
-        public string StopButtonContent
+        private Visibility _stopVisibility = Visibility.Hidden;
+        public Visibility StopVisibility
         {
-            get { return _stopButtonContent; }
+            get
+            {
+                return _stopVisibility;
+            }
+            set
+            {
+                _stopVisibility = value;
+                OnPropertyChanged("StopVisibility");
+            }
         }
 
-        private string _stepButtonContent = char.ConvertFromUtf32(0x23EF);
-        public string StepButtonContent
+        private bool _germanLanguageIsChecked;
+        public bool GermanLanguageIsChecked
         {
-            get { return _stepButtonContent; }
+            get
+            {
+                return _germanLanguageIsChecked;
+            }
+            set
+            {
+                _germanLanguageIsChecked = value;
+                OnPropertyChanged("GermanLanguageIsChecked");
+            }
         }
 
-
+        private bool _englishLanguageIsChecked;
+        public bool EnglishLanguageIsChecked
+        {
+            get
+            {
+                return _englishLanguageIsChecked;
+            }
+            set
+            {
+                _englishLanguageIsChecked = value;
+                OnPropertyChanged("EnglishLanguageIsChecked");
+            }
+        }
         #endregion
+
+        #region BindedTextPropertys
+        private string _fileText;
+        public string FileText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_File");
+            }
+            set
+            {
+                _fileText = value;
+                OnPropertyChanged("FileText");
+            }
+        }
+
+        private string _openText;
+        public string OpenText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Open");
+            }
+            set
+            {
+                _openText = value;
+                OnPropertyChanged("OpenText");
+            }
+        }
+
+        private string _saveText;
+        public string SaveText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Save");
+            }
+            set
+            {
+                _saveText = value;
+                OnPropertyChanged("SaveText");
+            }
+        }
+
+        private string _newText;
+        public string NewText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_New");
+            }
+            set
+            {
+                _newText = value;
+                OnPropertyChanged("NewText");
+            }
+        }
+
+        private string _examplesText;
+        public string ExamplesText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Examples");
+            }
+            set
+            {
+                _examplesText = value;
+                OnPropertyChanged("ExamplesText");
+            }
+        }
+
+        private string _exitText;
+        public string ExitText
+        {
+            get
+            {
+                return resourceManager.GetString("TEXT_Exit");
+            }
+            set
+            {
+                _exitText = value;
+                OnPropertyChanged("ExitText");
+            }
+        }
+        #endregion
+
+        private ResourceManager resourceManager;
 
         public ViewModel()
         {
@@ -74,46 +185,63 @@ namespace TMSim.WPF
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
             SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
-            TransformTuringMaschine = new RelayCommand((o) => { OnTansformTuringMaschine(); });
+            TransformTuringMachine = new RelayCommand((o) => { OnTansformTuringMachine(); });
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
-            ClearTuringMaschine = new RelayCommand((o) => { OnClearTuringMaschine(); });
+            ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
             LoadExample = new RelayCommand((o) => { OnLoadExample(); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
+            GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
+            EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
+
+            TM = new TuringMachine();
+
+            TMModifier = new TuringMachineModifier(this, ref TM);
+            DData = new DiagramData();
+            InitResoureManager();
+        }
+
+        private void InitResoureManager()
+        {
+            resourceManager = new ResourceManager("TMSim.WPF.Resources.Strings", Assembly.GetExecutingAssembly());
+            if(CultureInfo.CurrentCulture.Name == "de-DE")
+            {
+                GermanLanguageIsChecked = true;
+            }
+            else if (CultureInfo.CurrentCulture.Name == "en-US") 
+            {
+                EnglishLanguageIsChecked = true;
+            }
         }
 
         public bool HighlightCurrentState { get; set; } = true;
         public bool IsSimulationRunning { get; set; } = true;
+        public TuringMachineModifier TMModifier { get; }
+        public DiagramData DData { get; private set; }
 
+        private TuringMachine TM;
 
-
-        public TuringMaschine TM
+        public void OnTMChanged()
         {
-            get
-            {
-                // get when populating diagram and table
-                throw new NotImplementedException("Hello there");
-            }
-            set
-            {
-                // set when accept button is pressed
-                throw new NotImplementedException("Hello there");
-            }
+            UpdateDiagramData();
+            //UpdateTabledata();
         }
 
         private bool startIsActive = false;
 
         private void OnStartPauseSimulation()
         {
-            if(startIsActive)
+            if (startIsActive)
             {
                 startIsActive = false;
-                StartPauseButtonContent = startContent;
+                StartVisibility = Visibility.Visible;
+                StopVisibility = Visibility.Hidden;
             }
             else
             {
                 startIsActive = true;
-                StartPauseButtonContent = pauseContent;
+                StartVisibility = Visibility.Hidden;
+                StopVisibility = Visibility.Visible;
             }
             //todo
         }
@@ -138,9 +266,9 @@ namespace TMSim.WPF
             throw new NotImplementedException("Hi");
         }
 
-        public void OnTansformTuringMaschine()
+        public void OnTansformTuringMachine()
         {
-            TM.TansformTuringMaschine();
+            TM.TansformTuringMachine();
         }
 
         public void OnImportFromTextFile()
@@ -173,14 +301,14 @@ namespace TMSim.WPF
             }
         }
 
-        public void OnClearTuringMaschine()
+        public void OnClearTuringMachine()
         {
-            TM = new TuringMaschine(
+            TM = new TuringMachine(
                 new Alphabet(""),
                 ' ',
                 new Alphabet(""),
                 new List<TuringState>(),
-                new TuringState(),
+                new TuringState(""),
                 new List<TuringState>(),
                 new List<TuringTransition>(),
                 new List<TuringTape>()
@@ -198,13 +326,69 @@ namespace TMSim.WPF
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
-                TM.ImportFromTextFile(loadExampleFileDialog.FileName); 
+                TM.ImportFromTextFile(loadExampleFileDialog.FileName);
             }
+        }
+
+        private void UpdateDiagramData()
+        {
+            DData = DiagramConverter.UpdateDiagramData(DData, TM);
+            OnPropertyChanged(nameof(DData));
         }
 
         public void OnExitApplication()
         {
             Application.Current.Shutdown();
+        }
+
+        public void SelectedLanguageChanged(string language)
+        {
+            var vCulture = new CultureInfo(language);
+
+            Thread.CurrentThread.CurrentCulture = vCulture;
+            Thread.CurrentThread.CurrentUICulture = vCulture;
+            CultureInfo.DefaultThreadCurrentCulture = vCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
+
+            try
+            {
+                FrameworkElement.LanguageProperty.OverrideMetadata(
+                    typeof(FrameworkElement),
+                    new FrameworkPropertyMetadata(
+                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("SelectedLanguageChanged Exeption: " + ex.ToString());
+            }
+
+            resourceManager = new ResourceManager("TMSim.WPF.Resources.Strings", Assembly.GetExecutingAssembly());
+
+            RefreshTextFromUi();
+        }
+
+        public void OnGermanLanguageSelected()
+        {
+            GermanLanguageIsChecked = true;
+            EnglishLanguageIsChecked = false;
+            SelectedLanguageChanged("de-DE");
+        }
+
+        public void OnEnglishLanguageSelected()
+        {
+            GermanLanguageIsChecked = false;
+            EnglishLanguageIsChecked = true;
+            SelectedLanguageChanged("en-US");
+        }
+
+        private void RefreshTextFromUi()
+        {
+            FileText = resourceManager.GetString("TEXT_File");
+            OpenText = resourceManager.GetString("TEXT_Open");
+            SaveText = resourceManager.GetString("TEXT_Save");
+            NewText = resourceManager.GetString("TEXT_New");
+            ExamplesText = resourceManager.GetString("TEXT_Examples");
+            ExitText = resourceManager.GetString("TEXT_Exit");
         }
     }
 }
