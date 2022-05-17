@@ -64,8 +64,13 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
                 <Button x:Name="play_cmd" Margin="3" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
                 <Button x:Name="pause_cmd" Margin="3" Style="{StaticResource PauseButtonStyle}" Visibility="{Binding StopVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
@@ -75,7 +80,7 @@
                 <Slider x:Name="speed_slider" Grid.Column="6" Minimum="1" Maximum="10" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
                 <Label x:Name="EingabewortLabel" Padding="15,0,0,0" Grid.Column="7" Content="Eingabewort:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBox x:Name="EingabewortTextbox" Text="{Binding TapeWordInput}" Margin="10" Grid.Column="8" MinWidth="100" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="UploadButton" Margin="10" Grid.Column="9" Width="200" Content="Load" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding WriteTapeWord}"/>
+                <Button x:Name="UploadButton" Margin="10" Grid.Column="9" Width="100" Content="Load" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding WriteTapeWord}"/>
             </Grid>
         </Border>
         <Border Grid.Row="2" Background="White" CornerRadius="10" Margin="3,3,3,3">
