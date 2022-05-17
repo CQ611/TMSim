@@ -182,5 +182,10 @@ namespace TMSim.Core
             tt.Source.AssignedTransitions.Add(tt);
             tt.Target.AssignedTransitions.Add(tt);
         }
+
+        public void WriteTapeWord(string inputWord)
+        {
+            TapeAlphabet = new Alphabet(inputWord);
+        }
     }
 }

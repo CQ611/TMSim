@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:TMSim.WPF"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="TMSim" Height="800" Width="800" MinHeight="800" MinWidth="800" Background="#cccccc">
+        Title="TMSim" Height="800" Width="800" MinHeight="800" MinWidth="840" Background="#cccccc">
     <Window.DataContext>
         <local:ViewModel />
     </Window.DataContext>
@@ -14,8 +14,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <Menu.ItemsPanel>
@@ -56,17 +56,33 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="play_cmd" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
-                <Button x:Name="pause_cmd" Style="{StaticResource PauseButtonStyle}" Visibility="{Binding StopVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
-                <Button x:Name="stop_cmd" Style="{StaticResource StopButtonStyle}" Grid.Column="2" Command="{Binding StopSimulation}"/>
-                <Button x:Name="step_cmd" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}"/>
-                <Label x:Name="speedLabel" Grid.Column="5" Content="_Speed" VerticalAlignment="Top" HorizontalAlignment="Left" Target="{Binding ElementName=speed_slider}"/>
-                <Slider x:Name="speed_slider" Grid.Column="5" Minimum="1" Maximum="10" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="120"/>
+                <Button x:Name="play_cmd" Margin="3" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
+                <Button x:Name="pause_cmd" Margin="3" Style="{StaticResource PauseButtonStyle}" Visibility="{Binding StopVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
+                <Button x:Name="stop_cmd" Margin="3" Style="{StaticResource StopButtonStyle}" Grid.Column="2" Command="{Binding StopSimulation}"/>
+                <Button x:Name="step_cmd" Margin="3" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}"/>
+                <Label x:Name="speedLabel" Grid.Column="5" Content="_Speed:" VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=speed_slider}"/>
+                <Slider x:Name="speed_slider" Grid.Column="6" Minimum="1" Maximum="10" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
+                <Label x:Name="EingabewortLabel" Padding="15,0,0,0" Grid.Column="7" Content="Eingabewort:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBox x:Name="EingabewortTextbox" Text="{Binding TapeWordInput}" Margin="10" Grid.Column="8" MinWidth="100" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                <Button x:Name="UploadButton" Margin="10" Grid.Column="9" Width="200" Content="Load" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding WriteTapeWord}"/>
             </Grid>
         </Border>
-        <Grid Grid.Row="2">
+        <Border Grid.Row="2" Background="White" CornerRadius="10" Margin="3,3,3,3">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <local:Tape x:Name="tape" Margin="5"/>
+                <!--Command="{Binding WriteBandWord}"-->
+            </Grid>
+        </Border>
+        <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
@@ -85,14 +101,5 @@
                 <Button x:Name="switch2_cmd" Style="{StaticResource RightArrowButtonStyle}" FontWeight="Bold" FontSize="50"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30" Click="switch2_cmd_Click" IsEnabled="False"/>
             </Border>
         </Grid>
-        <Border Grid.Row="3" Background="White" CornerRadius="10" Margin="3,3,3,3">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100"/>
-                </Grid.RowDefinitions>
-                <local:Tape x:Name="tape" Margin="5"/>
-                <!--Command="{Binding WriteBandWord}"-->
-            </Grid>
-        </Border>
     </Grid>
 </Window>

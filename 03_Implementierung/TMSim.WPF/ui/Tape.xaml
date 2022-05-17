@@ -7,42 +7,86 @@
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="800">
     <Grid Background="White">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Grid.Column="5">
-            <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
-                <Canvas Name="svg19" Width="576" Height="512">
-                    <Canvas.RenderTransform>
-                        <TranslateTransform X="0" Y="0"/>
-                    </Canvas.RenderTransform>
-                    <Canvas.Resources/>
-                    <!--Unknown tag: sodipodi:namedview-->
-                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path17" Fill="#000000">
-                        <Path.Data>
-                            <PathGeometry Figures="m 418.24759 1.2642669 c 35.3 0 64 28.7000001 64 64.0000001 V 371.96427 c 0 17 -6.7 33.3 -18.7 45.3 l -150.7 150.628 c -6 6.001 -14.1 9.372 -22.6 9.372 -8.5 0 -16.6 -3.372 -22.6 -9.372 l -150.65 -150.628 c -12.01 -12 -18.750004 -28.3 -18.750004 -45.3 V 65.264267 c 0 -35.3 28.650004 -64.0000001 64.000004 -64.0000001 z m -175.9 305.0000031 47.9 -47.1 47 47.1 c 9.4 9.3 24.6 9.3 33.1 0 10.2 -9.4 10.2 -24.6 0 -33.1 l -46.2 -47.9 46.2 -47 c 10.2 -9.4 10.2 -24.6 0 -33.1 -8.5 -10.2 -23.7 -10.2 -33.1 0 l -47 46.2 -47.9 -46.2 c -8.5 -10.2 -23.7 -10.2 -33.1 0 -9.3 8.5 -9.3 23.7 0 33.1 l 47.1 47 -47.1 47.9 c -9.3 8.5 -9.3 23.7 0 33.1 9.4 9.3 24.6 9.3 33.1 0 z" FillRule="NonZero"/>
-                        </Path.Data>
-                    </Path>
-                </Canvas>
-            </Viewbox>
+        <Border Grid.Row="0">
+            <Label Style="{StaticResource ReadWriteHeadStyle}"></Label>
         </Border>
-        
-        <TextBox Text="" FontSize="60" VerticalAlignment="Top" HorizontalAlignment="Center" />
-        <TextBlock Text="B   a   a   n   d   a    s    d    f    g    d     e" FontSize="60" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="0" Margin="5" x:Name="ExampleTapeWord" HorizontalAlignment="Left" Width="150" Text="Example" VerticalContentAlignment="Center" FontSize="20"/>
+        <Slider Grid.Row="0" x:Name="SliderExample" Margin="170,5,5,5" Width="150" HorizontalAlignment="Left" VerticalAlignment="Center" Minimum="100" Maximum="1000"/>
+        <Button Grid.Row="0" Margin="5" x:Name="ExampleLoadButton" HorizontalAlignment="Right" Width="80" Content="ExLoad" VerticalContentAlignment="Center" FontSize="20" Click="ExampleLoadButton_Click"/>
+        <Button Grid.Row="0" x:Name="LeftButton" HorizontalAlignment="Right" Width="50" Content="Left" VerticalContentAlignment="Center" FontSize="20" Click="LeftButton_Click" Margin="0,5,160,5"/>
+        <Button Grid.Row="0" x:Name="RightButton" HorizontalAlignment="Right" Width="50" Content="Right" VerticalContentAlignment="Center" FontSize="20" Click="RightButton_Click" Margin="0,5,100,5"/>
+
+
+
+
+
+        <Border Grid.Row="1" Width="784" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Grid x:Name="TapeGrid" Width="850" HorizontalAlignment="Center">
+                <Grid.RenderTransform>
+                    <TranslateTransform />
+                </Grid.RenderTransform>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                    <ColumnDefinition Width="34"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="tapePos0" Grid.Row="1" Grid.Column="0" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos1" Grid.Row="1" Grid.Column="1" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos2" Grid.Row="1" Grid.Column="2" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos3" Grid.Row="1" Grid.Column="3" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos4" Grid.Row="1" Grid.Column="4" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos5" Grid.Row="1" Grid.Column="5" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos6" Grid.Row="1" Grid.Column="6" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos7" Grid.Row="1" Grid.Column="7" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos8" Grid.Row="1" Grid.Column="8" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos9" Grid.Row="1" Grid.Column="9" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos10" Grid.Row="1" Grid.Column="10" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos11" Grid.Row="1" Grid.Column="11" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos12" Grid.Row="1" Grid.Column="12" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos13" Grid.Row="1" Grid.Column="13" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos14" Grid.Row="1" Grid.Column="14" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos15" Grid.Row="1" Grid.Column="15" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos16" Grid.Row="1" Grid.Column="16" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos17" Grid.Row="1" Grid.Column="17" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos18" Grid.Row="1" Grid.Column="18" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos19" Grid.Row="1" Grid.Column="19" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos20" Grid.Row="1" Grid.Column="20" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos21" Grid.Row="1" Grid.Column="21" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos22" Grid.Row="1" Grid.Column="22" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos23" Grid.Row="1" Grid.Column="23" Style="{StaticResource TapeGridStyle}"/>
+                <Label x:Name="tapePos24" Grid.Row="1" Grid.Column="24" Style="{StaticResource TapeGridStyle}"/>
+            </Grid>
+            </StackPanel>
+        </Border>
+
     </Grid>
 </UserControl>

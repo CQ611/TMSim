@@ -1,0 +1,41 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style BasedOn="{StaticResource {x:Type Label}}"
+           TargetType="{x:Type Label}"
+           x:Key="TapeGridStyle">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Label">
+                        <Grid VerticalAlignment="Stretch"
+                              HorizontalAlignment="Stretch"
+                              Background="{TemplateBinding Background}">
+
+                            <!--<Border Width="50" Margin="5" BorderThickness="2" BorderBrush="Black" CornerRadius="5">
+                                <TextBox IsReadOnly="True" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" Text="{TemplateBinding Content}"></TextBox>
+                            </Border>-->
+
+
+                            <Border Width="30" Margin="2" Background="CadetBlue" BorderThickness="1" BorderBrush="Black" CornerRadius="5">
+                                <TextBox IsReadOnly="True" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Text="{TemplateBinding Content}"></TextBox>
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style.Setters>
+
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="Gray"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+</ResourceDictionary>
