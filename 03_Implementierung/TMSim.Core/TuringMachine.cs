@@ -27,7 +27,7 @@ namespace TMSim.Core
 
         public TuringState CurrentState { get; private set; }
         public List<TuringTape> Tapes { get; set; }
-
+        public List<Transformation> Transformations { get; set; }
         public TuringMachine()
         {
             TapeAlphabet = new Alphabet("");
@@ -39,6 +39,14 @@ namespace TMSim.Core
             EndStates = new List<TuringState>();
             Transitions = new List<TuringTransition>();
             Tapes = new List<TuringTape>();
+            Transformations = new List<Transformation>
+            {
+                new Transformation1(),
+                new Transformation2(),
+                new Transformation3(),
+                new Transformation4(),
+                new Transformation5()
+            };
         }
 
         public TuringMachine(Alphabet tapeAlphabet, char blankChar, Alphabet inputAlphabet,
@@ -58,6 +66,14 @@ namespace TMSim.Core
                 AddTransition(transition);
             }
             Tapes = tapes;
+            Transformations = new List<Transformation>
+            {
+                new Transformation1(),
+                new Transformation2(),
+                new Transformation3(),
+                new Transformation4(),
+                new Transformation5()
+            };
         }
 
 
@@ -103,7 +119,7 @@ namespace TMSim.Core
                 }
             }
 
-            foreach (ImportExportStructure.Transition transition in tm.Transitions)
+            foreach (Transition transition in tm.Transitions)
             {
                 Transitions.Add(
                     new TuringTransition(
