@@ -22,7 +22,7 @@ namespace TMSim.Core.Tests
             List<TuringTape> tapes = new List<TuringTape>() { new TuringTape("aaaaa", '_') };
 
 
-            TuringMaschine tm = new TuringMaschine(tapeAlphabet, '_', inputAlphabet, states, states[0], new List<TuringState>() { states[1] }, transitions, tapes);
+            TuringMachine tm = new TuringMachine(tapeAlphabet, '_', inputAlphabet, states, states[0], new List<TuringState>() { states[1] }, transitions, tapes);
             tm.AdvanceState();
             Assert.IsTrue(tm.CheckIsEndState());
         }
@@ -37,7 +37,7 @@ namespace TMSim.Core.Tests
             List<TuringTape> tapes = new List<TuringTape>() { new TuringTape("aaaaa", '_') };
 
 
-            TuringMaschine tm = new TuringMaschine(tapeAlphabet, '_', inputAlphabet, states, states[0], new List<TuringState>() { states[1] }, transitions, tapes);
+            TuringMachine tm = new TuringMachine(tapeAlphabet, '_', inputAlphabet, states, states[0], new List<TuringState>() { states[1] }, transitions, tapes);
             Assert.IsFalse(tm.CheckIsEndState()); 
         }
 
