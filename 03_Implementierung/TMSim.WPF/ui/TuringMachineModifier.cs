@@ -20,11 +20,23 @@ namespace TMSim.WPF
         public void AddState()
         {
             AddStateDialog asd = new AddStateDialog($"q{tm.States.Count}");
-            if(asd.ShowDialog() == true)
+            if (asd.ShowDialog() == true)
             {
                 string identifier = asd.Identfier;
                 bool isStart = asd.IsStart;
                 bool isAccepting = asd.IsAccepting;
+
+                List<string> existingStates = new List<string>();
+                tm.States.ForEach(ts => existingStates.Add(ts.Identifier));
+                if (existingStates.Contains(identifier))
+                {
+                    MessageBox.Show($"State with identifier {identifier} already exists!",
+                        "Warning!",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
                 tm.AddState(identifier, isStart, isAccepting);
                 vm.OnTMChanged();
             }
@@ -32,16 +44,17 @@ namespace TMSim.WPF
 
         public void RemoveState(string ident)
         {
-            TuringState ts = tm.States.Where(x => x.Identifier == ident).First();
+            TuringState ts = tm.States.First(x => x.Identifier == ident);
             tm.RemoveState(ts);
             vm.OnTMChanged();
         }
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            List<char> symbolsRead = null;
-            List<char> symbolsWrite = null;
-            List<TuringTransition.Direction> direction = new List<TuringTransition.Direction>();
+            List<char> symbolsRead = "ab".ToList<char>();
+            List<char> symbolsWrite = "cd".ToList<char>();
+            List<TuringTransition.Direction> direction = new List<TuringTransition.Direction> {
+            TuringTransition.Direction.Right, TuringTransition.Direction.Left};
             //TODO: Get the above from new window
             // pay attention to source and target, may be null for Table, not for diagram
             MessageBox.Show("This should get values for a new Transition");

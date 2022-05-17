@@ -12,18 +12,23 @@ namespace TMSim.WPF
         Dictionary<TuringTransition.Direction, string> dirTranslation =
             new Dictionary<TuringTransition.Direction, string>()
         {
-                {TuringTransition.Direction.Left, "L" },
-                {TuringTransition.Direction.Right, "R" },
-                {TuringTransition.Direction.Neutral, "N" }
+                {TuringTransition.Direction.Left, "→" },
+                {TuringTransition.Direction.Right, "←" },
+                {TuringTransition.Direction.Neutral, "•" }
         };
 
         public TuringTransition transition { get; set; }
         public Node Node1 { get; set; }
         public Node Node2 { get; set; }
-        public string Symbol { 
+        public string SymbolsWrite
+        { 
             get { return new string(transition.SymbolsWrite.ToArray()); }
         }
-        public string Direction
+        public string SymbolsRead
+        {
+            get { return new string(transition.SymbolsRead.ToArray()); }
+        }
+        public string Directions
         {
             get
             {

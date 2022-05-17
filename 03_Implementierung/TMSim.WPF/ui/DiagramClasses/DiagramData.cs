@@ -12,6 +12,8 @@ namespace TMSim.WPF
         public double Width { get; set; }
         public double Height { get; set; }
 
+        public System.Windows.Point AddNodePoint { get; set; }
+
         public DiagramData()
         {
             Nodes = new Dictionary<string, Node>();
