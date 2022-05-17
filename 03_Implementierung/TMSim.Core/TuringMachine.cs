@@ -166,15 +166,21 @@ namespace TMSim.Core
 
         public void RemoveState(TuringState ts)
         {
-            //TODO: remove State from States, EndStates, and StartState
-            // maybe reassign StartState
+            //TODO: remove State from EndStates, and StartState
+            // maybe reassign StartState.
+
+            // also all Transitions referencing this state need to be deleted
+            ts.AssignedTransitions.ForEach(tt => Transitions.Remove(tt));
+            // are other Node still going to have a reference to tt?
+
+            States.Remove(ts);
         }
 
         public void AddTransition(TuringTransition tt)
         {
             Transitions.Add(tt);
-            //TODO: add new transition to transisions to its references
-            // in its source and target states
+            tt.Source.AssignedTransitions.Add(tt);
+            tt.Target.AssignedTransitions.Add(tt);
         }
     }
 }

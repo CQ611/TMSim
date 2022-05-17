@@ -16,7 +16,7 @@
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
             <MenuItem Header="Add state" Click="add_state_btn_Click"/>
-            <MenuItem Header="Remove state"/>
+            <MenuItem Header="Remove state" Click="remove_state_btn_Click"/>
             <MenuItem Header="Edit state"/>
             <Separator/>
             <MenuItem Header="Arrange" Click="arrange_btn_Click"/>

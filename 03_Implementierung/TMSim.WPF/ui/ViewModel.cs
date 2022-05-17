@@ -332,33 +332,7 @@ namespace TMSim.WPF
 
         private void UpdateDiagramData()
         {
-            //convert TM data to displayable data here
-            //maybe move this to own diagrammconverter class
-            var rand = new Random();
-
-            DData.Nodes.Clear();
-            DData.Connections.Clear();
-            foreach (TuringState ts in TM.States)
-            {
-                Node n = new Node(ts, new Point(
-                    rand.Next((int)DData.NodeSize / 2,
-                        (int)(DData.Width - DData.NodeSize / 2)),
-                    rand.Next((int)DData.NodeSize / 2,
-                        (int)(DData.Height - DData.NodeSize / 2))),
-                    TM.StartState == ts);
-                DData.Nodes.Add(n.Identifier, n);
-            }
-
-            foreach (TuringTransition tt in TM.Transitions)
-            {
-                NodeConnection nc = new NodeConnection(
-                    tt,
-                    DData.Nodes[tt.Source.Identifier],
-                    DData.Nodes[tt.Target.Identifier]
-                    );
-                DData.Connections.Add(nc);
-            }
-
+            DData = DiagramConverter.UpdateDiagramData(DData, TM);
             OnPropertyChanged(nameof(DData));
         }
 

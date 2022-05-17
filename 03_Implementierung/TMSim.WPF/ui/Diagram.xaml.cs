@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -54,10 +55,15 @@ namespace TMSim.WPF
         private Node heldNode;
         private Node rightClickedNode;
 
+        Vector mouseClickpos;
+
         private static readonly Brush bgBrush = Brushes.White;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
 
-        private static readonly Brush accentBrush = Brushes.Black;
+        private static readonly Brush outlineBrush = Brushes.Black;
+        private static readonly Pen outlinePen = new Pen(outlineBrush, 1);
+
+        private static readonly Brush accentBrush = Brushes.LightGray;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
         public Diagram()
         {
@@ -94,15 +100,14 @@ namespace TMSim.WPF
                 ConstrainToScreen(heldNode);
             }
 
+            foreach (Node n in DData.Nodes.Values)
+            {
+                DrawNode(dc, n);
+            }
 
             foreach (NodeConnection con in DData.Connections)
             {
                 DrawNodeConnection(dc, con);
-            }
-
-            foreach (Node n in DData.Nodes.Values)
-            {
-                DrawNode(dc, n);
             }
 
             if (heldNode != null)
@@ -114,12 +119,12 @@ namespace TMSim.WPF
 
         private void DrawNode(DrawingContext dc, Node n)
         {
-            dc.DrawEllipse(bgBrush, accentPen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
+            dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
             dc.DrawText(new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Courier New"),
-                DData.NodeSize / 3, accentBrush, 1),
+                DData.NodeSize / 3, outlineBrush, 1),
                 OffsetPoint(n.Position, -DData.NodeSize / 5, -DData.NodeSize / 5));
         }
 
@@ -127,13 +132,13 @@ namespace TMSim.WPF
         {
             if (con.IsSelfReferencing())
             {
-                dc.DrawEllipse(Brushes.DarkBlue, accentPen,
+                dc.DrawEllipse(Brushes.DarkBlue, outlinePen,
                     OffsetPoint(con.Node1.Position, DData.NodeSize / 2, DData.NodeSize / 2),
                     DData.NodeSize / 2, DData.NodeSize / 2);
             }
             else
             {
-                dc.DrawLine(accentPen,
+                dc.DrawLine(outlinePen,
                     PointOnBorderTowards(con.Node1, con.Node2),
                     PointOnBorderTowards(con.Node2, con.Node1)
                     );
@@ -142,7 +147,35 @@ namespace TMSim.WPF
                     PointOnBorderTowards(con.Node2, con.Node1),
                     con.Node1.Position - con.Node2.Position
                     );
+                DrawConnectionText(dc, con, CenterPoint(con));
             }
+        }
+
+        private void DrawConnectionText(DrawingContext dc, NodeConnection con, Point textCenter)
+        {
+            string text = con.SymbolsRead + "|" + con.Directions + "|" + con.SymbolsWrite;
+
+            //System.Drawing.MeasureString()
+            FormattedText fText = new FormattedText(text,
+                CultureInfo.GetCultureInfo("en-us"),
+                FlowDirection.LeftToRight,
+                new Typeface("Courier New"),
+                DData.NodeSize / 3, outlineBrush, 1);
+
+            dc.PushTransform(new TranslateTransform(
+                textCenter.X - fText.Width / 2, 
+                textCenter.Y - fText.Height / 2));
+            dc.DrawRectangle(accentBrush, null, new Rect(
+                new Size(fText.Width, fText.Height)
+                ));
+            dc.DrawText(fText, new Point(0,0));
+
+            dc.Pop();
+        }
+
+        private Point CenterPoint(NodeConnection con)
+        {
+            return (Point)(((Vector)con.Node1.Position + (Vector)con.Node2.Position) / 2);
         }
 
         private Point PointOnBorderTowards(Node source, Node target)
@@ -168,7 +201,7 @@ namespace TMSim.WPF
                 ctx.LineTo(corner2, false, true);
             }
             sg.Freeze();
-            dc.DrawGeometry(accentBrush, accentPen, sg);
+            dc.DrawGeometry(outlineBrush, outlinePen, sg);
         }
 
         private Vector PerpendicularVector(Vector v)
@@ -185,7 +218,7 @@ namespace TMSim.WPF
 
             int iterationCount = 0;
             double maxForce = 1000000;
-            
+
 
             while (iterationCount < maxIterations && maxForce > stopForce)
             {
@@ -278,7 +311,7 @@ namespace TMSim.WPF
                 dir.Y = 2 * dir.Y;
                 dir.Normalize();
                 return dir * gravityStrength;
-            }            
+            }
         }
         private Node ConstrainToScreen(Node n)
         {
@@ -311,11 +344,11 @@ namespace TMSim.WPF
 
         private void UserControl_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Vector pos = (Vector)e.GetPosition((IInputElement)sender);
+            mouseClickpos = (Vector)e.GetPosition((IInputElement)sender);
             //MessageBox.Show($"clicked at: {pos}");
             foreach (Node n in DData.Nodes.Values)
             {
-                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
+                if (Vector.Subtract(mouseClickpos, (Vector)n.Position).Length < DData.NodeSize / 2)
                 {
                     heldNode = n;
                     //MessageBox.Show($"picked up node {n.Identifier}");
@@ -332,15 +365,21 @@ namespace TMSim.WPF
 
         private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Vector pos = (Vector)e.GetPosition((IInputElement)sender);
-            //MessageBox.Show($"clicked at: {pos}");
+            mouseClickpos = (Vector)e.GetPosition((IInputElement)sender);
+            bool found = false;
             foreach (Node n in DData.Nodes.Values)
             {
-                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
+                if (Vector.Subtract(mouseClickpos, (Vector)n.Position).Length < DData.NodeSize / 2)
                 {
                     rightClickedNode = n;
+                    found = true;
                     //MessageBox.Show($"picked up node {n.Identifier}");
+                    break;
                 }
+            } 
+            if(!found)
+            {
+                rightClickedNode = null;
             }
 
             InvalidateVisual();
@@ -349,8 +388,8 @@ namespace TMSim.WPF
         private void UserControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             Node nodeReleasedOver = null;
+            //this vvv is intentially not mouseClickpos
             Vector pos = (Vector)e.GetPosition((IInputElement)sender);
-            //MessageBox.Show($"clicked at: {pos}");
             foreach (Node n in DData.Nodes.Values)
             {
                 if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
@@ -364,7 +403,7 @@ namespace TMSim.WPF
                 //Open context menu
                 // with the option of creating a connection (also) to it self
             }
-            else if (nodeReleasedOver != null)
+            else if (nodeReleasedOver != null && rightClickedNode != null)
             {
                 //create Connection
                 TMModifier.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
@@ -379,8 +418,18 @@ namespace TMSim.WPF
 
         private void add_state_btn_Click(object sender, RoutedEventArgs e)
         {
+            DData.AddNodePoint = (Point)mouseClickpos;
             TMModifier.AddState();
             InvalidateVisual();
+        }
+
+        private void remove_state_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if(rightClickedNode != null)
+            {
+                TMModifier.RemoveState(rightClickedNode.Identifier);
+                InvalidateVisual();
+            }
         }
 
         private void arrange_btn_Click(object sender, RoutedEventArgs e)
