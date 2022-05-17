@@ -276,7 +276,7 @@ namespace TMSim.WPF
             OpenFileDialog importFileDialog = new OpenFileDialog
             {
                 Title = "Import turingmachine",
-                Filter = "Text file (*.txt)|*.txt",  //muss noch auf das entsprechende Dateiformat angepasst werden
+                Filter = "TMSim file (*.tmsim)|*.tmsim", 
                 FilterIndex = 2,
                 RestoreDirectory = true
             };
@@ -291,7 +291,7 @@ namespace TMSim.WPF
             SaveFileDialog exportFileDialog = new SaveFileDialog
             {
                 Title = "Export turingmachine",
-                Filter = "Text file (*.txt)|*.txt",  //muss noch auf das entsprechende Dateiformat angepasst werden
+                Filter = "TMSim file (*.tmsim)|*.tmsim",
                 FilterIndex = 2,
                 RestoreDirectory = true
             };
@@ -320,9 +320,9 @@ namespace TMSim.WPF
             OpenFileDialog loadExampleFileDialog = new OpenFileDialog
             {
                 Title = "Load example turingmachine",
-                Filter = "Text file (*.txt)|*.txt",  //muss noch auf das entsprechende Dateiformat angepasst werden
+                Filter = "TMSim file (*.tmsim)|*.tmsim",
                 FilterIndex = 2,
-                InitialDirectory = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory)/*, "Examples"*/)  //Pfad muss angepasst werden
+                InitialDirectory = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\Examples")
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
