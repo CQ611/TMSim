@@ -22,7 +22,7 @@ namespace TMSim.WPF
             set
             {
                 _tapeVelocity = value;
-                OnPropertyChanged(nameof(TapeVelocity));
+                OnPropertyChanged("TapeVelocity");
             }
         }
 
@@ -72,7 +72,7 @@ namespace TMSim.WPF
 
             //sb.Children.Add(slide);
             //sb.Begin();
-            XTransformGrid = -34;
+            XTransformGrid = -304;
         }
 
         public void OnRightButton()
@@ -92,7 +92,7 @@ namespace TMSim.WPF
             //sb.Children.Add(slide);
             //sb.Begin();
 
-            XTransformGrid = 34;
+            XTransformGrid = 304;
         }
 
 

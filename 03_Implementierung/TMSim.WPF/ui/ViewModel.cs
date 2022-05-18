@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
@@ -518,6 +519,5 @@ namespace TMSim.WPF
             Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
             Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
         }
-
     }
 }

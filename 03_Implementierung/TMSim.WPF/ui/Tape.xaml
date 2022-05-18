@@ -8,9 +8,9 @@
              d:DesignHeight="150" d:DesignWidth="800">
 
     <UserControl.DataContext>
-        <local:ViewModel/>
+        <Binding Source="{StaticResource sharedViewModel}" />
     </UserControl.DataContext>
-    
+
     <Grid Background="White">
 
         <Grid.RowDefinitions>
@@ -25,6 +25,8 @@
         <Button Grid.Row="0" Margin="5" x:Name="ExampleLoadButton" HorizontalAlignment="Right" Width="80" Content="Load" VerticalContentAlignment="Center" FontSize="20" Click="ExampleLoadButton_Click"/>
         <Button Grid.Row="0" x:Name="LeftButton" HorizontalAlignment="Right" Width="50" Content="Left" VerticalContentAlignment="Center" FontSize="20" Click="LeftButton_Click" Margin="0,5,160,5"/>
         <Button Grid.Row="0" x:Name="RightButton" HorizontalAlignment="Right" Width="50" Content="Right" VerticalContentAlignment="Center" FontSize="20" Click="RightButton_Click" Margin="0,5,100,5"/>
+
+        <Button x:Name="LeftButtonTapeView" Margin="177,10,495,10" Content="Left" Command="{Binding LeftButton}"/>
 
         <Border Grid.Row="1" Width="784" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

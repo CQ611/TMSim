@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="TMSim" Height="800" Width="800" MinHeight="800" MinWidth="840" Background="#cccccc">
     <Window.DataContext>
-        <local:ViewModel />
+        <Binding Source="{StaticResource sharedViewModel}" />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
