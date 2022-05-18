@@ -10,7 +10,9 @@ namespace TMSim.Core
         public TuringMachine Execute(TuringMachine tm)
         {
             if (tm.EndStates.Count == 1) return tm;
-            //TuringState newEndState = new TuringState("endState");
+            if (tm.Tapes.Count != 1) {
+                throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
+            }
             TuringMachine newTuringMachine = tm.GetCopy();
             newTuringMachine.EndStates.Clear();
             TuringState newEndState = new TuringState("new End State", "");

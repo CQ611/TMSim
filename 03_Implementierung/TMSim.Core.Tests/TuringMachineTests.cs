@@ -183,5 +183,14 @@ namespace TMSim.Core.Tests
             string contentExport = System.IO.File.ReadAllText(@"res\example_export.tmsim");
             Assert.IsTrue(string.Equals(contentExport, contentImport));
         }
+
+        [TestMethod]
+        public void ExportToTextFile_ExportEmptyTuringMachine()
+        {
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ExportToTextFile(@"res\example_export.tmsim");
+            string contentImport = System.IO.File.ReadAllText(@"res\example_export.tmsim");
+            Assert.IsTrue(true);
+        }
     }
 }

@@ -98,6 +98,7 @@ namespace TMSim.Core
             States.Clear();
             EndStates.Clear();
             Transitions.Clear();
+            Tapes.Clear();
 
             foreach (State state in tm.States)
             {
@@ -125,7 +126,7 @@ namespace TMSim.Core
 
             foreach (Transition transition in tm.Transitions)
             {
-                Transitions.Add(
+                AddTransition(
                     new TuringTransition(
                         States.Find(item => item.Identifier == transition.SourceState),
                         States.Find(item => item.Identifier == transition.TargetState),
@@ -133,6 +134,13 @@ namespace TMSim.Core
                         transition.SymbolsWrite,
                         transition.MoveDirections
                     ));
+            }
+            if (Transitions.Count > 0)
+            {
+                for (int i = 0; i < Transitions[0].SymbolsRead.Count; i++)
+                {
+                    Tapes.Add(new TuringTape("", BlankChar));
+                }
             }
         }
 
