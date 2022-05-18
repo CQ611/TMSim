@@ -66,7 +66,7 @@
                     <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -79,10 +79,10 @@
                 <Button x:Name="stop_cmd" Margin="3" Style="{StaticResource StopButtonStyle}" Grid.Column="2" Command="{Binding StopSimulation}"/>
                 <Button x:Name="step_cmd" Margin="3" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}"/>
                 <Label x:Name="speedLabel" Grid.Column="5" Content="_Speed:" VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=speed_slider}"/>
-                <Slider x:Name="speed_slider" Value="{Binding TapeVelocity}" Grid.Column="6" Minimum="100" Maximum="1000" SelectionStart="500" IsDirectionReversed="True" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
+                <Slider x:Name="speed_slider" Value="{Binding TapeVelocity}" Grid.Column="6" Minimum="100" Maximum="3000" TickFrequency="10" IsSnapToTickEnabled="True" IsDirectionReversed="True" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
                 <Label x:Name="EingabewortLabel" Padding="15,0,0,0" Grid.Column="7" Content="Eingabewort:" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <TextBox x:Name="EingabewortTextbox" Text="{Binding TapeWordInput}" Margin="10" Grid.Column="8" MinWidth="100" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-                <Button x:Name="UploadButton" Margin="10" Grid.Column="9" Width="100" Content="Load" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding WriteTapeWord}"/>
+                <Button x:Name="UploadButton" Margin="10" Grid.Column="9" Width="50" Content="Load" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Command="{Binding WriteTapeWord}"/>
                 <Button x:Name="LeftButton" Margin="10" Grid.Column="10" Content="Left" Command="{Binding LeftButton}"/>
                 <Button x:Name="RightButton" Margin="10" Grid.Column="11" Content="Right" Command="{Binding RightButton}" />
             </Grid>

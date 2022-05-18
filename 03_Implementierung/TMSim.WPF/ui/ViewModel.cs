@@ -96,8 +96,8 @@ namespace TMSim.WPF
         }
 
         private string _tapeWordInput;
-        public string TapeWordInput 
-        { 
+        public string TapeWordInput
+        {
             get
             {
                 return _tapeWordInput;

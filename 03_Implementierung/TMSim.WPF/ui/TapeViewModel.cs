@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace TMSim.WPF
 {
@@ -12,7 +14,7 @@ namespace TMSim.WPF
         public RelayCommand RightButton { get; set; }
         public RelayCommand LeftButton { get; set; }
 
-        private double _tapeVelocity;
+        private double _tapeVelocity = 1000;
         public double TapeVelocity
         {
             get
@@ -26,106 +28,18 @@ namespace TMSim.WPF
             }
         }
 
-        private double _xTransformGrid;
-        public double XTransformGrid
-        {
-            get
-            {
-                return _xTransformGrid;
-            }
-            set
-            {
-                _xTransformGrid = value;
-                OnPropertyChanged("XTransformGrid");
-            }
-        }
-
-        private Grid _tapeGrid;
-        public Grid TapeGrid 
-        { 
-            get
-            {
-                return _tapeGrid;
-            }
-            set
-            {
-                _tapeGrid = value;
-                OnPropertyChanged(nameof(TapeGrid));
-            }
-        }
-
-        private double actPos = 0;
-
+        public delegate void LeftMovement(double velocity);
+        public event LeftMovement LeftMovementEvent;
         public void OnLeftButton()
         {
-            //Storyboard sb = new Storyboard();
-            //sb.Completed += MoveLeftCompleted;
-
-            //DoubleAnimation slide = new DoubleAnimation();
-            //slide.To = -34.0;
-            //slide.From = 0;
-            //actPos = -34.0;
-            //slide.Duration = new Duration(TimeSpan.FromMilliseconds(TapeVelocity));
-
-            //Storyboard.SetTarget(slide, TapeGrid);
-            //Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
-
-            //sb.Children.Add(slide);
-            //sb.Begin();
-            XTransformGrid = -304;
+            LeftMovementEvent?.Invoke(TapeVelocity);
         }
 
+        public delegate void RightMovement(double velocity);
+        public event RightMovement RightMovementEvent;
         public void OnRightButton()
         {
-            //Storyboard sb = new Storyboard();
-            //sb.Completed += MoveRightCompleted;
-
-            //DoubleAnimation slide = new DoubleAnimation();
-            //slide.To = 34.0;
-            //slide.From = 0;
-            //actPos = 34.0;
-            //slide.Duration = new Duration(TimeSpan.FromMilliseconds(TapeVelocity));
-
-            //Storyboard.SetTarget(slide, TapeGrid);
-            //Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
-
-            //sb.Children.Add(slide);
-            //sb.Begin();
-
-            XTransformGrid = 304;
-        }
-
-
-        private void MoveLeftCompleted(object sender, EventArgs e)
-        {
-            //fieldUnderReadWriteHead--;
-            ResetToDefault();
-        }
-
-
-        private void MoveRightCompleted(object sender, EventArgs e)
-        {
-            //fieldUnderReadWriteHead++;
-            ResetToDefault();
-        }
-
-        private void ResetToDefault()
-        {
-            //WriteTapeWordToTape();
-
-            Storyboard sb = new Storyboard();
-
-            DoubleAnimation slide = new DoubleAnimation();
-            slide.To = 0;
-            slide.From = actPos;
-            actPos = 0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(0));
-
-            Storyboard.SetTarget(slide, TapeGrid);
-            Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
-
-            sb.Children.Add(slide);
-            sb.Begin();
+            RightMovementEvent?.Invoke(TapeVelocity);
         }
     }
 }
