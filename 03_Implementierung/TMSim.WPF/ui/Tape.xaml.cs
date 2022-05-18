@@ -107,71 +107,71 @@ namespace TMSim.WPF
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
         {
-            Storyboard sb = new Storyboard();
-            sb.Completed += MoveLeftCompleted;
+            //    Storyboard sb = new Storyboard();
+            //    sb.Completed += MoveLeftCompleted;
 
-            DoubleAnimation slide = new DoubleAnimation();
-            slide.To = -34.0;
-            slide.From = 0;
-            actPos = -34.0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
+            //    DoubleAnimation slide = new DoubleAnimation();
+            //    slide.To = -34.0;
+            //    slide.From = 0;
+            //    actPos = -34.0;
+            //    slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
 
-            Storyboard.SetTarget(slide, TapeGrid);
-            Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
+            //    Storyboard.SetTarget(slide, TapeGrid);
+            //    Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
 
-            sb.Children.Add(slide);
-            sb.Begin();
+            //    sb.Children.Add(slide);
+            //    sb.Begin();
 
+            }
+
+            private void MoveLeftCompleted(object sender, EventArgs e)
+            {
+            //    fieldUnderReadWriteHead--;
+            //    ResetToDefault();
+            }
+
+            private void RightButton_Click(object sender, RoutedEventArgs e)
+            {
+            //    Storyboard sb = new Storyboard();
+            //    sb.Completed += MoveRightCompleted;
+
+            //    DoubleAnimation slide = new DoubleAnimation();
+            //    slide.To = 34.0;
+            //    slide.From = 0;
+            //    actPos = 34.0;
+            //    slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
+
+            //    Storyboard.SetTarget(slide, TapeGrid);
+            //    Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
+
+            //    sb.Children.Add(slide);
+            //    sb.Begin();
+            }
+
+            private void MoveRightCompleted(object sender, EventArgs e)
+            {
+            //    fieldUnderReadWriteHead++;
+            //    ResetToDefault();
+            }
+
+            private void ResetToDefault()
+            {
+            //    WriteTapeWordToTape();
+
+            //    Storyboard sb = new Storyboard();
+
+            //    DoubleAnimation slide = new DoubleAnimation();
+            //    slide.To = 0;
+            //    slide.From = actPos;
+            //    actPos = 0;
+            //    slide.Duration = new Duration(TimeSpan.FromMilliseconds(0));
+
+            //    Storyboard.SetTarget(slide, TapeGrid);
+            //    Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
+
+            //    sb.Children.Add(slide);
+            //    sb.Begin();
+
+            }
         }
-
-        private void MoveLeftCompleted(object sender, EventArgs e)
-        {
-            fieldUnderReadWriteHead--;
-            ResetToDefault();
-        }
-
-        private void RightButton_Click(object sender, RoutedEventArgs e)
-        {
-            Storyboard sb = new Storyboard();
-            sb.Completed += MoveRightCompleted;
-
-            DoubleAnimation slide = new DoubleAnimation();
-            slide.To = 34.0;
-            slide.From = 0;
-            actPos = 34.0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
-
-            Storyboard.SetTarget(slide, TapeGrid);
-            Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
-
-            sb.Children.Add(slide);
-            sb.Begin();
-        }
-
-        private void MoveRightCompleted(object sender, EventArgs e)
-        {
-            fieldUnderReadWriteHead++;
-            ResetToDefault();
-        }
-
-        private void ResetToDefault()
-        {
-            WriteTapeWordToTape();
-
-            Storyboard sb = new Storyboard();
-
-            DoubleAnimation slide = new DoubleAnimation();
-            slide.To = 0;
-            slide.From = actPos;
-            actPos = 0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(0));
-
-            Storyboard.SetTarget(slide, TapeGrid);
-            Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
-
-            sb.Children.Add(slide);
-            sb.Begin();
-
-        }
-    }
 }

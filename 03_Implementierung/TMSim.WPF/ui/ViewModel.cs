@@ -14,7 +14,7 @@ using TMSim.Core;
 
 namespace TMSim.WPF
 {
-    public class ViewModel : ObservableObject
+    public partial class ViewModel : ObservableObject
     {
         #region RelayCommands
         public RelayCommand StartPauseSimulation { get; set; }
@@ -289,6 +289,8 @@ namespace TMSim.WPF
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
+            RightButton = new RelayCommand((o) => { OnRightButton(); });
+            LeftButton = new RelayCommand((o) => { OnLeftButton(); });
 
             TM = new TuringMachine();
 
@@ -516,5 +518,6 @@ namespace TMSim.WPF
             Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
             Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
         }
+
     }
 }
