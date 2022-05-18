@@ -85,6 +85,10 @@ namespace TMSim.Core
         public void ImportFromTextFile(string filePath)
         {
             string jsonString = System.IO.File.ReadAllText(filePath);
+            FromJsonString(jsonString);
+        }
+
+        private void FromJsonString(string jsonString) {
             var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
 
             TapeAlphabet = new Alphabet(tm.TapeAlphabet);
@@ -94,6 +98,7 @@ namespace TMSim.Core
             States.Clear();
             EndStates.Clear();
             Transitions.Clear();
+            Tapes.Clear();
 
             foreach (State state in tm.States)
             {
@@ -121,7 +126,7 @@ namespace TMSim.Core
 
             foreach (Transition transition in tm.Transitions)
             {
-                Transitions.Add(
+                AddTransition(
                     new TuringTransition(
                         States.Find(item => item.Identifier == transition.SourceState),
                         States.Find(item => item.Identifier == transition.TargetState),
@@ -129,6 +134,13 @@ namespace TMSim.Core
                         transition.SymbolsWrite,
                         transition.MoveDirections
                     ));
+            }
+            if (Transitions.Count > 0)
+            {
+                for (int i = 0; i < Transitions[0].SymbolsRead.Count; i++)
+                {
+                    Tapes.Add(new TuringTape("", BlankChar));
+                }
             }
         }
 
@@ -170,7 +182,7 @@ namespace TMSim.Core
 
         private TuringTransition GetTransition()
         {
-            foreach (TuringTransition transition in CurrentState.AssignedTransitions)
+            foreach (TuringTransition transition in CurrentState.OutgoingTransitions)
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
             }
@@ -185,13 +197,21 @@ namespace TMSim.Core
             if (isAccepting) { EndStates.Add(ts); }
         }
 
+        public void AddState(TuringState turingState, bool isStart = false, bool isAccepting = false)
+        {
+            States.Add(turingState);
+            if (isStart) { StartState = turingState; }
+            if (isAccepting) { EndStates.Add(turingState); }
+        }
+
         public void RemoveState(TuringState ts)
         {
             //TODO: remove State from EndStates, and StartState
             // maybe reassign StartState.
 
             // also all Transitions referencing this state need to be deleted
-            ts.AssignedTransitions.ForEach(tt => Transitions.Remove(tt));
+            ts.OutgoingTransitions.ForEach(tt => Transitions.Remove(tt));
+            ts.IncomingTransitions.ForEach(tt => Transitions.Remove(tt));
             // are other Node still going to have a reference to tt?
 
             States.Remove(ts);
@@ -200,8 +220,17 @@ namespace TMSim.Core
         public void AddTransition(TuringTransition tt)
         {
             Transitions.Add(tt);
-            tt.Source.AssignedTransitions.Add(tt);
-            tt.Target.AssignedTransitions.Add(tt);
+            tt.Source.OutgoingTransitions.Add(tt);
+            tt.Target.IncomingTransitions.Add(tt);
+        }
+
+        public TuringMachine GetCopy()
+        {
+            ImportExportStructure importExportStructure = new ImportExportStructure(this);
+            string jsonString = JsonConvert.SerializeObject(importExportStructure, Formatting.Indented);
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.FromJsonString(jsonString);
+            return turingMachine;
         }
 
         public void WriteTapeWord(string inputWord)

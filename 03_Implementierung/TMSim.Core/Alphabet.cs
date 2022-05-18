@@ -6,7 +6,7 @@ namespace TMSim.Core
 {
     public class Alphabet
     {
-        private List<char> Symbols = new List<char>();
+        public List<char> Symbols = new List<char>();
 
         public Alphabet(string chars) 
         {

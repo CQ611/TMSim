@@ -175,7 +175,8 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
-        public void ExportToTextFile_ContentShouldBeTheSameAfterExport() {
+        public void ExportToTextFile_ContentShouldBeTheSameAfterExport()
+        {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
             turingMachine.ExportToTextFile(@"res\example_export.tmsim");
