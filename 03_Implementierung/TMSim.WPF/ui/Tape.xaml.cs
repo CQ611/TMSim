@@ -27,6 +27,20 @@ namespace TMSim.WPF
         {
             InitializeComponent();
             InitTapeFields();
+
+            var vm = (ViewModel)DataContext;
+            vm.LeftMovementEvent += Vm_LeftMovementEvent;
+            vm.RightMovementEvent += Vm_RightMovementEvent;
+        }
+
+        private void Vm_LeftMovementEvent(double velocity)
+        {
+            LeftMove(velocity);
+        }
+
+        private void Vm_RightMovementEvent(double velocity)
+        {
+            RightMove(velocity);
         }
 
         private void InitTapeFields()
@@ -76,7 +90,6 @@ namespace TMSim.WPF
                     {
                         var label = TapeFields[fieldUnderReadWriteHead + i];
                         label.Content = character.ToString();
-                        
                     }
                 }
                 i++;
@@ -105,7 +118,7 @@ namespace TMSim.WPF
 
         private double actPos = 0;
 
-        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        private void LeftMove(double velocity)
         {
             Storyboard sb = new Storyboard();
             sb.Completed += MoveLeftCompleted;
@@ -114,14 +127,13 @@ namespace TMSim.WPF
             slide.To = -34.0;
             slide.From = 0;
             actPos = -34.0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
+            slide.Duration = new Duration(TimeSpan.FromMilliseconds(velocity));
 
             Storyboard.SetTarget(slide, TapeGrid);
             Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
 
             sb.Children.Add(slide);
             sb.Begin();
-
         }
 
         private void MoveLeftCompleted(object sender, EventArgs e)
@@ -130,7 +142,7 @@ namespace TMSim.WPF
             ResetToDefault();
         }
 
-        private void RightButton_Click(object sender, RoutedEventArgs e)
+        private void RightMove(double velocity)
         {
             Storyboard sb = new Storyboard();
             sb.Completed += MoveRightCompleted;
@@ -139,7 +151,7 @@ namespace TMSim.WPF
             slide.To = 34.0;
             slide.From = 0;
             actPos = 34.0;
-            slide.Duration = new Duration(TimeSpan.FromMilliseconds(SliderExample.Value));
+            slide.Duration = new Duration(TimeSpan.FromMilliseconds(velocity));
 
             Storyboard.SetTarget(slide, TapeGrid);
             Storyboard.SetTargetProperty(slide, new PropertyPath("RenderTransform.(TranslateTransform.X)"));
@@ -171,7 +183,6 @@ namespace TMSim.WPF
 
             sb.Children.Add(slide);
             sb.Begin();
-
         }
     }
 }

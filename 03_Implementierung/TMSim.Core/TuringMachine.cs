@@ -236,6 +236,12 @@ namespace TMSim.Core
         public void WriteTapeWord(string inputWord)
         {
             TapeAlphabet = new Alphabet(inputWord);
+
+            //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
+            foreach(var tape in Tapes)
+            {
+                tape.Content = inputWord;
+            }
         }
     }
 }

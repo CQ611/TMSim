@@ -17,7 +17,8 @@
                 <ResourceDictionary Source="Styles/ReadWriteHeadStyle.xaml"/>
                 <ResourceDictionary Source="Styles/TapeGridStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
+            
+            <local:ViewModel x:Key="sharedViewModel" />
         </ResourceDictionary>
 
     </Application.Resources>
