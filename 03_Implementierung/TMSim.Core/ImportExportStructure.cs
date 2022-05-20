@@ -44,8 +44,8 @@ namespace TMSim.Core
                 internalState.Comment = state.Comment;
                 States.Add(internalState);
             }
-            InputAlphabet = turingMachine.InputAlphabet.ToString();
-            TapeAlphabet = turingMachine.TapeAlphabet.ToString();
+            InputAlphabet = new String(turingMachine.InputSymbols.ToArray());
+            TapeAlphabet = new String(turingMachine.TapeSymbols.ToArray());
             foreach (TuringTransition turingTransition in turingMachine.Transitions) {
                 Transition transition = new Transition();
                 transition.SourceState = turingTransition.Source.Identifier;

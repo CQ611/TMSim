@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TMSim.Core
 {
-    public class Transformation5 : Transformation
+    public class Transformation5 : ITransformation
     {
         public TuringMachine Execute(TuringMachine tm)
         {
@@ -15,8 +15,8 @@ namespace TMSim.Core
             }
             TuringMachine newTuringMachine = tm.GetCopy();
             newTuringMachine.EndStates.Clear();
-            TuringState newEndState = new TuringState("new End State", "");
-            newTuringMachine.AddState(newEndState, false, true);
+            TuringState newEndState = new TuringState("new End State", "", false, true);
+            newTuringMachine.AddState(newEndState);
             foreach(TuringState endState in tm.EndStates)
             {
                 List<char> symbolsRead = new List<char>();
@@ -24,7 +24,7 @@ namespace TMSim.Core
                 {
                     symbolsRead.Add(transition.SymbolsRead[0]);
                 }
-                List<char> newTransitionSymbols = tm.TapeAlphabet.Symbols.Except(symbolsRead).ToList();
+                List<char> newTransitionSymbols = tm.TapeSymbols.Except(symbolsRead).ToList();
                 foreach(char symbol in newTransitionSymbols)
                 {
                     TuringTransition transition = new TuringTransition(

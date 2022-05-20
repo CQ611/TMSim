@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TMSim.Core
 {
-    class Transformation1 : Transformation
+    class Transformation1 : ITransformation
     {
         public TuringMachine Execute(TuringMachine tm)
         {
