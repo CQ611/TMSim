@@ -13,10 +13,16 @@ namespace TMSim.Core
         public List<TuringTransition> IncomingTransitions { get; private set; }
         public List<TuringTransition> OutgoingTransitions { get; private set; }
 
-        public TuringState(string identifier, string comment="")
+        public bool IsStart = false;
+        public bool IsAccepting = false;
+
+        public TuringState(string identifier, string comment = "",
+            bool isStart = false, bool isAccepting = false)
         {
             this.Identifier = identifier;
             this.Comment = comment;
+            this.IsStart = isStart;
+            this.IsAccepting = isAccepting;
             IncomingTransitions = new List<TuringTransition>();
             OutgoingTransitions = new List<TuringTransition>();
         }

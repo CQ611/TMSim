@@ -8,7 +8,7 @@ namespace TMSim.Core.Tests
         [TestMethod]
         public void WordIsContainedIn_AlphaABCInputABBCCC_ReturnsTrue()
         {
-            Alphabet a = new Alphabet("ABC");
+            TuringAlphabet a = new TuringAlphabet("ABC");
             bool isContained = a.WordIsContainedIn("ABBCCC");
             Assert.IsTrue(isContained);
         }
@@ -17,7 +17,7 @@ namespace TMSim.Core.Tests
         [TestMethod]
         public void WordIsContainedIn_AlphaABCInputABD_ReturnsFalse()
         {
-            Alphabet a = new Alphabet("ABC");
+            TuringAlphabet a = new TuringAlphabet("ABC");
             bool isContained = a.WordIsContainedIn("ABD");
             Assert.IsFalse(isContained);
         }
@@ -26,7 +26,7 @@ namespace TMSim.Core.Tests
         [TestMethod]
         public void WordIsContainedIn_AlphaABCInputBCA_ReturnsTrue()
         {
-            Alphabet a = new Alphabet("ABC");
+            TuringAlphabet a = new TuringAlphabet("ABC");
             bool isContained = a.WordIsContainedIn("BCA");
             Assert.IsTrue(isContained);
         }

@@ -17,7 +17,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
-            Transformation transformation = new Transformation5();
+            ITransformation transformation = new Transformation5();
             Assert.IsTrue(transformation.IsExecutable(turingMachine));
         }
 
@@ -27,7 +27,7 @@ namespace TMSim.Core.Tests
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
             turingMachine.EndStates.Clear();
-            Transformation transformation = new Transformation5();
+            ITransformation transformation = new Transformation5();
             Assert.IsFalse(transformation.IsExecutable(turingMachine));
         }
 
@@ -36,7 +36,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_import_one_endstate.tmsim");
-            Transformation transformation = new Transformation5();
+            ITransformation transformation = new Transformation5();
             TuringMachine newTuringMachine = transformation.Execute(turingMachine);
             Assert.AreEqual(turingMachine, newTuringMachine);
         }
@@ -47,7 +47,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
-            Transformation transformation = new Transformation5();
+            ITransformation transformation = new Transformation5();
             TuringMachine newTuringMachine = transformation.Execute(turingMachine);
         }
 
@@ -56,7 +56,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_contains_only_a_or_b.tmsim");
-            Transformation transfromation = new Transformation5();
+            ITransformation transfromation = new Transformation5();
             TuringMachine newTuringMachine = transfromation.Execute(turingMachine);
             Assert.IsTrue(newTuringMachine.EndStates.Count() == 1);
             Assert.IsTrue(newTuringMachine.EndStates[0].Identifier == "new End State");
@@ -68,7 +68,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_contains_only_a_or_b.tmsim");
-            Transformation transfromation = new Transformation5();
+            ITransformation transfromation = new Transformation5();
             TuringMachine newTuringMachine = transfromation.Execute(turingMachine);
             newTuringMachine.Tapes[0].Content = "aaaaa";
             while (newTuringMachine.AdvanceState()) ;
@@ -80,7 +80,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_contains_only_a_or_b.tmsim");
-            Transformation transfromation = new Transformation5();
+            ITransformation transfromation = new Transformation5();
             TuringMachine newTuringMachine = transfromation.Execute(turingMachine);
             newTuringMachine.Tapes[0].Content = "bbbbbbbbbbbbbbbbbbbbbb";
             while (newTuringMachine.AdvanceState()) ;
@@ -92,7 +92,7 @@ namespace TMSim.Core.Tests
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_contains_only_a_or_b.tmsim");
-            Transformation transfromation = new Transformation5();
+            ITransformation transfromation = new Transformation5();
             TuringMachine newTuringMachine = transfromation.Execute(turingMachine);
             newTuringMachine.Tapes[0].Content = "aacaa";
             while (newTuringMachine.AdvanceState()) ;

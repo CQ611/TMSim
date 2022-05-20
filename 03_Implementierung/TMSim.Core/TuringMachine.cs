@@ -2,84 +2,35 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static TMSim.Core.ImportExportStructure;
 
 namespace TMSim.Core
 {
     public class TuringMachine
     {
-        private class TransitionNotFound : Exception
-        {
-            public TransitionNotFound(string message) : base(message)
-            {
-            }
-        }
-
-        public Alphabet TapeAlphabet { get; set; }
+        private TuringAlphabet TapeAlphabet { get; set; }
+        private TuringAlphabet InputAlphabet { get; set; }
+        public List<char> TapeSymbols => TapeAlphabet.Symbols;
+        public List<char> InputSymbols => InputAlphabet.Symbols;
         public char BlankChar { get; set; }
-        public Alphabet InputAlphabet { get; set; }
-        public List<TuringState> States { get; set; }
-        public TuringState StartState { get; set; }
-        public List<TuringState> EndStates { get; set; }
-        public List<TuringTransition> Transitions { get; set; }
-
+        public List<TuringState> States { get; private set; }
+        public TuringState StartState { get; private set; }
+        public List<TuringState> EndStates { get; private set; }
+        public List<TuringTransition> Transitions { get; private set; }
         public TuringState CurrentState { get; private set; }
-        public List<TuringTape> Tapes { get; set; }
-        public List<Transformation> Transformations { get; set; }
+        public TuringTransition CurrentTransition { get; private set; }
+        public List<TuringTape> Tapes { get; private set; }
         public TuringMachine()
         {
-            TapeAlphabet = new Alphabet("");
+            TapeAlphabet = new TuringAlphabet("");
             BlankChar = ' ';
-            InputAlphabet = new Alphabet("");
+            InputAlphabet = new TuringAlphabet("");
             States = new List<TuringState>();
             StartState = new TuringState("");
             CurrentState = StartState;
             EndStates = new List<TuringState>();
             Transitions = new List<TuringTransition>();
-            Tapes = new List<TuringTape>();
-            Transformations = new List<Transformation>
-            {
-                new Transformation1(),
-                new Transformation2(),
-                new Transformation3(),
-                new Transformation4(),
-                new Transformation5()
-            };
-        }
-
-        public TuringMachine(Alphabet tapeAlphabet, char blankChar, Alphabet inputAlphabet,
-            List<TuringState> states, TuringState startState, List<TuringState> endStates,
-            List<TuringTransition> transitions, List<TuringTape> tapes)
-        {
-            TapeAlphabet = tapeAlphabet;
-            BlankChar = blankChar;
-            InputAlphabet = inputAlphabet;
-            States = states;
-            StartState = startState;
-            CurrentState = startState;
-            EndStates = endStates;
-            Transitions = new List<TuringTransition>();
-            foreach (TuringTransition transition in transitions) 
-            {
-                AddTransition(transition);
-            }
-            Tapes = tapes;
-            Transformations = new List<Transformation>
-            {
-                new Transformation1(),
-                new Transformation2(),
-                new Transformation3(),
-                new Transformation4(),
-                new Transformation5()
-            };
-        }
-
-
-        public void TansformTuringMachine()
-        {
-            
+            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
         }
 
         public void ImportFromTextFile(string filePath)
@@ -88,12 +39,13 @@ namespace TMSim.Core
             FromJsonString(jsonString);
         }
 
-        private void FromJsonString(string jsonString) {
+        private void FromJsonString(string jsonString)
+        {
             var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
 
-            TapeAlphabet = new Alphabet(tm.TapeAlphabet);
+            TapeAlphabet = new TuringAlphabet(tm.TapeAlphabet);
             BlankChar = tm.Blank;
-            InputAlphabet = new Alphabet(tm.InputAlphabet);
+            InputAlphabet = new TuringAlphabet(tm.InputAlphabet);
 
             States.Clear();
             EndStates.Clear();
@@ -102,7 +54,7 @@ namespace TMSim.Core
 
             foreach (State state in tm.States)
             {
-                States.Add(new TuringState(state.Identifier, state.Comment));
+                States.Add(new TuringState(state.Identifier, comment:state.Comment));
             }
 
             foreach (TuringState state in States)
@@ -155,16 +107,16 @@ namespace TMSim.Core
         {
             try
             {
-                TuringTransition transition = GetTransition();
+                CurrentTransition = GetTransition();
                 for (int i = 0; i < Tapes.Count(); i++)
                 {
-                    Tapes[i].SetCurrentSymbol(transition.SymbolsWrite[i]);
-                    if (transition.MoveDirections[i] == TuringTransition.Direction.Right) Tapes[i].MoveRight();
-                    else if (transition.MoveDirections[i] == TuringTransition.Direction.Left) Tapes[i].MoveLeft();
+                    Tapes[i].SetCurrentSymbol(CurrentTransition.SymbolsWrite[i]);
+                    if (CurrentTransition.MoveDirections[i] == TuringTransition.Direction.Right) Tapes[i].MoveRight();
+                    else if (CurrentTransition.MoveDirections[i] == TuringTransition.Direction.Left) Tapes[i].MoveLeft();
                 }
-                CurrentState = transition.Target;
+                CurrentState = CurrentTransition.Target;
             }
-            catch (TransitionNotFound)
+            catch (TransitionNotFoundException)
             {
                 return false;
             }
@@ -186,22 +138,19 @@ namespace TMSim.Core
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
             }
-            throw new TransitionNotFound("Can not find transition");
+            throw new TransitionNotFoundException("Can not find transition");
         }
 
-        public void AddState(string identifier, bool isStart = false, bool isAccepting = false, string comment = "")
-        {
-            TuringState ts = new TuringState(identifier, comment);
+        public void AddState(TuringState ts)
+        {            
             States.Add(ts);
-            if (isStart) { StartState = ts; }
-            if (isAccepting) { EndStates.Add(ts); }
+            if (ts.IsStart) { StartState.IsStart = false; StartState = ts; }
+            if (ts.IsAccepting) { EndStates.Add(ts); }
         }
 
-        public void AddState(TuringState turingState, bool isStart = false, bool isAccepting = false)
+        public void EditState(TuringState tsOld, TuringState tsNew)
         {
-            States.Add(turingState);
-            if (isStart) { StartState = turingState; }
-            if (isAccepting) { EndStates.Add(turingState); }
+            throw new NotImplementedException("EditState");
         }
 
         public void RemoveState(TuringState ts)
@@ -224,6 +173,32 @@ namespace TMSim.Core
             tt.Target.IncomingTransitions.Add(tt);
         }
 
+        public void EditTransition(TuringTransition ttOld, TuringTransition ttNew)
+        {
+            throw new NotImplementedException("EditTransition");
+        }
+
+        public void RemoveTransition(TuringTransition tt, bool removeUnusedSymbols = false)
+        {
+            //remove unused chars from alphabets
+            throw new NotImplementedException("RemoveTransition");
+        }
+
+        public void AddSymbol(char c, bool isInInput)
+        {
+            throw new NotImplementedException("AddCharacter");
+        }
+
+        public void EditSymbol(char c, bool isInInput)
+        {
+            throw new NotImplementedException("EditCharacter");
+        }
+
+        public void RemoveSymbol(char c)
+        {
+            throw new NotImplementedException("RemoveCharacter");
+        }
+
         public TuringMachine GetCopy()
         {
             ImportExportStructure importExportStructure = new ImportExportStructure(this);
@@ -235,7 +210,7 @@ namespace TMSim.Core
 
         public void WriteTapeWord(string inputWord)
         {
-            TapeAlphabet = new Alphabet(inputWord);
+            TapeAlphabet = new TuringAlphabet(inputWord);
 
             //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
             foreach(var tape in Tapes)
