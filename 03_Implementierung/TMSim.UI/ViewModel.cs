@@ -133,6 +133,14 @@ namespace TMSim.UI
         public string RightText { get => resourceManager.GetString("TEXT_Right"); set { OnPropertyChanged(nameof(RightText)); } }
         public string InputwordText { get => resourceManager.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
         public string SpeedLabelText { get => resourceManager.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
+        public string PopupIdentifierText { get => resourceManager.GetString("TEXT_PopupIdentifier"); set { OnPropertyChanged(nameof(PopupIdentifierText)); } }
+        public string PopupStartText { get => resourceManager.GetString("TEXT_PopupStart"); set { OnPropertyChanged(nameof(PopupStartText)); } }
+        public string PopupAcceptText { get => resourceManager.GetString("TEXT_PopupAccept"); set { OnPropertyChanged(nameof(PopupAcceptText)); } }
+        public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
+        public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
+        public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
+
+
 
         #endregion
 
@@ -388,6 +396,12 @@ namespace TMSim.UI
             RightText = resourceManager.GetString("TEXT_Right");
             SpeedLabelText = resourceManager.GetString("TEXT_SpeedLabel");
             InputwordText = resourceManager.GetString("TEXT_Inputword");
+            PopupIdentifierText = resourceManager.GetString("TEXT_PopupIdentifier");
+            PopupStartText = resourceManager.GetString("TEXT_PopupStart");
+            PopupAcceptText = resourceManager.GetString("TEXT_PopupAccept");
+            PopupOKText = resourceManager.GetString("TEXT_PopupOK");
+            PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
+            PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
         }
     }
 }

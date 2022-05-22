@@ -150,6 +150,24 @@
   <data name="TEXT_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="TEXT_PopupAccept" xml:space="preserve">
+    <value>Accepting</value>
+  </data>
+  <data name="TEXT_PopupCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TEXT_PopupIdentifier" xml:space="preserve">
+    <value>Identifier:</value>
+  </data>
+  <data name="TEXT_PopupIdentifierText" xml:space="preserve">
+    <value>This should not be visible</value>
+  </data>
+  <data name="TEXT_PopupOK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="TEXT_PopupStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
   <data name="TEXT_Preferences" xml:space="preserve">
     <value>Preferences</value>
   </data>

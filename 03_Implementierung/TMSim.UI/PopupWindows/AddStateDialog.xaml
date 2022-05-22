@@ -27,7 +27,7 @@
             <CheckBox x:Name="accept_chk">_Accepting</CheckBox>
         </WrapPanel>
 
-        <Label Name="ident_lbl" Target="{Binding ident_txt}" Grid.Column="0">_Identifier:</Label>
+        <Label Name="ident_lbl" Target="{Binding ident_txt}" Grid.Column="0">_Identifier: </Label>
         <TextBox Name="ident_txt" Grid.Row="1" Grid.Column="0" Margin="0,0,10,35" Grid.RowSpan="2" MinWidth="130">This should not be visible</TextBox>
 
 
