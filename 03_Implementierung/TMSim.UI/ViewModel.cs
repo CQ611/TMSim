@@ -115,6 +115,7 @@ namespace TMSim.UI
         public string OpenText { get => resourceManager.GetString("TEXT_Open"); set { OnPropertyChanged(nameof(OpenText)); } }
         public string SaveText { get => resourceManager.GetString("TEXT_Save"); set { OnPropertyChanged(nameof(SaveText)); } }
         public string NewText { get => resourceManager.GetString("TEXT_New"); set { OnPropertyChanged(nameof(NewText)); } }
+        public string TransformText { get => resourceManager.GetString("TEXT_Transform"); set { OnPropertyChanged(nameof(TransformText)); } }
         public string Transformation1Text { get => resourceManager.GetString("TEXT_Transformation1"); set { OnPropertyChanged(nameof(Transformation1Text)); } }
         public string Transformation2Text { get => resourceManager.GetString("TEXT_Transformation2"); set { OnPropertyChanged(nameof(Transformation2Text)); } }
         public string Transformation3Text { get => resourceManager.GetString("TEXT_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Text)); } }
@@ -122,6 +123,11 @@ namespace TMSim.UI
         public string Transformation5Text { get => resourceManager.GetString("TEXT_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Text)); } }
         public string ExamplesText { get => resourceManager.GetString("TEXT_Examples"); set { OnPropertyChanged(nameof(ExamplesText)); } }
         public string ExitText { get => resourceManager.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }  
+        public string LanguageText { get => resourceManager.GetString("TEXT_Language"); set { OnPropertyChanged(nameof(LanguageText)); } }
+        public string GermanText { get => resourceManager.GetString("TEXT_German"); set { OnPropertyChanged(nameof(GermanText)); } }
+        public string EnglishText { get => resourceManager.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
+        public string PreferencesText { get => resourceManager.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
+        public string HighlightText { get => resourceManager.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
         #endregion
 
         private ResourceManager resourceManager;
@@ -360,11 +366,17 @@ namespace TMSim.UI
             NewText = resourceManager.GetString("TEXT_New");
             ExamplesText = resourceManager.GetString("TEXT_Examples");
             ExitText = resourceManager.GetString("TEXT_Exit");
+            TransformText = resourceManager.GetString("TEXT_Transform");
             Transformation1Text = resourceManager.GetString("TEXT_Transformation1");
             Transformation2Text = resourceManager.GetString("TEXT_Transformation2");
             Transformation3Text = resourceManager.GetString("TEXT_Transformation3");
             Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
             Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
+            LanguageText = resourceManager.GetString("TEXT_Language");
+            GermanText = resourceManager.GetString("TEXT_German");
+            EnglishText = resourceManager.GetString("TEXT_English");
+            PreferencesText = resourceManager.GetString("TEXT_Preferences");
+            HighlightText = resourceManager.GetString("TEXT_Highlight");
         }
     }
 }

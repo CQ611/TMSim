@@ -32,15 +32,15 @@
                 <Separator />
                 <MenuItem Header="{Binding ExitText}" Command="{Binding ExitApplication}"/>
             </MenuItem>
-            <MenuItem Header="_Preferences">
-                <MenuItem Header="_Highlight State"/>
+            <MenuItem Header="{Binding PreferencesText}">
+                <MenuItem Header="{Binding HighlightText}"/>
                 <Separator/>
-                <MenuItem Header="Language">
-                    <MenuItem Header="Deutsch" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
-                    <MenuItem Header="Englisch" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
+                <MenuItem Header="{Binding LanguageText}">
+                    <MenuItem Header="{Binding GermanText}" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
+                    <MenuItem Header="{Binding EnglishText}" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="_Transform" Command="{Binding TransformturingMachine}">
+            <MenuItem Header="{Binding TransformText}" Command="{Binding TransformturingMachine}">
                 <!--
                 <MenuItem Header="_Left-Right only"/>
                 <MenuItem Header="_No self references"/>
