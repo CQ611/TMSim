@@ -138,6 +138,9 @@
   <data name="TEXT_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="TEXT_Left" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="TEXT_New" xml:space="preserve">
     <value>Neu</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="TEXT_Preferences" xml:space="preserve">
     <value>Präferenzen</value>
+  </data>
+  <data name="TEXT_Right" xml:space="preserve">
+    <value>Rechts</value>
   </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
@@ -167,5 +173,8 @@
   </data>
   <data name="TEXT_Transformation5" xml:space="preserve">
     <value>Transformation #5</value>
+  </data>
+  <data name="TEXT_Upload" xml:space="preserve">
+    <value>Laden</value>
   </data>
 </root>

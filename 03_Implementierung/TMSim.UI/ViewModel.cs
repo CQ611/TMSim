@@ -128,6 +128,9 @@ namespace TMSim.UI
         public string EnglishText { get => resourceManager.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
         public string PreferencesText { get => resourceManager.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
         public string HighlightText { get => resourceManager.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
+        public string UploadText { get => resourceManager.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
+        public string LeftText { get => resourceManager.GetString("TEXT_Left"); set { OnPropertyChanged(nameof(LeftText)); } }
+        public string RightText { get => resourceManager.GetString("TEXT_Right"); set { OnPropertyChanged(nameof(RightText)); } }
         #endregion
 
         private ResourceManager resourceManager;
@@ -377,6 +380,9 @@ namespace TMSim.UI
             EnglishText = resourceManager.GetString("TEXT_English");
             PreferencesText = resourceManager.GetString("TEXT_Preferences");
             HighlightText = resourceManager.GetString("TEXT_Highlight");
+            UploadText = resourceManager.GetString("TEXT_Upload");
+            LeftText = resourceManager.GetString("TEXT_Left");
+            RightText = resourceManager.GetString("TEXT_Right");
         }
     }
 }
