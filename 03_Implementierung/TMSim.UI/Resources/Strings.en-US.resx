@@ -135,6 +135,9 @@
   <data name="TEXT_Highlight" xml:space="preserve">
     <value>Highlight State</value>
   </data>
+  <data name="TEXT_Inputword" xml:space="preserve">
+    <value>Input word: </value>
+  </data>
   <data name="TEXT_Language" xml:space="preserve">
     <value>Language</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="TEXT_SpeedLabel" xml:space="preserve">
+    <value>Speed: </value>
   </data>
   <data name="TEXT_Transform" xml:space="preserve">
     <value>Transform</value>

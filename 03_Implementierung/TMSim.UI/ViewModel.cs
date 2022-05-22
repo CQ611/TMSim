@@ -131,6 +131,9 @@ namespace TMSim.UI
         public string UploadText { get => resourceManager.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
         public string LeftText { get => resourceManager.GetString("TEXT_Left"); set { OnPropertyChanged(nameof(LeftText)); } }
         public string RightText { get => resourceManager.GetString("TEXT_Right"); set { OnPropertyChanged(nameof(RightText)); } }
+        public string InputwordText { get => resourceManager.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
+        public string SpeedLabelText { get => resourceManager.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
+
         #endregion
 
         private ResourceManager resourceManager;
@@ -383,6 +386,8 @@ namespace TMSim.UI
             UploadText = resourceManager.GetString("TEXT_Upload");
             LeftText = resourceManager.GetString("TEXT_Left");
             RightText = resourceManager.GetString("TEXT_Right");
+            SpeedLabelText = resourceManager.GetString("TEXT_SpeedLabel");
+            InputwordText = resourceManager.GetString("TEXT_Inputword");
         }
     }
 }
