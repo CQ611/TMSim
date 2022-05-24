@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TMSim.Core
 {
+    [Serializable]
     public class TuringState
     {
         public string Identifier { get; set; }

@@ -104,7 +104,7 @@
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,3">
                 <Grid>
                     <local:Table x:Name="table" Margin="5" Visibility="Hidden"/>
-                    <local:Diagram x:Name="diagram" Margin="5" Visibility="Visible"/>
+                    <local:Diagram x:Name="diagram" Margin="5" Visibility="Visible" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>
                 </Grid>
             </Border>
             <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="3,0,0,3">

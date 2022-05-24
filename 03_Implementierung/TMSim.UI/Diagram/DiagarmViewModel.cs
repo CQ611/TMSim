@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,7 +45,17 @@ namespace TMSim.UI
                 DData.Connections.Add(nc);
             }
 
-            return DData;
+            // Creating a Duplicate of DData to trigger the binding engine
+            DiagramData DDataCopy;
+            using (MemoryStream stream = new MemoryStream())
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize(stream, DData);
+                stream.Position = 0;
+                DDataCopy = (DiagramData)formatter.Deserialize(stream);
+            }
+
+            return DDataCopy;
         }
     }
 }

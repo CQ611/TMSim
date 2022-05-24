@@ -44,5 +44,10 @@ namespace TMSim.UI
             TuringTable.Columns.Add(new TableColumn());
             TuringTable.RowGroups[0].Rows[0].Cells.Add(new TableCell(new Paragraph(new Run("Neue Spalte"))));
         }
+
+        public void Method()
+        {
+
+        }
     }
 }

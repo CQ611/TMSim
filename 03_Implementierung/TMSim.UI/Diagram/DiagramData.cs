@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace TMSim.UI
 {
+    [Serializable]
     public class DiagramData
     {
         public Dictionary<string, Node> Nodes { get; set; } // (Identifier / Node object) pairs

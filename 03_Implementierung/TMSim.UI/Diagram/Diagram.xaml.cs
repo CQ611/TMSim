@@ -1,18 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using TMSim.Core;
 
 using System.Globalization;
 using System.ComponentModel;
@@ -21,8 +13,32 @@ namespace TMSim.UI
 {
     public partial class Diagram : UserControl
     {
-        private DiagramData DData;
-        private TuringMachineModifier TMModifier;
+        #region Dependency properties
+        public static DependencyProperty DDataProperty = DependencyProperty.Register(
+            "DData", typeof(DiagramData), typeof(Diagram),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+        public static DependencyProperty VMProperty = DependencyProperty.Register(
+            "VM", typeof(ViewModel), typeof(Diagram),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((Diagram)d).InvalidateVisual();
+        }
+        #endregion
+
+
+        public DiagramData DData
+        {
+            get { return (DiagramData)GetValue(DDataProperty); }
+            set { SetValue(DDataProperty, value); }
+        }
+        public ViewModel VM
+        {
+            get { return (ViewModel)GetValue(VMProperty); }
+            set { SetValue(VMProperty, value); }
+        }
 
         public bool Animated { get; set; }
 
@@ -39,32 +55,19 @@ namespace TMSim.UI
 
         private static readonly Brush accentBrush = Brushes.LightGray;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
+
         public Diagram()
         {
             InitializeComponent();
-            //GenerateTestDiagram();
             this.Loaded += new RoutedEventHandler(OnDiagramLoaded);
-
-            var vm = (ViewModel)DataContext;
-            DData = vm.DData;
-            TMModifier = vm.TMModifier;
+            VM = (ViewModel)DataContext;            
         }
+
         private void OnDiagramLoaded(object sender, RoutedEventArgs e)
         {
             DData.Width = ActualWidth;
             DData.Height = ActualHeight;
         }
-
-        public void GenerateTestDiagram()
-        {
-            var rand = new Random();
-            //DData = new DiagramData();
-            TMModifier.AddState();
-
-
-            InvalidateVisual();
-        }
-
 
         protected override async void OnRender(DrawingContext dc)
         {
@@ -187,7 +190,7 @@ namespace TMSim.UI
             return new Vector(-v.Y, v.X);
         }
 
-        public async void ArrangeDiagram(int maxIterations = 5000, double stopForce = 0.2)
+        private async void ArangeDiagram(int maxIterations = 5000, double stopForce = 0.2)
         {
             double repulsiveForce = 15000;
             double attractiveForce = 0.07;
@@ -231,6 +234,7 @@ namespace TMSim.UI
             }
 
             InvalidateVisual();
+
 
             Vector SumOfAttractiveForcesOn(Node n)
             {
@@ -384,8 +388,7 @@ namespace TMSim.UI
             else if (nodeReleasedOver != null && rightClickedNode != null)
             {
                 //create Connection
-                TMModifier.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
-                InvalidateVisual();
+                VM.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
             }
         }
 
@@ -397,23 +400,20 @@ namespace TMSim.UI
         private void add_state_btn_Click(object sender, RoutedEventArgs e)
         {
             DData.AddNodePoint = (Point)mouseClickpos;
-            TMModifier.AddState();
-            InvalidateVisual();
+            VM.AddState();
         }
 
         private void remove_state_btn_Click(object sender, RoutedEventArgs e)
         {
             if(rightClickedNode != null)
             {
-                TMModifier.RemoveState(rightClickedNode.Identifier);
-                InvalidateVisual();
+                VM.RemoveState(rightClickedNode.Identifier);
             }
         }
 
         private void arrange_btn_Click(object sender, RoutedEventArgs e)
         {
-            ArrangeDiagram();
-            InvalidateVisual();
+            ArangeDiagram();
         }
     }
 }

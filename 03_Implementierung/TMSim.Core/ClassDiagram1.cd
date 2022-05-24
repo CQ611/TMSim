@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TMSim.Core.TransitionNotFoundException" Collapsed="true">
+    <Position X="16" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TransitionNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.Transformation1" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transformations\Transformation1.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TMSim.Core.Transformation2" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transformations\Transformation2.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TMSim.Core.Transformation3" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transformations\Transformation3.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TMSim.Core.Transformation4" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transformations\Transformation4.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TMSim.Core.Transformation5" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="14.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transformations\Transformation5.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TMSim.Core.ImportExportStructure" Collapsed="true">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAACAAAAAAAAAAAAAABAAAAAAAAAAgAADAACAAA=</HashCode>
+      <FileName>ImportExportStructure.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.TuringAlphabet" Collapsed="true">
+    <Position X="17.75" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TuringAlphabet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.TuringMachine" Collapsed="true">
+    <Position X="12.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAABAgACAAgAACBAIACMACBAAQAAJgIAAgAEDoADCAA=</HashCode>
+      <FileName>TuringMachine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.TuringState" Collapsed="true">
+    <Position X="14.25" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAUAAAAAAAAgAAAAAAAAAAAAAIAQAAAwAAAAAA=</HashCode>
+      <FileName>TuringState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.TuringTape" Collapsed="true">
+    <Position X="16" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACCAAAAAAgAAAAAAAAAAAAAAAAAAACAIQACAAAAAAAA=</HashCode>
+      <FileName>TuringTape.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TMSim.Core.TuringTransition" Collapsed="true">
+    <Position X="17.75" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIECgAAAABAAAAAACAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>TuringTransition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TMSim.Core.ITransformation" Collapsed="true">
+    <Position X="12.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\ITransformation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

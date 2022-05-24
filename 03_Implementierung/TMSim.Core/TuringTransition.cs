@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace TMSim.Core
 {
+    [Serializable]
     public class TuringTransition
     {
         public enum Direction {
