@@ -7,6 +7,7 @@ using TMSim.Core;
 
 namespace TMSim.UI
 {
+    [Serializable]
     public class NodeConnection
     {
         Dictionary<TuringTransition.Direction, string> dirTranslation =

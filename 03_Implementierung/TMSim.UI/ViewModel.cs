@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
@@ -151,7 +150,6 @@ namespace TMSim.UI
 
             TM = new TuringMachine();
 
-            TMModifier = new TuringMachineModifier(this, ref TM);
             DData = new DiagramData();
             InitResoureManager();
         }
@@ -171,8 +169,7 @@ namespace TMSim.UI
 
         public bool HighlightCurrentState { get; set; } = true;
         public bool IsSimulationRunning { get; set; } = true;
-        public TuringMachineModifier TMModifier { get; }
-        public DiagramData DData { get; private set; }
+        public DiagramData DData { get; set; }
 
         public TuringMachine TM;
 
@@ -201,57 +198,57 @@ namespace TMSim.UI
             //todo
         }
 
-        public void OnStopSimulation()
+        private void OnStopSimulation()
         {
             throw new NotImplementedException("Hi");
         }
 
-        public void OnStepSimulation()
+        private void OnStepSimulation()
         {
             throw new NotImplementedException("Hi");
         }
 
-        public void OnWriteTapeWord()
+        private void OnWriteTapeWord()
         {
             TM.WriteTapeWord(TapeWordInput);
         }
 
-        public void OnSetSimulationTimerInterval()
+        private void OnSetSimulationTimerInterval()
         {
             throw new NotImplementedException("Hi");
         }
 
-        public void OnTansformTuringMachine()
+        private void OnTansformTuringMachine()
         {
             //TM.TansformTuringMachine();
             throw new NotImplementedException("OnTransformTuringMachine >> ViewModel");
         }
 
-        public void OnTransformation1()
+        private void OnTransformation1()
         {
             throw new NotImplementedException("OnTransformation1 >> ViewModel");
         }
 
-        public void OnTransformation2()
+        private void OnTransformation2()
         {
             throw new NotImplementedException("OnTransformation2 >> ViewModel");
         }
 
-        public void OnTransformation3()
+        private void OnTransformation3()
         {
             throw new NotImplementedException("OnTransformation3 >> ViewModel");
         }
 
-        public void OnTransformation4()
+        private void OnTransformation4()
         {
             throw new NotImplementedException("OnTransformation4 >> ViewModel");
         }
-        public void OnTransformation5()
+        private void OnTransformation5()
         {
-            TMModifier.TransformT5();
+            TransformT5();
         }
 
-        public void OnImportFromTextFile()
+        private void OnImportFromTextFile()
         {
             OpenFileDialog importFileDialog = new OpenFileDialog
             {
@@ -263,10 +260,11 @@ namespace TMSim.UI
             if (importFileDialog.ShowDialog() == true)
             {
                 TM.ImportFromTextFile(importFileDialog.FileName);
+                OnTMChanged();
             }
         }
 
-        public void OnExportToTextFile()
+        private void OnExportToTextFile()
         {
             SaveFileDialog exportFileDialog = new SaveFileDialog
             {
@@ -281,12 +279,12 @@ namespace TMSim.UI
             }
         }
 
-        public void OnClearTuringMachine()
+        private void OnClearTuringMachine()
         {
             TM = new TuringMachine();
         }
 
-        public void OnLoadExample()
+        private void OnLoadExample()
         {
             OpenFileDialog loadExampleFileDialog = new OpenFileDialog
             {
@@ -298,6 +296,7 @@ namespace TMSim.UI
             if (loadExampleFileDialog.ShowDialog() == true)
             {
                 TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                OnTMChanged();
             }
         }
 
@@ -307,7 +306,7 @@ namespace TMSim.UI
             OnPropertyChanged(nameof(DData));
         }
 
-        public void OnExitApplication()
+        private void OnExitApplication()
         {
             Application.Current.Shutdown();
         }
@@ -338,14 +337,14 @@ namespace TMSim.UI
             RefreshTextFromUi();
         }
 
-        public void OnGermanLanguageSelected()
+        private void OnGermanLanguageSelected()
         {
             GermanLanguageIsChecked = true;
             EnglishLanguageIsChecked = false;
             SelectedLanguageChanged("de-DE");
         }
 
-        public void OnEnglishLanguageSelected()
+        private void OnEnglishLanguageSelected()
         {
             GermanLanguageIsChecked = false;
             EnglishLanguageIsChecked = true;
@@ -365,6 +364,60 @@ namespace TMSim.UI
             Transformation3Text = resourceManager.GetString("TEXT_Transformation3");
             Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
             Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
+        }
+
+        public void AddState()
+        {
+            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}");
+            if (asd.ShowDialog() == true)
+            {
+                string identifier = asd.Identfier;
+                bool isStart = asd.IsStart;
+                bool isAccepting = asd.IsAccepting;
+                string comment = "DEBUG: TODO: get comment from popup";
+                //TODO: get comment from popup
+
+                List<string> existingStates = new List<string>();
+                TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
+                if (existingStates.Contains(identifier))
+                {
+                    MessageBox.Show($"State with identifier {identifier} already exists!",
+                        "Warning!",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
+                OnTMChanged();
+            }
+        }
+
+        public void RemoveState(string ident)
+        {
+            TuringState ts = TM.States.First(x => x.Identifier == ident);
+            TM.RemoveState(ts);
+            OnTMChanged();
+        }
+
+        public void AddTransition(TuringState source = null, TuringState target = null)
+        {
+            List<char> symbolsRead = "ab".ToList<char>();
+            List<char> symbolsWrite = "cd".ToList<char>();
+            List<TuringTransition.Direction> direction = new List<TuringTransition.Direction> {
+            TuringTransition.Direction.Right, TuringTransition.Direction.Left};
+            //TODO: Get the above from new window
+            // pay attention to source and target, may be null for Table, not for diagram
+            MessageBox.Show("This should get values for a new Transition");
+
+            TM.AddTransition(new TuringTransition(source, target, symbolsRead, symbolsWrite, direction));
+            OnTMChanged();
+        }
+
+        public void TransformT5()
+        {
+            TM = new Transformation5().Execute(TM);
+            OnTMChanged();
         }
     }
 }

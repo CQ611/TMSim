@@ -10,9 +10,6 @@
              MouseRightButtonDown="UserControl_MouseRightButtonDown" MouseRightButtonUp="UserControl_MouseRightButtonUp"
              MouseLeave="UserControl_MouseLeave"
              >
-    <UserControl.DataContext>
-        <Binding Source="{StaticResource sharedViewModel}"/>
-    </UserControl.DataContext>
     <Grid>
         <Canvas/>
     </Grid>

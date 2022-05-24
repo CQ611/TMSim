@@ -16,6 +16,7 @@ using TMSim.Core;
 
 namespace TMSim.UI
 {
+    [Serializable]
     public class Node : IEquatable<Node>
     {
         public TuringState State { get; set; }
