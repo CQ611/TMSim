@@ -180,6 +180,12 @@
   <data name="TEXT_SpeedLabel" xml:space="preserve">
     <value>Tempo:</value>
   </data>
+  <data name="TEXT_TapeExample" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
+  <data name="TEXT_TapeLoad" xml:space="preserve">
+    <value>Laden</value>
+  </data>
   <data name="TEXT_Transform" xml:space="preserve">
     <value>Transformieren</value>
   </data>

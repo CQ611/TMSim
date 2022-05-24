@@ -140,7 +140,8 @@ namespace TMSim.UI
         public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
         public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
 
-
+        public string TapeExampleText { get => resourceManager.GetString("TEXT_TapeExample"); set { OnPropertyChanged(nameof(TapeExampleText)); } }
+        public string TapeLoadText { get => resourceManager.GetString("TEXT_TapeLoad"); set { OnPropertyChanged(nameof(TapeLoadText)); } }
 
         #endregion
 
@@ -402,6 +403,8 @@ namespace TMSim.UI
             PopupOKText = resourceManager.GetString("TEXT_PopupOK");
             PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
             PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
+            TapeExampleText = resourceManager.GetString("TEXT_TapeExample");
+            TapeLoadText = resourceManager.GetString("TEXT_TapeLoad");
         }
     }
 }
