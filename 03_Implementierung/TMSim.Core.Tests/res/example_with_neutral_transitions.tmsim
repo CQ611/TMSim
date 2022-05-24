@@ -1,0 +1,35 @@
+﻿{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "abcde",
+  "TapeAlphabet": "abcde_",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "q1"
+  ]
+}
