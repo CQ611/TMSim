@@ -62,7 +62,6 @@
   "StartState": "q0",
   "Blank": "_",
   "EndStates": [
-    "q2",
     "q3"
   ]
 }

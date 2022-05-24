@@ -1,0 +1,156 @@
+﻿{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "Only a",
+      "Comment": ""
+    },
+    {
+      "Identifier": "Only b",
+      "Comment": ""
+    },
+    {
+      "Identifier": "Error",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "abc",
+  "TapeAlphabet": "abc_",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "Only a",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "a"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "Only b",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only b",
+      "TargetState": "Only b",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only a",
+      "TargetState": "Only a",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "a"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "Error",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "c"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only b",
+      "TargetState": "Error",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "a"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only b",
+      "TargetState": "Error",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "c"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only a",
+      "TargetState": "Error",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "c"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Only a",
+      "TargetState": "Error",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "Only a",
+    "Only b"
+  ]
+}

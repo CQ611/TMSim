@@ -2,7 +2,7 @@
   "States": [
     {
       "Identifier": "q0",
-      "Comment": ""
+      "Comment": "Startzustand"
     },
     {
       "Identifier": "q1",
@@ -14,55 +14,58 @@
     },
     {
       "Identifier": "q3",
-      "Comment": ""
+      "Comment": "Endzustand"
     },
-    {
-      "Identifier": "...",
-      "Comment": ""
-    }
   ],
-  "InputAlphabet": "abcde",
-  "TapeAlphabet": "abcde_",
+  "InputAlphabet": "abc",
+  "TapeAlphabet": "abc_123",
   "Transitions": [
     {
       "SourceState": "q0",
       "TargetState": "q1",
       "SymbolsRead": [
-        "a",
-        "b"
-      ],
-      "SymbolsWrite": [
-        "b",
         "a"
       ],
-      "MoveDirections": [
-        "Right",
-        "Left"
+      "SymbolsWrite": [
+        "1"
       ],
-      "Comment": ""
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": "check a"
     },
     {
       "SourceState": "q1",
-      "TargetState": "q0",
+      "TargetState": "q2",
       "SymbolsRead": [
-        "a",
         "b"
       ],
       "SymbolsWrite": [
-        "b",
-        "a"
+        "2"
       ],
       "MoveDirections": [
-        "Right",
-        "Left"
+        "Right"
+      ],
+      "Comment": "check b"
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q3",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
       ],
       "Comment": ""
-    }
+    },
   ],
   "StartState": "q0",
   "Blank": "_",
   "EndStates": [
-    "q2",
     "q3"
   ]
 }

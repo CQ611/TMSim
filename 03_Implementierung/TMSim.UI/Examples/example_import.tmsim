@@ -1,25 +1,10 @@
 ﻿{
   "States": [
-    {
-      "Identifier": "q0",
-      "Comment": ""
-    },
-    {
-      "Identifier": "q1",
-      "Comment": ""
-    },
-    {
-      "Identifier": "q2",
-      "Comment": ""
-    },
-    {
-      "Identifier": "q3",
-      "Comment": ""
-    },
-    {
-      "Identifier": "...",
-      "Comment": ""
-    }
+    "q0",
+    "q1",
+    "q2",
+    "q3",
+    "..."
   ],
   "InputAlphabet": "abcde",
   "TapeAlphabet": "abcde_",
@@ -38,8 +23,7 @@
       "MoveDirections": [
         "Right",
         "Left"
-      ],
-      "Comment": ""
+      ]
     },
     {
       "SourceState": "q1",
@@ -55,8 +39,7 @@
       "MoveDirections": [
         "Right",
         "Left"
-      ],
-      "Comment": ""
+      ]
     }
   ],
   "StartState": "q0",
