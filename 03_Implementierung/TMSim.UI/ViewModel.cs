@@ -10,6 +10,7 @@ using System.Resources;
 using System.Threading;
 using System.Windows;
 using System.Windows.Markup;
+using System.Windows.Threading;
 using TMSim.Core;
 
 namespace TMSim.UI
@@ -21,7 +22,6 @@ namespace TMSim.UI
         public RelayCommand StepSimulation { get; set; }
         public RelayCommand StopSimulation { get; set; }
         public RelayCommand WriteTapeWord { get; set; }
-        public RelayCommand SetSimulationTimerInterval { get; set; }
         public RelayCommand TransformTuringMachine { get; set; }
         public RelayCommand Transformation1 { get; set; }
         public RelayCommand Transformation2 { get; set; }
@@ -94,7 +94,7 @@ namespace TMSim.UI
             }
         }
 
-        private string _tapeWordInput;
+        private string _tapeWordInput = String.Empty;
         public string TapeWordInput
         {
             get
@@ -121,15 +121,13 @@ namespace TMSim.UI
         public string Transformation4Text { get => resourceManager.GetString("TEXT_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Text)); } }
         public string Transformation5Text { get => resourceManager.GetString("TEXT_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Text)); } }
         public string ExamplesText { get => resourceManager.GetString("TEXT_Examples"); set { OnPropertyChanged(nameof(ExamplesText)); } }
-        public string ExitText { get => resourceManager.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }  
+        public string ExitText { get => resourceManager.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }
         public string LanguageText { get => resourceManager.GetString("TEXT_Language"); set { OnPropertyChanged(nameof(LanguageText)); } }
         public string GermanText { get => resourceManager.GetString("TEXT_German"); set { OnPropertyChanged(nameof(GermanText)); } }
         public string EnglishText { get => resourceManager.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
         public string PreferencesText { get => resourceManager.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
         public string HighlightText { get => resourceManager.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
         public string UploadText { get => resourceManager.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
-        public string LeftText { get => resourceManager.GetString("TEXT_Left"); set { OnPropertyChanged(nameof(LeftText)); } }
-        public string RightText { get => resourceManager.GetString("TEXT_Right"); set { OnPropertyChanged(nameof(RightText)); } }
         public string InputwordText { get => resourceManager.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
         public string SpeedLabelText { get => resourceManager.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
         public string PopupIdentifierText { get => resourceManager.GetString("TEXT_PopupIdentifier"); set { OnPropertyChanged(nameof(PopupIdentifierText)); } }
@@ -138,13 +136,10 @@ namespace TMSim.UI
         public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
         public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
         public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
-
-        public string TapeExampleText { get => resourceManager.GetString("TEXT_TapeExample"); set { OnPropertyChanged(nameof(TapeExampleText)); } }
-        public string TapeLoadText { get => resourceManager.GetString("TEXT_TapeLoad"); set { OnPropertyChanged(nameof(TapeLoadText)); } }
-
         #endregion
 
         private ResourceManager resourceManager;
+        private DispatcherTimer dispatcherTimer;
 
         public ViewModel()
         {
@@ -152,7 +147,6 @@ namespace TMSim.UI
             StepSimulation = new RelayCommand((o) => { OnStepSimulation(); });
             StopSimulation = new RelayCommand((o) => { OnStopSimulation(); });
             WriteTapeWord = new RelayCommand((o) => { OnWriteTapeWord(); });
-            SetSimulationTimerInterval = new RelayCommand((o) => { OnSetSimulationTimerInterval(); });
             TransformTuringMachine = new RelayCommand((o) => { OnTansformTuringMachine(); });
             Transformation1 = new RelayCommand((o) => { OnTransformation1(); });
             Transformation2 = new RelayCommand((o) => { OnTransformation2(); });
@@ -166,23 +160,24 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
-            RightButton = new RelayCommand((o) => { OnRightButton(); });
-            LeftButton = new RelayCommand((o) => { OnLeftButton(); });
 
             TM = new TuringMachine();
 
             DData = new DiagramData();
             InitResoureManager();
+
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Tick += DispatcherTimer_Tick;
         }
 
         private void InitResoureManager()
         {
             resourceManager = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
-            if(CultureInfo.CurrentCulture.Name == "de-DE")
+            if (CultureInfo.CurrentCulture.Name == "de-DE")
             {
                 GermanLanguageIsChecked = true;
             }
-            else if (CultureInfo.CurrentCulture.Name == "en-US") 
+            else if (CultureInfo.CurrentCulture.Name == "en-US")
             {
                 EnglishLanguageIsChecked = true;
             }
@@ -197,46 +192,70 @@ namespace TMSim.UI
         public void OnTMChanged()
         {
             UpdateDiagramData();
-            //UpdateTabledata();
+            UpdateTapeData();
         }
 
         private bool startIsActive = false;
 
+
         private void OnStartPauseSimulation()
         {
+            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
             if (startIsActive)
             {
                 startIsActive = false;
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
+                dispatcherTimer.Stop();
             }
             else
             {
                 startIsActive = true;
                 StartVisibility = Visibility.Hidden;
                 StopVisibility = Visibility.Visible;
+                dispatcherTimer.Start();
             }
-            //todo
+            OnTMChanged();
+        }
+
+        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            if(TM.AdvanceState() == true)
+            {
+                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
+                OnTMChanged();
+            }
+            else
+            {
+                OnStopSimulation();
+            }
         }
 
         private void OnStopSimulation()
         {
-            throw new NotImplementedException("Hi");
+            //todo zuruecksetzen
+            startIsActive = false;
+            StartVisibility = Visibility.Visible;
+            StopVisibility = Visibility.Hidden;
+            dispatcherTimer.Stop();
         }
 
         private void OnStepSimulation()
         {
-            throw new NotImplementedException("Hi");
+            if(TM.AdvanceState() == true)
+            {
+                OnTMChanged();
+            }
+            else
+            {
+
+            }
         }
 
         private void OnWriteTapeWord()
         {
             TM.WriteTapeWord(TapeWordInput);
-        }
-
-        private void OnSetSimulationTimerInterval()
-        {
-            throw new NotImplementedException("Hi");
+            LoadTapeContent();
         }
 
         private void OnTansformTuringMachine()
@@ -252,7 +271,7 @@ namespace TMSim.UI
 
         private void OnTransformation2()
         {
-            throw new NotImplementedException("OnTransformation2 >> ViewModel");
+            TransformT2();
         }
 
         private void OnTransformation3()
@@ -264,9 +283,22 @@ namespace TMSim.UI
         {
             throw new NotImplementedException("OnTransformation4 >> ViewModel");
         }
+
         private void OnTransformation5()
         {
             TransformT5();
+        }
+
+        public void TransformT2()
+        {
+            TM = new Transformation2().Execute(TM);
+            OnTMChanged();
+        }
+
+        public void TransformT5()
+        {
+            TM = new Transformation5().Execute(TM);
+            OnTMChanged();
         }
 
         private void OnImportFromTextFile()
@@ -274,13 +306,14 @@ namespace TMSim.UI
             OpenFileDialog importFileDialog = new OpenFileDialog
             {
                 Title = "Import turingmachine",
-                Filter = "TMSim file (*.tmsim)|*.tmsim", 
+                Filter = "TMSim file (*.tmsim)|*.tmsim",
                 FilterIndex = 2,
                 RestoreDirectory = true
             };
             if (importFileDialog.ShowDialog() == true)
             {
                 TM.ImportFromTextFile(importFileDialog.FileName);
+                DeleteTapeContent();
                 OnTMChanged();
             }
         }
@@ -303,6 +336,7 @@ namespace TMSim.UI
         private void OnClearTuringMachine()
         {
             TM = new TuringMachine();
+            DeleteTapeContent();
         }
 
         private void OnLoadExample()
@@ -317,6 +351,7 @@ namespace TMSim.UI
             if (loadExampleFileDialog.ShowDialog() == true)
             {
                 TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                DeleteTapeContent();
                 OnTMChanged();
             }
         }
@@ -392,8 +427,6 @@ namespace TMSim.UI
             PreferencesText = resourceManager.GetString("TEXT_Preferences");
             HighlightText = resourceManager.GetString("TEXT_Highlight");
             UploadText = resourceManager.GetString("TEXT_Upload");
-            LeftText = resourceManager.GetString("TEXT_Left");
-            RightText = resourceManager.GetString("TEXT_Right");
             SpeedLabelText = resourceManager.GetString("TEXT_SpeedLabel");
             InputwordText = resourceManager.GetString("TEXT_Inputword");
             PopupIdentifierText = resourceManager.GetString("TEXT_PopupIdentifier");
@@ -402,8 +435,6 @@ namespace TMSim.UI
             PopupOKText = resourceManager.GetString("TEXT_PopupOK");
             PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
             PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
-            TapeExampleText = resourceManager.GetString("TEXT_TapeExample");
-            TapeLoadText = resourceManager.GetString("TEXT_TapeLoad");
         }
 
         public void AddState()
@@ -451,12 +482,6 @@ namespace TMSim.UI
             MessageBox.Show("This should get values for a new Transition");
 
             TM.AddTransition(new TuringTransition(source, target, symbolsRead, symbolsWrite, direction));
-            OnTMChanged();
-        }
-
-        public void TransformT5()
-        {
-            TM = new Transformation5().Execute(TM);
             OnTMChanged();
         }
     }

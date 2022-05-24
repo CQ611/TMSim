@@ -21,8 +21,6 @@
         <Border Grid.Row="0">
             <Label Style="{StaticResource ReadWriteHeadStyle}"></Label>
         </Border>
-        <TextBox Grid.Row="0" Margin="5" x:Name="ExampleTapeWord" HorizontalAlignment="Left" Width="150" Text="{Binding TapeExampleText}" VerticalContentAlignment="Center" FontSize="20"/>
-        <Button Grid.Row="0" Margin="5" x:Name="ExampleLoadButton" HorizontalAlignment="Right" Width="80" Content="{Binding TapeLoadText}" VerticalContentAlignment="Center" FontSize="20" Click="ExampleLoadButton_Click"/>
 
         <Border Grid.Row="1" Width="784" BorderBrush="Black" BorderThickness="1" CornerRadius="5">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">

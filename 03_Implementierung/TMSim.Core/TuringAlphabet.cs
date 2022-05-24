@@ -12,6 +12,7 @@ namespace TMSim.Core
             chars.ToList().ForEach(c => { if (!Symbols.Contains(c)) Symbols.Add(c); });
 
         }
+
         public bool WordIsContainedIn(string word)
         {
             return !word.ToList().Where(c => !Symbols.Contains(c)).Any();

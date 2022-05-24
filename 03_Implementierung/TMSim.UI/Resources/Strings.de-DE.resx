@@ -141,9 +141,6 @@
   <data name="TEXT_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <data name="TEXT_Left" xml:space="preserve">
-    <value>Links</value>
-  </data>
   <data name="TEXT_New" xml:space="preserve">
     <value>Neu</value>
   </data>
@@ -171,20 +168,11 @@
   <data name="TEXT_Preferences" xml:space="preserve">
     <value>Präferenzen</value>
   </data>
-  <data name="TEXT_Right" xml:space="preserve">
-    <value>Rechts</value>
-  </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
   <data name="TEXT_SpeedLabel" xml:space="preserve">
     <value>Tempo:</value>
-  </data>
-  <data name="TEXT_TapeExample" xml:space="preserve">
-    <value>Beispiel</value>
-  </data>
-  <data name="TEXT_TapeLoad" xml:space="preserve">
-    <value>Laden</value>
   </data>
   <data name="TEXT_Transform" xml:space="preserve">
     <value>Transformieren</value>
