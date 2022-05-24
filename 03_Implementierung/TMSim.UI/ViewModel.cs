@@ -114,6 +114,7 @@ namespace TMSim.UI
         public string OpenText { get => resourceManager.GetString("TEXT_Open"); set { OnPropertyChanged(nameof(OpenText)); } }
         public string SaveText { get => resourceManager.GetString("TEXT_Save"); set { OnPropertyChanged(nameof(SaveText)); } }
         public string NewText { get => resourceManager.GetString("TEXT_New"); set { OnPropertyChanged(nameof(NewText)); } }
+        public string TransformText { get => resourceManager.GetString("TEXT_Transform"); set { OnPropertyChanged(nameof(TransformText)); } }
         public string Transformation1Text { get => resourceManager.GetString("TEXT_Transformation1"); set { OnPropertyChanged(nameof(Transformation1Text)); } }
         public string Transformation2Text { get => resourceManager.GetString("TEXT_Transformation2"); set { OnPropertyChanged(nameof(Transformation2Text)); } }
         public string Transformation3Text { get => resourceManager.GetString("TEXT_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Text)); } }
@@ -121,6 +122,26 @@ namespace TMSim.UI
         public string Transformation5Text { get => resourceManager.GetString("TEXT_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Text)); } }
         public string ExamplesText { get => resourceManager.GetString("TEXT_Examples"); set { OnPropertyChanged(nameof(ExamplesText)); } }
         public string ExitText { get => resourceManager.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }  
+        public string LanguageText { get => resourceManager.GetString("TEXT_Language"); set { OnPropertyChanged(nameof(LanguageText)); } }
+        public string GermanText { get => resourceManager.GetString("TEXT_German"); set { OnPropertyChanged(nameof(GermanText)); } }
+        public string EnglishText { get => resourceManager.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
+        public string PreferencesText { get => resourceManager.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
+        public string HighlightText { get => resourceManager.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
+        public string UploadText { get => resourceManager.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
+        public string LeftText { get => resourceManager.GetString("TEXT_Left"); set { OnPropertyChanged(nameof(LeftText)); } }
+        public string RightText { get => resourceManager.GetString("TEXT_Right"); set { OnPropertyChanged(nameof(RightText)); } }
+        public string InputwordText { get => resourceManager.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
+        public string SpeedLabelText { get => resourceManager.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
+        public string PopupIdentifierText { get => resourceManager.GetString("TEXT_PopupIdentifier"); set { OnPropertyChanged(nameof(PopupIdentifierText)); } }
+        public string PopupStartText { get => resourceManager.GetString("TEXT_PopupStart"); set { OnPropertyChanged(nameof(PopupStartText)); } }
+        public string PopupAcceptText { get => resourceManager.GetString("TEXT_PopupAccept"); set { OnPropertyChanged(nameof(PopupAcceptText)); } }
+        public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
+        public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
+        public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
+
+        public string TapeExampleText { get => resourceManager.GetString("TEXT_TapeExample"); set { OnPropertyChanged(nameof(TapeExampleText)); } }
+        public string TapeLoadText { get => resourceManager.GetString("TEXT_TapeLoad"); set { OnPropertyChanged(nameof(TapeLoadText)); } }
+
         #endregion
 
         private ResourceManager resourceManager;
@@ -359,11 +380,30 @@ namespace TMSim.UI
             NewText = resourceManager.GetString("TEXT_New");
             ExamplesText = resourceManager.GetString("TEXT_Examples");
             ExitText = resourceManager.GetString("TEXT_Exit");
+            TransformText = resourceManager.GetString("TEXT_Transform");
             Transformation1Text = resourceManager.GetString("TEXT_Transformation1");
             Transformation2Text = resourceManager.GetString("TEXT_Transformation2");
             Transformation3Text = resourceManager.GetString("TEXT_Transformation3");
             Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
             Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
+            LanguageText = resourceManager.GetString("TEXT_Language");
+            GermanText = resourceManager.GetString("TEXT_German");
+            EnglishText = resourceManager.GetString("TEXT_English");
+            PreferencesText = resourceManager.GetString("TEXT_Preferences");
+            HighlightText = resourceManager.GetString("TEXT_Highlight");
+            UploadText = resourceManager.GetString("TEXT_Upload");
+            LeftText = resourceManager.GetString("TEXT_Left");
+            RightText = resourceManager.GetString("TEXT_Right");
+            SpeedLabelText = resourceManager.GetString("TEXT_SpeedLabel");
+            InputwordText = resourceManager.GetString("TEXT_Inputword");
+            PopupIdentifierText = resourceManager.GetString("TEXT_PopupIdentifier");
+            PopupStartText = resourceManager.GetString("TEXT_PopupStart");
+            PopupAcceptText = resourceManager.GetString("TEXT_PopupAccept");
+            PopupOKText = resourceManager.GetString("TEXT_PopupOK");
+            PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
+            PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
+            TapeExampleText = resourceManager.GetString("TEXT_TapeExample");
+            TapeLoadText = resourceManager.GetString("TEXT_TapeLoad");
         }
 
         public void AddState()

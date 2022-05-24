@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="TEXT_English" xml:space="preserve">
+    <value>English</value>
+  </data>
   <data name="TEXT_Examples" xml:space="preserve">
     <value>Examples</value>
   </data>
@@ -126,14 +129,65 @@
   <data name="TEXT_File" xml:space="preserve">
     <value>File</value>
   </data>
+  <data name="TEXT_German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="TEXT_Highlight" xml:space="preserve">
+    <value>Highlight State</value>
+  </data>
+  <data name="TEXT_Inputword" xml:space="preserve">
+    <value>Input word: </value>
+  </data>
+  <data name="TEXT_Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="TEXT_Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
   <data name="TEXT_New" xml:space="preserve">
     <value>New</value>
   </data>
   <data name="TEXT_Open" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="TEXT_PopupAccept" xml:space="preserve">
+    <value>Accepting</value>
+  </data>
+  <data name="TEXT_PopupCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="TEXT_PopupIdentifier" xml:space="preserve">
+    <value>Identifier:</value>
+  </data>
+  <data name="TEXT_PopupIdentifierText" xml:space="preserve">
+    <value>This should not be visible</value>
+  </data>
+  <data name="TEXT_PopupOK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="TEXT_PopupStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="TEXT_Preferences" xml:space="preserve">
+    <value>Preferences</value>
+  </data>
+  <data name="TEXT_Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="TEXT_SpeedLabel" xml:space="preserve">
+    <value>Speed: </value>
+  </data>
+  <data name="TEXT_TapeExample" xml:space="preserve">
+    <value>Example</value>
+  </data>
+  <data name="TEXT_TapeLoad" xml:space="preserve">
+    <value>Load</value>
+  </data>
+  <data name="TEXT_Transform" xml:space="preserve">
+    <value>Transform</value>
   </data>
   <data name="TEXT_Transformation1" xml:space="preserve">
     <value>transformation No. 1</value>
@@ -149,5 +203,8 @@
   </data>
   <data name="TEXT_Transformation5" xml:space="preserve">
     <value>transformation No. 5</value>
+  </data>
+  <data name="TEXT_Upload" xml:space="preserve">
+    <value>Load</value>
   </data>
 </root>

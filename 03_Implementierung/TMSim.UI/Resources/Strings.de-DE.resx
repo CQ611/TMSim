@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="TEXT_English" xml:space="preserve">
+    <value>Englisch</value>
+  </data>
   <data name="TEXT_Examples" xml:space="preserve">
     <value>Beispiele</value>
   </data>
@@ -126,14 +129,65 @@
   <data name="TEXT_File" xml:space="preserve">
     <value>Datei</value>
   </data>
+  <data name="TEXT_German" xml:space="preserve">
+    <value>Deutsch</value>
+  </data>
+  <data name="TEXT_Highlight" xml:space="preserve">
+    <value>Zustand hervorheben</value>
+  </data>
+  <data name="TEXT_Inputword" xml:space="preserve">
+    <value>Eingabewort: </value>
+  </data>
+  <data name="TEXT_Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="TEXT_Left" xml:space="preserve">
+    <value>Links</value>
+  </data>
   <data name="TEXT_New" xml:space="preserve">
     <value>Neu</value>
   </data>
   <data name="TEXT_Open" xml:space="preserve">
     <value>Öffnen</value>
   </data>
+  <data name="TEXT_PopupAccept" xml:space="preserve">
+    <value>Akzeptieren</value>
+  </data>
+  <data name="TEXT_PopupCancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="TEXT_PopupIdentifier" xml:space="preserve">
+    <value>Identifier:</value>
+  </data>
+  <data name="TEXT_PopupIdentifierText" xml:space="preserve">
+    <value>Das sollte nicht sichtbar sein!</value>
+  </data>
+  <data name="TEXT_PopupOK" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="TEXT_PopupStart" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="TEXT_Preferences" xml:space="preserve">
+    <value>Präferenzen</value>
+  </data>
+  <data name="TEXT_Right" xml:space="preserve">
+    <value>Rechts</value>
+  </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
+  </data>
+  <data name="TEXT_SpeedLabel" xml:space="preserve">
+    <value>Tempo:</value>
+  </data>
+  <data name="TEXT_TapeExample" xml:space="preserve">
+    <value>Beispiel</value>
+  </data>
+  <data name="TEXT_TapeLoad" xml:space="preserve">
+    <value>Laden</value>
+  </data>
+  <data name="TEXT_Transform" xml:space="preserve">
+    <value>Transformieren</value>
   </data>
   <data name="TEXT_Transformation1" xml:space="preserve">
     <value>Transformation #1</value>
@@ -149,5 +203,8 @@
   </data>
   <data name="TEXT_Transformation5" xml:space="preserve">
     <value>Transformation #5</value>
+  </data>
+  <data name="TEXT_Upload" xml:space="preserve">
+    <value>Laden</value>
   </data>
 </root>

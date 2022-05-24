@@ -18,6 +18,7 @@ namespace TMSim.UI
         {
             InitializeComponent();
             ident_txt.Text = defaultIdentifier;
+            var vm = (ViewModel)DataContext;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
