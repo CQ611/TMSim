@@ -139,7 +139,7 @@ namespace TMSim.UI
         #endregion
 
         private ResourceManager resourceManager;
-        private DispatcherTimer dispatcherTimer;
+        private DispatcherTimer timmy;
 
         public ViewModel()
         {
@@ -166,8 +166,9 @@ namespace TMSim.UI
             DData = new DiagramData();
             InitResoureManager();
 
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Tick += DispatcherTimer_Tick;
+            timmy = new DispatcherTimer();
+            timmy.Tick += Timmy_Tick;
+            SetTimerInterval();
         }
 
         private void InitResoureManager()
@@ -200,56 +201,53 @@ namespace TMSim.UI
 
         private void OnStartPauseSimulation()
         {
-            dispatcherTimer.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
             if (startIsActive)
             {
                 startIsActive = false;
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
-                dispatcherTimer.Stop();
+                timmy.Stop();
             }
             else
             {
                 startIsActive = true;
                 StartVisibility = Visibility.Hidden;
                 StopVisibility = Visibility.Visible;
-                dispatcherTimer.Start();
+                timmy.Start();
             }
             OnTMChanged();
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
+        private void Timmy_Tick(object sender, EventArgs e)
         {
-            if(TM.AdvanceState() == true)
-            {
-                dispatcherTimer.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
-                OnTMChanged();
-            }
-            else
-            {
-                OnStopSimulation();
-            }
+            OnStepSimulation();
+        }
+
+        private void SetTimerInterval()
+        {
+            timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
 
         private void OnStopSimulation()
         {
-            //todo zuruecksetzen
+            TM.Reset();
             startIsActive = false;
             StartVisibility = Visibility.Visible;
             StopVisibility = Visibility.Hidden;
-            dispatcherTimer.Stop();
+            timmy.Stop();
+            OnTMChanged();
         }
 
         private void OnStepSimulation()
         {
-            if(TM.AdvanceState() == true)
+            if (!TM.AdvanceState())
             {
-                OnTMChanged();
+                startIsActive = false;
+                StartVisibility = Visibility.Visible;
+                StopVisibility = Visibility.Hidden;
+                timmy.Stop();
             }
-            else
-            {
-
-            }
+            OnTMChanged();
         }
 
         private void OnWriteTapeWord()

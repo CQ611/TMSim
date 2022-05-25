@@ -54,23 +54,16 @@ namespace TMSim.UI
             if(newIndex < fieldUnderReadWriteHead)
             {
                 RightMove(velocity);
-                //fieldUnderReadWriteHead = newIndex;
             }
             else if (newIndex > fieldUnderReadWriteHead)
             {
                 LeftMove(velocity);
-                //fieldUnderReadWriteHead = newIndex;
             }
-            else
-            {
-
-            }
-
         }
 
-        private void Vm_DeleteTapeWordEvent()
+        private void Vm_DeleteTapeWordEvent(char blank)
         {
-            ClearTape();
+            ClearTape(blank);
         }
 
         private void Vm_LoadTapeWordEvent(string tapeWord)
@@ -117,7 +110,6 @@ namespace TMSim.UI
 
         public void WriteTapeWordToTape()
         {
-            ClearTape();
             int i = 0;
             if (TapeContent == null)
                 return;
@@ -135,11 +127,11 @@ namespace TMSim.UI
             }
         }
 
-        public void ClearTape()
+        public void ClearTape(char blank)
         {
             foreach (var tape in TapeFields)
             {
-                tape.Content = "";
+                tape.Content = blank.ToString();
             }
         }
 

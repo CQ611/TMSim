@@ -123,6 +123,12 @@ namespace TMSim.Core
             return true;
         }
 
+        public void Reset()
+        {
+            CurrentState = StartState;
+            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
+        }
+
         public bool CheckIsEndState()
         {
             if (EndStates.Contains(CurrentState))

@@ -25,6 +25,7 @@ namespace TMSim.UI
             {
                 _tapeVelocity = value;
                 OnPropertyChanged("TapeVelocity");
+                SetTimerInterval();
             }
         }
 
@@ -39,14 +40,15 @@ namespace TMSim.UI
         public event UpdateTapeWord UpdateTapeWordEvent;
         private void UpdateTapeContent()
         {
+            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
             UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
 
-        public delegate void DeleteTapeWord();
+        public delegate void DeleteTapeWord(char blank);
         public event DeleteTapeWord DeleteTapeWordEvent;
         private void DeleteTapeContent()
         {
-            DeleteTapeWordEvent?.Invoke();
+            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
         }
 
         public delegate void UpdateTape(int headIndex, double velocity);
@@ -54,6 +56,7 @@ namespace TMSim.UI
         private void UpdateTapeData()
         {
             UpdateTapeEvent?.Invoke(TM.Tapes[0].HeadIndex, TapeVelocity);
+            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
             UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
     }
