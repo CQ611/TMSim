@@ -111,7 +111,7 @@
                 <Button x:Name="switch2_cmd" Style="{StaticResource RightArrowButtonStyle}" FontWeight="Bold" FontSize="50"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30" Click="switch2_cmd_Click" IsEnabled="False"/>
             </Border>
         </Grid>
-        <Border Grid.Row="4">
+        <Border Grid.Row="4" Background="White" CornerRadius="10" Margin="3,0,3,3">
             <local:Info x:Name="info"/>
         </Border>
     </Grid>
