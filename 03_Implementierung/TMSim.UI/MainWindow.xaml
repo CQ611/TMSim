@@ -16,6 +16,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0">
             <Menu.ItemsPanel>
@@ -40,7 +41,7 @@
                     <MenuItem Header="{Binding EnglishText}" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
                 </MenuItem>
             </MenuItem>
-            <MenuItem Header="{Binding TransformText}" Command="{Binding TransformturingMachine}">
+            <MenuItem Header="{Binding TransformText}" Command="{Binding TransformTuringMachine}">
                 <!--
                 <MenuItem Header="_Left-Right only"/>
                 <MenuItem Header="_No self references"/>
@@ -110,5 +111,8 @@
                 <Button x:Name="switch2_cmd" Style="{StaticResource RightArrowButtonStyle}" FontWeight="Bold" FontSize="50"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30" Click="switch2_cmd_Click" IsEnabled="False"/>
             </Border>
         </Grid>
+        <Border Grid.Row="4">
+            <local:Info x:Name="info"/>
+        </Border>
     </Grid>
 </Window>
