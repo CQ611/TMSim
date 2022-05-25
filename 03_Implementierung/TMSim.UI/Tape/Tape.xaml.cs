@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TMSim.UI
 {
     public partial class Tape : UserControl
     {
-        public List<char> BandContent { get; set; }
+        public List<char> TapeContent { get; set; }
 
         private List<Label> TapeFields { get; set; }
+
+        private char blankChar = ' ';
+        private int fieldUnderReadWriteHead = 12;
+        private int headIndexOffset = 12;
+
+        private int leftrightchange = 12;
 
         public Tape()
         {
@@ -29,18 +25,58 @@ namespace TMSim.UI
             InitTapeFields();
 
             var vm = (ViewModel)DataContext;
-            vm.LeftMovementEvent += Vm_LeftMovementEvent;
-            vm.RightMovementEvent += Vm_RightMovementEvent;
+            vm.LoadTapeWordEvent += Vm_LoadTapeWordEvent;
+            vm.UpdateTapeWordEvent += Vm_UpdateTapeWordEvent;
+            vm.DeleteTapeWordEvent += Vm_DeleteTapeWordEvent;
+            vm.UpdateTapeEvent += Vm_UpdateTapeEvent;
+            vm.SetBlankEvent += Vm_SetBlankEvent;
         }
 
-        private void Vm_LeftMovementEvent(double velocity)
+        private void Vm_SetBlankEvent(char blank)
         {
-            LeftMove(velocity);
+            blankChar = blank;
         }
 
-        private void Vm_RightMovementEvent(double velocity)
+        private void Vm_UpdateTapeWordEvent(string tapeWord)
         {
-            RightMove(velocity);
+            ClearTape();
+            TapeContent = new List<char>();
+            foreach (var character in tapeWord)
+            {
+                TapeContent.Add(character);
+            }
+            WriteTapeWordToTape();
+        }
+
+        private void Vm_UpdateTapeEvent(int headIndex, double velocity)
+        {
+            var newIndex = headIndex + headIndexOffset;
+            if (newIndex > leftrightchange)
+            {
+                LeftMove(velocity);
+            }
+            else if (newIndex < leftrightchange)
+            {
+                RightMove(velocity);
+            }
+        }
+
+        private void Vm_DeleteTapeWordEvent()
+        {
+            ClearTape();
+        }
+
+        private void Vm_LoadTapeWordEvent(string tapeWord)
+        {
+            ClearTape();
+            TapeContent = new List<char>();
+            foreach (var character in tapeWord)
+            {
+                TapeContent.Add(character);
+            }
+            leftrightchange = 12;
+            fieldUnderReadWriteHead = 12;
+            WriteTapeWordToTape();
         }
 
         private void InitTapeFields()
@@ -74,15 +110,13 @@ namespace TMSim.UI
             TapeFields.Add(tapePos24);
         }
 
-        private int fieldUnderReadWriteHead = 12;
-
         public void WriteTapeWordToTape()
         {
             ClearTape();
             int i = 0;
-            if (BandContent == null)
+            if (TapeContent == null)
                 return;
-            foreach (var character in BandContent)
+            foreach (var character in TapeContent)
             {
                 if (i < TapeFields.Count() - fieldUnderReadWriteHead)
                 {
@@ -100,20 +134,8 @@ namespace TMSim.UI
         {
             foreach (var tape in TapeFields)
             {
-                tape.Content = "";
+                tape.Content = blankChar.ToString();
             }
-        }
-
-        private void ExampleLoadButton_Click(object sender, RoutedEventArgs e)
-        {
-            InitTapeFields();
-            BandContent = new List<char>();
-            foreach (var character in ExampleTapeWord.Text)
-            {
-                BandContent.Add(character);
-            }
-            fieldUnderReadWriteHead = 12;
-            WriteTapeWordToTape();
         }
 
         private double actPos = 0;
@@ -138,6 +160,7 @@ namespace TMSim.UI
 
         private void MoveLeftCompleted(object sender, EventArgs e)
         {
+            leftrightchange++;
             fieldUnderReadWriteHead--;
             ResetToDefault();
         }
@@ -162,6 +185,7 @@ namespace TMSim.UI
 
         private void MoveRightCompleted(object sender, EventArgs e)
         {
+            leftrightchange--;
             fieldUnderReadWriteHead++;
             ResetToDefault();
         }

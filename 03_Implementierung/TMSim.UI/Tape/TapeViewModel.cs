@@ -25,21 +25,45 @@ namespace TMSim.UI
             {
                 _tapeVelocity = value;
                 OnPropertyChanged("TapeVelocity");
+                SetTimerInterval();
             }
         }
 
-        public delegate void LeftMovement(double velocity);
-        public event LeftMovement LeftMovementEvent;
-        public void OnLeftButton()
+        public delegate void LoadTapeWord(string tapeWord);
+        public event LoadTapeWord LoadTapeWordEvent;
+        private void LoadTapeContent()
         {
-            LeftMovementEvent?.Invoke(TapeVelocity);
+            LoadTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
 
-        public delegate void RightMovement(double velocity);
-        public event RightMovement RightMovementEvent;
-        public void OnRightButton()
+        public delegate void UpdateTapeWord(string tapeWord);
+        public event UpdateTapeWord UpdateTapeWordEvent;
+        private void UpdateTapeContent()
         {
-            RightMovementEvent?.Invoke(TapeVelocity);
+            UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
+        }
+
+        public delegate void SetBlank(char blank);
+        public event SetBlank SetBlankEvent;
+        private void SetBlankForTape()
+        {
+            SetBlankEvent?.Invoke(TM.BlankChar);
+        }
+
+        public delegate void DeleteTapeWord();
+        public event DeleteTapeWord DeleteTapeWordEvent;
+        private void DeleteTapeContent()
+        {
+            DeleteTapeWordEvent?.Invoke();
+        }
+
+        public delegate void UpdateTape(int headIndex, double velocity);
+        public event UpdateTape UpdateTapeEvent;
+        private void UpdateTapeData()
+        {
+            SetBlankEvent?.Invoke(TM.BlankChar);
+            UpdateTapeEvent?.Invoke(TM.Tapes[0].HeadIndex, TapeVelocity);
+            UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
     }
 }
