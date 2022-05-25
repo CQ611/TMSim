@@ -11,15 +11,9 @@
         <Binding Source="{StaticResource sharedViewModel}"/>
     </UserControl.DataContext>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-        </Grid.RowDefinitions>
-
-        <Border BorderBrush="{Binding InfoMessageColor}" BorderThickness="2" CornerRadius="5" Margin="3" Background="White">
-            <Grid Grid.Row="0">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding InfoMessageColor}" FontSize="14" Text="{Binding InfoMessage}"/>
-            </Grid>
-        </Border>
-    </Grid>
+    <Border BorderBrush="{Binding InfoMessageColor}" BorderThickness="2" CornerRadius="5" Background="White">
+        <Grid>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{Binding InfoMessageColor}" FontSize="14" Text="{Binding InfoMessage}"/>
+        </Grid>
+    </Border>
 </UserControl>
