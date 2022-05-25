@@ -40,23 +40,29 @@ namespace TMSim.UI
         public event UpdateTapeWord UpdateTapeWordEvent;
         private void UpdateTapeContent()
         {
-            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
             UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
 
-        public delegate void DeleteTapeWord(char blank);
+        public delegate void SetBlank(char blank);
+        public event SetBlank SetBlankEvent;
+        private void SetBlankForTape()
+        {
+            SetBlankEvent?.Invoke(TM.BlankChar);
+        }
+
+        public delegate void DeleteTapeWord();
         public event DeleteTapeWord DeleteTapeWordEvent;
         private void DeleteTapeContent()
         {
-            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
+            DeleteTapeWordEvent?.Invoke();
         }
 
         public delegate void UpdateTape(int headIndex, double velocity);
         public event UpdateTape UpdateTapeEvent;
         private void UpdateTapeData()
         {
+            SetBlankEvent?.Invoke(TM.BlankChar);
             UpdateTapeEvent?.Invoke(TM.Tapes[0].HeadIndex, TapeVelocity);
-            DeleteTapeWordEvent?.Invoke(TM.BlankChar);
             UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
         }
     }
