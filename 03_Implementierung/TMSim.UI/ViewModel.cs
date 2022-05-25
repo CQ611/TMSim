@@ -246,8 +246,24 @@ namespace TMSim.UI
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
+                CheckIfRunWasSuccessful();
             }
             OnTMChanged();
+        }
+
+        private void CheckIfRunWasSuccessful()
+        {
+            if (TM.CheckIsEndState())
+            {
+                // Todo: Übersetzen
+                InfoMessage = "Endzustand erreicht";
+                InfoMessageColor = GetBrushFromEnum(MessageColor.DarkGreen);
+            }
+            else
+            {
+                InfoMessage = "Endzustand nicht erreicht";
+                InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
+            }
         }
 
         private void OnWriteTapeWord()
@@ -264,7 +280,9 @@ namespace TMSim.UI
 
         private void OnTransformation1()
         {
-            throw new NotImplementedException("OnTransformation1 >> ViewModel");
+            InfoMessage = "OnTransformation1 >> ViewModel";
+            InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
+            //throw new NotImplementedException("OnTransformation1 >> ViewModel");
         }
 
         private void OnTransformation2()
