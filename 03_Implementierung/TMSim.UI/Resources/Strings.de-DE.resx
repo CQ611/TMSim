@@ -150,6 +150,9 @@
   <data name="TEXT_PopupAccept" xml:space="preserve">
     <value>Akzeptieren</value>
   </data>
+  <data name="TEXT_PopupBlank" xml:space="preserve">
+    <value>Neues Leerzeichen:</value>
+  </data>
   <data name="TEXT_PopupCancel" xml:space="preserve">
     <value>Abbrechen</value>
   </data>
