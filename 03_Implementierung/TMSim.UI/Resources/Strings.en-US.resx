@@ -150,6 +150,9 @@
   <data name="TEXT_PopupAccept" xml:space="preserve">
     <value>Accepting</value>
   </data>
+  <data name="TEXT_PopupBlank" xml:space="preserve">
+    <value>New Blank Symbol:</value>
+  </data>
   <data name="TEXT_PopupCancel" xml:space="preserve">
     <value>Cancel</value>
   </data>

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using TMSim.Core;
+using TMSim.UI.PopupWindows;
 
 namespace TMSim.UI
 {
@@ -136,6 +137,7 @@ namespace TMSim.UI
         public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
         public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
         public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
+        public string PopupBlankText { get => resourceManager.GetString("TEXT_PopupBlank"); set { OnPropertyChanged(nameof(PopupBlankText)); } }
         #endregion
 
         private ResourceManager resourceManager;
@@ -292,7 +294,12 @@ namespace TMSim.UI
 
         private void OnTransformation3()
         {
-            throw new NotImplementedException("OnTransformation3 >> ViewModel");
+            Transformation3Dialog t3d = new Transformation3Dialog();
+            if (t3d.ShowDialog() == true)
+            {
+                char newBlank = t3d.Blank;
+                TransformT3(newBlank);
+            }
         }
 
         private void OnTransformation4()
@@ -309,6 +316,11 @@ namespace TMSim.UI
         {
             TM = new Transformation2().Execute(TM);
             OnTMChanged();
+        }
+
+        public void TransformT3(char newBlank)
+        {
+            throw new NotImplementedException("TransformT3 >> ViewModel");
         }
 
         public void TransformT5()
@@ -451,6 +463,7 @@ namespace TMSim.UI
             PopupOKText = resourceManager.GetString("TEXT_PopupOK");
             PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
             PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
+            PopupBlankText = resourceManager.GetString("TEXT_PopupBlank");
         }
 
         public void AddState()
