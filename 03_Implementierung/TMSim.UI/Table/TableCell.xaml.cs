@@ -32,6 +32,19 @@ namespace TMSim.UI
             }
         }
 
+        private string _symbolRead;
+        public string SymbolRead
+        {
+            get
+            {
+                return _symbolRead;
+            }
+            set
+            {
+                _symbolRead = value;
+            }
+        }
+
         private string _symbolWrite;
         public string SymbolWrite
         {
@@ -60,26 +73,29 @@ namespace TMSim.UI
             }
         }
 
-        public enum MoveDirection
+        private string SetDirection(string direction)
         {
-            Left,
-            Right,
-            Neutral
-        }
-
-        public void SetDirection(MoveDirection direction)
-        {
-            if (direction == MoveDirection.Left)
-                Direction = "←";
-            else if (direction == MoveDirection.Right)
-                Direction = "→";
-            else Direction = "•";
+            if (direction == "Right")
+                return "→";
+            else if (direction == "Left")
+                return "←";
+            else 
+                return "•";
         }
 
 
         public TableCell()
         {
             InitializeComponent();
+        }
+
+        public TableCell(string state, string direction, string symbolWrite, string symbolRead)
+        {
+            InitializeComponent();
+            State = state;
+            Direction = SetDirection(direction);
+            SymbolWrite = symbolWrite;
+            SymbolRead = symbolRead;
         }
     }
 }

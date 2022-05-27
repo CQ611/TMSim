@@ -15,13 +15,13 @@
         <Grid x:Name="TableGrid" Background="White">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition x:Name="row1" Height="60"/>
+                <RowDefinition x:Name="row2" Height="60"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition x:Name="column1" Width="100"/>
+                <ColumnDefinition x:Name="column2" Width="100"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="2">

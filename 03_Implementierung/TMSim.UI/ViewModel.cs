@@ -194,6 +194,7 @@ namespace TMSim.UI
         {
             UpdateDiagramData();
             UpdateTapeData();
+            UpdateTableData();
         }
 
         private bool startIsActive = false;
@@ -352,7 +353,7 @@ namespace TMSim.UI
         private void OnClearTuringMachine()
         {
             TM = new TuringMachine();
-            DeleteTapeContent();
+            OnTMChanged();
         }
 
         private void OnLoadExample()

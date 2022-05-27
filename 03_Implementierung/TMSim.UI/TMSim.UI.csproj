@@ -23,10 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\asdf_to_Tobi.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\example_import.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Examples\simpleTM.tmsim">
+    <None Update="Examples\abc_to_123.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
