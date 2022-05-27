@@ -219,6 +219,14 @@ namespace TMSim.Core
         {
             if (InputAlphabet.Symbols.Contains(c)) InputAlphabet.Symbols.Remove(c);
             if (TapeAlphabet.Symbols.Contains(c)) TapeAlphabet.Symbols.Remove(c);
+            List<TuringTransition> TransitionsToRemove = new List<TuringTransition>();
+            foreach (TuringTransition tt in Transitions) 
+            {
+                if (tt.SymbolsRead.Contains(c) || tt.SymbolsWrite.Contains(c)) TransitionsToRemove.Add(tt);
+            }
+            foreach (TuringTransition tt in TransitionsToRemove) {
+                RemoveTransition(tt);
+            }
         }
 
         public TuringMachine GetCopy()
