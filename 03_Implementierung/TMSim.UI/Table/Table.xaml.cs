@@ -17,35 +17,82 @@ namespace TMSim.UI
 {
     public partial class Table : UserControl
     {
+        private List<RowHeader> rowHeaders = new List<RowHeader>();
+        private List<ColumnHeader> columnHeaders = new List<ColumnHeader>();
+        private List<TableCell> tableCells = new List<TableCell>();
+
+        private int rowCount = 0;
+        private int columnCount = 0;
+
         public Table()
         {
             InitializeComponent();
         }
 
-        private List<List<string>> tableMatrix = new List<List<string>>();
-
-        private void ButtonAddRow_Click(object sender, RoutedEventArgs e)
+        private void AddRowButton_Click(object sender, RoutedEventArgs e)
         {
-            TuringTable.RowGroups[0].Rows.Add(new TableRow());
-            var actualRow = TuringTable.RowGroups[0].Rows.Count() - 1;
-            TableRow currentRow = TuringTable.RowGroups[0].Rows[actualRow];
-            if (actualRow % 2 == 1)
-                currentRow.Background = Brushes.Silver;
-            else
-                currentRow.Background = Brushes.Transparent;
-            currentRow.FontSize = 12;
-            currentRow.FontWeight = FontWeights.Normal;
-            currentRow.Cells.Add(new TableCell(new Paragraph(new Run("Neue Zeile"))));
+            var newRow = new RowDefinition();
+            newRow.Height = new GridLength(60);
+            TableGrid.RowDefinitions.Add(newRow);
+
+            Grid.SetRow(AddRemoveRow, TableGrid.RowDefinitions.Count() - 1);
+
+            var stateName = "q" + rowCount;
+            rowCount++;
+            var newRowHeader = new RowHeader(false, false, stateName);
+            rowHeaders.Add(newRowHeader);
+            TableGrid.Children.Add(rowHeaders[rowHeaders.Count() - 1]);
+            Grid.SetRow(rowHeaders[rowHeaders.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
+
+            SetTableCellsToNewRow();
+        }
+
+        private void AddColumnButton_Click(object sender, RoutedEventArgs e)
+        {
+            var newColumn = new ColumnDefinition();
+            newColumn.Width = new GridLength(100);
+            TableGrid.ColumnDefinitions.Add(newColumn);
+
+            Grid.SetColumn(AddRemoveColumn, TableGrid.ColumnDefinitions.Count() - 1);
+
+            var symbol = columnCount.ToString();
+            columnCount++;
+            var newColumnHeader = new ColumnHeader(symbol, false);
+            columnHeaders.Add(newColumnHeader);
+            TableGrid.Children.Add(columnHeaders[columnHeaders.Count() - 1]);
+            Grid.SetColumn(columnHeaders[columnHeaders.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);
+
+            SetTableCellsToNewColumn();
+        }
+
+        private void SetTableCellsToNewRow()
+        {
+            for (int i = 0; i < columnHeaders.Count(); i++)
+            {
+                tableCells.Add(new TableCell());
+                TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
+                Grid.SetRow(tableCells[tableCells.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
+                Grid.SetColumn(tableCells[tableCells.Count() - 1], i + 1);
+            }
+        }
+
+        private void SetTableCellsToNewColumn()
+        {
+            for (int i = 0; i < rowHeaders.Count(); i++)
+            {
+                tableCells.Add(new TableCell());
+                TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
+                Grid.SetRow(tableCells[tableCells.Count() - 1], i + 1);
+                Grid.SetColumn(tableCells[tableCells.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);
+            }
+        }
+
+        private void RemoveRowButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
-        private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
-        {
-            TuringTable.Columns.Add(new TableColumn());
-            TuringTable.RowGroups[0].Rows[0].Cells.Add(new TableCell(new Paragraph(new Run("Neue Spalte"))));
-        }
-
-        public void Method()
+        private void RemoveColumnButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

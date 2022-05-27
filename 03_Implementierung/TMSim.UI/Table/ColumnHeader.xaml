@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="TMSim.UI.ColumnHeader"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TMSim.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="100">
+    <Border Background="White" BorderBrush="Black" BorderThickness="2">
+        <Label x:Name="LabelSymbol" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" FontSize="12"/>
+    </Border>
+
+    <UserControl.ContextMenu>
+        <ContextMenu x:Name="ContextMenu">
+            <MenuItem Header="Edit symbol" Click="EditSymbol_Click"/>
+            <MenuItem Header="Remove symbol" Click="RemoveSymbol_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+</UserControl>
