@@ -232,6 +232,27 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
+        public void RemoveSymbol_AllTransitionsContainingTheSymbolAreRemoved()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            TuringState q0 = new TuringState("q0");
+            TuringTransition tt = new TuringTransition(
+                q0, 
+                q0, 
+                new List<char> { 'a' }, 
+                new List<char> { 'a' }, 
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Left }
+            );
+            tm.AddState(q0);
+            tm.AddTransition(tt);
+            tm.RemoveSymbol('a');
+            Assert.IsFalse(tm.Transitions.Contains(tt));
+            Assert.IsFalse(tm.States[0].IncomingTransitions.Contains(tt));
+            Assert.IsFalse(tm.States[0].OutgoingTransitions.Contains(tt));
+        }
+
+        [TestMethod]
         public void WriteTapeWord_HelloShouldBeWrittenToTape()
         {
             TuringMachine tm = new TuringMachine();
