@@ -36,6 +36,8 @@ namespace TMSim.UI
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
         public RelayCommand EnglishLanguageSelected { get; set; }
+        public RelayCommand SingleViewSelected { get; set; }
+        public RelayCommand MultiViewSelected { get; set; }
         #endregion
 
         #region BindingProperties
@@ -67,6 +69,34 @@ namespace TMSim.UI
             }
         }
 
+        private Visibility _singleViewVisibility = Visibility.Visible;
+        public Visibility SingleViewVisibility
+        {
+            get
+            {
+                return _singleViewVisibility;
+            }
+            set
+            {
+                _singleViewVisibility = value;
+                OnPropertyChanged("SingleViewVisibility");
+            }
+        }
+
+        private Visibility _multiViewVisibility = Visibility.Hidden;
+        public Visibility MultiViewVisibility
+        {
+            get
+            {
+                return _multiViewVisibility;
+            }
+            set
+            {
+                _multiViewVisibility = value;
+                OnPropertyChanged("MultiViewVisibility");
+            }
+        }
+
         private bool _germanLanguageIsChecked;
         public bool GermanLanguageIsChecked
         {
@@ -92,6 +122,34 @@ namespace TMSim.UI
             {
                 _englishLanguageIsChecked = value;
                 OnPropertyChanged("EnglishLanguageIsChecked");
+            }
+        }
+
+        private bool _singleViewIsChecked = true;
+        public bool SingleViewIsChecked
+        {
+            get
+            {
+                return _singleViewIsChecked;
+            }
+            set
+            {
+                _singleViewIsChecked = value;
+                OnPropertyChanged("SingleViewIsChecked");
+            }
+        }
+
+        private bool _multiViewIsChecked;
+        public bool MultiViewIsChecked
+        {
+            get
+            {
+                return _multiViewIsChecked;
+            }
+            set
+            {
+                _multiViewIsChecked = value;
+                OnPropertyChanged("MultiViewIsChecked");
             }
         }
 
@@ -165,6 +223,8 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
+            SingleViewSelected = new RelayCommand((o) => { OnSingleViewSelected(); });
+            MultiViewSelected = new RelayCommand((o) => { OnMultiViewSelected(); });
 
             TM = new TuringMachine();
 
@@ -199,6 +259,7 @@ namespace TMSim.UI
         {
             UpdateDiagramData();
             UpdateTapeData();
+            UpdateTableData();
         }
 
         private bool startIsActive = false;
@@ -367,7 +428,7 @@ namespace TMSim.UI
         private void OnClearTuringMachine()
         {
             TM = new TuringMachine();
-            DeleteTapeContent();
+            OnTMChanged();
         }
 
         private void OnLoadExample()
@@ -537,6 +598,22 @@ namespace TMSim.UI
 
             TM.AddTransition(new TuringTransition(source, target, symbolsRead, symbolsWrite, direction));
             OnTMChanged();
+        }
+
+        private void OnSingleViewSelected()
+        {
+            MultiViewIsChecked = false;
+            SingleViewIsChecked = true;
+            MultiViewVisibility = Visibility.Hidden;
+            SingleViewVisibility = Visibility.Visible;
+        }
+
+        private void OnMultiViewSelected()
+        {
+            SingleViewIsChecked = false;
+            MultiViewIsChecked = true;
+            SingleViewVisibility = Visibility.Hidden;
+            MultiViewVisibility = Visibility.Visible;
         }
     }
 }

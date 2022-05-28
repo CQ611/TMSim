@@ -40,6 +40,11 @@
                     <MenuItem Header="{Binding GermanText}" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
                     <MenuItem Header="{Binding EnglishText}" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="View">
+                    <MenuItem Header="Single" Command="{Binding SingleViewSelected}" IsChecked="{Binding SingleViewIsChecked}" IsCheckable="True"/>
+                    <MenuItem Header="Multi" Command="{Binding MultiViewSelected}" IsChecked="{Binding MultiViewIsChecked}" IsCheckable="True"/>
+                </MenuItem>
             </MenuItem>
             <MenuItem Header="{Binding TransformText}" Command="{Binding TransformTuringMachine}">
                 <!--
@@ -92,7 +97,7 @@
                 <local:Tape x:Name="tape" Margin="5"/>
             </Grid>
         </Border>
-        <Grid Grid.Row="3">
+        <Grid x:Name="singleViewGrid" Grid.Row="3" Visibility="{Binding SingleViewVisibility}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
@@ -109,6 +114,18 @@
             </Border>
             <Border Grid.Column="2" Background="White" CornerRadius="10" Margin="0,0,3,3">
                 <Button x:Name="switch2_cmd" Style="{StaticResource RightArrowButtonStyle}" FontWeight="Bold" FontSize="50"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,30,0,30" Click="switch2_cmd_Click" IsEnabled="False"/>
+            </Border>
+        </Grid>
+        <Grid x:Name="multiViewGrid" Grid.Row="3" Visibility="{Binding MultiViewVisibility}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="White" CornerRadius="10" Margin="3,0,3,3">
+                <local:Table Margin="5"/>
+            </Border>
+            <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="0,0,3,3">
+                <local:Diagram Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>
             </Border>
         </Grid>
         <Border Grid.Row="4" Background="White" CornerRadius="10" Margin="3,0,3,3">
