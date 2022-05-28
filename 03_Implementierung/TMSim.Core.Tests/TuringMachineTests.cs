@@ -13,64 +13,253 @@ namespace TMSim.Core.Tests
     [TestClass]
     public class TuringMachineTests
     {
-        //[TestMethod]
-        //public void CheckIsEndState_ShouldReturnTrue()
-        //{
-        //    TuringAlphabet inputAlphabet = new TuringAlphabet("a");
-        //    TuringAlphabet tapeAlphabet = new TuringAlphabet("a_");
-        //    List<TuringState> states = new List<TuringState>() { new TuringState("0"), new TuringState("1") };
-        //    List<TuringTransition> transitions = new List<TuringTransition>() { new TuringTransition(states[0], states[1], new List<char>() { 'a' }, new List<char>() { 'a' }, new List<TuringTransition.Direction>() { TuringTransition.Direction.Right }) };
-        //    List<TuringTape> tapes = new List<TuringTape>() { new TuringTape("aaaaa", '_') };
+        [TestMethod]
+        public void AddState_NoStartOrEndState_ShouldAddStateToStates() 
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("q0");
+            tm.AddState(ts);
+            Assert.IsTrue(tm.States.Contains(ts));
+            Assert.IsFalse(tm.EndStates.Contains(ts));
+            Assert.IsFalse(tm.StartState == ts);
+        }
 
+        [TestMethod]
+        public void AddState_NoStartButEndState_ShouldAddStateToStatesAndEndStates()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("q0", isAccepting:true);
+            tm.AddState(ts);
+            Assert.IsTrue(tm.States.Contains(ts));
+            Assert.IsTrue(tm.EndStates.Contains(ts));
+            Assert.IsFalse(tm.StartState == ts);
+        }
 
-        //    TuringMachine tm = new TuringMachine()
-        //    {
-        //        TapeAlphabet = tapeAlphabet,
-        //        InputAlphabet = inputAlphabet,
-        //        BlankChar = '_',
-        //        States = states,
-        //        StartState = states[0],
-        //        EndStates = new List<TuringState>() { states[1] },
-        //        Transitions = transitions,
-        //        Tapes = tapes
-        //    };
-            
-        //    tm.AdvanceState();
-        //    Assert.IsTrue(tm.CheckIsEndState());
-        //}
+        [TestMethod]
+        public void AddState_StartAndEndState_ShouldAddStateToStatesEndStatesAndStartState()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("q0", isAccepting: true, isStart:true);
+            tm.AddState(ts);
+            Assert.IsTrue(tm.States.Contains(ts));
+            Assert.IsTrue(tm.EndStates.Contains(ts));
+            Assert.IsTrue(tm.StartState == ts);
+        }
 
-        //[TestMethod]
-        //public void CheckIsEndState_ShouldReturnFalse()
-        //{
-        //    TuringAlphabet inputAlphabet = new TuringAlphabet("a");
-        //    TuringAlphabet tapeAlphabet = new TuringAlphabet("a_");
-        //    List<TuringState> states = new List<TuringState>() { new TuringState(""), new TuringState("") };
-        //    List<TuringTransition> transitions = new List<TuringTransition>();
-        //    List<TuringTape> tapes = new List<TuringTape>() { new TuringTape("aaaaa", '_') };
+        [TestMethod]
+        public void AddState_AddTwoStartStates_SecondOneShouldBeSetAsStartState()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0", isStart: true);
+            TuringState ts2 = new TuringState("q1", isStart: true);
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            Assert.IsTrue(tm.States.Contains(ts1));
+            Assert.IsTrue(tm.States.Contains(ts2));
+            Assert.IsTrue(tm.StartState == ts2);
+        }
 
+        [TestMethod]
+        public void EditState_ReplaceOldStateWithNewOne() {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0");
+            TuringState ts2 = new TuringState("q1");
+            tm.AddState(ts1);
+            tm.EditState(ts1, ts2);
+            Assert.IsFalse(tm.States.Contains(ts1));
+            Assert.IsTrue(tm.States.Contains(ts2));
+        }
 
-        //    TuringMachine tm = new TuringMachine()
-        //    {
-        //        TapeAlphabet = tapeAlphabet,
-        //        BlankChar = '_',
-        //        States = states,
-        //        StartState = states[0],
-        //        EndStates = new List<TuringState>() { states[1] },
-        //        Transitions = transitions,
-        //        Tapes = tapes
-        //    };
+        [TestMethod]
+        public void RemoveState_AllTransitionsContainingThisStateShouldBeRemoved()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0");
+            TuringState ts2 = new TuringState("q1");
+            TuringState ts3 = new TuringState("q2");
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            tm.AddState(ts3);
+            TuringTransition tt1 = new TuringTransition(
+                ts1, 
+                ts2, 
+                new List<char> { 'a' }, 
+                new List<char> { 'a' }, 
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            TuringTransition tt2 = new TuringTransition(
+                ts2,
+                ts3,
+                new List<char> { 'a' },
+                new List<char> { 'a' },
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            tm.AddTransition(tt1);
+            tm.AddTransition(tt2);
+            tm.RemoveState(ts2);
+            Assert.IsTrue(tm.States.Contains(ts1));
+            Assert.IsFalse(tm.States.Contains(ts2));
+            Assert.IsTrue(tm.States.Contains(ts3));
+            Assert.IsTrue(tm.Transitions.Count == 0);
+            Assert.IsTrue(ts1.OutgoingTransitions.Count == 0);
+            Assert.IsTrue(ts3.IncomingTransitions.Count == 0);
+        }
 
-        //    Assert.IsFalse(tm.CheckIsEndState()); 
-        //}
+        [TestMethod]
+        public void AddTransition_TransitonIsAddToTransitionsIncomingTransitonsOfTargetAndOutgoingTransitionsOfSource() 
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0");
+            TuringState ts2 = new TuringState("q1");
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            TuringTransition tt1 = new TuringTransition(
+                ts1,
+                ts2,
+                new List<char> { 'a' },
+                new List<char> { 'a' },
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            tm.AddTransition(tt1);
+            Assert.IsTrue(tm.Transitions.Contains(tt1));
+            Assert.IsTrue(ts1.OutgoingTransitions.Contains(tt1));
+            Assert.IsTrue(ts2.IncomingTransitions.Contains(tt1));
+        }
 
+        [TestMethod]
+        public void RemoveTransition_TransitonIsRemovedFromTransitionsIncomingTransitonsOfTargetAndOutgoingTransitionsOfSource()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0");
+            TuringState ts2 = new TuringState("q1");
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            TuringTransition tt1 = new TuringTransition(
+                ts1,
+                ts2,
+                new List<char> { 'a' },
+                new List<char> { 'a' },
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            tm.AddTransition(tt1);
+            tm.RemoveTransition(tt1);
+            Assert.IsFalse(tm.Transitions.Contains(tt1));
+            Assert.IsFalse(ts1.OutgoingTransitions.Contains(tt1));
+            Assert.IsFalse(ts2.IncomingTransitions.Contains(tt1));
+        }
 
-        //[TestMethod]
-        //public void ImportFromTextFile_ReadExampleFile_TapeAlphabetIs_abcde_ReturnsTrue()
-        //{
-        //    TuringMachine turingMachine = new TuringMachine();
-        //    turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
-        //    Assert.IsTrue(turingMachine.TapeAlphabet.WordIsContainedIn("abcde_"));
-        //}
+        [TestMethod]
+        public void EditTransition_TransitonIsReplacedByNewOne()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("q0");
+            TuringState ts2 = new TuringState("q1");
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            TuringTransition tt1 = new TuringTransition(
+                ts1,
+                ts2,
+                new List<char> { 'a' },
+                new List<char> { 'a' },
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            TuringTransition tt2 = new TuringTransition(
+                ts1,
+                ts2,
+                new List<char> { 'b' },
+                new List<char> { 'b' },
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Right }
+            );
+            tm.AddTransition(tt1);
+            tm.EditTransition(tt1, tt2);
+            Assert.IsFalse(tm.Transitions.Contains(tt1));
+            Assert.IsFalse(ts1.OutgoingTransitions.Contains(tt1));
+            Assert.IsFalse(ts2.IncomingTransitions.Contains(tt1));
+            Assert.IsTrue(tm.Transitions.Contains(tt2));
+            Assert.IsTrue(ts1.OutgoingTransitions.Contains(tt2));
+            Assert.IsTrue(ts2.IncomingTransitions.Contains(tt2));
+        }
+
+        [TestMethod]
+        public void AddSymbol_symbolIsAddedToInputAndTapeAlphabet() {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            Assert.IsTrue(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void AddSymbol_symbolIsAddedToInputAlphabet()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', false);
+            Assert.IsFalse(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void EditSymbol_symbolIsAddedToInputAlphabet()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', false);
+            Assert.IsFalse(tm.InputSymbols.Contains('a'));
+            tm.EditSymbol('a', true);
+            Assert.IsTrue(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void EditSymbol_symbolIsRemovedFromInputAlphabet()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            Assert.IsTrue(tm.InputSymbols.Contains('a'));
+            tm.EditSymbol('a', false);
+            Assert.IsFalse(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void RemoveSymbol_symbolIsRemovedFromInputAndTapeAlphabet()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            Assert.IsTrue(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+            tm.RemoveSymbol('a');
+            Assert.IsFalse(tm.InputSymbols.Contains('a'));
+            Assert.IsFalse(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void RemoveSymbol_AllTransitionsContainingTheSymbolAreRemoved()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            TuringState q0 = new TuringState("q0");
+            TuringTransition tt = new TuringTransition(
+                q0, 
+                q0, 
+                new List<char> { 'a' }, 
+                new List<char> { 'a' }, 
+                new List<TuringTransition.Direction> { TuringTransition.Direction.Left }
+            );
+            tm.AddState(q0);
+            tm.AddTransition(tt);
+            tm.RemoveSymbol('a');
+            Assert.IsFalse(tm.Transitions.Contains(tt));
+            Assert.IsFalse(tm.States[0].IncomingTransitions.Contains(tt));
+            Assert.IsFalse(tm.States[0].OutgoingTransitions.Contains(tt));
+        }
+
+        [TestMethod]
+        public void WriteTapeWord_HelloShouldBeWrittenToTape()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.WriteTapeWord("Hello");
+            Assert.IsTrue(tm.Tapes[0].Content == "Hello");
+        }
+
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_BlankCharIsUnderscore_ReturnsTrue()
@@ -80,14 +269,6 @@ namespace TMSim.Core.Tests
             turingMachine.ImportFromTextFile(@"res/example_import.tmsim");
             Assert.IsTrue(turingMachine.BlankChar == '_');
         }
-
-        //[TestMethod]
-        //public void ImportFromTextFile_ReadExampleFile_InputAlphabetIs_abcde_ReturnsTrue()
-        //{
-        //    TuringMachine turingMachine = new TuringMachine();
-        //    turingMachine.ImportFromTextFile(@"res\example_import.tmsim");
-        //    Assert.IsTrue(turingMachine.InputAlphabet.WordIsContainedIn("abcde"));
-        //}
 
         [TestMethod]
         public void ImportFromTextFile_ReadExampleFile_CheckStates_ReturnsTrue()

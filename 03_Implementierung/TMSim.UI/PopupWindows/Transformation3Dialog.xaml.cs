@@ -10,21 +10,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace TMSim.UI
+namespace TMSim.UI.PopupWindows
 {
-    public partial class AddStateDialog : Window
+    /// <summary>
+    /// Interaktionslogik für Transformation3Dialog.xaml
+    /// </summary>
+    public partial class Transformation3Dialog : Window
     {
-        public AddStateDialog(string defaultIdentifier)
+        public Transformation3Dialog()
         {
             InitializeComponent();
-            ident_txt.Text = defaultIdentifier;
             var vm = (ViewModel)DataContext;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            ident_txt.SelectAll();
-            ident_txt.Focus();
+            blank_txt.Focus();
         }
 
         private void ok_cmd_Click(object sender, RoutedEventArgs e)
@@ -32,19 +33,9 @@ namespace TMSim.UI
             this.DialogResult = true;
         }
 
-        public string Identfier
+        public char Blank
         {
-            get { return ident_txt.Text; }
-        }
-
-        public bool IsStart
-        {
-            get { return (bool)start_chk.IsChecked; }
-        }
-
-        public bool IsAccepting
-        {
-            get { return (bool)accept_chk.IsChecked; }
+            get { return blank_txt.Text[0]; }
         }
     }
 }

@@ -14,18 +14,20 @@
 
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5">
                                 <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Stretch="Uniform">
-                                  <Canvas Name="svg19" Width="448" Height="512">
+                                  <Canvas Name="svg4" Width="384" Height="576">
                                     <Canvas.RenderTransform>
                                       <TranslateTransform X="0" Y="0"/>
                                     </Canvas.RenderTransform>
                                     <Canvas.Resources/>
-                                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path17" Fill="#000000">
+                                    <!--Unknown tag: metadata-->
+                                    <!--Unknown tag: sodipodi:namedview-->
+                                    <Path xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Name="path2" Fill="#000000">
                                       <Path.Data>
-                                        <PathGeometry Figures="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z" FillRule="NonZero"/>
+                                        <PathGeometry Figures="m 320 0 c 35.3 0 64 28.7 64 64 v 306.7 c 0 17 -6.7 33.3 -18.7 45.3 L 214.6 566.628 c -6 6.001 -14.1 9.372 -22.6 9.372 -8.5 0 -16.6 -3.372 -22.6 -9.372 L 18.75 416 C 6.74 404 0 387.7 0 370.7 V 64 C 0 28.7 28.65 0 64 0 Z M 144.1 305 192 257.9 239 305 c 9.4 9.3 24.6 9.3 33.1 0 10.2 -9.4 10.2 -24.6 0 -33.1 L 225.9 224 272.1 177 c 10.2 -9.4 10.2 -24.6 0 -33.1 -8.5 -10.2 -23.7 -10.2 -33.1 0 l -47 46.2 -47.9 -46.2 c -8.5 -10.2 -23.7 -10.2 -33.1 0 -9.3 8.5 -9.3 23.7 0 33.1 l 47.1 47 -47.1 47.9 c -9.3 8.5 -9.3 23.7 0 33.1 9.4 9.3 24.6 9.3 33.1 0 z" FillRule="NonZero"/>
                                       </Path.Data>
                                     </Path>
                                   </Canvas>
-                                </Viewbox>          
+                                </Viewbox>
                             </TextBlock>
                         </Grid>
                     </ControlTemplate>
