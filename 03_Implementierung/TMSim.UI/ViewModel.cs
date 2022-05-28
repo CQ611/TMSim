@@ -137,6 +137,9 @@ namespace TMSim.UI
         public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
         public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
         public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
+        public string PopupAddSymbolText { get => resourceManager.GetString("TEXT_PopupAddSymbol"); set { OnPropertyChanged(nameof(PopupAddSymbolText)); } }
+        public string PopupSymbolText { get => resourceManager.GetString("TEXT_PopupSymbol"); set { OnPropertyChanged(nameof(PopupSymbolText)); } }
+        public string PopupIsInputAlphabetText { get => resourceManager.GetString("TEXT_PopupIsInputAlphabet"); set { OnPropertyChanged(nameof(PopupIsInputAlphabetText)); } }
         public string PopupBlankText { get => resourceManager.GetString("TEXT_PopupBlank"); set { OnPropertyChanged(nameof(PopupBlankText)); } }
         #endregion
 
@@ -463,7 +466,6 @@ namespace TMSim.UI
             PopupOKText = resourceManager.GetString("TEXT_PopupOK");
             PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
             PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
-            PopupBlankText = resourceManager.GetString("TEXT_PopupBlank");
         }
 
         public void AddState()
@@ -492,6 +494,29 @@ namespace TMSim.UI
                 OnTMChanged();
             }
         }
+
+        public void AddSymbol()
+        {
+            AddSymbolDialog asd = new AddSymbolDialog();
+            if(asd.ShowDialog() == true)
+            {
+                char symbol = asd.Symbol;
+                bool isInputAlphabet = asd.IsInInput;
+
+                if(TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
+                {
+                    MessageBox.Show($"Symbol {symbol} already exists!",
+                        "Warning!",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                    return;
+                }
+
+                TM.AddSymbol(symbol, isInputAlphabet);
+                OnTMChanged();
+            }
+        }
+
 
         public void RemoveState(string ident)
         {
