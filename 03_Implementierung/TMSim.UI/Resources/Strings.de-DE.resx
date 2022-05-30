@@ -207,4 +207,34 @@
   <data name="TEXT_Upload" xml:space="preserve">
     <value>Laden</value>
   </data>
+  <data name="TEXT_Comment" xml:space="preserve">
+    <value>Kommentar</value>
+  </data>
+  <data name="TEXT_Directions" xml:space="preserve">
+    <value>Richtungen</value>
+  </data>
+  <data name="TEXT_ReadSymbols" xml:space="preserve">
+    <value>Lesesymbole</value>
+  </data>
+  <data name="TEXT_SourceState" xml:space="preserve">
+    <value>Ausgangszustand</value>
+  </data>
+  <data name="TEXT_Tapes" xml:space="preserve">
+    <value> Band/Bänder!</value>
+  </data>
+  <data name="TEXT_TargetState" xml:space="preserve">
+    <value>Zielzustand</value>
+  </data>
+  <data name="TEXT_Warn_SymCount" xml:space="preserve">
+    <value> Symbole, aber es gibt </value>
+  </data>
+  <data name="TEXT_Warn_SymReCount" xml:space="preserve">
+    <value>Lesesymbole enthalten </value>
+  </data>
+  <data name="TEXT_Warn_SymWrCount" xml:space="preserve">
+    <value>Schreibsymbole enthalten </value>
+  </data>
+  <data name="TEXT_WriteSymbols" xml:space="preserve">
+    <value>Schreibsymbole</value>
+  </data>
 </root>

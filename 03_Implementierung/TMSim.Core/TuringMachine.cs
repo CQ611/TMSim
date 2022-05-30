@@ -127,6 +127,7 @@ namespace TMSim.Core
 
         private TuringTransition GetTransition()
         {
+            if (CurrentState == null) CurrentState = StartState;
             foreach (TuringTransition transition in CurrentState.OutgoingTransitions)
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;

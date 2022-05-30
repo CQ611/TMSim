@@ -169,39 +169,81 @@ namespace TMSim.UI
         #endregion
 
         #region BindedTextPropertys
-        public string FileText { get => resourceManager.GetString("TEXT_File"); set { OnPropertyChanged(nameof(FileText)); } }
-        public string OpenText { get => resourceManager.GetString("TEXT_Open"); set { OnPropertyChanged(nameof(OpenText)); } }
-        public string SaveText { get => resourceManager.GetString("TEXT_Save"); set { OnPropertyChanged(nameof(SaveText)); } }
-        public string NewText { get => resourceManager.GetString("TEXT_New"); set { OnPropertyChanged(nameof(NewText)); } }
-        public string TransformText { get => resourceManager.GetString("TEXT_Transform"); set { OnPropertyChanged(nameof(TransformText)); } }
-        public string Transformation1Text { get => resourceManager.GetString("TEXT_Transformation1"); set { OnPropertyChanged(nameof(Transformation1Text)); } }
-        public string Transformation2Text { get => resourceManager.GetString("TEXT_Transformation2"); set { OnPropertyChanged(nameof(Transformation2Text)); } }
-        public string Transformation3Text { get => resourceManager.GetString("TEXT_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Text)); } }
-        public string Transformation4Text { get => resourceManager.GetString("TEXT_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Text)); } }
-        public string Transformation5Text { get => resourceManager.GetString("TEXT_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Text)); } }
-        public string ExamplesText { get => resourceManager.GetString("TEXT_Examples"); set { OnPropertyChanged(nameof(ExamplesText)); } }
-        public string ExitText { get => resourceManager.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }
-        public string LanguageText { get => resourceManager.GetString("TEXT_Language"); set { OnPropertyChanged(nameof(LanguageText)); } }
-        public string GermanText { get => resourceManager.GetString("TEXT_German"); set { OnPropertyChanged(nameof(GermanText)); } }
-        public string EnglishText { get => resourceManager.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
-        public string PreferencesText { get => resourceManager.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
-        public string HighlightText { get => resourceManager.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
-        public string UploadText { get => resourceManager.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
-        public string InputwordText { get => resourceManager.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
-        public string SpeedLabelText { get => resourceManager.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
-        public string PopupIdentifierText { get => resourceManager.GetString("TEXT_PopupIdentifier"); set { OnPropertyChanged(nameof(PopupIdentifierText)); } }
-        public string PopupStartText { get => resourceManager.GetString("TEXT_PopupStart"); set { OnPropertyChanged(nameof(PopupStartText)); } }
-        public string PopupAcceptText { get => resourceManager.GetString("TEXT_PopupAccept"); set { OnPropertyChanged(nameof(PopupAcceptText)); } }
-        public string PopupOKText { get => resourceManager.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
-        public string PopupCancelText { get => resourceManager.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
-        public string PopupIdentifierTextText { get => resourceManager.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
-        public string PopupAddSymbolText { get => resourceManager.GetString("TEXT_PopupAddSymbol"); set { OnPropertyChanged(nameof(PopupAddSymbolText)); } }
-        public string PopupSymbolText { get => resourceManager.GetString("TEXT_PopupSymbol"); set { OnPropertyChanged(nameof(PopupSymbolText)); } }
-        public string PopupIsInputAlphabetText { get => resourceManager.GetString("TEXT_PopupIsInputAlphabet"); set { OnPropertyChanged(nameof(PopupIsInputAlphabetText)); } }
-        public string PopupBlankText { get => resourceManager.GetString("TEXT_PopupBlank"); set { OnPropertyChanged(nameof(PopupBlankText)); } }
+        public string FileText { get => Translator.GetString("TEXT_File"); set { OnPropertyChanged(nameof(FileText)); } }
+        public string OpenText { get => Translator.GetString("TEXT_Open"); set { OnPropertyChanged(nameof(OpenText)); } }
+        public string SaveText { get => Translator.GetString("TEXT_Save"); set { OnPropertyChanged(nameof(SaveText)); } }
+        public string NewText { get => Translator.GetString("TEXT_New"); set { OnPropertyChanged(nameof(NewText)); } }
+        public string TransformText { get => Translator.GetString("TEXT_Transform"); set { OnPropertyChanged(nameof(TransformText)); } }
+        public string Transformation1Text { get => Translator.GetString("TEXT_Transformation1"); set { OnPropertyChanged(nameof(Transformation1Text)); } }
+        public string Transformation2Text { get => Translator.GetString("TEXT_Transformation2"); set { OnPropertyChanged(nameof(Transformation2Text)); } }
+        public string Transformation3Text { get => Translator.GetString("TEXT_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Text)); } }
+        public string Transformation4Text { get => Translator.GetString("TEXT_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Text)); } }
+        public string Transformation5Text { get => Translator.GetString("TEXT_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Text)); } }
+        public string ExamplesText { get => Translator.GetString("TEXT_Examples"); set { OnPropertyChanged(nameof(ExamplesText)); } }
+        public string ExitText { get => Translator.GetString("TEXT_Exit"); set { OnPropertyChanged(nameof(ExitText)); } }
+        public string LanguageText { get => Translator.GetString("TEXT_Language"); set { OnPropertyChanged(nameof(LanguageText)); } }
+        public string GermanText { get => Translator.GetString("TEXT_German"); set { OnPropertyChanged(nameof(GermanText)); } }
+        public string EnglishText { get => Translator.GetString("TEXT_English"); set { OnPropertyChanged(nameof(EnglishText)); } }
+        public string PreferencesText { get => Translator.GetString("TEXT_Preferences"); set { OnPropertyChanged(nameof(PreferencesText)); } }
+        public string HighlightText { get => Translator.GetString("TEXT_Highlight"); set { OnPropertyChanged(nameof(HighlightText)); } }
+        public string UploadText { get => Translator.GetString("TEXT_Upload"); set { OnPropertyChanged(nameof(UploadText)); } }
+        public string InputwordText { get => Translator.GetString("TEXT_Inputword"); set { OnPropertyChanged(nameof(InputwordText)); } }
+        public string SpeedLabelText { get => Translator.GetString("TEXT_SpeedLabel"); set { OnPropertyChanged(nameof(SpeedLabelText)); } }
+        public string PopupIdentifierText { get => Translator.GetString("TEXT_PopupIdentifier"); set { OnPropertyChanged(nameof(PopupIdentifierText)); } }
+        public string PopupStartText { get => Translator.GetString("TEXT_PopupStart"); set { OnPropertyChanged(nameof(PopupStartText)); } }
+        public string PopupAcceptText { get => Translator.GetString("TEXT_PopupAccept"); set { OnPropertyChanged(nameof(PopupAcceptText)); } }
+        public string PopupOKText { get => Translator.GetString("TEXT_PopupOK"); set { OnPropertyChanged(nameof(PopupOKText)); } }
+        public string PopupCancelText { get => Translator.GetString("TEXT_PopupCancel"); set { OnPropertyChanged(nameof(PopupCancelText)); } }
+        public string PopupIdentifierTextText { get => Translator.GetString("TEXT_PopupIdentifierText"); set { OnPropertyChanged(nameof(PopupIdentifierTextText)); } }
+        public string PopupAddSymbolText { get => Translator.GetString("TEXT_PopupAddSymbol"); set { OnPropertyChanged(nameof(PopupAddSymbolText)); } }
+        public string PopupSymbolText { get => Translator.GetString("TEXT_PopupSymbol"); set { OnPropertyChanged(nameof(PopupSymbolText)); } }
+        public string PopupIsInputAlphabetText { get => Translator.GetString("TEXT_PopupIsInputAlphabet"); set { OnPropertyChanged(nameof(PopupIsInputAlphabetText)); } }
+        public string PopupBlankText { get => Translator.GetString("TEXT_PopupBlank"); set { OnPropertyChanged(nameof(PopupBlankText)); } }
+        public string ReadSymbolsText { get => Translator.GetString("TEXT_ReadSymbols"); set { OnPropertyChanged(nameof(ReadSymbolsText)); } }
+        public string WriteSymbolsText { get => Translator.GetString("TEXT_WriteSymbols"); set { OnPropertyChanged(nameof(WriteSymbolsText)); } }
+        public string SourceStateText { get => Translator.GetString("TEXT_SourceState"); set { OnPropertyChanged(nameof(SourceStateText)); } }
+        public string TargetStateText { get => Translator.GetString("TEXT_TargetState"); set { OnPropertyChanged(nameof(TargetStateText)); } }
+        public string CommentText { get => Translator.GetString("TEXT_Comment"); set { OnPropertyChanged(nameof(CommentText)); } }
+        public string DirectionsText { get => Translator.GetString("TEXT_Directions"); set { OnPropertyChanged(nameof(DirectionsText)); } }
+
+
+        private void RefreshTextFromUi()
+        {
+            FileText = Translator.GetString("TEXT_File");
+            OpenText = Translator.GetString("TEXT_Open");
+            SaveText = Translator.GetString("TEXT_Save");
+            NewText = Translator.GetString("TEXT_New");
+            ExamplesText = Translator.GetString("TEXT_Examples");
+            ExitText = Translator.GetString("TEXT_Exit");
+            TransformText = Translator.GetString("TEXT_Transform");
+            Transformation1Text = Translator.GetString("TEXT_Transformation1");
+            Transformation2Text = Translator.GetString("TEXT_Transformation2");
+            Transformation3Text = Translator.GetString("TEXT_Transformation3");
+            Transformation4Text = Translator.GetString("TEXT_Transformation4");
+            Transformation5Text = Translator.GetString("TEXT_Transformation5");
+            LanguageText = Translator.GetString("TEXT_Language");
+            GermanText = Translator.GetString("TEXT_German");
+            EnglishText = Translator.GetString("TEXT_English");
+            PreferencesText = Translator.GetString("TEXT_Preferences");
+            HighlightText = Translator.GetString("TEXT_Highlight");
+            UploadText = Translator.GetString("TEXT_Upload");
+            SpeedLabelText = Translator.GetString("TEXT_SpeedLabel");
+            InputwordText = Translator.GetString("TEXT_Inputword");
+            PopupIdentifierText = Translator.GetString("TEXT_PopupIdentifier");
+            PopupStartText = Translator.GetString("TEXT_PopupStart");
+            PopupAcceptText = Translator.GetString("TEXT_PopupAccept");
+            PopupOKText = Translator.GetString("TEXT_PopupOK");
+            PopupCancelText = Translator.GetString("TEXT_PopupCancel");
+            PopupIdentifierTextText = Translator.GetString("TEXT_PopupIdentifierText");
+        }
         #endregion
 
-        private ResourceManager resourceManager;
+        public bool HighlightCurrentState { get; set; } = true;
+        public bool IsSimulationRunning { get; set; } = true;
+        public DiagramData DData { get; set; }
+
+        public static ResourceManager Translator;
+        public TuringMachine TM;
         private DispatcherTimer timmy;
 
         public ViewModel()
@@ -238,7 +280,7 @@ namespace TMSim.UI
 
         private void InitResoureManager()
         {
-            resourceManager = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
+            Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
             if (CultureInfo.CurrentCulture.Name == "de-DE")
             {
                 GermanLanguageIsChecked = true;
@@ -248,12 +290,6 @@ namespace TMSim.UI
                 EnglishLanguageIsChecked = true;
             }
         }
-
-        public bool HighlightCurrentState { get; set; } = true;
-        public bool IsSimulationRunning { get; set; } = true;
-        public DiagramData DData { get; set; }
-
-        public TuringMachine TM;
 
         public void OnTMChanged()
         {
@@ -451,7 +487,8 @@ namespace TMSim.UI
         private void UpdateDiagramData()
         {
             DData = UpdateDiagramData(DData, TM);
-            OnPropertyChanged(nameof(DData));
+            //OnPropertyChanged(nameof(DData));
+            DData.OnForcePropertyChanged();
         }
 
         private void OnExitApplication()
@@ -480,7 +517,7 @@ namespace TMSim.UI
                 Console.WriteLine("SelectedLanguageChanged Exeption: " + ex.ToString());
             }
 
-            resourceManager = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
+            Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
 
             RefreshTextFromUi();
         }
@@ -499,39 +536,14 @@ namespace TMSim.UI
             SelectedLanguageChanged("en-US");
         }
 
-        private void RefreshTextFromUi()
+        public static void QuickWarning(string message)
         {
-            FileText = resourceManager.GetString("TEXT_File");
-            OpenText = resourceManager.GetString("TEXT_Open");
-            SaveText = resourceManager.GetString("TEXT_Save");
-            NewText = resourceManager.GetString("TEXT_New");
-            ExamplesText = resourceManager.GetString("TEXT_Examples");
-            ExitText = resourceManager.GetString("TEXT_Exit");
-            TransformText = resourceManager.GetString("TEXT_Transform");
-            Transformation1Text = resourceManager.GetString("TEXT_Transformation1");
-            Transformation2Text = resourceManager.GetString("TEXT_Transformation2");
-            Transformation3Text = resourceManager.GetString("TEXT_Transformation3");
-            Transformation4Text = resourceManager.GetString("TEXT_Transformation4");
-            Transformation5Text = resourceManager.GetString("TEXT_Transformation5");
-            LanguageText = resourceManager.GetString("TEXT_Language");
-            GermanText = resourceManager.GetString("TEXT_German");
-            EnglishText = resourceManager.GetString("TEXT_English");
-            PreferencesText = resourceManager.GetString("TEXT_Preferences");
-            HighlightText = resourceManager.GetString("TEXT_Highlight");
-            UploadText = resourceManager.GetString("TEXT_Upload");
-            SpeedLabelText = resourceManager.GetString("TEXT_SpeedLabel");
-            InputwordText = resourceManager.GetString("TEXT_Inputword");
-            PopupIdentifierText = resourceManager.GetString("TEXT_PopupIdentifier");
-            PopupStartText = resourceManager.GetString("TEXT_PopupStart");
-            PopupAcceptText = resourceManager.GetString("TEXT_PopupAccept");
-            PopupOKText = resourceManager.GetString("TEXT_PopupOK");
-            PopupCancelText = resourceManager.GetString("TEXT_PopupCancel");
-            PopupIdentifierTextText = resourceManager.GetString("TEXT_PopupIdentifierText");
+            MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         public void AddState()
         {
-            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}");
+            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count<1);
             if (asd.ShowDialog() == true)
             {
                 string identifier = asd.Identfier;
@@ -544,10 +556,7 @@ namespace TMSim.UI
                 TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
                 if (existingStates.Contains(identifier))
                 {
-                    MessageBox.Show($"State with identifier {identifier} already exists!",
-                        "Warning!",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    QuickWarning($"State with identifier {identifier} already exists!");
                     return;
                 }
 
@@ -566,10 +575,7 @@ namespace TMSim.UI
 
                 if(TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
                 {
-                    MessageBox.Show($"Symbol {symbol} already exists!",
-                        "Warning!",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning);
+                    QuickWarning($"Symbol {symbol} already exists!");
                     return;
                 }
 
@@ -588,16 +594,17 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            List<char> symbolsRead = "ab".ToList<char>();
-            List<char> symbolsWrite = "cd".ToList<char>();
-            List<TuringTransition.Direction> direction = new List<TuringTransition.Direction> {
-            TuringTransition.Direction.Right, TuringTransition.Direction.Left};
-            //TODO: Get the above from new window
-            // pay attention to source and target, may be null for Table, not for diagram
-            MessageBox.Show("This should get values for a new Transition");
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target);
+            if (atd.ShowDialog() == true)
+            {
+                TM.AddTransition(new TuringTransition(
+                    atd.Source, atd.Target, atd.SymbolsRead,
+                    atd.SymbolsWrite, atd.Directions, atd.Comment));
 
-            TM.AddTransition(new TuringTransition(source, target, symbolsRead, symbolsWrite, direction));
-            OnTMChanged();
+                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+
+                OnTMChanged();
+            }
         }
 
         private void OnSingleViewSelected()
