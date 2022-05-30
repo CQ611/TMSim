@@ -44,18 +44,7 @@ namespace TMSim.UI
                     );
                 DData.Connections.Add(nc);
             }
-
-            // Creating a Duplicate of DData to trigger the binding engine
-            DiagramData DDataCopy;
-            using (MemoryStream stream = new MemoryStream())
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, DData);
-                stream.Position = 0;
-                DDataCopy = (DiagramData)formatter.Deserialize(stream);
-            }
-
-            return DDataCopy;
+            return DData;
         }
     }
 }

@@ -12,9 +12,17 @@ namespace TMSim.UI
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public delegate void ForcePropertyChangedEventHandler();
+        public event ForcePropertyChangedEventHandler ForcePropertyChanged;
+
         protected void OnPropertyChanged([CallerMemberName] string name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public void OnForcePropertyChanged() //no name, always invokes self
+        {
+            ForcePropertyChanged?.Invoke();
         }
     }
 }

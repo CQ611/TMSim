@@ -14,11 +14,17 @@ namespace TMSim.UI
 {
     public partial class AddStateDialog : Window
     {
-        public AddStateDialog(string defaultIdentifier)
+        public AddStateDialog(string defaultIdentifier, bool forceStart = false)
         {
             InitializeComponent();
             ident_txt.Text = defaultIdentifier;
             var vm = (ViewModel)DataContext;
+
+            if (forceStart)
+            {
+                start_chk.IsChecked = true;
+                start_chk.IsEnabled = false;
+            }
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)

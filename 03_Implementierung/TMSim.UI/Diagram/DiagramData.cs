@@ -7,7 +7,7 @@ using System.Text;
 namespace TMSim.UI
 {
     [Serializable]
-    public class DiagramData
+    public class DiagramData : ObservableObject
     {
         public Dictionary<string, Node> Nodes { get; set; } // (Identifier / Node object) pairs
         public List<NodeConnection> Connections { get; set; }
