@@ -1,7 +1,7 @@
 {
-    "states": ["q0", "q1", "q2", "q3", "..."],
-    "inputAlphabet":"abcde",
-    "tapeAlphabet": "abcde_",
+    "states": ["q0", "q1", "q2", "..."],
+    "inputAlphabet":["a", "b", "c", "d", "e", "..."],
+    "tapeAlphabet": ["a", "b", "c", "d", "e", "_", "..."],
     "transitions": [
         {
             "sourceState": "q0",
