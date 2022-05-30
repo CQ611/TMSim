@@ -207,4 +207,34 @@
   <data name="TEXT_Upload" xml:space="preserve">
     <value>Load</value>
   </data>
+  <data name="TEXT_Comment" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="TEXT_Directions" xml:space="preserve">
+    <value>Directions</value>
+  </data>
+  <data name="TEXT_ReadSymbols" xml:space="preserve">
+    <value>Read symbols</value>
+  </data>
+  <data name="TEXT_SourceState" xml:space="preserve">
+    <value>Source state</value>
+  </data>
+  <data name="TEXT_Tapes" xml:space="preserve">
+    <value> tape(s)!</value>
+  </data>
+  <data name="TEXT_TargetState" xml:space="preserve">
+    <value>Target state</value>
+  </data>
+  <data name="TEXT_Warn_SymCount" xml:space="preserve">
+    <value> characters, but there are </value>
+  </data>
+  <data name="TEXT_Warn_SymReCount" xml:space="preserve">
+    <value>Symbols read contain </value>
+  </data>
+  <data name="TEXT_Warn_SymWrCount" xml:space="preserve">
+    <value>Symbols write contain </value>
+  </data>
+  <data name="TEXT_WriteSymbols" xml:space="preserve">
+    <value>Write symbols</value>
+  </data>
 </root>

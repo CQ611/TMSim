@@ -24,7 +24,12 @@ namespace TMSim.UI
 
         private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((Diagram)d).InvalidateVisual();
+            ((Diagram)d).PropertyChangedCallback();
+        }
+
+        private void PropertyChangedCallback()
+        {
+            InvalidateVisual();
         }
         #endregion
 
@@ -60,13 +65,15 @@ namespace TMSim.UI
         {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(OnDiagramLoaded);
-            VM = (ViewModel)DataContext;            
+            VM = (ViewModel)DataContext;
         }
 
         private void OnDiagramLoaded(object sender, RoutedEventArgs e)
         {
             DData.Width = ActualWidth;
             DData.Height = ActualHeight;
+
+            DData.ForcePropertyChanged += PropertyChangedCallback;
         }
 
         protected override async void OnRender(DrawingContext dc)
