@@ -237,4 +237,40 @@
   <data name="TEXT_WriteSymbols" xml:space="preserve">
     <value>Write symbols</value>
   </data>
+  <data name="TOOLTIP_Eingabe" xml:space="preserve">
+    <value>Type word</value>
+  </data>
+  <data name="TOOLTIP_Pause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="TOOLTIP_Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
+  <data name="TOOLTIP_Speed" xml:space="preserve">
+    <value>Change Speed of animation</value>
+  </data>
+  <data name="TOOLTIP_Step" xml:space="preserve">
+    <value>Step</value>
+  </data>
+  <data name="TOOLTIP_Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="TOOLTIP_Transformation1" xml:space="preserve">
+    <value>No transition leads to the start state and none of the transitions begin in an accepting state</value>
+  </data>
+  <data name="TOOLTIP_Transformation2" xml:space="preserve">
+    <value>There are no state transitions with unmoved read/write head</value>
+  </data>
+  <data name="TOOLTIP_Transformation3" xml:space="preserve">
+    <value>The space character is never written</value>
+  </data>
+  <data name="TOOLTIP_Transformation4" xml:space="preserve">
+    <value>The state set is divided into a right and left half</value>
+  </data>
+  <data name="TOOLTIP_Transformation5" xml:space="preserve">
+    <value>There is exactly one accepting state</value>
+  </data>
+  <data name="TOOLTIP_Upload" xml:space="preserve">
+    <value>insert and upload text to tape</value>
+  </data>
 </root>
