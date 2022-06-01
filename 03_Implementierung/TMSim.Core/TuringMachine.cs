@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMSim.Core.Exceptions;
 using static TMSim.Core.ImportExportStructure;
 
 namespace TMSim.Core
@@ -136,7 +137,8 @@ namespace TMSim.Core
         }
 
         public void AddState(TuringState ts)
-        {            
+        {
+            foreach (TuringState state in States) if (state.Identifier == ts.Identifier) throw new StateAlreadyExistsException();
             States.Add(ts);
             if (ts.IsStart) {
                 if (StartState != null) StartState.IsStart = false; 
@@ -154,6 +156,7 @@ namespace TMSim.Core
 
         public void RemoveState(TuringState ts)
         {
+            if (!States.Contains(ts)) throw new StateDoesNotExistException();
             // also all Transitions referencing this state need to be deleted
             foreach (TuringTransition tt in ts.OutgoingTransitions) {
                 tt.Target.IncomingTransitions.Remove(tt);
@@ -171,6 +174,11 @@ namespace TMSim.Core
 
         public void AddTransition(TuringTransition tt)
         {
+            if (checkTransitionAlreadyExists(tt)) throw new TransitionAlreadyExistsException();
+            if (!States.Contains(tt.Source)) throw new SourceStateOfTransitionDoesNotExistException();
+            if (!States.Contains(tt.Target)) throw new TargetStateOfTransitionDoesNotExistException();
+            foreach (char c in tt.SymbolsRead) if (!TapeAlphabet.Symbols.Contains(c)) throw new ReadSymbolDoesNotExistException(c.ToString());
+            foreach (char c in tt.SymbolsWrite) if (!TapeAlphabet.Symbols.Contains(c)) throw new WriteSymbolDoesNotExistException(c.ToString());
             Transitions.Add(tt);
             tt.Source.OutgoingTransitions.Add(tt);
             tt.Target.IncomingTransitions.Add(tt);
@@ -184,6 +192,7 @@ namespace TMSim.Core
 
         public void RemoveTransition(TuringTransition tt, bool removeUnusedSymbols = false)
         {
+            if (!Transitions.Contains(tt)) throw new TransitionDoesNotExistException();
             tt.Source.OutgoingTransitions.Remove(tt);
             tt.Target.IncomingTransitions.Remove(tt);
             Transitions.Remove(tt);
@@ -205,19 +214,23 @@ namespace TMSim.Core
 
         public void AddSymbol(char c, bool isInInput)
         {
-            if (!TapeAlphabet.Symbols.Contains(c)) TapeAlphabet.Symbols.Add(c);
-            if (!InputAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
+            if (TapeAlphabet.Symbols.Contains(c)) throw new SymbolAlreadyExistsException();
+            else {
+                TapeAlphabet.Symbols.Add(c);
+                if (isInInput) InputAlphabet.Symbols.Add(c);
+            }
         }
 
         public void EditSymbol(char c, bool isInInput)
         {
+            if(!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
             if (!InputAlphabet.Symbols.Contains(c) && TapeAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
             else if (InputAlphabet.Symbols.Contains(c) && !isInInput) InputAlphabet.Symbols.Remove(c);
-            else throw new NotImplementedException("Edit Symbol can not be called for a symbol which is not added to an alphabet");
         }
 
         public void RemoveSymbol(char c)
         {
+            if (!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
             if (InputAlphabet.Symbols.Contains(c)) InputAlphabet.Symbols.Remove(c);
             if (TapeAlphabet.Symbols.Contains(c)) TapeAlphabet.Symbols.Remove(c);
             List<TuringTransition> TransitionsToRemove = new List<TuringTransition>();
@@ -241,11 +254,20 @@ namespace TMSim.Core
 
         public void WriteTapeWord(string inputWord)
         {
+
+            if (!InputAlphabet.WordIsContainedIn(inputWord)) throw new WordIsNoValidInputException();
             //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
-            foreach(var tape in Tapes)
+            foreach (var tape in Tapes)
             {
                 tape.Content = inputWord;
             }
+        }
+        private bool checkTransitionAlreadyExists(TuringTransition tt) {
+            foreach (TuringTransition transition in Transitions) 
+            {
+                if (transition.Source == tt.Source && transition.SymbolsRead.SequenceEqual(tt.SymbolsRead)) return true;
+            }
+            return false;
         }
     }
 }
