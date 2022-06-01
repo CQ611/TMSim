@@ -237,4 +237,40 @@
   <data name="TEXT_WriteSymbols" xml:space="preserve">
     <value>Schreibsymbole</value>
   </data>
+  <data name="TOOLTIP_Eingabe" xml:space="preserve">
+    <value>Eingabewort hier eingeben</value>
+  </data>
+  <data name="TOOLTIP_Pause" xml:space="preserve">
+    <value>pausieren</value>
+  </data>
+  <data name="TOOLTIP_Play" xml:space="preserve">
+    <value>Animation starten</value>
+  </data>
+  <data name="TOOLTIP_Speed" xml:space="preserve">
+    <value>Geschwindigkeitsregler</value>
+  </data>
+  <data name="TOOLTIP_Step" xml:space="preserve">
+    <value>Schritt</value>
+  </data>
+  <data name="TOOLTIP_Stop" xml:space="preserve">
+    <value>stoppen</value>
+  </data>
+  <data name="TOOLTIP_Transformation1" xml:space="preserve">
+    <value>Kein Übergang führt in den Startzustand und keiner der Übergänge beginnt in einem akzeptierenden Zustand</value>
+  </data>
+  <data name="TOOLTIP_Transformation2" xml:space="preserve">
+    <value>Es gibt keine Zustandsübergänge mit unbewegtem Lese-/Schreibkopf</value>
+  </data>
+  <data name="TOOLTIP_Transformation3" xml:space="preserve">
+    <value>Es wird das Leerzeichen nicht geschrieben</value>
+  </data>
+  <data name="TOOLTIP_Transformation4" xml:space="preserve">
+    <value>Die Zustandsmenge ist in eine rechte und linke Hälfte geteilt</value>
+  </data>
+  <data name="TOOLTIP_Transformation5" xml:space="preserve">
+    <value>Es gibt genau einen akzeptierenden Zustand</value>
+  </data>
+  <data name="TOOLTIP_Upload" xml:space="preserve">
+    <value>Eingabewort auf das Band hochladen</value>
+  </data>
 </root>

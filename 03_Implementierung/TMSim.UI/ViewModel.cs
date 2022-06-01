@@ -205,6 +205,18 @@ namespace TMSim.UI
         public string TargetStateText { get => Translator.GetString("TEXT_TargetState"); set { OnPropertyChanged(nameof(TargetStateText)); } }
         public string CommentText { get => Translator.GetString("TEXT_Comment"); set { OnPropertyChanged(nameof(CommentText)); } }
         public string DirectionsText { get => Translator.GetString("TEXT_Directions"); set { OnPropertyChanged(nameof(DirectionsText)); } }
+        public string PlayTooltip { get => Translator.GetString("TOOLTIP_Play"); set { OnPropertyChanged(nameof(PlayTooltip)); } }
+        public string PauseTooltip { get => Translator.GetString("TOOLTIP_Pause"); set { OnPropertyChanged(nameof(PauseTooltip)); } }
+        public string StopTooltip { get => Translator.GetString("TOOLTIP_Stop"); set { OnPropertyChanged(nameof(StopTooltip)); } }
+        public string StepTooltip { get => Translator.GetString("TOOLTIP_Step"); set { OnPropertyChanged(nameof(StepTooltip)); } }
+        public string SpeedTooltip { get => Translator.GetString("TOOLTIP_Speed"); set { OnPropertyChanged(nameof(SpeedTooltip)); } }
+        public string EingabeTooltip { get => Translator.GetString("TOOLTIP_Eingabe"); set { OnPropertyChanged(nameof(EingabeTooltip)); } }
+        public string UploadTooltip { get => Translator.GetString("TOOLTIP_Upload"); set { OnPropertyChanged(nameof(UploadTooltip)); } }
+        public string Transformation1Tooltip { get => Translator.GetString("TOOLTIP_Transformation1"); set { OnPropertyChanged(nameof(Transformation1Tooltip)); } }
+        public string Transformation2Tooltip { get => Translator.GetString("TOOLTIP_Transformation2"); set { OnPropertyChanged(nameof(Transformation2Tooltip)); } }
+        public string Transformation3Tooltip { get => Translator.GetString("TOOLTIP_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Tooltip)); } }
+        public string Transformation4Tooltip { get => Translator.GetString("TOOLTIP_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Tooltip)); } }
+        public string Transformation5Tooltip { get => Translator.GetString("TOOLTIP_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Tooltip)); } }
 
 
         private void RefreshTextFromUi()
@@ -235,6 +247,18 @@ namespace TMSim.UI
             PopupOKText = Translator.GetString("TEXT_PopupOK");
             PopupCancelText = Translator.GetString("TEXT_PopupCancel");
             PopupIdentifierTextText = Translator.GetString("TEXT_PopupIdentifierText");
+            PlayTooltip = Translator.GetString("TOOLTIP_Play");
+            PauseTooltip = Translator.GetString("TOOLTIP_Pause");
+            StopTooltip = Translator.GetString("TOOLTIP_Stop");
+            StepTooltip = Translator.GetString("TOOLTIP_Step");
+            SpeedTooltip = Translator.GetString("TOOLTIP_Speed");
+            EingabeTooltip = Translator.GetString("TOOLTIP_Eingabe");
+            UploadTooltip = Translator.GetString("TOOLTIP_Upload");
+            Transformation1Tooltip = Translator.GetString("TOOLTIP_Transformation1");
+            Transformation2Tooltip = Translator.GetString("TOOLTIP_Transformation2");
+            Transformation3Tooltip = Translator.GetString("TOOLTIP_Transformation3");
+            Transformation4Tooltip = Translator.GetString("TOOLTIP_Transformation4");
+            Transformation5Tooltip = Translator.GetString("TOOLTIP_Transformation5");
         }
         #endregion
 
