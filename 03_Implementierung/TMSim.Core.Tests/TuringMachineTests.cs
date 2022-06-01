@@ -480,6 +480,19 @@ namespace TMSim.Core.Tests
             tm.AddTransition(tt);
         }
 
+        [TestMethod]
+        [ExpectedException(typeof(NumberOfTapesDoesNotMatchToTransitionDefinitionException))]
+        public void AddTransition_throwsNumberOfTapesDoesNotMatchToTransitionDefinitionException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddSymbol('a', true);
+            tm.AddSymbol('b', true);
+            tm.AddState(ts);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a', 'a' }, new List<char> { 'b', 'b' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left, TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
 
         [TestMethod]
         [ExpectedException(typeof(TransitionAlreadyExistsException))]
@@ -547,6 +560,13 @@ namespace TMSim.Core.Tests
         {
             TuringMachine tm = new TuringMachine();
             tm.WriteTapeWord("Hello");
+        }
+
+        [TestMethod]
+        public void AdvanceState_returnsFasleForEmptyTuringMachine()
+        {
+            TuringMachine tm = new TuringMachine();
+            Assert.IsFalse(tm.AdvanceState());
         }
     }
 }
