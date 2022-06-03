@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Resources;
+using TMSim.Core.Exceptions;
 
 namespace TMSim.Core.Tests
 {
@@ -80,6 +81,7 @@ namespace TMSim.Core.Tests
             tm.AddState(ts1);
             tm.AddState(ts2);
             tm.AddState(ts3);
+            tm.AddSymbol('a', true);
             TuringTransition tt1 = new TuringTransition(
                 ts1, 
                 ts2, 
@@ -113,6 +115,7 @@ namespace TMSim.Core.Tests
             TuringState ts2 = new TuringState("q1");
             tm.AddState(ts1);
             tm.AddState(ts2);
+            tm.AddSymbol('a', true);
             TuringTransition tt1 = new TuringTransition(
                 ts1,
                 ts2,
@@ -134,6 +137,7 @@ namespace TMSim.Core.Tests
             TuringState ts2 = new TuringState("q1");
             tm.AddState(ts1);
             tm.AddState(ts2);
+            tm.AddSymbol('a', true);
             TuringTransition tt1 = new TuringTransition(
                 ts1,
                 ts2,
@@ -156,6 +160,8 @@ namespace TMSim.Core.Tests
             TuringState ts2 = new TuringState("q1");
             tm.AddState(ts1);
             tm.AddState(ts2);
+            tm.AddSymbol('a', true);
+            tm.AddSymbol('b', true);
             TuringTransition tt1 = new TuringTransition(
                 ts1,
                 ts2,
@@ -256,6 +262,10 @@ namespace TMSim.Core.Tests
         public void WriteTapeWord_HelloShouldBeWrittenToTape()
         {
             TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('H', true);
+            tm.AddSymbol('e', true);
+            tm.AddSymbol('l', true);
+            tm.AddSymbol('o', true);
             tm.WriteTapeWord("Hello");
             Assert.IsTrue(tm.Tapes[0].Content == "Hello");
         }
@@ -369,6 +379,194 @@ namespace TMSim.Core.Tests
             string contentImport = System.IO.File.ReadAllText(@"res\example_import.tmsim");
             string contentExport = System.IO.File.ReadAllText(@"res\example_export.tmsim");
             Assert.IsTrue(string.Equals(contentExport, contentImport));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateAlreadyExistsException))]
+        public void AddState_throwsStateAlreadyExistsException() {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddState(ts);
+            tm.AddState(ts);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateDoesNotExistException))]
+        public void EditState_throwsStateDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.EditState(ts, ts);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateAlreadyExistsException))]
+        public void EditState_throwsStateAlreadyExistsException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("id1");
+            TuringState ts2 = new TuringState("id2");
+            tm.AddState(ts1);
+            tm.AddState(ts2);
+            tm.EditState(ts1, ts2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(StateDoesNotExistException))]
+        public void RemoveState_throwsStateDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.RemoveState(ts);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TransitionAlreadyExistsException))]
+        public void AddTransition_throwsTransitionAlreadyExistsException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddState(ts);
+            tm.AddSymbol('a', true);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char>{'a'}, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left});
+            tm.AddTransition(tt);
+            tm.AddTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SourceStateOfTransitionDoesNotExistException))]
+        public void AddTransition_throwsSourceStateOfTransitionDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddSymbol('a', true);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TargetStateOfTransitionDoesNotExistException))]
+        public void AddTransition_throwsTargetStateOfTransitionDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts1 = new TuringState("id1");
+            TuringState ts2 = new TuringState("id2");
+            tm.AddState(ts1);
+            tm.AddSymbol('a', true);
+            TuringTransition tt = new TuringTransition(ts1, ts2, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ReadSymbolDoesNotExistException))]
+        public void AddTransition_throwsReadSymbolDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddState(ts);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WriteSymbolDoesNotExistException))]
+        public void AddTransition_throwsWriteSymbolDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddSymbol('a', true);
+            tm.AddState(ts);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'b' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(NumberOfTapesDoesNotMatchToTransitionDefinitionException))]
+        public void AddTransition_throwsNumberOfTapesDoesNotMatchToTransitionDefinitionException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddSymbol('a', true);
+            tm.AddSymbol('b', true);
+            tm.AddState(ts);
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a', 'a' }, new List<char> { 'b', 'b' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left, TuringTransition.Direction.Left });
+            tm.AddTransition(tt);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(TransitionAlreadyExistsException))]
+        public void EditTransition_throwsTransitionAlreadyExistsException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            tm.AddSymbol('a', true);
+            tm.AddState(ts);
+            TuringTransition tt1 = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            TuringTransition tt2 = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.AddTransition(tt1);
+            tm.AddTransition(tt2);
+            tm.EditTransition(tt1, tt2);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(TransitionDoesNotExistException))]
+        public void EditTransition_throwsTransitionDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.EditTransition(tt, tt);
+        }
+
+
+        [TestMethod]
+        [ExpectedException(typeof(TransitionDoesNotExistException))]
+        public void RemoveTransition_throwsTransitionDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            TuringState ts = new TuringState("id1");
+            TuringTransition tt = new TuringTransition(ts, ts, new List<char> { 'a' }, new List<char> { 'a' }, new List<TuringTransition.Direction> { TuringTransition.Direction.Left });
+            tm.RemoveTransition(tt);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SymbolAlreadyExistsException))]
+        public void AddSymbol_throwsSymbolAlreadyExistsException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            tm.AddSymbol('a', false);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(SymbolDoesNotExistException))]
+        public void Editymbol_throwsSymbolDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.EditSymbol('a', false);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(SymbolDoesNotExistException))]
+        public void RemoveSymbol_throwsSymbolDoesNotExistException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.RemoveSymbol('a');
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(WordIsNoValidInputException))]
+        public void WriteTapeWord_throwsWordIsNoValidInputException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.WriteTapeWord("Hello");
+        }
+
+        [TestMethod]
+        public void AdvanceState_returnsFasleForEmptyTuringMachine()
+        {
+            TuringMachine tm = new TuringMachine();
+            Assert.IsFalse(tm.AdvanceState());
         }
     }
 }

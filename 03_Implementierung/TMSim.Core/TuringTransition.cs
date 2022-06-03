@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMSim.Core.Exceptions;
 
 namespace TMSim.Core
 {
@@ -31,6 +32,7 @@ namespace TMSim.Core
         public TuringTransition(TuringState source, TuringState target,
             List<char> symbolsRead, List<char> symbolsWrite, List<Direction> dirs, string comment="")
         {
+            if (symbolsRead.Count() != symbolsWrite.Count() || symbolsRead.Count() != dirs.Count()) throw new TransitionNumberOfTapesIsInconsistentException();
             Source = source;
             Target = target;
             SymbolsRead = symbolsRead;
