@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -152,6 +153,20 @@ namespace TMSim.UI
             }
         }
 
+        private bool _highlightIsChecked = true;
+        public bool HighlightIsChecked
+        {
+            get
+            {
+                return _highlightIsChecked;
+            }
+            set
+            {
+                _highlightIsChecked = value;
+                OnPropertyChanged(nameof(HighlightIsChecked));
+            }
+        }
+
         private string _tapeWordInput = String.Empty;
         public string TapeWordInput
         {
@@ -272,7 +287,20 @@ namespace TMSim.UI
         public DiagramData DData { get; set; }
 
         public static ResourceManager Translator;
-        public TuringMachine TM;
+        private TuringMachine tm;
+        public TuringMachine TM
+        {
+            get
+            {
+                return tm;
+            }
+            set
+            {
+                tm = value;
+                OnPropertyChanged(nameof(TM));
+            }
+        }
+
         private DispatcherTimer timmy;
 
         public ViewModel()
@@ -323,6 +351,8 @@ namespace TMSim.UI
             UpdateDiagramData();
             UpdateTapeData();
             UpdateTableData();
+
+            OnPropertyChanged(nameof(TM));
         }
 
         private bool startIsActive = false;

@@ -37,7 +37,7 @@
                 <MenuItem Header="{Binding ExitText}" Command="{Binding ExitApplication}"/>
             </MenuItem>
             <MenuItem Header="{Binding PreferencesText}">
-                <MenuItem Header="{Binding HighlightText}"/>
+                <MenuItem Header="{Binding HighlightText}" IsChecked="{Binding HighlightIsChecked}" IsCheckable="True"/>
                 <Separator/>
                 <MenuItem Header="{Binding LanguageText}">
                     <MenuItem Header="{Binding GermanText}" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
@@ -106,7 +106,7 @@
                 <ColumnDefinition Width="{Binding DiagramViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
             </Grid.ColumnDefinitions>
             <Border Background="White" CornerRadius="10" Margin="3,0,3,3">
-                <local:Table x:Name="table" Margin="5"/>
+                <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}" Turingmachine="{Binding TM, Mode=TwoWay}"/>
             </Border>
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,3">
                 <local:Diagram x:Name="diagram" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>

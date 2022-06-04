@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMSim.Core;
 
 namespace TMSim.UI
 {
@@ -24,6 +26,56 @@ namespace TMSim.UI
         private int rowCount = 0;
         private int columnCount = 0;
 
+        private int thomascount = 0;
+
+        #region Dependency properties
+        public static DependencyProperty HighlightProperty = DependencyProperty.Register(
+            "Highlight", typeof(bool), typeof(Table),
+            new PropertyMetadata(false, HighlightPropertyChanged));
+
+        public static DependencyProperty TuringmachineProperty = DependencyProperty.Register(
+            "Turingmachine", typeof(TuringMachine), typeof(Table),
+            new PropertyMetadata(null, TuringmachinePropertyChanged));
+
+        private static void HighlightPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //dodo Aktion implementieren
+            ((Table)d).PropertyChangedCallback();
+        }
+
+        private static void TuringmachinePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //dodo Aktion implementieren
+            ((Table)d).TuringmachinePropertyChangedCallback();   
+        }
+
+        private void PropertyChangedCallback()
+        {
+            //brauchen wir nicht?
+            //InvalidateVisual();
+            Trace.WriteLine("Highlight State Table: " + Highlight.ToString());
+        }
+
+        private void TuringmachinePropertyChangedCallback()
+        {
+            //brauchen wir nicht?
+            //InvalidateVisual();
+            Trace.WriteLine("Turingmachine Changed count: " + thomascount.ToString());
+        }
+        #endregion
+
+        public bool Highlight
+        {
+            get { return (bool)GetValue(HighlightProperty); }
+            set { SetValue(HighlightProperty, value); }
+        }
+
+        public TuringMachine Turingmachine
+        {
+            get { return (TuringMachine)GetValue(TuringmachineProperty); }
+            set { SetValue(TuringmachineProperty, value); }
+        }
+
         public Table()
         {
             InitializeComponent();
@@ -34,17 +86,17 @@ namespace TMSim.UI
         }
 
         private void Vm_LoadTableEvent(
-            List<char> TapeSymbols, 
-            List<char> InputSymbols, 
-            List<Core.TuringState> States, 
-            Core.TuringState StartState, 
-            List<Core.TuringState> EndStates, 
-            List<Core.TuringTransition> Transitions, 
-            Core.TuringState CurrentState, 
+            List<char> TapeSymbols,
+            List<char> InputSymbols,
+            List<Core.TuringState> States,
+            Core.TuringState StartState,
+            List<Core.TuringState> EndStates,
+            List<Core.TuringTransition> Transitions,
+            Core.TuringState CurrentState,
             Core.TuringTransition CurrentTransition)
         {
             //AddColumns
-            foreach(var symbol in TapeSymbols)
+            foreach (var symbol in TapeSymbols)
             {
                 bool ifInputSymbol = InputSymbols.Contains(symbol);
                 AddColumn(symbol.ToString(), ifInputSymbol);
@@ -64,7 +116,7 @@ namespace TMSim.UI
                 int row = 1;
                 int column = 1;
                 int i = 1;
-                foreach(var state in States)
+                foreach (var state in States)
                 {
                     if (state.Identifier == transition.Source.Identifier)
                         row = i;
@@ -85,11 +137,11 @@ namespace TMSim.UI
         }
 
         private void OverwriteTransition(
-            int row, 
-            int column, 
-            List<char> symbolsRead, 
-            List<char> symbolsWrite, 
-            List<Core.TuringTransition.Direction> moveDirections, 
+            int row,
+            int column,
+            List<char> symbolsRead,
+            List<char> symbolsWrite,
+            List<Core.TuringTransition.Direction> moveDirections,
             Core.TuringState source)
         {
             tableCells.Add(new TableCell(source.Identifier, moveDirections[0].ToString(), symbolsWrite[0].ToString(), symbolsRead[0].ToString()));
@@ -124,12 +176,12 @@ namespace TMSim.UI
             tableCells = new List<TableCell>();
 
             List<RowDefinition> rowsToDelete = new List<RowDefinition>();
-            foreach(var rowDef in TableGrid.RowDefinitions)
+            foreach (var rowDef in TableGrid.RowDefinitions)
             {
-                if(rowDef.Name != row1.Name && rowDef.Name != row2.Name)
+                if (rowDef.Name != row1.Name && rowDef.Name != row2.Name)
                     rowsToDelete.Add(rowDef);
             }
-            foreach(var row in rowsToDelete)
+            foreach (var row in rowsToDelete)
                 TableGrid.RowDefinitions.Remove(row);
 
             List<ColumnDefinition> columnsToDelete = new List<ColumnDefinition>();
@@ -137,9 +189,9 @@ namespace TMSim.UI
             {
                 if (columnDef.Name != column1.Name && columnDef.Name != column2.Name)
                     columnsToDelete.Add(columnDef);
-                    
+
             }
-            foreach(var column in columnsToDelete)
+            foreach (var column in columnsToDelete)
                 TableGrid.ColumnDefinitions.Remove(column);
 
         }
@@ -150,7 +202,7 @@ namespace TMSim.UI
             newRow.Height = new GridLength(60);
             TableGrid.RowDefinitions.Add(newRow);
 
-            Grid.SetRow(AddRemoveRow, TableGrid.RowDefinitions.Count() - 1);
+            Grid.SetRow(AddRowButton, TableGrid.RowDefinitions.Count() - 1);
 
             var stateName = "q" + rowCount;
             rowCount++;
@@ -168,7 +220,7 @@ namespace TMSim.UI
             newRow.Height = new GridLength(60);
             TableGrid.RowDefinitions.Add(newRow);
 
-            Grid.SetRow(AddRemoveRow, TableGrid.RowDefinitions.Count() - 1);
+            Grid.SetRow(AddRowButton, TableGrid.RowDefinitions.Count() - 1);
 
             var newRowHeader = new RowHeader(isStart, isAccepting, identifier);
             rowHeaders.Add(newRowHeader);
@@ -184,7 +236,7 @@ namespace TMSim.UI
             newColumn.Width = new GridLength(100);
             TableGrid.ColumnDefinitions.Add(newColumn);
 
-            Grid.SetColumn(AddRemoveColumn, TableGrid.ColumnDefinitions.Count() - 1);
+            Grid.SetColumn(AddColumnButton, TableGrid.ColumnDefinitions.Count() - 1);
 
             var symbol = columnCount.ToString();
             columnCount++;
@@ -202,7 +254,7 @@ namespace TMSim.UI
             newColumn.Width = new GridLength(100);
             TableGrid.ColumnDefinitions.Add(newColumn);
 
-            Grid.SetColumn(AddRemoveColumn, TableGrid.ColumnDefinitions.Count() - 1);
+            Grid.SetColumn(AddColumnButton, TableGrid.ColumnDefinitions.Count() - 1);
 
             var newColumnHeader = new ColumnHeader(symbol, isInInputAlphabet);
             columnHeaders.Add(newColumnHeader);
