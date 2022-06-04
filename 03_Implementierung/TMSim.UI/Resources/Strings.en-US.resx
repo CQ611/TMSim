@@ -273,4 +273,13 @@
   <data name="TOOLTIP_Upload" xml:space="preserve">
     <value>insert and upload text to tape</value>
   </data>
+  <data name="TEXT_DiagramView" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="TEXT_TableView" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="TEXT_View" xml:space="preserve">
+    <value>View</value>
+  </data>
 </root>

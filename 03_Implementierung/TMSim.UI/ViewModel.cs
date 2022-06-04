@@ -36,8 +36,7 @@ namespace TMSim.UI
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
         public RelayCommand EnglishLanguageSelected { get; set; }
-        public RelayCommand SingleViewSelected { get; set; }
-        public RelayCommand MultiViewSelected { get; set; }
+
         #endregion
 
         #region BindingProperties
@@ -125,31 +124,31 @@ namespace TMSim.UI
             }
         }
 
-        private bool _singleViewIsChecked = true;
-        public bool SingleViewIsChecked
+        private bool _diagramViewIsChecked = true;
+        public bool DiagramViewIsChecked
         {
             get
             {
-                return _singleViewIsChecked;
+                return _diagramViewIsChecked;
             }
             set
             {
-                _singleViewIsChecked = value;
-                OnPropertyChanged("SingleViewIsChecked");
+                _diagramViewIsChecked = value;
+                OnPropertyChanged(nameof(DiagramViewIsChecked));
             }
         }
 
-        private bool _multiViewIsChecked;
-        public bool MultiViewIsChecked
+        private bool _tableViewIsChecked = true;
+        public bool TableViewIsChecked
         {
             get
             {
-                return _multiViewIsChecked;
+                return _tableViewIsChecked;
             }
             set
             {
-                _multiViewIsChecked = value;
-                OnPropertyChanged("MultiViewIsChecked");
+                _tableViewIsChecked = value;
+                OnPropertyChanged(nameof(TableViewIsChecked));
             }
         }
 
@@ -217,6 +216,9 @@ namespace TMSim.UI
         public string Transformation3Tooltip { get => Translator.GetString("TOOLTIP_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Tooltip)); } }
         public string Transformation4Tooltip { get => Translator.GetString("TOOLTIP_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Tooltip)); } }
         public string Transformation5Tooltip { get => Translator.GetString("TOOLTIP_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Tooltip)); } }
+        public string ViewText { get => Translator.GetString("TEXT_View"); set { OnPropertyChanged(nameof(ViewText)); } }
+        public string DiagramViewText { get => Translator.GetString("TEXT_DiagramView"); set { OnPropertyChanged(nameof(DiagramViewText)); } }
+        public string TableViewText { get => Translator.GetString("TEXT_TableView"); set { OnPropertyChanged(nameof(TableViewText)); } }
 
 
         private void RefreshTextFromUi()
@@ -259,6 +261,9 @@ namespace TMSim.UI
             Transformation3Tooltip = Translator.GetString("TOOLTIP_Transformation3");
             Transformation4Tooltip = Translator.GetString("TOOLTIP_Transformation4");
             Transformation5Tooltip = Translator.GetString("TOOLTIP_Transformation5");
+            ViewText = Translator.GetString("TEXT_View");
+            DiagramViewText = Translator.GetString("TEXT_DiagramView");
+            TableViewText = Translator.GetString("TEXT_TableView");
         }
         #endregion
 
@@ -289,8 +294,6 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
-            SingleViewSelected = new RelayCommand((o) => { OnSingleViewSelected(); });
-            MultiViewSelected = new RelayCommand((o) => { OnMultiViewSelected(); });
 
             TM = new TuringMachine();
 
@@ -629,22 +632,6 @@ namespace TMSim.UI
 
                 OnTMChanged();
             }
-        }
-
-        private void OnSingleViewSelected()
-        {
-            MultiViewIsChecked = false;
-            SingleViewIsChecked = true;
-            MultiViewVisibility = Visibility.Hidden;
-            SingleViewVisibility = Visibility.Visible;
-        }
-
-        private void OnMultiViewSelected()
-        {
-            SingleViewIsChecked = false;
-            MultiViewIsChecked = true;
-            SingleViewVisibility = Visibility.Hidden;
-            MultiViewVisibility = Visibility.Visible;
         }
     }
 }

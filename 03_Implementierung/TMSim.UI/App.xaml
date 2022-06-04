@@ -8,8 +8,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/GeneralButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/LeftArrowButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/RightArrowButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/PauseButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/StartButtonStyle.xaml"/>
                 <ResourceDictionary Source="Styles/StepButtonStyle.xaml"/>

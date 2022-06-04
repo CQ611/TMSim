@@ -24,21 +24,5 @@ namespace TMSim.UI
         {
             InitializeComponent();
         }
-
-        private void switch1_cmd_Click(object sender, RoutedEventArgs e)
-        {
-            diagram.Visibility = Visibility.Hidden;
-            table.Visibility = Visibility.Visible;
-            switch1_cmd.IsEnabled = false;
-            switch2_cmd.IsEnabled = true;
-        }
-
-        private void switch2_cmd_Click(object sender, RoutedEventArgs e)
-        {
-            diagram.Visibility = Visibility.Visible;
-            table.Visibility = Visibility.Hidden;
-            switch1_cmd.IsEnabled = true;
-            switch2_cmd.IsEnabled = false;
-        }
     }
 }

@@ -178,7 +178,7 @@
     <value>Symbol:</value>
   </data>
   <data name="TEXT_Preferences" xml:space="preserve">
-    <value>Präferenzen</value>
+    <value>Einstellungen</value>
   </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
@@ -272,5 +272,14 @@
   </data>
   <data name="TOOLTIP_Upload" xml:space="preserve">
     <value>Eingabewort auf das Band hochladen</value>
+  </data>
+  <data name="TEXT_DiagramView" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="TEXT_TableView" xml:space="preserve">
+    <value>Tabelle</value>
+  </data>
+  <data name="TEXT_View" xml:space="preserve">
+    <value>Ansicht</value>
   </data>
 </root>
