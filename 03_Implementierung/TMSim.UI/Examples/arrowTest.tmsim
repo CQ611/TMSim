@@ -89,5 +89,8 @@
   ],
   "StartState": "q0",
   "Blank": " ",
-  "EndStates": []
+  "EndStates": [
+    "q1",
+    "q2"
+  ]
 }

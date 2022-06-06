@@ -29,6 +29,7 @@ namespace TMSim.UI
 
         private void PropertyChangedCallback()
         {
+            if (DData != null) {if (DData.ArangeFlag) ArangeDiagram(); DData.ArangeFlag = false; }
             InvalidateVisual();
         }
         #endregion
@@ -44,8 +45,6 @@ namespace TMSim.UI
             get { return (ViewModel)GetValue(VMProperty); }
             set { SetValue(VMProperty, value); }
         }
-
-        public bool Animated { get; set; }
 
         private Node heldNode;
         private Node rightClickedNode;
@@ -238,7 +237,8 @@ namespace TMSim.UI
             Rect r = new Rect(
                 new Point(textCenter.X - fText.Width / 2, textCenter.Y - fText.Height / 2),
                 new Point(textCenter.X + fText.Width / 2, textCenter.Y + fText.Height / 2));
-            connectionLocations.Add(r, con);
+            try { connectionLocations.Add(r, con); }
+            catch (Exception) { }
         }
 
         private Point CenterPoint(NodeConnection con)
@@ -320,7 +320,7 @@ namespace TMSim.UI
                     ctr++;
                 }
 
-                if (Animated)
+                if (VM.AnimateDiagram)
                 {
                     InvalidateVisual();
                     await Task.Delay(3);
@@ -385,15 +385,18 @@ namespace TMSim.UI
                 Vector Center = new Vector(ActualWidth / 2, ActualHeight / 2);
                 Vector dir = Vector.Subtract(Center, (Vector)n.Position);
                 dir.Y = 2 * dir.Y;
-                dir.Normalize();
+                if (!(dir.X == 0 && dir.Y == 0)) dir.Normalize();
                 return dir * gravityStrength;
             }
         }
         private Node ConstrainToScreen(Node n)
         {
             Point tmp = n.Position;
+            var rand = new Random();
             double x = Math.Clamp(tmp.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
             double y = Math.Clamp(tmp.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
+            if (tmp.X == double.NaN) tmp.X = rand.Next((int)DData.Width);
+            if (tmp.Y == double.NaN) tmp.Y = rand.Next((int)DData.Height);
             n.Position = new Point(x, y);
             return n;
         }

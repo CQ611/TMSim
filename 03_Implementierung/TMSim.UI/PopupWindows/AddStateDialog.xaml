@@ -7,7 +7,7 @@
         ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Add State" Height="169" Width="259">
+        Title="State" Height="169" Width="259">
 
 
     <Window.DataContext>

@@ -168,6 +168,20 @@ namespace TMSim.UI
             }
         }
 
+        private bool _animateDiagram = false;
+        public bool AnimateDiagram
+        {
+            get
+            {
+                return _animateDiagram;
+            }
+            set
+            {
+                _animateDiagram = value;
+                OnPropertyChanged(nameof(AnimateDiagram));
+            }
+        }
+
         private string _tapeWordInput = String.Empty;
         public string TapeWordInput
         {

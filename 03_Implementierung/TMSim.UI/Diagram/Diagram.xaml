@@ -24,6 +24,7 @@
             <MenuItem x:Name="remove_transition_btn" Header="Remove Transition" Click="remove_transition_btn_Click"/>
             <Separator/>
             <MenuItem Header="Arrange" Click="arrange_btn_Click"/>
+            <MenuItem Header="Animate" IsChecked="{Binding Path=AnimateDiagram, Mode=TwoWay}" IsCheckable="True"/>
         </ContextMenu>
     </UserControl.ContextMenu>
 </UserControl>

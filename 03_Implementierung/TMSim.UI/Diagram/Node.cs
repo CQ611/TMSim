@@ -21,17 +21,15 @@ namespace TMSim.UI
     {
         public TuringState State { get; set; }
         public string Identifier { get { return State.Identifier; } }
-        public bool IsStart { get; set; } = false;
-        public bool IsAccepting { get; set; } = false;
+        public bool IsStart { get { return State.IsStart; } }
+        public bool IsAccepting { get { return State.IsAccepting; } }
         public Point Position { get; set; } = new Point(50, 50);
         public string Comment { get { return State.Comment; } }
 
-        public Node(TuringState st, Point pos, bool start = false, bool accepting = false)
+        public Node(TuringState st, Point pos)
         {
             State = st;
             Position = pos;
-            IsStart = start;
-            IsAccepting = accepting;
         }
     }
 }
