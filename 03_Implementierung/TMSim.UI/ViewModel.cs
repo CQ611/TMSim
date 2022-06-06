@@ -249,7 +249,18 @@ namespace TMSim.UI
         public string ViewText { get => Translator.GetString("TEXT_View"); set { OnPropertyChanged(nameof(ViewText)); } }
         public string DiagramViewText { get => Translator.GetString("TEXT_DiagramView"); set { OnPropertyChanged(nameof(DiagramViewText)); } }
         public string TableViewText { get => Translator.GetString("TEXT_TableView"); set { OnPropertyChanged(nameof(TableViewText)); } }
-
+        public string InvalidInputWordText { get => Translator.GetString("TEXT_InvalidInputWord"); set { OnPropertyChanged(nameof(InvalidInputWordText)); } }
+        public string InvalidTapeNumberInDefinitionText { get => Translator.GetString("TEXT_InvalidTapeNumberInDefinition"); set { OnPropertyChanged(nameof(InvalidTapeNumberInDefinitionText)); } }
+        public string ReadSymbolDoesNotExistText { get => Translator.GetString("TEXT_ReadSymbolDoesNotExist"); set { OnPropertyChanged(nameof(ReadSymbolDoesNotExistText)); } }
+        public string SourceStateDoesNotExistText { get => Translator.GetString("TEXT_SourceStateDoesNotExist"); set { OnPropertyChanged(nameof(SourceStateDoesNotExistText)); } }
+        public string StateDoesNotExistText { get => Translator.GetString("TEXT_StateDoesNotExist"); set { OnPropertyChanged(nameof(StateDoesNotExistText)); } }
+        public string StateExistsText { get => Translator.GetString("TEXT_StateExists"); set { OnPropertyChanged(nameof(StateExistsText)); } }
+        public string SymbolDoesNotExistText { get => Translator.GetString("TEXT_SymbolDoesNotExist"); set { OnPropertyChanged(nameof(SymbolDoesNotExistText)); } }
+        public string SymbolExistsText { get => Translator.GetString("TEXT_SymbolExists"); set { OnPropertyChanged(nameof(SymbolExistsText)); } }
+        public string TargetStateDoesNotExistText { get => Translator.GetString("TEXT_TargetStateDoesNotExist"); set { OnPropertyChanged(nameof(TargetStateDoesNotExistText)); } }
+        public string TransitionDoesNotExistText { get => Translator.GetString("TEXT_TransitionDoesNotExist"); set { OnPropertyChanged(nameof(TransitionDoesNotExistText)); } }
+        public string TransitionExistsText { get => Translator.GetString("TEXT_TransitionExists"); set { OnPropertyChanged(nameof(TransitionExistsText)); } }
+        public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -294,6 +305,18 @@ namespace TMSim.UI
             ViewText = Translator.GetString("TEXT_View");
             DiagramViewText = Translator.GetString("TEXT_DiagramView");
             TableViewText = Translator.GetString("TEXT_TableView");
+            InvalidInputWordText = Translator.GetString("TEXT_InvalidInputWord");
+            InvalidTapeNumberInDefinitionText = Translator.GetString("TEXT_InvalidTapeNumberInDefinition");
+            ReadSymbolDoesNotExistText = Translator.GetString("TEXT_ReadSymbolDoesNotExist");
+            SourceStateDoesNotExistText = Translator.GetString("TEXT_SourceStateDoesNotExist");
+            StateDoesNotExistText = Translator.GetString("TEXT_StateDoesNotExist");
+            StateExistsText = Translator.GetString("TEXT_StateExists");
+            SymbolDoesNotExistText = Translator.GetString("TEXT_SymbolDoesNotExist");
+            SymbolExistsText = Translator.GetString("TEXT_SymbolExists");
+            TargetStateDoesNotExistText = Translator.GetString("TEXT_TargetStateDoesNotExist");
+            TransitionDoesNotExistText = Translator.GetString("TEXT_TransitionDoesNotExist");
+            TransitionExistsText = Translator.GetString("TEXT_TransitionExists");
+            WriteSymbolDoesNotExistText = Translator.GetString("TEXT_WriteSymbolDoesNotExist");
         }
         #endregion
 
@@ -442,7 +465,15 @@ namespace TMSim.UI
 
         private void OnWriteTapeWord()
         {
-            TM.WriteTapeWord(TapeWordInput);
+            try
+            {
+                TM.WriteTapeWord(TapeWordInput);
+            }
+            catch (WordIsNoValidInputException)
+            {
+                QuickWarning(InvalidInputWordText);
+                return;
+            }
             LoadTapeContent();
         }
 
@@ -512,7 +543,45 @@ namespace TMSim.UI
             };
             if (importFileDialog.ShowDialog() == true)
             {
-                TM.ImportFromTextFile(importFileDialog.FileName);
+                try
+                {
+                    TM.ImportFromTextFile(importFileDialog.FileName);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                    return;
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
+                    return;
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException e)
+                {
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText+ $" ({e.Message})");
+                    return;
+                }
                 DeleteTapeContent();
                 OnTMChanged();
             }
@@ -550,7 +619,45 @@ namespace TMSim.UI
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
-                TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                try 
+                {
+                    TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                    return;
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
+                    return;
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException e)
+                {
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
                 DeleteTapeContent();
                 OnTMChanged();
             }
@@ -612,7 +719,7 @@ namespace TMSim.UI
         {
             MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-
+            
         public void AddState()
         {
             AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count < 1);
@@ -623,15 +730,23 @@ namespace TMSim.UI
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
 
-                List<string> existingStates = new List<string>();
+                /*List<string> existingStates = new List<string>();
                 TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
                 if (existingStates.Contains(identifier))
                 {
                     QuickWarning($"State with identifier {identifier} already exists!");
                     return;
-                }
+                }*/
 
-                TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
+                try
+                {
+                    TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
@@ -646,15 +761,23 @@ namespace TMSim.UI
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
 
-                List<string> existingStates = new List<string>();
-                TM.States.ForEach(ts2 => existingStates.Add(ts2.Identifier));
-                if (existingStates.Contains(identifier) && identifier != ts.Identifier)
+                /*list<string> existingstates = new list<string>();
+                tm.states.foreach(ts2 => existingstates.add(ts2.identifier));
+                if (existingstates.contains(identifier) && identifier != ts.identifier)
                 {
-                    QuickWarning($"State with identifier {identifier} already exists!");
+                    quickwarning($"state with identifier {identifier} already exists!");
+                    return;
+                }*/
+
+                try
+                {
+                    TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
                     return;
                 }
-
-                TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
                 OnTMChanged();
             }
         }
@@ -677,22 +800,38 @@ namespace TMSim.UI
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
 
-                List<string> existingStates = new List<string>();
+                /*List<string> existingStates = new List<string>();
                 TM.States.ForEach(ts2 => existingStates.Add(ts2.Identifier));
                 if (existingStates.Contains(identifier) && identifier != ts.Identifier)
                 {
                     QuickWarning($"State with identifier {identifier} already exists!");
                     return;
-                }
+                }*/
 
-                TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
+                try
+                {
+                    TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
 
         public void RemoveState(TuringState ts)
         {
-            TM.RemoveState(ts);
+            try
+            {
+                TM.RemoveState(ts);
+            }
+            catch (StateDoesNotExistException)
+            {
+                QuickWarning(StateDoesNotExistText);
+                return;
+            }
             OnTMChanged();
         }
 
@@ -706,7 +845,15 @@ namespace TMSim.UI
                     ts = state;
             }
 
-            TM.RemoveState(ts);
+            try
+            {
+                TM.RemoveState(ts);
+            }
+            catch (StateDoesNotExistException)
+            {
+                QuickWarning(StateDoesNotExistText);
+                return;
+            }
             OnTMChanged();
         }
 
@@ -727,7 +874,7 @@ namespace TMSim.UI
                 }
                 catch (TransitionAlreadyExistsException)
                 {
-                    QuickWarning("The Transition already exists!");
+                    QuickWarning(TransitionExistsText);
                     return;
                 }
                 OnTMChanged();
@@ -751,7 +898,7 @@ namespace TMSim.UI
                 }
                 catch (TransitionAlreadyExistsException)
                 {
-                    QuickWarning("The Transition already exists!");
+                    QuickWarning(TransitionExistsText);
                     return;
                 }
                 OnTMChanged();
@@ -783,7 +930,7 @@ namespace TMSim.UI
                 }
                 catch (TransitionAlreadyExistsException)
                 {
-                    QuickWarning("The Transition already exists!");
+                    QuickWarning(TransitionExistsText);
                     return;
                 }
                 OnTMChanged();
@@ -792,7 +939,15 @@ namespace TMSim.UI
 
         public void RemoveTransition(TuringTransition tt)
         {
-            TM.RemoveTransition(tt);
+            try
+            {
+                TM.RemoveTransition(tt);
+            }
+            catch (TransitionDoesNotExistException)
+            {
+                QuickWarning(TransitionDoesNotExistText);
+                return;
+            }
             OnTMChanged();
         }
 
@@ -806,7 +961,15 @@ namespace TMSim.UI
                     tt = transtition;
             }
 
-            TM.RemoveTransition(tt);
+            try
+            {
+                TM.RemoveTransition(tt);
+            }
+            catch (TransitionDoesNotExistException)
+            {
+                QuickWarning(TransitionDoesNotExistText);
+                return;
+            }
             OnTMChanged();
         }
 
@@ -818,13 +981,21 @@ namespace TMSim.UI
                 char symbol = asd.Symbol;
                 bool isInputAlphabet = asd.IsInInput;
 
-                if (TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
+                /*if (TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
                 {
                     QuickWarning($"Symbol {symbol} already exists!");
                     return;
-                }
+                }*/
 
-                TM.AddSymbol(symbol, isInputAlphabet);
+                try
+                {
+                    TM.AddSymbol(symbol, isInputAlphabet);
+                }
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(SymbolExistsText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
@@ -837,20 +1008,36 @@ namespace TMSim.UI
                 char symbol = esd.Symbol;
                 bool isInputAlphabet = esd.IsInInput;
 
-                if (!TM.InputSymbols.Contains(symbol) || !TM.TapeSymbols.Contains(symbol))
+                /*if (!TM.InputSymbols.Contains(symbol) || !TM.TapeSymbols.Contains(symbol))
                 {
                     QuickWarning($"Symbol {symbol} does not exists!");
                     return;
-                }
+                }*/
 
-                TM.EditSymbol(symbol, isInputAlphabet);
+                try
+                {
+                    TM.EditSymbol(symbol, isInputAlphabet);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
 
         public void RemoveSymbol(string symbol)
         {
-            TM.RemoveSymbol(symbol.ToCharArray()[0]);
+            try
+            {
+                TM.RemoveSymbol(symbol.ToCharArray()[0]);
+            }
+            catch (SymbolDoesNotExistException)
+            {
+                QuickWarning(SymbolDoesNotExistText);
+                return;
+            }
             OnTMChanged();
         }
     }

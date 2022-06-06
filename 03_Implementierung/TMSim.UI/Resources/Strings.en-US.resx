@@ -282,4 +282,40 @@
   <data name="TEXT_View" xml:space="preserve">
     <value>View</value>
   </data>
+  <data name="TEXT_InvalidInputWord" xml:space="preserve">
+    <value>The input word is not valid!</value>
+  </data>
+  <data name="TEXT_InvalidTapeNumberInDefinition" xml:space="preserve">
+    <value>The number of tapes does not match the transition definition!</value>
+  </data>
+  <data name="TEXT_ReadSymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the read-symbol!</value>
+  </data>
+  <data name="TEXT_SourceStateDoesNotExist" xml:space="preserve">
+    <value>The source state of the transition does not exist!</value>
+  </data>
+  <data name="TEXT_StateDoesNotExist" xml:space="preserve">
+    <value>The state does not exist!</value>
+  </data>
+  <data name="TEXT_StateExists" xml:space="preserve">
+    <value>The state already exists!</value>
+  </data>
+  <data name="TEXT_SymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the symbol!</value>
+  </data>
+  <data name="TEXT_SymbolExists" xml:space="preserve">
+    <value>The tape alphabet already contains the symbol!</value>
+  </data>
+  <data name="TEXT_TargetStateDoesNotExist" xml:space="preserve">
+    <value>The target state of the transition does not exist!</value>
+  </data>
+  <data name="TEXT_TransitionDoesNotExist" xml:space="preserve">
+    <value>The transition does not exist!</value>
+  </data>
+  <data name="TEXT_TransitionExists" xml:space="preserve">
+    <value>The transition already exists!</value>
+  </data>
+  <data name="TEXT_WriteSymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the write-symbol!</value>
+  </data>
 </root>
