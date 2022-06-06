@@ -18,6 +18,12 @@ namespace TMSim.UI
     /// </summary>
     public partial class ColumnHeader : UserControl
     {
+        public delegate void EditSymbol(string symbol, bool isInput);
+        public static event EditSymbol EditSymbolEvent;
+
+        public delegate void RemoveSymbol(string symbol);
+        public static event RemoveSymbol RemoveSymbolEvent;
+
         private string _symbol;
         public string Symbol
         {
@@ -54,19 +60,12 @@ namespace TMSim.UI
 
         private void EditSymbol_Click(object sender, RoutedEventArgs e)
         {
-            var esd = new EditSymbolDialog(Symbol, IsInput);
-            if (esd.ShowDialog() == true)
-            {
-                Symbol = esd.Symbol;
-                IsInput = esd.IsInput;
-                string comment = "DEBUG: TODO: get comment from popup";
-                //TODO: get comment from popup
-            }
+            EditSymbolEvent?.Invoke(Symbol, IsInput);
         }
 
         private void RemoveSymbol_Click(object sender, RoutedEventArgs e)
         {
-
+            RemoveSymbolEvent.Invoke(Symbol);
         }
     }
 }

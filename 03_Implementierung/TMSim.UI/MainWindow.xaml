@@ -106,7 +106,7 @@
                 <ColumnDefinition Width="{Binding DiagramViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
             </Grid.ColumnDefinitions>
             <Border Background="White" CornerRadius="10" Margin="3,0,3,3">
-                <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}" Turingmachine="{Binding TM, Mode=TwoWay}"/>
+                <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}"/>
             </Border>
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,3">
                 <local:Diagram x:Name="diagram" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>

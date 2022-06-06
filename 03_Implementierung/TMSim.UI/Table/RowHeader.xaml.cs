@@ -18,6 +18,12 @@ namespace TMSim.UI
     /// </summary>
     public partial class RowHeader : UserControl
     {
+        public delegate void EditState(string identifier);
+        public static event EditState EditStateEvent;
+
+        public delegate void RemoveState(string identifier);
+        public static event RemoveState RemoveStateEvent;
+
         private bool _isStartState;
         public bool IsStartState
         {
@@ -70,20 +76,12 @@ namespace TMSim.UI
 
         private void EditState_Click(object sender, RoutedEventArgs e)
         {
-            var asd = new EditStateDialog(Identifier, IsStartState, IsAcceptingState);
-            if (asd.ShowDialog() == true)
-            {
-                Identifier = asd.Identfier;
-                IsStartState = asd.IsStart;
-                IsAcceptingState = asd.IsAccepting;
-                string comment = "DEBUG: TODO: get comment from popup";
-                //TODO: get comment from popup
-            }
+            EditStateEvent?.Invoke(Identifier);
         }
 
         private void RemoveState_Click(object sender, RoutedEventArgs e)
         {
-
+            RemoveStateEvent?.Invoke(Identifier); 
         }
     }
 }

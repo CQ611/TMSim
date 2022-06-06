@@ -615,7 +615,7 @@ namespace TMSim.UI
 
         public void AddState()
         {
-            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count<1);
+            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count < 1);
             if (asd.ShowDialog() == true)
             {
                 string identifier = asd.Identfier;
@@ -659,8 +659,53 @@ namespace TMSim.UI
             }
         }
 
+        public void EditState(string turingStateAsString)
+        {
+            TuringState ts = null;
+
+            foreach (var state in TM.States)
+            {
+                if (turingStateAsString == state.Identifier)
+                    ts = state;
+            }
+
+            AddStateDialog asd = new AddStateDialog(ts);
+            if (asd.ShowDialog() == true)
+            {
+                string identifier = asd.Identfier;
+                bool isStart = asd.IsStart;
+                bool isAccepting = asd.IsAccepting;
+                string comment = asd.Comment;
+
+                List<string> existingStates = new List<string>();
+                TM.States.ForEach(ts2 => existingStates.Add(ts2.Identifier));
+                if (existingStates.Contains(identifier) && identifier != ts.Identifier)
+                {
+                    QuickWarning($"State with identifier {identifier} already exists!");
+                    return;
+                }
+
+                TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
+                OnTMChanged();
+            }
+        }
+
         public void RemoveState(TuringState ts)
         {
+            TM.RemoveState(ts);
+            OnTMChanged();
+        }
+
+        public void RemoveState(string turingStateAsString)
+        {
+            TuringState ts = null;
+
+            foreach (var state in TM.States)
+            {
+                if (turingStateAsString == state.Identifier)
+                    ts = state;
+            }
+
             TM.RemoveState(ts);
             OnTMChanged();
         }
@@ -674,11 +719,14 @@ namespace TMSim.UI
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
-                try {
+                try
+                {
                     TM.AddTransition(new TuringTransition(
                         atd.Source, atd.Target, atd.SymbolsRead,
                         atd.SymbolsWrite, atd.Directions, atd.Comment));
-                } catch (TransitionAlreadyExistsException) {
+                }
+                catch (TransitionAlreadyExistsException)
+                {
                     QuickWarning("The Transition already exists!");
                     return;
                 }
@@ -710,8 +758,54 @@ namespace TMSim.UI
             }
         }
 
+        public void EditTransition(string turingTransition, string symbolRead)
+        {
+            TuringTransition tt = null;
+
+            foreach(var transtition in TM.Transitions)
+            {
+                if (transtition.Source.Identifier == turingTransition && transtition.SymbolsRead.Contains(symbolRead.ToCharArray()[0]))
+                    tt = transtition;
+            }
+
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
+            if (atd.ShowDialog() == true)
+            {
+                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+
+                try
+                {
+                    TM.EditTransition(tt, new TuringTransition(
+                        atd.Source, atd.Target, atd.SymbolsRead,
+                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning("The Transition already exists!");
+                    return;
+                }
+                OnTMChanged();
+            }
+        }
+
         public void RemoveTransition(TuringTransition tt)
         {
+            TM.RemoveTransition(tt);
+            OnTMChanged();
+        }
+
+        public void RemoveTransition(string turingTransition, string symbolRead)
+        {
+            TuringTransition tt = null;
+
+            foreach (var transtition in TM.Transitions)
+            {
+                if (transtition.Source.Identifier == turingTransition && transtition.SymbolsRead.Contains(symbolRead.ToCharArray()[0]))
+                    tt = transtition;
+            }
+
             TM.RemoveTransition(tt);
             OnTMChanged();
         }
@@ -733,6 +827,31 @@ namespace TMSim.UI
                 TM.AddSymbol(symbol, isInputAlphabet);
                 OnTMChanged();
             }
+        }
+
+        public void EditSymbol(string actSymbol, bool isInput)
+        {
+            EditSymbolDialog esd = new EditSymbolDialog(actSymbol.ToCharArray()[0], isInput);
+            if (esd.ShowDialog() == true)
+            {
+                char symbol = esd.Symbol;
+                bool isInputAlphabet = esd.IsInInput;
+
+                if (!TM.InputSymbols.Contains(symbol) || !TM.TapeSymbols.Contains(symbol))
+                {
+                    QuickWarning($"Symbol {symbol} does not exists!");
+                    return;
+                }
+
+                TM.EditSymbol(symbol, isInputAlphabet);
+                OnTMChanged();
+            }
+        }
+
+        public void RemoveSymbol(string symbol)
+        {
+            TM.RemoveSymbol(symbol.ToCharArray()[0]);
+            OnTMChanged();
         }
     }
 }
