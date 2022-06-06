@@ -61,6 +61,7 @@ namespace TMSim.UI
             vm = (ViewModel)DataContext;
             vm.ClearTableEvent += Vm_ClearTableEvent;
             vm.LoadTableEvent += Vm_LoadTableEvent;
+            vm.RefreshActiveHighlightEvent += Vm_RefreshActiveHighlightEvent;
         }
 
         private void RowHeader_EditStateEvent(string identifier)
@@ -98,6 +99,11 @@ namespace TMSim.UI
             vm.RemoveTransition(identifier, symbolRead);
         }
 
+        private void Vm_ClearTableEvent()
+        {
+            ClearTable();
+        }
+
         private void Vm_LoadTableEvent(TuringMachine TM)
         {
             TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s)));
@@ -108,6 +114,17 @@ namespace TMSim.UI
                 TM.TapeSymbols.FindIndex(x => x == t.SymbolsRead[0]) + 1,
                 Highlight && TM.CurrentState.Equals(t.Source),
                 t));
+        }
+
+        private void Vm_RefreshActiveHighlightEvent(TuringMachine TM)
+        {
+            var highlightedCell = tableCells.Find(x => x.Highlight == true);
+            if (highlightedCell != null)
+                highlightedCell.Highlight = false;
+
+            var cellForHighlight = tableCells.Find(x => x.State == TM.CurrentState.Identifier);
+            if (cellForHighlight != null)
+                cellForHighlight.Highlight = true;
         }
 
         private void OverwriteTransition(int row, int column, bool highlight, TuringTransition transition)
@@ -121,11 +138,6 @@ namespace TMSim.UI
             TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
             Grid.SetRow(tableCells[tableCells.Count() - 1], row);
             Grid.SetColumn(tableCells[tableCells.Count() - 1], column);
-        }
-
-        private void Vm_ClearTableEvent()
-        {
-            ClearTable();
         }
 
         private void ClearTable()

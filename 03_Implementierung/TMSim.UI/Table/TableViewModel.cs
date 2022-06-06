@@ -15,6 +15,9 @@ namespace TMSim.UI
         public delegate void LoadTable(TuringMachine TM);
         public event LoadTable LoadTableEvent;
 
+        public delegate void RefreshActiveHighlight(TuringMachine TM);
+        public event RefreshActiveHighlight RefreshActiveHighlightEvent;
+
 
         private void UpdateTableData()
         {
@@ -23,5 +26,11 @@ namespace TMSim.UI
             LoadTableEvent?.Invoke(TM);
         }
 
+        private void RefreshTableData()
+        {
+            RefreshActiveHighlightEvent?.Invoke(TM);
+        }
+
     }
 }
+
