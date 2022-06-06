@@ -160,7 +160,7 @@
     <value>Cancel</value>
   </data>
   <data name="TEXT_PopupIdentifier" xml:space="preserve">
-    <value>Identifier:</value>
+    <value>Identifier</value>
   </data>
   <data name="TEXT_PopupIdentifierText" xml:space="preserve">
     <value>This should not be visible</value>

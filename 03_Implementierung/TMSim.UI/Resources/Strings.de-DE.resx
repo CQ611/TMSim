@@ -160,7 +160,7 @@
     <value>Abbrechen</value>
   </data>
   <data name="TEXT_PopupIdentifier" xml:space="preserve">
-    <value>Identifier:</value>
+    <value>Kennung</value>
   </data>
   <data name="TEXT_PopupIdentifierText" xml:space="preserve">
     <value>Das sollte nicht sichtbar sein!</value>

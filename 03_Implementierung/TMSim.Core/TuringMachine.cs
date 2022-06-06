@@ -154,15 +154,35 @@ namespace TMSim.Core
 
         public void EditState(TuringState tsOld, TuringState tsNew)
         {
-            RemoveState(tsOld);
-            AddState(tsNew);
+            foreach (TuringState state in States)
+            {
+                if (state.Identifier == tsNew.Identifier && state.Identifier != tsOld.Identifier)
+                    throw new StateAlreadyExistsException();
+            }
+            tsOld.Identifier = tsNew.Identifier;
+            tsOld.Comment = tsNew.Comment;
+
+            tsOld.IsAccepting = tsNew.IsAccepting;
+            if (tsOld.IsAccepting && !EndStates.Contains(tsOld)) { EndStates.Add(tsOld); }
+            if (!tsOld.IsAccepting && EndStates.Contains(tsOld)) { EndStates.Remove(tsOld); }
+
+            if (tsOld.IsStart && !tsNew.IsStart)
+            {
+                StartState = null;
+            }
+            else if (!tsOld.IsStart && tsNew.IsStart)
+            {
+                if (StartState != null && StartState != tsOld) StartState.IsStart = false;
+                StartState = tsOld;
+            }
+            tsOld.IsStart = tsNew.IsStart;
         }
 
         public void RemoveState(TuringState ts)
         {
             if (!States.Contains(ts)) throw new StateDoesNotExistException();
-            // also all Transitions referencing this state need to be deleted
-            foreach (TuringTransition tt in ts.OutgoingTransitions) {
+            foreach (TuringTransition tt in ts.OutgoingTransitions)
+            {
                 tt.Target.IncomingTransitions.Remove(tt);
                 Transitions.Remove(tt);
             }

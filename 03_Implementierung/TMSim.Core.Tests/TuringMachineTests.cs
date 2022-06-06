@@ -67,8 +67,8 @@ namespace TMSim.Core.Tests
             TuringState ts2 = new TuringState("q1");
             tm.AddState(ts1);
             tm.EditState(ts1, ts2);
-            Assert.IsFalse(tm.States.Contains(ts1));
-            Assert.IsTrue(tm.States.Contains(ts2));
+            Assert.IsTrue(tm.States.Contains(ts1));
+            Assert.IsFalse(tm.States.Contains(ts2));
         }
 
         [TestMethod]
@@ -388,15 +388,6 @@ namespace TMSim.Core.Tests
             TuringState ts = new TuringState("id1");
             tm.AddState(ts);
             tm.AddState(ts);
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(StateDoesNotExistException))]
-        public void EditState_throwsStateDoesNotExistException()
-        {
-            TuringMachine tm = new TuringMachine();
-            TuringState ts = new TuringState("id1");
-            tm.EditState(ts, ts);
         }
 
         [TestMethod]

@@ -35,25 +35,8 @@
                 </Grid>
             </Border>
 
-            <Grid x:Name="AddRemoveRow" Grid.Row="1" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button x:Name="AddRowButton" Grid.Column="0" Style="{StaticResource AddButtonStyle}" Click="AddRowButton_Click" Margin="10"></Button>
-                <Button x:Name="RemoveRowButton" Grid.Column="1" Style="{StaticResource RemoveButtonStyle}" Click="RemoveRowButton_Click" Margin="10"></Button>
-            </Grid>
-
-            <Grid x:Name="AddRemoveColumn" Grid.Row="0" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Button x:Name="AddColumnButton" Grid.Row="0" Style="{StaticResource AddButtonStyle}" Click="AddColumnButton_Click"></Button>
-                <Button x:Name="RemoveColumnButton" Grid.Row="1" Style="{StaticResource RemoveButtonStyle}" Click="RemoveColumnButton_Click"></Button>
-            </Grid>
+            <Button x:Name="AddRowButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource AddButtonStyle}" Click="AddRowButton_Click" Margin="10"></Button>
+            <Button x:Name="AddColumnButton" Grid.Row="0" Grid.Column="1" Style="{StaticResource AddButtonStyle}" Click="AddColumnButton_Click" Margin="10"></Button>
 
         </Grid>
 

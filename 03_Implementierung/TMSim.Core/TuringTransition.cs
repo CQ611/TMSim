@@ -20,8 +20,8 @@ namespace TMSim.Core
             Neutral
         }
 
-        public TuringState Source { get; }
-        public TuringState Target { get; }
+        public TuringState Source { get; set; }
+        public TuringState Target { get; set; }
         public List<char> SymbolsRead { get; }
         public List<char> SymbolsWrite { get; }
 

@@ -29,6 +29,7 @@ namespace TMSim.UI
 
         private void PropertyChangedCallback()
         {
+            if (DData != null) {if (DData.ArangeFlag) ArangeDiagram(); DData.ArangeFlag = false; }
             InvalidateVisual();
         }
         #endregion
@@ -45,10 +46,9 @@ namespace TMSim.UI
             set { SetValue(VMProperty, value); }
         }
 
-        public bool Animated { get; set; }
-
         private Node heldNode;
         private Node rightClickedNode;
+        private NodeConnection rightClickedConnection;
 
         Vector mouseClickpos;
 
@@ -60,6 +60,8 @@ namespace TMSim.UI
 
         private static readonly Brush accentBrush = Brushes.LightGray;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
+
+        private Dictionary<Rect, NodeConnection> connectionLocations = new Dictionary<Rect, NodeConnection>();
 
         public Diagram()
         {
@@ -79,6 +81,7 @@ namespace TMSim.UI
         protected override async void OnRender(DrawingContext dc)
         {
             base.OnRender(dc);
+            connectionLocations.Clear();
 
             dc.DrawRectangle(bgBrush, bgPen, new Rect(0, 0, ActualWidth, ActualHeight));
 
@@ -108,34 +111,108 @@ namespace TMSim.UI
         private void DrawNode(DrawingContext dc, Node n)
         {
             dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
-            dc.DrawText(new FormattedText(n.Identifier,
+            if(n.IsAccepting) dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
+            FormattedText ft = new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Courier New"),
-                DData.NodeSize / 3, outlineBrush, 1),
-                OffsetPoint(n.Position, -DData.NodeSize / 5, -DData.NodeSize / 5));
+                DData.NodeSize / 3, outlineBrush, 1);
+            dc.DrawText(ft, OffsetPoint(n.Position, -ft.Width/2, -ft.Height/2));
+
+            if (n.IsStart)
+            {
+                ft = new FormattedText("START",
+                    CultureInfo.GetCultureInfo("en-us"),
+                    FlowDirection.LeftToRight,
+                    new Typeface("Courier New"),
+                    DData.NodeSize / 3, outlineBrush, 1);
+                dc.DrawText(ft, OffsetPoint(n.Position, -ft.Width/2, -DData.NodeSize*0.8 - ft.Height/2));
+                DrawArrwohead(
+                    dc,
+                    OffsetPoint(n.Position, 0, -DData.NodeSize / 2),
+                    OffsetPoint(n.Position, 0, -DData.NodeSize) - n.Position);
+            }
         }
 
         private void DrawNodeConnection(DrawingContext dc, NodeConnection con)
         {
             if (con.IsSelfReferencing())
             {
-                dc.DrawEllipse(Brushes.DarkBlue, outlinePen,
-                    OffsetPoint(con.Node1.Position, DData.NodeSize / 2, DData.NodeSize / 2),
-                    DData.NodeSize / 2, DData.NodeSize / 2);
+                Node n = con.Node1;
+
+                StreamGeometry sg = new StreamGeometry();
+                using (StreamGeometryContext ctx = sg.Open())
+                {
+                    ctx.BeginFigure(
+                        OffsetPoint(n.Position, DData.NodeSize / 2, 0),
+                        true, false);
+                    ctx.ArcTo(
+                        OffsetPoint(n.Position, 0, DData.NodeSize / 2),
+                        new Size(DData.NodeSize, DData.NodeSize/3),
+                        0.0, true, SweepDirection.Clockwise, true, true);
+                }
+                sg.Freeze();
+                dc.DrawGeometry(Brushes.Transparent, outlinePen, sg);
+                DrawConnectionTextsAround(dc, con, OffsetPoint(n.Position, DData.NodeSize * 1.2, DData.NodeSize / 4));
+                DrawArrwohead(
+                    dc,
+                    OffsetPoint(n.Position, DData.NodeSize / 2, 0),
+                    new Vector(1, 0));
             }
             else
             {
-                dc.DrawLine(outlinePen,
-                    PointOnBorderTowards(con.Node1, con.Node2),
-                    PointOnBorderTowards(con.Node2, con.Node1)
-                    );
-                DrawArrwohead(
-                    dc,
-                    PointOnBorderTowards(con.Node2, con.Node1),
-                    con.Node1.Position - con.Node2.Position
-                    );
-                DrawConnectionText(dc, con, CenterPoint(con));
+                if (con.OpposedConnection == null)
+                {
+                    dc.DrawLine(outlinePen,
+                        PointOnBorderTowards(con.Node1, con.Node2),
+                        PointOnBorderTowards(con.Node2, con.Node1));
+                    DrawArrwohead(
+                        dc,
+                        PointOnBorderTowards(con.Node2, con.Node1),
+                        con.Node1.Position - con.Node2.Position);
+                    DrawConnectionTextsAround(dc, con, CenterPoint(con));
+                }
+                else
+                {
+                    Vector nodeVector = con.Node2.Position - con.Node1.Position;
+                    Point center = con.Node1.Position + nodeVector / 2;
+                    Point pRight = center + MNormalize(PerpVector(nodeVector)) * DData.NodeSize * 0.7;
+                    Point pLeft = center + MNormalize(PerpVector(-nodeVector)) * DData.NodeSize * 0.7;
+
+                    //render con
+                    dc.DrawLine(outlinePen,
+                        PointOnBorderTowards(con.Node1, pRight), pRight);
+                    dc.DrawLine(outlinePen,
+                        PointOnBorderTowards(con.Node2, pRight), pRight);
+                    DrawArrwohead(dc,
+                        PointOnBorderTowards(con.Node2, pRight),
+                        pRight - con.Node2.Position);
+                    DrawConnectionTextsAround(dc, con, pRight);
+
+                    //render opposed con
+                    NodeConnection oCon = con.OpposedConnection;
+                    dc.DrawLine(outlinePen,
+                        PointOnBorderTowards(oCon.Node1, pLeft), pLeft);
+                    dc.DrawLine(outlinePen,
+                        PointOnBorderTowards(oCon.Node2, pLeft), pLeft);
+                    DrawArrwohead(dc,
+                        PointOnBorderTowards(oCon.Node2, pLeft),
+                        pLeft - oCon.Node2.Position);
+                    DrawConnectionTextsAround(dc, oCon, pLeft);
+                }
+            }
+        }
+        private void DrawConnectionTextsAround(DrawingContext dc, NodeConnection con, Point CenterOfMass)
+        {
+            int collinearCount = con.CollinearConnections.Count;
+            double rowHeight = new FormattedText("|", CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Courier New"), DData.NodeSize / 3, outlineBrush, 1).Height;
+            double spacing = 5;
+            double totalHeight = rowHeight * collinearCount + (collinearCount - 1) * spacing;
+            for (int i = 0; i < collinearCount; i++)
+            {
+                DrawConnectionText(dc, con.CollinearConnections[i],
+                    OffsetPoint(CenterOfMass, 0,
+                    -totalHeight / 2 + i * (rowHeight + spacing) + rowHeight / 2));
             }
         }
 
@@ -153,12 +230,15 @@ namespace TMSim.UI
             dc.PushTransform(new TranslateTransform(
                 textCenter.X - fText.Width / 2, 
                 textCenter.Y - fText.Height / 2));
-            dc.DrawRectangle(accentBrush, null, new Rect(
-                new Size(fText.Width, fText.Height)
-                ));
+            dc.DrawRectangle(accentBrush, null, new Rect(new Size(fText.Width, fText.Height)));
             dc.DrawText(fText, new Point(0,0));
-
             dc.Pop();
+
+            Rect r = new Rect(
+                new Point(textCenter.X - fText.Width / 2, textCenter.Y - fText.Height / 2),
+                new Point(textCenter.X + fText.Width / 2, textCenter.Y + fText.Height / 2));
+            try { connectionLocations.Add(r, con); }
+            catch (Exception) { }
         }
 
         private Point CenterPoint(NodeConnection con)
@@ -173,13 +253,20 @@ namespace TMSim.UI
             return source.Position + direction * DData.NodeSize/2;
         }
 
+        private Point PointOnBorderTowards(Node n, Point p2)
+        {
+            Vector direction = p2 - n.Position;
+            direction.Normalize();
+            return n.Position + direction * DData.NodeSize / 2;
+        }
+
         private void DrawArrwohead(DrawingContext dc, Point tip, Vector direction)
         {
             direction.Normalize();
             Point corner1 = tip + direction * DData.NodeSize / 6 +
-                PerpendicularVector(direction) * DData.NodeSize / 12;
+                PerpVector(direction) * DData.NodeSize / 12;
             Point corner2 = tip + direction * DData.NodeSize / 6 -
-                PerpendicularVector(direction) * DData.NodeSize / 12;
+                PerpVector(direction) * DData.NodeSize / 12;
 
             StreamGeometry sg = new StreamGeometry();
             using (StreamGeometryContext ctx = sg.Open())
@@ -192,7 +279,7 @@ namespace TMSim.UI
             dc.DrawGeometry(outlineBrush, outlinePen, sg);
         }
 
-        private Vector PerpendicularVector(Vector v)
+        private Vector PerpVector(Vector v)
         {
             return new Vector(-v.Y, v.X);
         }
@@ -233,7 +320,7 @@ namespace TMSim.UI
                     ctr++;
                 }
 
-                if (Animated)
+                if (VM.AnimateDiagram)
                 {
                     InvalidateVisual();
                     await Task.Delay(3);
@@ -298,15 +385,18 @@ namespace TMSim.UI
                 Vector Center = new Vector(ActualWidth / 2, ActualHeight / 2);
                 Vector dir = Vector.Subtract(Center, (Vector)n.Position);
                 dir.Y = 2 * dir.Y;
-                dir.Normalize();
+                if (!(dir.X == 0 && dir.Y == 0)) dir.Normalize();
                 return dir * gravityStrength;
             }
         }
         private Node ConstrainToScreen(Node n)
         {
             Point tmp = n.Position;
+            var rand = new Random();
             double x = Math.Clamp(tmp.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
             double y = Math.Clamp(tmp.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
+            if (tmp.X == double.NaN) tmp.X = rand.Next((int)DData.Width);
+            if (tmp.Y == double.NaN) tmp.Y = rand.Next((int)DData.Height);
             n.Position = new Point(x, y);
             return n;
         }
@@ -319,6 +409,12 @@ namespace TMSim.UI
         private Vector SubtractPositions(Node n1, Node n2)
         {
             return Vector.Subtract((Vector)n1.Position, (Vector)n2.Position);
+        }
+
+        private Vector MNormalize(Vector v)
+        {
+            v.Normalize();
+            return v;
         }
 
         private Vector SumVectors(IEnumerable<Vector> vectors)
@@ -371,6 +467,20 @@ namespace TMSim.UI
                 rightClickedNode = null;
             }
 
+            found = false;
+            foreach (Rect r in connectionLocations.Keys)
+            {
+                if (r.Contains((Point)mouseClickpos)){
+                    rightClickedConnection = connectionLocations[r];
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
+            {
+                rightClickedConnection = null;
+            }
+
             InvalidateVisual();
         }
 
@@ -394,8 +504,29 @@ namespace TMSim.UI
             }
             else if (nodeReleasedOver != null && rightClickedNode != null)
             {
-                //create Connection
                 VM.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
+            }
+            HandleContextMenuButtons();
+        }
+
+        private void HandleContextMenuButtons()
+        {
+            if (rightClickedNode != null) {
+                edit_state_btn.IsEnabled = true;
+                remove_state_btn.IsEnabled = true;
+                add_transition_btn.IsEnabled = true;
+            } else {
+                edit_state_btn.IsEnabled = false;
+                remove_state_btn.IsEnabled = false;
+                add_transition_btn.IsEnabled = false;
+            }
+
+            if (rightClickedConnection != null) {
+                edit_transition_btn.IsEnabled = true;
+                remove_transition_btn.IsEnabled = true;
+            } else { 
+                edit_transition_btn.IsEnabled = false;
+                remove_transition_btn.IsEnabled = false;
             }
         }
 
@@ -410,11 +541,43 @@ namespace TMSim.UI
             VM.AddState();
         }
 
+        private void edit_state_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (rightClickedNode != null)
+            {
+                VM.EditState(rightClickedNode.State);
+            }
+        }
+
         private void remove_state_btn_Click(object sender, RoutedEventArgs e)
         {
             if(rightClickedNode != null)
             {
-                VM.RemoveState(rightClickedNode.Identifier);
+                VM.RemoveState(rightClickedNode.State);
+            }
+        }
+
+        private void add_transition_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (rightClickedNode != null)
+            {
+                VM.AddTransition(rightClickedNode.State, rightClickedNode.State);
+            }
+        }
+
+        private void edit_transition_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (rightClickedConnection != null)
+            {
+                VM.EditTransition(rightClickedConnection.Transition);
+            }
+        }
+
+        private void remove_transition_btn_Click(object sender, RoutedEventArgs e)
+        {
+            if (rightClickedConnection != null)
+            {
+                VM.RemoveTransition(rightClickedConnection.Transition);
             }
         }
 

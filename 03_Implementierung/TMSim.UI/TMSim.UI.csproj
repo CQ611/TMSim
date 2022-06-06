@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\arrowTest.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\asdf_to_Tobi.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

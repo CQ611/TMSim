@@ -7,7 +7,7 @@
         ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Add Transition" Height="217" Width="372">
+        Title="Transition" Height="217" Width="372">
 
 
     <Window.DataContext>

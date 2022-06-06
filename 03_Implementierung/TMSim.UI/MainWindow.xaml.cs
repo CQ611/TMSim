@@ -23,6 +23,7 @@ namespace TMSim.UI
         public MainWindow()
         {
             InitializeComponent();
+            //table.GetBindingExpression(Table.TuringmachineProperty).UpdateTarget();
         }
     }
 }
