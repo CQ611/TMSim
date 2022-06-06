@@ -370,6 +370,12 @@ namespace TMSim.UI
             OnPropertyChanged(nameof(TM));
         }
 
+        public void OnTmRefresh()
+        {
+            UpdateTapeData();
+            RefreshTableData();
+        }
+
         private bool startIsActive = false;
 
 
@@ -389,7 +395,7 @@ namespace TMSim.UI
                 StopVisibility = Visibility.Visible;
                 timmy.Start();
             }
-            OnTMChanged();
+            OnTmRefresh();
         }
 
         private void Timmy_Tick(object sender, EventArgs e)
@@ -409,7 +415,7 @@ namespace TMSim.UI
             StartVisibility = Visibility.Visible;
             StopVisibility = Visibility.Hidden;
             timmy.Stop();
-            OnTMChanged();
+            OnTmRefresh();
         }
 
         private void OnStepSimulation()
@@ -422,7 +428,7 @@ namespace TMSim.UI
                 timmy.Stop();
                 CheckIfRunWasSuccessful();
             }
-            OnTMChanged();
+            OnTmRefresh();
         }
 
         private void CheckIfRunWasSuccessful()
@@ -762,7 +768,7 @@ namespace TMSim.UI
         {
             TuringTransition tt = null;
 
-            foreach(var transtition in TM.Transitions)
+            foreach (var transtition in TM.Transitions)
             {
                 if (transtition.Source.Identifier == turingTransition && transtition.SymbolsRead.Contains(symbolRead.ToCharArray()[0]))
                     tt = transtition;
