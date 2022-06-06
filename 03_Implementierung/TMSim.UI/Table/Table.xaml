@@ -15,13 +15,13 @@
         <Grid x:Name="TableGrid" Background="White">
 
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="row1" Height="60"/>
-                <RowDefinition x:Name="row2" Height="60"/>
+                <RowDefinition x:Name="row1" Height="50"/>
+                <RowDefinition x:Name="row2" Height="55"/>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition x:Name="column1" Width="100"/>
-                <ColumnDefinition x:Name="column2" Width="100"/>
+                <ColumnDefinition x:Name="column1" Width="80"/>
+                <ColumnDefinition x:Name="column2" Width="65"/>
             </Grid.ColumnDefinitions>
 
             <Border Grid.Row="0" Grid.Column="0" BorderBrush="Black" BorderThickness="2">
@@ -35,8 +35,8 @@
                 </Grid>
             </Border>
 
-            <Button x:Name="AddRowButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource AddButtonStyle}" Click="AddRowButton_Click" Margin="10"></Button>
-            <Button x:Name="AddColumnButton" Grid.Row="0" Grid.Column="1" Style="{StaticResource AddButtonStyle}" Click="AddColumnButton_Click" Margin="10"></Button>
+            <Button x:Name="AddRowButton" Grid.Row="1" Grid.Column="0" Style="{StaticResource AddButtonStyle}" Click="AddRowButton_Click" Height="30"></Button>
+            <Button x:Name="AddColumnButton" Grid.Row="0" Grid.Column="1" Style="{StaticResource AddButtonStyle}" Click="AddColumnButton_Click" Height="30"></Button>
 
         </Grid>
 

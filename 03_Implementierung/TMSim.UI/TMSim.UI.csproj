@@ -38,12 +38,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="PopupWindows\AddTransitionDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
     <Page Update="PopupWindows\EditSymbolDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PopupWindows\AddSymbolDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="PopupWindows\AddTransitionDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="PopupWindows\EditStateDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
