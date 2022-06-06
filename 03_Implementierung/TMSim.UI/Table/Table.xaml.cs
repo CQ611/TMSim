@@ -131,7 +131,7 @@ namespace TMSim.UI
                     i++;
                 }
 
-                OverwriteTransition(row, column, transition.SymbolsRead, transition.SymbolsWrite, transition.MoveDirections, transition.Source);
+                OverwriteTransition(row, column, transition.SymbolsRead, transition.SymbolsWrite, transition.MoveDirections, transition.Target);
             }
 
         }
@@ -142,9 +142,9 @@ namespace TMSim.UI
             List<char> symbolsRead,
             List<char> symbolsWrite,
             List<Core.TuringTransition.Direction> moveDirections,
-            Core.TuringState source)
+            Core.TuringState target)
         {
-            tableCells.Add(new TableCell(source.Identifier, moveDirections[0].ToString(), symbolsWrite[0].ToString(), symbolsRead[0].ToString()));
+            tableCells.Add(new TableCell(target.Identifier, moveDirections[0].ToString(), symbolsWrite[0].ToString(), symbolsRead[0].ToString()));
             TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
             Grid.SetRow(tableCells[tableCells.Count() - 1], row);
             Grid.SetColumn(tableCells[tableCells.Count() - 1], column);

@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using TMSim.Core;
+using TMSim.Core.Exceptions;
 using TMSim.UI.PopupWindows;
 
 namespace TMSim.UI
@@ -606,8 +607,7 @@ namespace TMSim.UI
                 string identifier = asd.Identfier;
                 bool isStart = asd.IsStart;
                 bool isAccepting = asd.IsAccepting;
-                string comment = "DEBUG: TODO: get comment from popup";
-                //TODO: get comment from popup
+                string comment = asd.Comment;
 
                 List<string> existingStates = new List<string>();
                 TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
@@ -622,29 +622,31 @@ namespace TMSim.UI
             }
         }
 
-        public void AddSymbol()
+        public void EditState(TuringState ts)
         {
-            AddSymbolDialog asd = new AddSymbolDialog();
-            if(asd.ShowDialog() == true)
+            AddStateDialog asd = new AddStateDialog(ts);
+            if (asd.ShowDialog() == true)
             {
-                char symbol = asd.Symbol;
-                bool isInputAlphabet = asd.IsInInput;
+                string identifier = asd.Identfier;
+                bool isStart = asd.IsStart;
+                bool isAccepting = asd.IsAccepting;
+                string comment = asd.Comment;
 
-                if(TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
+                List<string> existingStates = new List<string>();
+                TM.States.ForEach(ts2 => existingStates.Add(ts2.Identifier));
+                if (existingStates.Contains(identifier) && identifier != ts.Identifier)
                 {
-                    QuickWarning($"Symbol {symbol} already exists!");
+                    QuickWarning($"State with identifier {identifier} already exists!");
                     return;
                 }
 
-                TM.AddSymbol(symbol, isInputAlphabet);
+                TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
                 OnTMChanged();
             }
         }
 
-
-        public void RemoveState(string ident)
+        public void RemoveState(TuringState ts)
         {
-            TuringState ts = TM.States.First(x => x.Identifier == ident);
             TM.RemoveState(ts);
             OnTMChanged();
         }
@@ -654,14 +656,70 @@ namespace TMSim.UI
             AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target);
             if (atd.ShowDialog() == true)
             {
-                TM.AddTransition(new TuringTransition(
-                    atd.Source, atd.Target, atd.SymbolsRead,
-                    atd.SymbolsWrite, atd.Directions, atd.Comment));
-
                 //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
+                try {
+                    TM.AddTransition(new TuringTransition(
+                        atd.Source, atd.Target, atd.SymbolsRead,
+                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                } catch (TransitionAlreadyExistsException) {
+                    QuickWarning("The Transition already exists!");
+                    return;
+                }
+                OnTMChanged();
+            }
+        }
+
+        public void EditTransition(TuringTransition tt)
+        {
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
+            if (atd.ShowDialog() == true)
+            {
+                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+
+                try
+                {
+                    TM.EditTransition(tt, new TuringTransition(
+                        atd.Source, atd.Target, atd.SymbolsRead,
+                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning("The Transition already exists!");
+                    return;
+                }
+                OnTMChanged();
+            }
+        }
+
+        public void RemoveTransition(TuringTransition tt)
+        {
+            TM.RemoveTransition(tt);
+            OnTMChanged();
+        }
+
+        public void AddSymbol()
+        {
+            AddSymbolDialog asd = new AddSymbolDialog();
+            if (asd.ShowDialog() == true)
+            {
+                char symbol = asd.Symbol;
+                bool isInputAlphabet = asd.IsInInput;
+
+                if (TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
+                {
+                    QuickWarning($"Symbol {symbol} already exists!");
+                    return;
+                }
+
+                TM.AddSymbol(symbol, isInputAlphabet);
                 OnTMChanged();
             }
         }
     }
 }
+

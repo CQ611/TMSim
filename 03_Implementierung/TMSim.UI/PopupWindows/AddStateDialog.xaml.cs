@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TMSim.Core;
 
 namespace TMSim.UI
 {
@@ -18,13 +19,21 @@ namespace TMSim.UI
         {
             InitializeComponent();
             ident_txt.Text = defaultIdentifier;
-            var vm = (ViewModel)DataContext;
 
             if (forceStart)
             {
                 start_chk.IsChecked = true;
                 start_chk.IsEnabled = false;
             }
+        }
+
+        public AddStateDialog(TuringState ts)
+        {
+            InitializeComponent();
+            start_chk.IsChecked = ts.IsStart;
+            accept_chk.IsChecked = ts.IsAccepting;
+            ident_txt.Text = ts.Identifier;
+            comment_txt.Text = ts.Comment;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -51,6 +60,11 @@ namespace TMSim.UI
         public bool IsAccepting
         {
             get { return (bool)accept_chk.IsChecked; }
+        }
+
+        public string Comment
+        {
+            get { return comment_txt.Text; }
         }
     }
 }

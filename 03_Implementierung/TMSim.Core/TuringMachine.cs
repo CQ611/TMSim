@@ -154,8 +154,10 @@ namespace TMSim.Core
 
         public void EditState(TuringState tsOld, TuringState tsNew)
         {
-            RemoveState(tsOld);
-            AddState(tsNew);
+            tsOld.Identifier = tsNew.Identifier;
+            tsOld.Comment = tsNew.Comment;
+            tsOld.IsStart = tsNew.IsStart;
+            tsOld.IsAccepting = tsNew.IsAccepting;
         }
 
         public void RemoveState(TuringState ts)

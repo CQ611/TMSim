@@ -42,7 +42,37 @@ namespace TMSim.UI
                     DData.Nodes[tt.Source.Identifier],
                     DData.Nodes[tt.Target.Identifier]
                     );
-                DData.Connections.Add(nc);
+                bool foundParentCon = false;
+                foreach(NodeConnection nc2 in DData.Connections)
+                {
+                    if (nc2.IsCollinear(nc))
+                    {
+                        nc2.CollinearConnections.Add(nc);
+                        foundParentCon = true;
+                        break;
+                    }
+                    if(nc2.OpposedConnection != null)
+                    {
+                        if (nc2.OpposedConnection.IsCollinear(nc))
+                        {
+                            nc2.OpposedConnection.CollinearConnections.Add(nc);
+                            foundParentCon = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundParentCon) {
+                    foreach (NodeConnection nc2 in DData.Connections)
+                    {
+                        if (nc2.IsOpposed(nc))
+                        {
+                            nc2.OpposedConnection = nc;
+                            foundParentCon = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundParentCon) DData.Connections.Add(nc);
             }
             return DData;
         }
