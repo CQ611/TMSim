@@ -154,6 +154,7 @@ namespace TMSim.Core
 
         public void EditState(TuringState tsOld, TuringState tsNew)
         {
+            foreach (TuringState state in States) if (state.Identifier == tsNew.Identifier) throw new StateAlreadyExistsException();
             tsOld.Identifier = tsNew.Identifier;
             tsOld.Comment = tsNew.Comment;
 
