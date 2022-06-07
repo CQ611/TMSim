@@ -136,6 +136,7 @@ namespace TMSim.UI
             set
             {
                 _diagramViewIsChecked = value;
+                if (_diagramViewIsChecked == false) TableViewIsChecked = true;
                 OnPropertyChanged(nameof(DiagramViewIsChecked));
             }
         }
@@ -150,6 +151,7 @@ namespace TMSim.UI
             set
             {
                 _tableViewIsChecked = value;
+                if (_tableViewIsChecked == false) DiagramViewIsChecked = true;
                 OnPropertyChanged(nameof(TableViewIsChecked));
             }
         }
