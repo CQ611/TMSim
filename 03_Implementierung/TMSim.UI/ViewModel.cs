@@ -261,7 +261,14 @@ namespace TMSim.UI
         public string TransitionDoesNotExistText { get => Translator.GetString("TEXT_TransitionDoesNotExist"); set { OnPropertyChanged(nameof(TransitionDoesNotExistText)); } }
         public string TransitionExistsText { get => Translator.GetString("TEXT_TransitionExists"); set { OnPropertyChanged(nameof(TransitionExistsText)); } }
         public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
-
+        public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSuccessText)); } }
+        public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationFailureText)); } }
+        public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsRunningText)); } }
+        public string SimulationIsPausedText { get => Translator.GetString("TEXT_Info_SimulationIsPaused"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsPausedText)); } }
+        public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
+        public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
+        public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+         
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -317,6 +324,13 @@ namespace TMSim.UI
             TransitionDoesNotExistText = Translator.GetString("TEXT_TransitionDoesNotExist");
             TransitionExistsText = Translator.GetString("TEXT_TransitionExists");
             WriteSymbolDoesNotExistText = Translator.GetString("TEXT_WriteSymbolDoesNotExist");
+            SimulationSuccessText = Translator.GetString("TEXT_Info_SimulationSuccess");
+            SimulationFailureText = Translator.GetString("TEXT_Info_SimulationFailure");
+            SimulationIsRunningText = Translator.GetString("TEXT_Info_SimulationIsRunning");
+            SimulationIsPausedText = Translator.GetString("TEXT_Info_SimulationIsPaused");
+            SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
+            SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
+            DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
         }
         #endregion
 
@@ -369,6 +383,8 @@ namespace TMSim.UI
             timmy = new DispatcherTimer();
             timmy.Tick += Timmy_Tick;
             SetTimerInterval();
+
+            UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
         }
 
         private void InitResoureManager()
@@ -410,6 +426,7 @@ namespace TMSim.UI
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
+                UpdateInfo(MessageIdentification.SimulationIsPaused, SimulationIsPausedText);
             }
             else
             {
@@ -417,13 +434,14 @@ namespace TMSim.UI
                 StartVisibility = Visibility.Hidden;
                 StopVisibility = Visibility.Visible;
                 timmy.Start();
+                UpdateInfo(MessageIdentification.SimulationIsRunning, SimulationIsRunningText);
             }
             OnTmRefresh();
         }
 
         private void Timmy_Tick(object sender, EventArgs e)
         {
-            OnStepSimulation();
+            OnStepSimulation(true);
         }
 
         private void SetTimerInterval()
@@ -439,10 +457,14 @@ namespace TMSim.UI
             StopVisibility = Visibility.Hidden;
             timmy.Stop();
             OnTmRefresh();
+            UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
 
-        private void OnStepSimulation()
+        private void OnStepSimulation(bool timerStep = false)
         {
+            if (timerStep == false)
+                UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
+
             if (!TM.AdvanceState())
             {
                 startIsActive = false;
@@ -459,13 +481,11 @@ namespace TMSim.UI
             if (TM.CheckIsEndState())
             {
                 // Todo: Übersetzen
-                InfoMessage = "Endzustand erreicht";
-                InfoMessageColor = GetBrushFromEnum(MessageColor.DarkGreen);
+                UpdateInfo(MessageIdentification.SimulationSuccess, SimulationSuccessText);
             }
             else
             {
-                InfoMessage = "Endzustand nicht erreicht";
-                InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
+                UpdateInfo(MessageIdentification.SimulationFailure, SimulationFailureText);
             }
         }
 
@@ -491,9 +511,7 @@ namespace TMSim.UI
 
         private void OnTransformation1()
         {
-            InfoMessage = "OnTransformation1 >> ViewModel";
-            InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
-            //throw new NotImplementedException("OnTransformation1 >> ViewModel");
+            throw new NotImplementedException("OnTransformation1 >> ViewModel");
         }
 
         private void OnTransformation2()

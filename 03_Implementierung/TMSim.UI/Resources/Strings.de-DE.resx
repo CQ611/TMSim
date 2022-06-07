@@ -318,4 +318,25 @@
   <data name="TEXT_WriteSymbolDoesNotExist" xml:space="preserve">
     <value>Das zu schreibende Symbol befindet sich nicht im Bandalphabet!</value>
   </data>
+  <data name="TEXT_Info_DefaultMessage" xml:space="preserve">
+    <value>Willkommen zu TMSim</value>
+  </data>
+  <data name="TEXT_Info_SimulationFailure" xml:space="preserve">
+    <value>Kein Endzustand wurde erreicht</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsPaused" xml:space="preserve">
+    <value>Simulation ist pausiert</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsRunning" xml:space="preserve">
+    <value>Simulation läuft</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsStopped" xml:space="preserve">
+    <value>Simulation wurde abgebrochen</value>
+  </data>
+  <data name="TEXT_Info_SimulationSingleStep" xml:space="preserve">
+    <value>Einzelschritt ausgeführt</value>
+  </data>
+  <data name="TEXT_Info_SimulationSuccess" xml:space="preserve">
+    <value>Endzustand wurde erreicht</value>
+  </data>
 </root>
