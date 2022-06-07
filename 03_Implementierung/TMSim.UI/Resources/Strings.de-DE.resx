@@ -285,7 +285,7 @@
   <data name="TEXT_InvalidInputWord" xml:space="preserve">
     <value>Das Eingabewort ist nicht gültig!</value>
   </data>
-  <data name="TEXT_InvalidTapenumberInDefinition" xml:space="preserve">
+  <data name="TEXT_InvalidTapeNumberInDefinition" xml:space="preserve">
     <value>Die Anzahl der Bänder stimmt nicht mit der Zustandsübergangsdefinition überein!</value>
   </data>
   <data name="TEXT_ReadSymbolDoesNotExist" xml:space="preserve">
