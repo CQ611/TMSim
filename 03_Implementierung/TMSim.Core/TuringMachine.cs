@@ -279,8 +279,7 @@ namespace TMSim.Core
 
         public void WriteTapeWord(string inputWord)
         {
-
-            if (!InputAlphabet.WordIsContainedIn(inputWord)) throw new WordIsNoValidInputException();
+            if (!InputAlphabet.WordIsContainedIn(inputWord) || inputWord.Length == 0) throw new WordIsNoValidInputException();
             //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
             foreach (var tape in Tapes)
             {
