@@ -17,9 +17,9 @@
 
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
-            <MenuItem Header="Add Transition" Click="add_transition_click"/>
-            <MenuItem Header="Edit Transition" Click="edit_transition_click"/>
-            <MenuItem Header="Remove Transition" Click="remove_transition_click"/>
+            <MenuItem x:Name="addButton" Header="Add Transition" Click="add_transition_click" IsEnabled="True"/>
+            <MenuItem x:Name="editButton" Header="Edit Transition" Click="edit_transition_click" IsEnabled="False"/>
+            <MenuItem x:Name="removeButton" Header="Remove Transition" Click="remove_transition_click" IsEnabled="False"/>
         </ContextMenu>
     </UserControl.ContextMenu>
 

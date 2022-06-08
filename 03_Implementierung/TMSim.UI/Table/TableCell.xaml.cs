@@ -96,6 +96,24 @@ namespace TMSim.UI
             }
         }
 
+        private bool _transitionDefined = false;
+        public bool TransitionDefined
+        {
+            get { return _transitionDefined; }
+            set
+            {
+                _transitionDefined = value;
+                SetButtonEnable(value);
+            }
+        }
+
+        private void SetButtonEnable(bool enabled)
+        {
+            addButton.IsEnabled = !enabled;
+            editButton.IsEnabled = enabled;
+            removeButton.IsEnabled = enabled;
+        }
+
         private string SetDirection(string direction)
         {
             if (direction == "Right")
@@ -121,6 +139,7 @@ namespace TMSim.UI
             SymbolWrite = symbolWrite;
             SymbolRead = symbolRead;
             Highlight = highlight;
+            TransitionDefined = true;
         }
 
         private void add_transition_click(object sender, RoutedEventArgs e)
