@@ -112,19 +112,22 @@ namespace TMSim.UI
             TM.Transitions.ForEach(t => OverwriteTransition(
                 TM.States.FindIndex(x => x.Identifier == t.Source.Identifier) + 1,
                 TM.TapeSymbols.FindIndex(x => x == t.SymbolsRead[0]) + 1,
-                Highlight && TM.CurrentState.Equals(t.Source),
+                false,
                 t));
         }
 
         private void Vm_RefreshActiveHighlightEvent(TuringMachine TM)
         {
-            var highlightedCell = tableCells.Find(x => x.Highlight == true);
+            var highlightedCell = tableCells.Find(x => x.Highlight);
             if (highlightedCell != null)
                 highlightedCell.Highlight = false;
 
-            var cellForHighlight = tableCells.Find(x => x.State == TM.CurrentState.Identifier);
-            if (cellForHighlight != null)
-                cellForHighlight.Highlight = true;
+            if(TM.CurrentTransition != null)
+            {
+                var cellForHighlight = tableCells.Find(x => x.State == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
+                if (cellForHighlight != null)
+                    cellForHighlight.Highlight = true;
+            }
         }
 
         private void OverwriteTransition(int row, int column, bool highlight, TuringTransition transition)

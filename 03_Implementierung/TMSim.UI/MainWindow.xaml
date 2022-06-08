@@ -106,10 +106,24 @@
                 <ColumnDefinition Width="{Binding DiagramViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
             </Grid.ColumnDefinitions>
             <Border Background="White" CornerRadius="10" Margin="3,0,3,3">
-                <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="{Binding DefinitionTabelle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    <local:Table x:Name="table" Grid.Row="1" Margin="5" Highlight="{Binding HighlightIsChecked}"/>
+                </Grid>
             </Border>
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,3">
-                <local:Diagram x:Name="diagram" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="{Binding DefinitionDiagramm}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    <local:Diagram x:Name="diagram" Grid.Row="1" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>
+                </Grid>
             </Border>
         </Grid>
         <Border Grid.Row="4" Background="White" CornerRadius="10" Margin="3,0,3,3">
