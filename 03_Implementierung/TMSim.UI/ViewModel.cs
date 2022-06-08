@@ -270,6 +270,8 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionTabelle)); } }
+        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionDiagramm)); } }
          
         private void RefreshTextFromUi()
         {
@@ -333,6 +335,8 @@ namespace TMSim.UI
             SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
             SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
+            DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
+            DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
         }
         #endregion
 
@@ -802,25 +806,7 @@ namespace TMSim.UI
                     ts = state;
             }
 
-            AddStateDialog asd = new AddStateDialog(ts);
-            if (asd.ShowDialog() == true)
-            {
-                string identifier = asd.Identfier;
-                bool isStart = asd.IsStart;
-                bool isAccepting = asd.IsAccepting;
-                string comment = asd.Comment;
-
-                try
-                {
-                    TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
-                }
-                catch (StateAlreadyExistsException)
-                {
-                    QuickWarning(StateExistsText);
-                    return;
-                }
-                OnTMChanged();
-            }
+            EditState(ts);
         }
 
         public void RemoveState(TuringState ts)
@@ -847,16 +833,7 @@ namespace TMSim.UI
                     ts = state;
             }
 
-            try
-            {
-                TM.RemoveState(ts);
-            }
-            catch (StateDoesNotExistException)
-            {
-                QuickWarning(StateDoesNotExistText);
-                return;
-            }
-            OnTMChanged();
+            RemoveState(ts);
         }
 
         public void AddTransition(TuringState source = null, TuringState target = null)
@@ -917,26 +894,7 @@ namespace TMSim.UI
                     tt = transtition;
             }
 
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
-            if (atd.ShowDialog() == true)
-            {
-                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
-                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-
-                try
-                {
-                    TM.EditTransition(tt, new TuringTransition(
-                        atd.Source, atd.Target, atd.SymbolsRead,
-                        atd.SymbolsWrite, atd.Directions, atd.Comment));
-                }
-                catch (TransitionAlreadyExistsException)
-                {
-                    QuickWarning(TransitionExistsText);
-                    return;
-                }
-                OnTMChanged();
-            }
+            EditTransition(tt);
         }
 
         public void RemoveTransition(TuringTransition tt)
@@ -963,16 +921,7 @@ namespace TMSim.UI
                     tt = transtition;
             }
 
-            try
-            {
-                TM.RemoveTransition(tt);
-            }
-            catch (TransitionDoesNotExistException)
-            {
-                QuickWarning(TransitionDoesNotExistText);
-                return;
-            }
-            OnTMChanged();
+            RemoveTransition(tt);
         }
 
         public void AddSymbol()

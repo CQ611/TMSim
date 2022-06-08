@@ -339,4 +339,10 @@
   <data name="TEXT_Info_SimulationSuccess" xml:space="preserve">
     <value>Endzustand wurde erreicht</value>
   </data>
+  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+    <value>Definition als Diagramm</value>
+  </data>
+  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+    <value>Definition als Tabelle</value>
+  </data>
 </root>

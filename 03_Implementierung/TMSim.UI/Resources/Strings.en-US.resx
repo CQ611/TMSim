@@ -339,4 +339,10 @@
   <data name="TEXT_Info_SimulationSingleStep" xml:space="preserve">
     <value>Single Step executed</value>
   </data>
+  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+    <value>Definition as diagram</value>
+  </data>
+  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+    <value>Definition as table</value>
+  </data>
 </root>
