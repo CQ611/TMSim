@@ -736,14 +736,6 @@ namespace TMSim.UI
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
 
-                /*List<string> existingStates = new List<string>();
-                TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
-                if (existingStates.Contains(identifier))
-                {
-                    QuickWarning($"State with identifier {identifier} already exists!");
-                    return;
-                }*/
-
                 try
                 {
                     TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
@@ -766,14 +758,6 @@ namespace TMSim.UI
                 bool isStart = asd.IsStart;
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
-
-                /*list<string> existingstates = new list<string>();
-                tm.states.foreach(ts2 => existingstates.add(ts2.identifier));
-                if (existingstates.contains(identifier) && identifier != ts.identifier)
-                {
-                    quickwarning($"state with identifier {identifier} already exists!");
-                    return;
-                }*/
 
                 try
                 {
@@ -805,14 +789,6 @@ namespace TMSim.UI
                 bool isStart = asd.IsStart;
                 bool isAccepting = asd.IsAccepting;
                 string comment = asd.Comment;
-
-                /*List<string> existingStates = new List<string>();
-                TM.States.ForEach(ts2 => existingStates.Add(ts2.Identifier));
-                if (existingStates.Contains(identifier) && identifier != ts.Identifier)
-                {
-                    QuickWarning($"State with identifier {identifier} already exists!");
-                    return;
-                }*/
 
                 try
                 {
@@ -987,12 +963,6 @@ namespace TMSim.UI
                 char symbol = asd.Symbol;
                 bool isInputAlphabet = asd.IsInInput;
 
-                /*if (TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
-                {
-                    QuickWarning($"Symbol {symbol} already exists!");
-                    return;
-                }*/
-
                 try
                 {
                     TM.AddSymbol(symbol, isInputAlphabet);
@@ -1013,12 +983,6 @@ namespace TMSim.UI
             {
                 char symbol = esd.Symbol;
                 bool isInputAlphabet = esd.IsInInput;
-
-                /*if (!TM.InputSymbols.Contains(symbol) || !TM.TapeSymbols.Contains(symbol))
-                {
-                    QuickWarning($"Symbol {symbol} does not exists!");
-                    return;
-                }*/
 
                 try
                 {
