@@ -62,7 +62,6 @@ namespace TMSim.UI
             vm.ClearTableEvent += Vm_ClearTableEvent;
             vm.LoadTableEvent += Vm_LoadTableEvent;
             vm.RefreshActiveHighlightEvent += Vm_RefreshActiveHighlightEvent;
-            vm.CheckIfToEnableUploadButtonEvent += Vm_CheckIfToEnableUploadButtonEvent;
         }
 
         private void RowHeader_EditStateEvent(string identifier)
@@ -129,13 +128,6 @@ namespace TMSim.UI
                 if (cellForHighlight != null)
                     cellForHighlight.Highlight = true;
             }
-        }
-
-        private void Vm_CheckIfToEnableUploadButtonEvent(bool Enable)
-        {
-            foreach (var columnHeader in columnHeaders)
-                if (columnHeader.IsInput == true)
-                    Enable = true;
         }
 
         private void OverwriteTransition(int row, int column, bool highlight, TuringTransition transition)

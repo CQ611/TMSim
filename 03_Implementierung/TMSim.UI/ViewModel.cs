@@ -431,19 +431,6 @@ namespace TMSim.UI
             }
         }
 
-        private bool _enable = false;
-        public bool Enable
-        {
-            get
-            {
-                return _enable;
-            }
-            set
-            {
-                _enable = value;
-                OnPropertyChanged(nameof(Enable));
-            }
-        }
         private DispatcherTimer timmy;
 
         public ViewModel()
@@ -496,7 +483,11 @@ namespace TMSim.UI
             UpdateDiagramData();
             UpdateTapeData();
             UpdateTableData();
-            CheckIfToEnableUploadButtonFromTable();
+
+            if (TM.InputSymbols.Count > 0)
+                UploadTextEnabled = true;
+            else
+                UploadTextEnabled = false;
 
             OnPropertyChanged(nameof(TM));
         }
@@ -508,13 +499,19 @@ namespace TMSim.UI
         }
 
         private bool startIsActive = false;
+        private bool simulationIsRunning = false;
 
 
         private void OnStartPauseSimulation()
         {
-            StopEnabled = true;
-            UploadTextEnabled = false;
-            MenuElementEnabled = false;
+            if (simulationIsRunning == false)
+            {
+                simulationIsRunning = true;
+                StopEnabled = true;
+                UploadTextEnabled = false;
+                MenuElementEnabled = false;
+            }
+
             if (startIsActive)
             {
                 startIsActive = false;
@@ -545,7 +542,7 @@ namespace TMSim.UI
         {
             timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
-
+        
         private void OnStopSimulation()
         {
             TM.Reset();
@@ -557,11 +554,12 @@ namespace TMSim.UI
             StepEnabled = false;
             UploadTextEnabled = true;
             MenuElementEnabled = true;
+            simulationIsRunning = false;
             timmy.Stop();
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
-
+        
         private void OnStepSimulation(bool timerStep = false)
         {
             StopEnabled = true;
