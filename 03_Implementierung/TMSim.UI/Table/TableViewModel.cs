@@ -18,6 +18,8 @@ namespace TMSim.UI
         public delegate void RefreshActiveHighlight(TuringMachine TM);
         public event RefreshActiveHighlight RefreshActiveHighlightEvent;
 
+        public delegate void CheckIfToEnableUploadButton(bool Enable);
+        public event CheckIfToEnableUploadButton CheckIfToEnableUploadButtonEvent;
 
         private void UpdateTableData()
         {
@@ -29,6 +31,11 @@ namespace TMSim.UI
         private void RefreshTableData()
         {
             RefreshActiveHighlightEvent?.Invoke(TM);
+        }
+
+        private void CheckIfToEnableUploadButtonFromTable()
+        {
+            CheckIfToEnableUploadButtonEvent?.Invoke(Enable);
         }
 
     }
