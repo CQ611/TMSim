@@ -340,8 +340,9 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
-        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionTabelle)); } }
-        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
+        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
          
         private void RefreshTextFromUi()
         {
@@ -407,6 +408,7 @@ namespace TMSim.UI
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
+            InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
         }
         #endregion
 
@@ -429,6 +431,19 @@ namespace TMSim.UI
             }
         }
 
+        private bool _enable = false;
+        public bool Enable
+        {
+            get
+            {
+                return _enable;
+            }
+            set
+            {
+                _enable = value;
+                OnPropertyChanged(nameof(Enable));
+            }
+        }
         private DispatcherTimer timmy;
 
         public ViewModel()
@@ -481,6 +496,7 @@ namespace TMSim.UI
             UpdateDiagramData();
             UpdateTapeData();
             UpdateTableData();
+            CheckIfToEnableUploadButtonFromTable();
 
             OnPropertyChanged(nameof(TM));
         }
@@ -548,6 +564,10 @@ namespace TMSim.UI
 
         private void OnStepSimulation(bool timerStep = false)
         {
+            StopEnabled = true;
+            UploadTextEnabled = false;
+            MenuElementEnabled = false;
+
             if (timerStep == false)
                 UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
 
@@ -593,6 +613,7 @@ namespace TMSim.UI
                 return;
             }
             LoadTapeContent();
+            UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
             StartEnabled = true;
             StopEnabled = false;
             StepEnabled = true;
