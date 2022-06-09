@@ -642,7 +642,8 @@ namespace TMSim.UI
 
         public void TransformT3(char newBlank)
         {
-            throw new NotImplementedException("TransformT3 >> ViewModel");
+            TM = new Transformation3().Execute(TM, newBlank);
+            OnTMChanged();
         }
 
         public void TransformT5()
