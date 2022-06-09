@@ -6,10 +6,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TMSim.Core.Tests
 {
-    [DeploymentItem("res/example_import.tmsim", "res")]
-    [DeploymentItem("res/example_zero_neutral_transitions.tmsim", "res")]
-    [DeploymentItem("res/example_with_neutral_transitions.tmsim", "res")]
-
     [TestClass]
     public class Transformation3Tests
     {
@@ -40,7 +36,6 @@ namespace TMSim.Core.Tests
             turingMachine.ImportFromTextFile(@"res\example_contains_only_a_or_b.tmsim");
             ITransformation transformation = new Transformation3();
 
-
             //act
             TuringMachine newTuringMachine = transformation.Execute(turingMachine, '~');
 
@@ -57,12 +52,6 @@ namespace TMSim.Core.Tests
             ITransformation transformation = new Transformation3();
             TuringMachine newTuringMachine = transformation.Execute(turingMachine);
         }
-
-
-
-
-
-
 
     }
 }
