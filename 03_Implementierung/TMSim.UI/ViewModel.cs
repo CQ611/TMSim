@@ -197,6 +197,76 @@ namespace TMSim.UI
                 OnPropertyChanged("TapeWordInput");
             }
         }
+
+        private bool _startEnabled = false;
+        public bool StartEnabled
+        {
+            get
+            {
+                return _startEnabled;
+            }
+            set
+            {
+                _startEnabled = value;
+                OnPropertyChanged(nameof(StartEnabled));
+            }
+        }
+
+        private bool _stopEnabled = false;
+        public bool StopEnabled
+        {
+            get
+            {
+                return _stopEnabled;
+            }
+            set
+            {
+                _stopEnabled = value;
+                OnPropertyChanged(nameof(StopEnabled));
+            }
+        }
+
+        private bool _stepEnabled = false;
+        public bool StepEnabled
+        {
+            get
+            {
+                return _stepEnabled;
+            }
+            set
+            {
+                _stepEnabled = value;
+                OnPropertyChanged(nameof(StepEnabled));
+            }
+        }
+
+        private bool _uploadTextEnabled = false;
+        public bool UploadTextEnabled
+        {
+            get
+            {
+                return _uploadTextEnabled;
+            }
+            set
+            {
+                _uploadTextEnabled = value;
+                OnPropertyChanged(nameof(UploadTextEnabled));
+            }
+        }
+
+        private bool _menuElementEnabled = true;
+        public bool MenuElementEnabled
+        {
+            get
+            {
+                return _menuElementEnabled;
+            }
+            set
+            {
+                _menuElementEnabled = value;
+                OnPropertyChanged(nameof(MenuElementEnabled));
+            }
+        }
         #endregion
 
         #region Translation
@@ -426,6 +496,9 @@ namespace TMSim.UI
 
         private void OnStartPauseSimulation()
         {
+            StopEnabled = true;
+            UploadTextEnabled = false;
+            MenuElementEnabled = false;
             if (startIsActive)
             {
                 startIsActive = false;
@@ -433,6 +506,7 @@ namespace TMSim.UI
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
                 UpdateInfo(MessageIdentification.SimulationIsPaused, SimulationIsPausedText);
+                StepEnabled = true;
             }
             else
             {
@@ -441,6 +515,7 @@ namespace TMSim.UI
                 StopVisibility = Visibility.Visible;
                 timmy.Start();
                 UpdateInfo(MessageIdentification.SimulationIsRunning, SimulationIsRunningText);
+                StepEnabled = false;
             }
             OnTmRefresh();
         }
@@ -461,6 +536,11 @@ namespace TMSim.UI
             startIsActive = false;
             StartVisibility = Visibility.Visible;
             StopVisibility = Visibility.Hidden;
+            StartEnabled = false;
+            StopEnabled = false;
+            StepEnabled = false;
+            UploadTextEnabled = true;
+            MenuElementEnabled = true;
             timmy.Stop();
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
@@ -477,6 +557,11 @@ namespace TMSim.UI
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
+                StartEnabled = false;
+                StopEnabled = false;
+                StepEnabled = false;
+                UploadTextEnabled = true;
+                MenuElementEnabled = true;
                 CheckIfRunWasSuccessful();
             }
             OnTmRefresh();
@@ -486,7 +571,6 @@ namespace TMSim.UI
         {
             if (TM.CheckIsEndState())
             {
-                // Todo: Übersetzen
                 UpdateInfo(MessageIdentification.SimulationSuccess, SimulationSuccessText);
             }
             else
@@ -497,6 +581,8 @@ namespace TMSim.UI
 
         private void OnWriteTapeWord()
         {
+            TM.Reset();
+
             try
             {
                 TM.WriteTapeWord(TapeWordInput);
@@ -507,6 +593,9 @@ namespace TMSim.UI
                 return;
             }
             LoadTapeContent();
+            StartEnabled = true;
+            StopEnabled = false;
+            StepEnabled = true;
         }
 
         private void OnTansformTuringMachine()
@@ -614,6 +703,7 @@ namespace TMSim.UI
                 }
                 DeleteTapeContent();
                 OnTMChanged();
+                UploadTextEnabled = true;
             }
         }
 
@@ -690,6 +780,7 @@ namespace TMSim.UI
                 }
                 DeleteTapeContent();
                 OnTMChanged();
+                UploadTextEnabled = true;
             }
         }
 
