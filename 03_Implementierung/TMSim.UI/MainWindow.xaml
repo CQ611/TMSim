@@ -12,7 +12,6 @@
     </Window.DataContext>
     <Window.Resources>
         <local:BoolToColumnWidthConverter x:Key="BoolToColumnWidthConverter"/>
-        <local:BoolToFloatConverter x:Key="BoolToFloatConverter"/>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -37,7 +36,7 @@
                 <Separator />
                 <MenuItem Header="{Binding ExitText}" Command="{Binding ExitApplication}"/>
             </MenuItem>
-            <MenuItem Header="{Binding PreferencesText}" IsEnabled="{Binding MenuElementEnabled}">
+            <MenuItem Header="{Binding PreferencesText}">
                 <MenuItem Header="{Binding HighlightText}" IsChecked="{Binding HighlightIsChecked}" IsCheckable="True"/>
                 <Separator/>
                 <MenuItem Header="{Binding LanguageText}">
@@ -82,15 +81,15 @@
                     <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="10"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="play_cmd" Margin="3" ToolTip="{Binding PlayTooltip}" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}" IsEnabled="{Binding StartEnabled}" Opacity="{Binding StartEnabled, Converter={StaticResource BoolToFloatConverter}}"/>
+                <Button x:Name="play_cmd" Margin="3" ToolTip="{Binding PlayTooltip}" Style="{StaticResource StartButtonStyle}" Visibility="{Binding StartVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}" IsEnabled="{Binding StartEnabled}"/>
                 <Button x:Name="pause_cmd" Margin="3" ToolTip="Pause" Style="{StaticResource PauseButtonStyle}" Visibility="{Binding StopVisibility}" Grid.Column="1" Command="{Binding StartPauseSimulation}"/>
-                <Button x:Name="stop_cmd" Margin="3" ToolTip="Stop" Style="{StaticResource StopButtonStyle}" Grid.Column="2" Command="{Binding StopSimulation}" IsEnabled="{Binding StopEnabled}" Opacity="{Binding StopEnabled, Converter={StaticResource BoolToFloatConverter}}"/>
-                <Button x:Name="step_cmd" Margin="3" ToolTip="Step" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}" IsEnabled="{Binding StepEnabled}" Opacity="{Binding StepEnabled, Converter={StaticResource BoolToFloatConverter}}"/>
+                <Button x:Name="stop_cmd" Margin="3" ToolTip="Stop" Style="{StaticResource StopButtonStyle}" Grid.Column="2" Command="{Binding StopSimulation}" IsEnabled="{Binding StopEnabled}"/>
+                <Button x:Name="step_cmd" Margin="3" ToolTip="Step" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}" IsEnabled="{Binding StepEnabled}"/>
                 <Label x:Name="speedLabel" Grid.Column="5" Content="{Binding SpeedLabelText}" VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=speed_slider}"/>
                 <Slider x:Name="speed_slider" ToolTip="Speed" Value="{Binding TapeVelocity}" Grid.Column="6" Minimum="100" Maximum="3000" TickFrequency="10" IsSnapToTickEnabled="True" IsDirectionReversed="True" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120"/>
                 <Label x:Name="EingabewortLabel" Padding="15,0,0,0" Grid.Column="7" Content="{Binding InputwordText}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 <TextBox x:Name="EingabewortTextbox" ToolTip="Eingabe" Text="{Binding TapeWordInput}" Margin="10" Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center"/>
-                <Button x:Name="UploadButton" ToolTip="Upload" Margin="10" Grid.Column="9" Width="50" Content="{Binding UploadText}" VerticalAlignment="Stretch" Command="{Binding WriteTapeWord}" HorizontalAlignment="Right" IsEnabled="{Binding UploadTextEnabled}"/>
+                <Button x:Name="UploadButton" ToolTip="Upload" Margin="10" Grid.Column="9" Width="50" Content="{Binding UploadText}" VerticalAlignment="Stretch" Command="{Binding WriteTapeWord}" HorizontalAlignment="Right" IsEnabled="{Binding Enable}"/>
             </Grid>
         </Border>
         <Border Grid.Row="2" Background="White" CornerRadius="10" Margin="3,0,3,3">
@@ -103,7 +102,7 @@
         </Border>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{Binding TableViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="{Binding DiagramViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
             </Grid.ColumnDefinitions>
             <Border Background="White" CornerRadius="10" Margin="3,0,3,3">
@@ -113,7 +112,9 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="{Binding DefinitionTabelle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                    <local:Table x:Name="table" Grid.Row="1" Margin="5" Highlight="{Binding HighlightIsChecked}"/>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+                        <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}" IsEnabled="{Binding MenuElementEnabled}"/>
+                    </ScrollViewer>
                 </Grid>
             </Border>
             <Border Grid.Column="1" Background="White" CornerRadius="10" Margin="3,0,3,3">
@@ -123,7 +124,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Content="{Binding DefinitionDiagramm}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
-                    <local:Diagram x:Name="diagram" Grid.Row="1" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}"/>
+                    <local:Diagram x:Name="diagram" Grid.Row="1" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}" IsEnabled="{Binding MenuElementEnabled}"/>
                 </Grid>
             </Border>
         </Grid>
