@@ -160,7 +160,7 @@
     <value>Cancel</value>
   </data>
   <data name="TEXT_PopupIdentifier" xml:space="preserve">
-    <value>Identifier:</value>
+    <value>Identifier</value>
   </data>
   <data name="TEXT_PopupIdentifierText" xml:space="preserve">
     <value>This should not be visible</value>
@@ -272,5 +272,77 @@
   </data>
   <data name="TOOLTIP_Upload" xml:space="preserve">
     <value>insert and upload text to tape</value>
+  </data>
+  <data name="TEXT_DiagramView" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="TEXT_TableView" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="TEXT_View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="TEXT_InvalidInputWord" xml:space="preserve">
+    <value>The input word is not valid!</value>
+  </data>
+  <data name="TEXT_InvalidTapeNumberInDefinition" xml:space="preserve">
+    <value>The number of tapes does not match the transition definition!</value>
+  </data>
+  <data name="TEXT_ReadSymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the read-symbol!</value>
+  </data>
+  <data name="TEXT_SourceStateDoesNotExist" xml:space="preserve">
+    <value>The source state of the transition does not exist!</value>
+  </data>
+  <data name="TEXT_StateDoesNotExist" xml:space="preserve">
+    <value>The state does not exist!</value>
+  </data>
+  <data name="TEXT_StateExists" xml:space="preserve">
+    <value>The state already exists!</value>
+  </data>
+  <data name="TEXT_SymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the symbol!</value>
+  </data>
+  <data name="TEXT_SymbolExists" xml:space="preserve">
+    <value>The tape alphabet already contains the symbol!</value>
+  </data>
+  <data name="TEXT_TargetStateDoesNotExist" xml:space="preserve">
+    <value>The target state of the transition does not exist!</value>
+  </data>
+  <data name="TEXT_TransitionDoesNotExist" xml:space="preserve">
+    <value>The transition does not exist!</value>
+  </data>
+  <data name="TEXT_TransitionExists" xml:space="preserve">
+    <value>The transition already exists!</value>
+  </data>
+  <data name="TEXT_WriteSymbolDoesNotExist" xml:space="preserve">
+    <value>The tape alphabet does not contain the write-symbol!</value>
+  </data>
+  <data name="TEXT_Info_SimulationSuccess" xml:space="preserve">
+    <value>Accepting state was reached</value>
+  </data>
+  <data name="TEXT_Info_DefaultMessage" xml:space="preserve">
+    <value>Welcome to TMSim</value>
+  </data>
+  <data name="TEXT_Info_SimulationFailure" xml:space="preserve">
+    <value>No accepting state was reached</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsPaused" xml:space="preserve">
+    <value>Simulation is paused</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsRunning" xml:space="preserve">
+    <value>Simulation is running</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsStopped" xml:space="preserve">
+    <value>Simulation was aborted</value>
+  </data>
+  <data name="TEXT_Info_SimulationSingleStep" xml:space="preserve">
+    <value>Single Step executed</value>
+  </data>
+  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+    <value>Definition as diagram</value>
+  </data>
+  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+    <value>Definition as table</value>
   </data>
 </root>

@@ -5,44 +5,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TMSim.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="100">
+             d:DesignHeight="55" d:DesignWidth="65">
+    
     <Border BorderBrush="Black" BorderThickness="2">
 
-        <Grid Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="26"/>
-                <ColumnDefinition Width="13"/>
-                <ColumnDefinition Width="26"/>
-                <ColumnDefinition Width="13"/>
-                <ColumnDefinition Width="18"/>
-            </Grid.ColumnDefinitions>
-
-            <Label x:Name="LabelState" Grid.Column="0" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Grid.Column="1" Content="|" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="LabelMoveDirection" Grid.Column="2" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Grid.Column="3" Content="|" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="LabelSymbolWrite" Grid.Column="4" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
+        <Grid x:Name="TableCellGrid">
+            <Label x:Name="TransitionText" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </Grid>
 
-        <!--<Grid Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <Label Grid.Row="0" Grid.Column="0" Content="State:" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="LabelState" Grid.Row="0" Grid.Column="1" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Grid.Row="1" Grid.Column="0" Content="Write:" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="LabelSymbolWrite" Grid.Row="1" Grid.Column="1" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label Grid.Row="2" Grid.Column="0" Content="Move:" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <Label x:Name="LabelMoveDirection" Grid.Row="2" Grid.Column="1" Content="_" FontSize="12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-        </Grid>-->
     </Border>
+
+    <UserControl.ContextMenu>
+        <ContextMenu x:Name="ContextMenu">
+            <MenuItem x:Name="addButton" Header="Add Transition" Click="add_transition_click" IsEnabled="True"/>
+            <MenuItem x:Name="editButton" Header="Edit Transition" Click="edit_transition_click" IsEnabled="False"/>
+            <MenuItem x:Name="removeButton" Header="Remove Transition" Click="remove_transition_click" IsEnabled="False"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
 
 </UserControl>

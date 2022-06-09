@@ -18,6 +18,15 @@ namespace TMSim.UI
     /// </summary>
     public partial class TableCell : UserControl
     {
+        public delegate void AddTransition();
+        public static event AddTransition AddTransitionEvent;
+
+        public delegate void EditTransition(string identifier, string symbolRead);
+        public static event EditTransition EditTransitionEvent;
+
+        public delegate void RemoveTransition(string identifier, string symbolRead);
+        public static event RemoveTransition RemoveTransitionEvent;
+
         private string _state;
         public string State
         {
@@ -28,7 +37,6 @@ namespace TMSim.UI
             set
             {
                 _state = value;
-                LabelState.Content = _state;
             }
         }
 
@@ -42,6 +50,7 @@ namespace TMSim.UI
             set
             {
                 _symbolRead = value;
+                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
             }
         }
 
@@ -55,7 +64,7 @@ namespace TMSim.UI
             set
             {
                 _symbolWrite = value;
-                LabelSymbolWrite.Content = _symbolWrite;
+                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
             }
         }
 
@@ -69,33 +78,83 @@ namespace TMSim.UI
             set
             {
                 _direction = value;
-                LabelMoveDirection.Content = _direction;
+                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
             }
+        }
+
+        private bool _highlight = false;
+        public bool Highlight
+        {
+            get
+            {
+                return _highlight;
+            }
+            set
+            {
+                _highlight = value;
+                SetBackground();
+            }
+        }
+
+        private bool _transitionDefined = false;
+        public bool TransitionDefined
+        {
+            get { return _transitionDefined; }
+            set
+            {
+                _transitionDefined = value;
+                SetButtonEnable(value);
+            }
+        }
+
+        private void SetButtonEnable(bool enabled)
+        {
+            addButton.IsEnabled = !enabled;
+            editButton.IsEnabled = enabled;
+            removeButton.IsEnabled = enabled;
         }
 
         private string SetDirection(string direction)
         {
             if (direction == "Right")
                 return "→";
-            else if (direction == "Left")
-                return "←";
-            else 
-                return "•";
+            else return direction == "Left" ? "←" : "•";
         }
 
+        private void SetBackground()
+        {
+            TableCellGrid.Background = Highlight ? Brushes.Yellow : Brushes.White;
+        }
 
         public TableCell()
         {
             InitializeComponent();
         }
 
-        public TableCell(string state, string direction, string symbolWrite, string symbolRead)
+        public TableCell(string state, string direction, string symbolWrite, string symbolRead, bool highlight)
         {
             InitializeComponent();
             State = state;
             Direction = SetDirection(direction);
             SymbolWrite = symbolWrite;
             SymbolRead = symbolRead;
+            Highlight = highlight;
+            TransitionDefined = true;
+        }
+
+        private void add_transition_click(object sender, RoutedEventArgs e)
+        {
+            AddTransitionEvent?.Invoke();
+        }
+
+        private void edit_transition_click(object sender, RoutedEventArgs e)
+        {
+            EditTransitionEvent?.Invoke(State, SymbolRead);
+        }
+
+        private void remove_transition_click(object sender, RoutedEventArgs e)
+        {
+            RemoveTransitionEvent?.Invoke(State, SymbolRead);
         }
     }
 }

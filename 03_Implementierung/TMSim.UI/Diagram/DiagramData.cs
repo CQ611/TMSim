@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Windows;
 
 namespace TMSim.UI
 {
@@ -15,7 +16,9 @@ namespace TMSim.UI
         public double Width { get; set; }
         public double Height { get; set; }
 
-        public System.Windows.Point AddNodePoint { get; set; }
+        public bool ArangeFlag = false;
+
+        public Point AddNodePoint { get; set; } = new Point(10, 10);
 
         public DiagramData()
         {

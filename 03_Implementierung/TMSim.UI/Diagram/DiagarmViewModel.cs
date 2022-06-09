@@ -26,13 +26,27 @@ namespace TMSim.UI
             HashSet<string> deletedStates = oldStates.Except(newStates).ToHashSet();
 
             deletedStates.ToList().ForEach(id => DData.Nodes.Remove(id));
-            foreach(string identfier in addedStates)
+
+            if (addedStates.Count > 1)
             {
-                TuringState ts = TM.States.First(x => x.Identifier == identfier);
-                Node n = new Node(ts, DData.AddNodePoint,
-                    TM.StartState == ts, TM.EndStates.Contains(ts));
+                int ctr = 1;
+                foreach (string identfier in addedStates)
+                {
+                    TuringState ts = TM.States.First(x => x.Identifier == identfier);
+                    Node n = new Node(ts, 
+                        new Point(ctr * DData.NodeSize, ctr * DData.NodeSize * 0.8));
+                    DData.Nodes.Add(n.Identifier, n);
+                    ctr++;
+                }
+                DData.ArangeFlag = true;
+            }
+            else if (addedStates.Count == 1)
+            {
+                TuringState ts = TM.States.First(x => x.Identifier == addedStates.ToArray()[0]);
+                Node n = new Node(ts, DData.AddNodePoint);
                 DData.Nodes.Add(n.Identifier, n);
             }
+
 
             DData.Connections.Clear();
             foreach (TuringTransition tt in TM.Transitions)
@@ -42,7 +56,37 @@ namespace TMSim.UI
                     DData.Nodes[tt.Source.Identifier],
                     DData.Nodes[tt.Target.Identifier]
                     );
-                DData.Connections.Add(nc);
+                bool foundParentCon = false;
+                foreach(NodeConnection nc2 in DData.Connections)
+                {
+                    if (nc2.IsCollinear(nc))
+                    {
+                        nc2.CollinearConnections.Add(nc);
+                        foundParentCon = true;
+                        break;
+                    }
+                    if(nc2.OpposedConnection != null)
+                    {
+                        if (nc2.OpposedConnection.IsCollinear(nc))
+                        {
+                            nc2.OpposedConnection.CollinearConnections.Add(nc);
+                            foundParentCon = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundParentCon) {
+                    foreach (NodeConnection nc2 in DData.Connections)
+                    {
+                        if (nc2.IsOpposed(nc))
+                        {
+                            nc2.OpposedConnection = nc;
+                            foundParentCon = true;
+                            break;
+                        }
+                    }
+                }
+                if (!foundParentCon) DData.Connections.Add(nc);
             }
             return DData;
         }

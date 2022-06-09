@@ -7,8 +7,7 @@
         ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Add Transition" Height="217" Width="372">
-
+        Title="Transition" Height="217" Width="372" ResizeMode="NoResize">
 
     <Window.DataContext>
         <Binding Source="{StaticResource sharedViewModel}"/>
@@ -43,7 +42,7 @@
         <Label x:Name="comment_lbl" Content="{Binding CommentText}" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <TextBox x:Name="comment_txt" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Grid.RowSpan="2"/>
 
-        <WrapPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,5,0,5" Width="130">
+        <WrapPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,5,0,5">
             <Button IsDefault="True" x:Name="ok_cmd" Click="ok_cmd_Click" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupOKText}"></Button>
             <Button IsCancel="True" MinWidth="60" Content="{Binding PopupCancelText}"></Button>
         </WrapPanel>

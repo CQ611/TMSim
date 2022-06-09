@@ -29,7 +29,50 @@ namespace TMSim.UI
         }
 
         private int TapeCount;
+        private List<ComboBoxItemWrapper> items = new List<ComboBoxItemWrapper>();
+
+        public AddTransitionDialog(List<TuringState> states, TuringTransition tt)
+        {
+            Init(states, tt.Source, tt.Target, tt.SymbolsRead.Count);
+            List<ComboBox> LVitems = new List<ComboBox>();
+            for (int i = 0; i < tt.SymbolsRead.Count; i++)
+            {
+                ComboBox cb = new ComboBox()
+                {
+                    ItemsSource = items,
+                    SelectedValuePath = "InternalValue",
+                    DisplayMemberPath = "DisplayValue"
+                };
+                cb.SelectedValue = tt.MoveDirections[i];
+                LVitems.Add(cb);
+            }
+            directions_lst.ItemsSource = LVitems;
+            readSymbols_txt.Text = new string(tt.SymbolsRead.ToArray());
+            writeSymbols_txt.Text = new string(tt.SymbolsWrite.ToArray());
+            comment_txt.Text = tt.Comment;
+        }
+
         public AddTransitionDialog(List<TuringState> states,
+            TuringState source, TuringState target, int tapeCount = 1,
+            string defaultSymbols = "")
+        {
+            Init(states, source, target, tapeCount, defaultSymbols);
+            List<ComboBox> LVitems = new List<ComboBox>();
+            for (int i = 0; i < tapeCount; i++)
+            {
+                ComboBox cb = new ComboBox()
+                {
+                    ItemsSource = items,
+                    SelectedValuePath = "InternalValue",
+                    DisplayMemberPath = "DisplayValue"
+                };
+                cb.SelectedIndex = 0;
+                LVitems.Add(cb);
+            }
+            directions_lst.ItemsSource = LVitems;
+        }
+
+        private void Init(List<TuringState> states,
             TuringState source, TuringState target, int tapeCount = 1,
             string defaultSymbols = "")
         {
@@ -47,20 +90,9 @@ namespace TMSim.UI
             readSymbols_txt.Text = defaultSymbols;
             writeSymbols_txt.Text = defaultSymbols;
 
-            List<ComboBoxItemWrapper> items = new List<ComboBoxItemWrapper>();
-            items.Add(new ComboBoxItemWrapper("←",TuringTransition.Direction.Left));
             items.Add(new ComboBoxItemWrapper("→", TuringTransition.Direction.Right));
+            items.Add(new ComboBoxItemWrapper("←", TuringTransition.Direction.Left));
             items.Add(new ComboBoxItemWrapper("•", TuringTransition.Direction.Neutral));
-
-            List<ComboBox> LVitems = new List<ComboBox>();
-            for (int i = 0; i < tapeCount; i++)
-            { 
-                LVitems.Add(new ComboBox() {
-                    ItemsSource = items,
-                    SelectedValuePath = "InternalValue",
-                    DisplayMemberPath = "DisplayValue" });
-            }
-            directions_lst.ItemsSource = LVitems;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)

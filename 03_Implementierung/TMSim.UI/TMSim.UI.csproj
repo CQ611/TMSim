@@ -23,6 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\arrowTest.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\asdf_to_Tobi.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -35,12 +38,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Update="PopupWindows\AddTransitionDialog.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-    </Page>
     <Page Update="PopupWindows\EditSymbolDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PopupWindows\AddSymbolDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="PopupWindows\AddTransitionDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="PopupWindows\EditStateDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
@@ -74,14 +80,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\StartButtonStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Styles\RightArrowButtonStyle.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Styles\LeftArrowButtonStyle.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
     </Page>

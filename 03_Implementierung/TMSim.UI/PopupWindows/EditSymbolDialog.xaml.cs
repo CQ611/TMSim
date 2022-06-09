@@ -8,18 +8,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace TMSim.UI
 {
+
     public partial class EditSymbolDialog : Window
     {
-        public EditSymbolDialog(string actSymbol, bool isInput)
+        public EditSymbolDialog(char symbol, bool isInput)
         {
             InitializeComponent();
-            symbol_txt.Text = actSymbol;
-            isInput_chk.IsChecked = isInput;
             var vm = (ViewModel)DataContext;
+
+            Symbol = symbol;
+            IsInInput = isInput;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -33,14 +36,18 @@ namespace TMSim.UI
             this.DialogResult = true;
         }
 
-        public string Symbol
+        public char Symbol
         {
-            get { return symbol_txt.Text; }
+            get { return symbol_txt.Text[0]; }
+            set { symbol_txt.Text = value.ToString(); }
         }
 
-        public bool IsInput
+        public bool IsInInput
         {
-            get { return (bool)isInput_chk.IsChecked; }
+            get { return (bool)isInInput_chk.IsChecked; }
+            set { isInInput_chk.IsChecked = IsInInput; }
         }
+
+
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using TMSim.Core;
+using TMSim.Core.Exceptions;
 using TMSim.UI.PopupWindows;
 
 namespace TMSim.UI
@@ -36,8 +38,7 @@ namespace TMSim.UI
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
         public RelayCommand EnglishLanguageSelected { get; set; }
-        public RelayCommand SingleViewSelected { get; set; }
-        public RelayCommand MultiViewSelected { get; set; }
+
         #endregion
 
         #region BindingProperties
@@ -125,31 +126,61 @@ namespace TMSim.UI
             }
         }
 
-        private bool _singleViewIsChecked = true;
-        public bool SingleViewIsChecked
+        private bool _diagramViewIsChecked = true;
+        public bool DiagramViewIsChecked
         {
             get
             {
-                return _singleViewIsChecked;
+                return _diagramViewIsChecked;
             }
             set
             {
-                _singleViewIsChecked = value;
-                OnPropertyChanged("SingleViewIsChecked");
+                _diagramViewIsChecked = value;
+                if (_diagramViewIsChecked == false) TableViewIsChecked = true;
+                OnPropertyChanged(nameof(DiagramViewIsChecked));
             }
         }
 
-        private bool _multiViewIsChecked;
-        public bool MultiViewIsChecked
+        private bool _tableViewIsChecked = true;
+        public bool TableViewIsChecked
         {
             get
             {
-                return _multiViewIsChecked;
+                return _tableViewIsChecked;
             }
             set
             {
-                _multiViewIsChecked = value;
-                OnPropertyChanged("MultiViewIsChecked");
+                _tableViewIsChecked = value;
+                if (_tableViewIsChecked == false) DiagramViewIsChecked = true;
+                OnPropertyChanged(nameof(TableViewIsChecked));
+            }
+        }
+
+        private bool _highlightIsChecked = true;
+        public bool HighlightIsChecked
+        {
+            get
+            {
+                return _highlightIsChecked;
+            }
+            set
+            {
+                _highlightIsChecked = value;
+                OnPropertyChanged(nameof(HighlightIsChecked));
+            }
+        }
+
+        private bool _animateDiagram = false;
+        public bool AnimateDiagram
+        {
+            get
+            {
+                return _animateDiagram;
+            }
+            set
+            {
+                _animateDiagram = value;
+                OnPropertyChanged(nameof(AnimateDiagram));
             }
         }
 
@@ -164,6 +195,76 @@ namespace TMSim.UI
             {
                 _tapeWordInput = value;
                 OnPropertyChanged("TapeWordInput");
+            }
+        }
+
+        private bool _startEnabled = false;
+        public bool StartEnabled
+        {
+            get
+            {
+                return _startEnabled;
+            }
+            set
+            {
+                _startEnabled = value;
+                OnPropertyChanged(nameof(StartEnabled));
+            }
+        }
+
+        private bool _stopEnabled = false;
+        public bool StopEnabled
+        {
+            get
+            {
+                return _stopEnabled;
+            }
+            set
+            {
+                _stopEnabled = value;
+                OnPropertyChanged(nameof(StopEnabled));
+            }
+        }
+
+        private bool _stepEnabled = false;
+        public bool StepEnabled
+        {
+            get
+            {
+                return _stepEnabled;
+            }
+            set
+            {
+                _stepEnabled = value;
+                OnPropertyChanged(nameof(StepEnabled));
+            }
+        }
+
+        private bool _uploadTextEnabled = false;
+        public bool UploadTextEnabled
+        {
+            get
+            {
+                return _uploadTextEnabled;
+            }
+            set
+            {
+                _uploadTextEnabled = value;
+                OnPropertyChanged(nameof(UploadTextEnabled));
+            }
+        }
+
+        private bool _menuElementEnabled = true;
+        public bool MenuElementEnabled
+        {
+            get
+            {
+                return _menuElementEnabled;
+            }
+            set
+            {
+                _menuElementEnabled = value;
+                OnPropertyChanged(nameof(MenuElementEnabled));
             }
         }
         #endregion
@@ -217,8 +318,31 @@ namespace TMSim.UI
         public string Transformation3Tooltip { get => Translator.GetString("TOOLTIP_Transformation3"); set { OnPropertyChanged(nameof(Transformation3Tooltip)); } }
         public string Transformation4Tooltip { get => Translator.GetString("TOOLTIP_Transformation4"); set { OnPropertyChanged(nameof(Transformation4Tooltip)); } }
         public string Transformation5Tooltip { get => Translator.GetString("TOOLTIP_Transformation5"); set { OnPropertyChanged(nameof(Transformation5Tooltip)); } }
-
-
+        public string ViewText { get => Translator.GetString("TEXT_View"); set { OnPropertyChanged(nameof(ViewText)); } }
+        public string DiagramViewText { get => Translator.GetString("TEXT_DiagramView"); set { OnPropertyChanged(nameof(DiagramViewText)); } }
+        public string TableViewText { get => Translator.GetString("TEXT_TableView"); set { OnPropertyChanged(nameof(TableViewText)); } }
+        public string InvalidInputWordText { get => Translator.GetString("TEXT_InvalidInputWord"); set { OnPropertyChanged(nameof(InvalidInputWordText)); } }
+        public string InvalidTapeNumberInDefinitionText { get => Translator.GetString("TEXT_InvalidTapeNumberInDefinition"); set { OnPropertyChanged(nameof(InvalidTapeNumberInDefinitionText)); } }
+        public string ReadSymbolDoesNotExistText { get => Translator.GetString("TEXT_ReadSymbolDoesNotExist"); set { OnPropertyChanged(nameof(ReadSymbolDoesNotExistText)); } }
+        public string SourceStateDoesNotExistText { get => Translator.GetString("TEXT_SourceStateDoesNotExist"); set { OnPropertyChanged(nameof(SourceStateDoesNotExistText)); } }
+        public string StateDoesNotExistText { get => Translator.GetString("TEXT_StateDoesNotExist"); set { OnPropertyChanged(nameof(StateDoesNotExistText)); } }
+        public string StateExistsText { get => Translator.GetString("TEXT_StateExists"); set { OnPropertyChanged(nameof(StateExistsText)); } }
+        public string SymbolDoesNotExistText { get => Translator.GetString("TEXT_SymbolDoesNotExist"); set { OnPropertyChanged(nameof(SymbolDoesNotExistText)); } }
+        public string SymbolExistsText { get => Translator.GetString("TEXT_SymbolExists"); set { OnPropertyChanged(nameof(SymbolExistsText)); } }
+        public string TargetStateDoesNotExistText { get => Translator.GetString("TEXT_TargetStateDoesNotExist"); set { OnPropertyChanged(nameof(TargetStateDoesNotExistText)); } }
+        public string TransitionDoesNotExistText { get => Translator.GetString("TEXT_TransitionDoesNotExist"); set { OnPropertyChanged(nameof(TransitionDoesNotExistText)); } }
+        public string TransitionExistsText { get => Translator.GetString("TEXT_TransitionExists"); set { OnPropertyChanged(nameof(TransitionExistsText)); } }
+        public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
+        public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSuccessText)); } }
+        public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationFailureText)); } }
+        public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsRunningText)); } }
+        public string SimulationIsPausedText { get => Translator.GetString("TEXT_Info_SimulationIsPaused"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsPausedText)); } }
+        public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
+        public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
+        public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionTabelle)); } }
+        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+         
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -259,6 +383,30 @@ namespace TMSim.UI
             Transformation3Tooltip = Translator.GetString("TOOLTIP_Transformation3");
             Transformation4Tooltip = Translator.GetString("TOOLTIP_Transformation4");
             Transformation5Tooltip = Translator.GetString("TOOLTIP_Transformation5");
+            ViewText = Translator.GetString("TEXT_View");
+            DiagramViewText = Translator.GetString("TEXT_DiagramView");
+            TableViewText = Translator.GetString("TEXT_TableView");
+            InvalidInputWordText = Translator.GetString("TEXT_InvalidInputWord");
+            InvalidTapeNumberInDefinitionText = Translator.GetString("TEXT_InvalidTapeNumberInDefinition");
+            ReadSymbolDoesNotExistText = Translator.GetString("TEXT_ReadSymbolDoesNotExist");
+            SourceStateDoesNotExistText = Translator.GetString("TEXT_SourceStateDoesNotExist");
+            StateDoesNotExistText = Translator.GetString("TEXT_StateDoesNotExist");
+            StateExistsText = Translator.GetString("TEXT_StateExists");
+            SymbolDoesNotExistText = Translator.GetString("TEXT_SymbolDoesNotExist");
+            SymbolExistsText = Translator.GetString("TEXT_SymbolExists");
+            TargetStateDoesNotExistText = Translator.GetString("TEXT_TargetStateDoesNotExist");
+            TransitionDoesNotExistText = Translator.GetString("TEXT_TransitionDoesNotExist");
+            TransitionExistsText = Translator.GetString("TEXT_TransitionExists");
+            WriteSymbolDoesNotExistText = Translator.GetString("TEXT_WriteSymbolDoesNotExist");
+            SimulationSuccessText = Translator.GetString("TEXT_Info_SimulationSuccess");
+            SimulationFailureText = Translator.GetString("TEXT_Info_SimulationFailure");
+            SimulationIsRunningText = Translator.GetString("TEXT_Info_SimulationIsRunning");
+            SimulationIsPausedText = Translator.GetString("TEXT_Info_SimulationIsPaused");
+            SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
+            SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
+            DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
+            DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
+            DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
         }
         #endregion
 
@@ -267,7 +415,20 @@ namespace TMSim.UI
         public DiagramData DData { get; set; }
 
         public static ResourceManager Translator;
-        public TuringMachine TM;
+        private TuringMachine tm;
+        public TuringMachine TM
+        {
+            get
+            {
+                return tm;
+            }
+            set
+            {
+                tm = value;
+                OnPropertyChanged(nameof(TM));
+            }
+        }
+
         private DispatcherTimer timmy;
 
         public ViewModel()
@@ -289,8 +450,6 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
-            SingleViewSelected = new RelayCommand((o) => { OnSingleViewSelected(); });
-            MultiViewSelected = new RelayCommand((o) => { OnMultiViewSelected(); });
 
             TM = new TuringMachine();
 
@@ -300,6 +459,8 @@ namespace TMSim.UI
             timmy = new DispatcherTimer();
             timmy.Tick += Timmy_Tick;
             SetTimerInterval();
+
+            UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
         }
 
         private void InitResoureManager()
@@ -320,6 +481,14 @@ namespace TMSim.UI
             UpdateDiagramData();
             UpdateTapeData();
             UpdateTableData();
+
+            OnPropertyChanged(nameof(TM));
+        }
+
+        public void OnTmRefresh()
+        {
+            UpdateTapeData();
+            RefreshTableData();
         }
 
         private bool startIsActive = false;
@@ -327,12 +496,17 @@ namespace TMSim.UI
 
         private void OnStartPauseSimulation()
         {
+            StopEnabled = true;
+            UploadTextEnabled = false;
+            MenuElementEnabled = false;
             if (startIsActive)
             {
                 startIsActive = false;
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
+                UpdateInfo(MessageIdentification.SimulationIsPaused, SimulationIsPausedText);
+                StepEnabled = true;
             }
             else
             {
@@ -340,13 +514,15 @@ namespace TMSim.UI
                 StartVisibility = Visibility.Hidden;
                 StopVisibility = Visibility.Visible;
                 timmy.Start();
+                UpdateInfo(MessageIdentification.SimulationIsRunning, SimulationIsRunningText);
+                StepEnabled = false;
             }
-            OnTMChanged();
+            OnTmRefresh();
         }
 
         private void Timmy_Tick(object sender, EventArgs e)
         {
-            OnStepSimulation();
+            OnStepSimulation(true);
         }
 
         private void SetTimerInterval()
@@ -360,42 +536,66 @@ namespace TMSim.UI
             startIsActive = false;
             StartVisibility = Visibility.Visible;
             StopVisibility = Visibility.Hidden;
+            StartEnabled = false;
+            StopEnabled = false;
+            StepEnabled = false;
+            UploadTextEnabled = true;
+            MenuElementEnabled = true;
             timmy.Stop();
-            OnTMChanged();
+            OnTmRefresh();
+            UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
 
-        private void OnStepSimulation()
+        private void OnStepSimulation(bool timerStep = false)
         {
+            if (timerStep == false)
+                UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
+
             if (!TM.AdvanceState())
             {
                 startIsActive = false;
                 StartVisibility = Visibility.Visible;
                 StopVisibility = Visibility.Hidden;
                 timmy.Stop();
+                StartEnabled = false;
+                StopEnabled = false;
+                StepEnabled = false;
+                UploadTextEnabled = true;
+                MenuElementEnabled = true;
                 CheckIfRunWasSuccessful();
             }
-            OnTMChanged();
+            OnTmRefresh();
         }
 
         private void CheckIfRunWasSuccessful()
         {
             if (TM.CheckIsEndState())
             {
-                // Todo: Übersetzen
-                InfoMessage = "Endzustand erreicht";
-                InfoMessageColor = GetBrushFromEnum(MessageColor.DarkGreen);
+                UpdateInfo(MessageIdentification.SimulationSuccess, SimulationSuccessText);
             }
             else
             {
-                InfoMessage = "Endzustand nicht erreicht";
-                InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
+                UpdateInfo(MessageIdentification.SimulationFailure, SimulationFailureText);
             }
         }
 
         private void OnWriteTapeWord()
         {
-            TM.WriteTapeWord(TapeWordInput);
+            TM.Reset();
+
+            try
+            {
+                TM.WriteTapeWord(TapeWordInput);
+            }
+            catch (WordIsNoValidInputException)
+            {
+                QuickWarning(InvalidInputWordText);
+                return;
+            }
             LoadTapeContent();
+            StartEnabled = true;
+            StopEnabled = false;
+            StepEnabled = true;
         }
 
         private void OnTansformTuringMachine()
@@ -406,9 +606,7 @@ namespace TMSim.UI
 
         private void OnTransformation1()
         {
-            InfoMessage = "OnTransformation1 >> ViewModel";
-            InfoMessageColor = GetBrushFromEnum(MessageColor.Red);
-            //throw new NotImplementedException("OnTransformation1 >> ViewModel");
+            throw new NotImplementedException("OnTransformation1 >> ViewModel");
         }
 
         private void OnTransformation2()
@@ -464,9 +662,48 @@ namespace TMSim.UI
             };
             if (importFileDialog.ShowDialog() == true)
             {
-                TM.ImportFromTextFile(importFileDialog.FileName);
+                try
+                {
+                    TM.ImportFromTextFile(importFileDialog.FileName);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                    return;
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
+                    return;
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException e)
+                {
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText+ $" ({e.Message})");
+                    return;
+                }
                 DeleteTapeContent();
                 OnTMChanged();
+                UploadTextEnabled = true;
             }
         }
 
@@ -502,9 +739,48 @@ namespace TMSim.UI
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
-                TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                try 
+                {
+                    TM.ImportFromTextFile(loadExampleFileDialog.FileName);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                    return;
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                    return;
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
+                    return;
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException e)
+                {
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
                 DeleteTapeContent();
                 OnTMChanged();
+                UploadTextEnabled = true;
             }
         }
 
@@ -564,56 +840,91 @@ namespace TMSim.UI
         {
             MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-
+            
         public void AddState()
         {
-            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count<1);
+            AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count < 1);
             if (asd.ShowDialog() == true)
             {
                 string identifier = asd.Identfier;
                 bool isStart = asd.IsStart;
                 bool isAccepting = asd.IsAccepting;
-                string comment = "DEBUG: TODO: get comment from popup";
-                //TODO: get comment from popup
+                string comment = asd.Comment;
 
-                List<string> existingStates = new List<string>();
-                TM.States.ForEach(ts => existingStates.Add(ts.Identifier));
-                if (existingStates.Contains(identifier))
+                try
                 {
-                    QuickWarning($"State with identifier {identifier} already exists!");
+                    TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
                     return;
                 }
-
-                TM.AddState(new TuringState(identifier, comment, isStart, isAccepting));
                 OnTMChanged();
             }
         }
 
-        public void AddSymbol()
+        public void EditState(TuringState ts)
         {
-            AddSymbolDialog asd = new AddSymbolDialog();
-            if(asd.ShowDialog() == true)
+            AddStateDialog asd = new AddStateDialog(ts);
+            if (asd.ShowDialog() == true)
             {
-                char symbol = asd.Symbol;
-                bool isInputAlphabet = asd.IsInInput;
+                string identifier = asd.Identfier;
+                bool isStart = asd.IsStart;
+                bool isAccepting = asd.IsAccepting;
+                string comment = asd.Comment;
 
-                if(TM.InputSymbols.Contains(symbol) || TM.TapeSymbols.Contains(symbol))
+                try
                 {
-                    QuickWarning($"Symbol {symbol} already exists!");
+                    TM.EditState(ts, new TuringState(identifier, comment, isStart, isAccepting));
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
                     return;
                 }
-
-                TM.AddSymbol(symbol, isInputAlphabet);
                 OnTMChanged();
             }
         }
 
-
-        public void RemoveState(string ident)
+        public void EditState(string turingStateAsString)
         {
-            TuringState ts = TM.States.First(x => x.Identifier == ident);
-            TM.RemoveState(ts);
+            TuringState ts = null;
+
+            foreach (var state in TM.States)
+            {
+                if (turingStateAsString == state.Identifier)
+                    ts = state;
+            }
+
+            EditState(ts);
+        }
+
+        public void RemoveState(TuringState ts)
+        {
+            try
+            {
+                TM.RemoveState(ts);
+            }
+            catch (StateDoesNotExistException)
+            {
+                QuickWarning(StateDoesNotExistText);
+                return;
+            }
             OnTMChanged();
+        }
+
+        public void RemoveState(string turingStateAsString)
+        {
+            TuringState ts = null;
+
+            foreach (var state in TM.States)
+            {
+                if (turingStateAsString == state.Identifier)
+                    ts = state;
+            }
+
+            RemoveState(ts);
         }
 
         public void AddTransition(TuringState source = null, TuringState target = null)
@@ -621,30 +932,144 @@ namespace TMSim.UI
             AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target);
             if (atd.ShowDialog() == true)
             {
-                TM.AddTransition(new TuringTransition(
-                    atd.Source, atd.Target, atd.SymbolsRead,
-                    atd.SymbolsWrite, atd.Directions, atd.Comment));
-
                 //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
+                try
+                {
+                    TM.AddTransition(new TuringTransition(
+                        atd.Source, atd.Target, atd.SymbolsRead,
+                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
 
-        private void OnSingleViewSelected()
+        public void EditTransition(TuringTransition tt)
         {
-            MultiViewIsChecked = false;
-            SingleViewIsChecked = true;
-            MultiViewVisibility = Visibility.Hidden;
-            SingleViewVisibility = Visibility.Visible;
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
+            if (atd.ShowDialog() == true)
+            {
+                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
+                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+
+                try
+                {
+                    TM.EditTransition(tt, new TuringTransition(
+                        atd.Source, atd.Target, atd.SymbolsRead,
+                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                }
+                catch (TransitionAlreadyExistsException)
+                {
+                    QuickWarning(TransitionExistsText);
+                    return;
+                }
+                OnTMChanged();
+            }
         }
 
-        private void OnMultiViewSelected()
+        public void EditTransition(string turingTransition, string symbolRead)
         {
-            SingleViewIsChecked = false;
-            MultiViewIsChecked = true;
-            SingleViewVisibility = Visibility.Hidden;
-            MultiViewVisibility = Visibility.Visible;
+            TuringTransition tt = null;
+
+            foreach (var transtition in TM.Transitions)
+            {
+                if (transtition.Source.Identifier == turingTransition && transtition.SymbolsRead.Contains(symbolRead.ToCharArray()[0]))
+                    tt = transtition;
+            }
+
+            EditTransition(tt);
+        }
+
+        public void RemoveTransition(TuringTransition tt)
+        {
+            try
+            {
+                TM.RemoveTransition(tt);
+            }
+            catch (TransitionDoesNotExistException)
+            {
+                QuickWarning(TransitionDoesNotExistText);
+                return;
+            }
+            OnTMChanged();
+        }
+
+        public void RemoveTransition(string turingTransition, string symbolRead)
+        {
+            TuringTransition tt = null;
+
+            foreach (var transtition in TM.Transitions)
+            {
+                if (transtition.Source.Identifier == turingTransition && transtition.SymbolsRead.Contains(symbolRead.ToCharArray()[0]))
+                    tt = transtition;
+            }
+
+            RemoveTransition(tt);
+        }
+
+        public void AddSymbol()
+        {
+            AddSymbolDialog asd = new AddSymbolDialog();
+            if (asd.ShowDialog() == true)
+            {
+                char symbol = asd.Symbol;
+                bool isInputAlphabet = asd.IsInInput;
+
+                try
+                {
+                    TM.AddSymbol(symbol, isInputAlphabet);
+                }
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(SymbolExistsText);
+                    return;
+                }
+                OnTMChanged();
+            }
+        }
+
+        public void EditSymbol(string actSymbol, bool isInput)
+        {
+            EditSymbolDialog esd = new EditSymbolDialog(actSymbol.ToCharArray()[0], isInput);
+            if (esd.ShowDialog() == true)
+            {
+                char symbol = esd.Symbol;
+                bool isInputAlphabet = esd.IsInInput;
+
+                try
+                {
+                    TM.EditSymbol(symbol, isInputAlphabet);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                    return;
+                }
+                OnTMChanged();
+            }
+        }
+
+        public void RemoveSymbol(string symbol)
+        {
+            try
+            {
+                TM.RemoveSymbol(symbol.ToCharArray()[0]);
+            }
+            catch (SymbolDoesNotExistException)
+            {
+                QuickWarning(SymbolDoesNotExistText);
+                return;
+            }
+            OnTMChanged();
         }
     }
 }
+

@@ -160,7 +160,7 @@
     <value>Abbrechen</value>
   </data>
   <data name="TEXT_PopupIdentifier" xml:space="preserve">
-    <value>Identifier:</value>
+    <value>Kennung</value>
   </data>
   <data name="TEXT_PopupIdentifierText" xml:space="preserve">
     <value>Das sollte nicht sichtbar sein!</value>
@@ -178,7 +178,7 @@
     <value>Symbol:</value>
   </data>
   <data name="TEXT_Preferences" xml:space="preserve">
-    <value>Präferenzen</value>
+    <value>Einstellungen</value>
   </data>
   <data name="TEXT_Save" xml:space="preserve">
     <value>Speichern</value>
@@ -262,7 +262,7 @@
     <value>Es gibt keine Zustandsübergänge mit unbewegtem Lese-/Schreibkopf</value>
   </data>
   <data name="TOOLTIP_Transformation3" xml:space="preserve">
-    <value>Es wird niemals das Leerzeichen geschrieben</value>
+    <value>Es wird das Leerzeichen nicht geschrieben</value>
   </data>
   <data name="TOOLTIP_Transformation4" xml:space="preserve">
     <value>Die Zustandsmenge ist in eine rechte und linke Hälfte geteilt</value>
@@ -272,5 +272,77 @@
   </data>
   <data name="TOOLTIP_Upload" xml:space="preserve">
     <value>Eingabewort auf das Band hochladen</value>
+  </data>
+  <data name="TEXT_DiagramView" xml:space="preserve">
+    <value>Diagramm</value>
+  </data>
+  <data name="TEXT_TableView" xml:space="preserve">
+    <value>Tabelle</value>
+  </data>
+  <data name="TEXT_View" xml:space="preserve">
+    <value>Ansicht</value>
+  </data>
+  <data name="TEXT_InvalidInputWord" xml:space="preserve">
+    <value>Das Eingabewort ist nicht gültig!</value>
+  </data>
+  <data name="TEXT_InvalidTapeNumberInDefinition" xml:space="preserve">
+    <value>Die Anzahl der Bänder stimmt nicht mit der Zustandsübergangsdefinition überein!</value>
+  </data>
+  <data name="TEXT_ReadSymbolDoesNotExist" xml:space="preserve">
+    <value>Das zu lesende Symbol befindet sich nicht im Bandalphabet!</value>
+  </data>
+  <data name="TEXT_SourceStateDoesNotExist" xml:space="preserve">
+    <value>Der Anfangszustand des Zustandsübergangs existiert nicht!</value>
+  </data>
+  <data name="TEXT_StateDoesNotExist" xml:space="preserve">
+    <value>Der Zustand existiert nicht!</value>
+  </data>
+  <data name="TEXT_StateExists" xml:space="preserve">
+    <value>Der Zustand existiert bereits!</value>
+  </data>
+  <data name="TEXT_SymbolDoesNotExist" xml:space="preserve">
+    <value>Das Symbol befindet sich nicht im Bandalphabet!</value>
+  </data>
+  <data name="TEXT_SymbolExists" xml:space="preserve">
+    <value>Das Symbol befindet sich bereits im Bandalphabet!</value>
+  </data>
+  <data name="TEXT_TargetStateDoesNotExist" xml:space="preserve">
+    <value>Der Zielzustand des Zustandsübergangs existiert nicht!</value>
+  </data>
+  <data name="TEXT_TransitionDoesNotExist" xml:space="preserve">
+    <value>Der Zustandsübergang existiert nicht!</value>
+  </data>
+  <data name="TEXT_TransitionExists" xml:space="preserve">
+    <value>Der Zustandsübergang existiert bereits!</value>
+  </data>
+  <data name="TEXT_WriteSymbolDoesNotExist" xml:space="preserve">
+    <value>Das zu schreibende Symbol befindet sich nicht im Bandalphabet!</value>
+  </data>
+  <data name="TEXT_Info_DefaultMessage" xml:space="preserve">
+    <value>Willkommen zu TMSim</value>
+  </data>
+  <data name="TEXT_Info_SimulationFailure" xml:space="preserve">
+    <value>Kein Endzustand wurde erreicht</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsPaused" xml:space="preserve">
+    <value>Simulation ist pausiert</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsRunning" xml:space="preserve">
+    <value>Simulation läuft</value>
+  </data>
+  <data name="TEXT_Info_SimulationIsStopped" xml:space="preserve">
+    <value>Simulation wurde abgebrochen</value>
+  </data>
+  <data name="TEXT_Info_SimulationSingleStep" xml:space="preserve">
+    <value>Einzelschritt ausgeführt</value>
+  </data>
+  <data name="TEXT_Info_SimulationSuccess" xml:space="preserve">
+    <value>Endzustand wurde erreicht</value>
+  </data>
+  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+    <value>Definition als Diagramm</value>
+  </data>
+  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+    <value>Definition als Tabelle</value>
   </data>
 </root>
