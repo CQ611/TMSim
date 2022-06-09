@@ -18,6 +18,7 @@ namespace TMSim.UI
         public delegate void RefreshActiveHighlight(TuringMachine TM);
         public event RefreshActiveHighlight RefreshActiveHighlightEvent;
 
+
         private void UpdateTableData()
         {
             ClearTableEvent?.Invoke();

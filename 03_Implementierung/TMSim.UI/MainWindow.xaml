@@ -102,7 +102,7 @@
         </Border>
         <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="{Binding TableViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
                 <ColumnDefinition Width="{Binding DiagramViewIsChecked, Converter={StaticResource BoolToColumnWidthConverter}}"/>
             </Grid.ColumnDefinitions>
             <Border Background="White" CornerRadius="10" Margin="3,0,3,3">
