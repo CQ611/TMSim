@@ -345,4 +345,7 @@
   <data name="TEXT_DefinitionTabelle" xml:space="preserve">
     <value>Definition als Tabelle</value>
   </data>
+  <data name="TEXT_Info_InputWordWrittenOnTape" xml:space="preserve">
+    <value>Eingabewort auf Band geschrieben</value>
+  </data>
 </root>

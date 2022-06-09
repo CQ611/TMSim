@@ -340,8 +340,9 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
-        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionTabelle)); } }
-        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
+        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
          
         private void RefreshTextFromUi()
         {
@@ -407,6 +408,7 @@ namespace TMSim.UI
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
+            InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
         }
         #endregion
 
@@ -482,6 +484,11 @@ namespace TMSim.UI
             UpdateTapeData();
             UpdateTableData();
 
+            if (TM.InputSymbols.Count > 0)
+                UploadTextEnabled = true;
+            else
+                UploadTextEnabled = false;
+
             OnPropertyChanged(nameof(TM));
         }
 
@@ -492,13 +499,19 @@ namespace TMSim.UI
         }
 
         private bool startIsActive = false;
+        private bool simulationIsRunning = false;
 
 
         private void OnStartPauseSimulation()
         {
-            StopEnabled = true;
-            UploadTextEnabled = false;
-            MenuElementEnabled = false;
+            if (simulationIsRunning == false)
+            {
+                simulationIsRunning = true;
+                StopEnabled = true;
+                UploadTextEnabled = false;
+                MenuElementEnabled = false;
+            }
+
             if (startIsActive)
             {
                 startIsActive = false;
@@ -529,7 +542,7 @@ namespace TMSim.UI
         {
             timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
-
+        
         private void OnStopSimulation()
         {
             TM.Reset();
@@ -541,13 +554,18 @@ namespace TMSim.UI
             StepEnabled = false;
             UploadTextEnabled = true;
             MenuElementEnabled = true;
+            simulationIsRunning = false;
             timmy.Stop();
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
-
+        
         private void OnStepSimulation(bool timerStep = false)
         {
+            StopEnabled = true;
+            UploadTextEnabled = false;
+            MenuElementEnabled = false;
+
             if (timerStep == false)
                 UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
 
@@ -593,6 +611,7 @@ namespace TMSim.UI
                 return;
             }
             LoadTapeContent();
+            UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
             StartEnabled = true;
             StopEnabled = false;
             StepEnabled = true;
