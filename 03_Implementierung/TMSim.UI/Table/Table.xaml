@@ -9,10 +9,9 @@
     <UserControl.DataContext>
         <Binding Source="{StaticResource sharedViewModel}"/>
     </UserControl.DataContext>
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
 
-        <Grid x:Name="TableGrid" Background="White">
+    <Grid x:Name="TableGrid" Background="White">
 
             <Grid.RowDefinitions>
                 <RowDefinition x:Name="row1" Height="50"/>
@@ -40,5 +39,4 @@
 
         </Grid>
 
-    </ScrollViewer>
 </UserControl>
