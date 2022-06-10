@@ -728,6 +728,11 @@ namespace TMSim.UI
                     QuickWarning(InvalidTapeNumberInDefinitionText);
                     return;
                 }
+                catch (TransitionNumberOfTapesIsInconsistentException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
                 catch (ReadSymbolDoesNotExistException e)
                 {
                     QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
@@ -809,6 +814,11 @@ namespace TMSim.UI
                     return;
                 }
                 catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
+                catch (TransitionNumberOfTapesIsInconsistentException)
                 {
                     QuickWarning(InvalidTapeNumberInDefinitionText);
                     return;
