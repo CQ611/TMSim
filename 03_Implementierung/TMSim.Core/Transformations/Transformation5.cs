@@ -7,7 +7,7 @@ namespace TMSim.Core
 {
     public class Transformation5 : ITransformation
     {
-        public TuringMachine Execute(TuringMachine tm)
+        public TuringMachine Execute(TuringMachine tm, char ch = ' ')
         {
             if (tm.EndStates.Count == 1) return tm;
             if (tm.Tapes.Count != 1) {

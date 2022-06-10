@@ -6,7 +6,7 @@ namespace TMSim.Core
 {
     class Transformation4 : ITransformation
     {
-        public TuringMachine Execute(TuringMachine tm)
+        public TuringMachine Execute(TuringMachine tm, char ch = ' ')
         {
             throw new NotImplementedException();
         }

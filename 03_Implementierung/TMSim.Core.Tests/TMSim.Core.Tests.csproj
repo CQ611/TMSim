@@ -18,6 +18,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="res\example_import_transformation3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="res\example_import.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
