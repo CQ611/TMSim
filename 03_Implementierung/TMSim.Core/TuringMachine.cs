@@ -91,7 +91,7 @@ namespace TMSim.Core
                         transition.MoveDirections
                     ));
             }
-            }
+        }
 
         public void ExportToTextFile(string filePath)
         {
