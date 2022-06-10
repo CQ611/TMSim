@@ -29,7 +29,16 @@
     <None Update="Examples\asdf_to_Tobi.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\examples\example_binaryPalindrome.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\examples\example_decimalToBinary.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\examples\example_evenAmountOfZeros.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\examples\example_mirrorBinaryString.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\example_import.tmsim">
