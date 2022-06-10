@@ -37,18 +37,29 @@ namespace TMSim.Core
         public void ImportFromTextFile(string filePath)
         {
             string jsonString = System.IO.File.ReadAllText(filePath);
-            FromJsonString(jsonString);
+            try
+            {
+                FromJsonString(jsonString);
+            }
+            catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException e) { 
+                throw e; 
+            }
+            catch (Exception)
+            {
+                throw new ImportFileIsNotValidException();
+            }
         }
 
         private void FromJsonString(string jsonString)
         {
-            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
-
-            // TODO: check if InputAlphabet is a subsequence of TapeAlphabet
-            // TODO: write Tests after errorhandling
+            ImportExportStructure tm;
+            tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString); 
             TapeAlphabet = new TuringAlphabet(tm.TapeAlphabet);
             BlankChar = tm.Blank;
             InputAlphabet = new TuringAlphabet(tm.InputAlphabet);
+            if (!InputAlphabet.Symbols.All(c => TapeAlphabet.Symbols.Contains(c))) {
+                throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
+            }
 
             States.Clear();
             EndStates.Clear();
@@ -81,7 +92,7 @@ namespace TMSim.Core
                         transition.MoveDirections
                     ));
             }
-        }
+            }
 
         public void ExportToTextFile(string filePath)
         {

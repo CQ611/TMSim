@@ -348,4 +348,10 @@
   <data name="TEXT_Info_InputWordWrittenOnTape" xml:space="preserve">
     <value>Eingabewort auf Band geschrieben</value>
   </data>
+  <data name="TEXT_ImportFileIsNotValid" xml:space="preserve">
+    <value>Die importierte Datei ist ungültig</value>
+  </data>
+  <data name="TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet" xml:space="preserve">
+    <value>Das Eingabealphabet muss eine Teilmenge des Bandalphabets sein</value>
+  </data>
 </root>
