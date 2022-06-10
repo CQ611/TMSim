@@ -267,6 +267,18 @@ namespace TMSim.UI
                 OnPropertyChanged(nameof(MenuElementEnabled));
             }
         }
+
+        private string _tapeWordInputToolTip;
+        public string TapeWordInputToolTip
+        {
+            get { return _tapeWordInputToolTip; }
+            set
+            {
+                _tapeWordInputToolTip = value;
+                OnPropertyChanged(nameof(TapeWordInputToolTip));
+            }
+
+        }
         #endregion
 
         #region Translation
@@ -411,6 +423,7 @@ namespace TMSim.UI
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
+            SetInputTapeWordToolTip();
         }
         #endregion
 
@@ -492,6 +505,8 @@ namespace TMSim.UI
                 UploadTextEnabled = false;
 
             OnPropertyChanged(nameof(TM));
+
+            SetInputTapeWordToolTip();
         }
 
         public void OnTmRefresh()
@@ -1106,6 +1121,11 @@ namespace TMSim.UI
                 return;
             }
             OnTMChanged();
+        }
+
+        private void SetInputTapeWordToolTip()
+        {
+            TapeWordInputToolTip = PopupIsInputAlphabetText + ": " + string.Join(", ", TM.InputSymbols.ToArray());
         }
     }
 }
