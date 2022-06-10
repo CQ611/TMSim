@@ -11,6 +11,8 @@ namespace TMSim.Core.Tests
         
     [DeploymentItem("res/example_import.tmsim","res")]
     [DeploymentItem("res/example_export.tmsim", "res")]
+    [DeploymentItem("res/example_invalid.tmsim", "res")]
+    [DeploymentItem("res/example_input_alphabet_is_no_subset_of_tape_alphabet.tmsim", "res")]
     [TestClass]
     public class TuringMachineTests
     {
@@ -368,6 +370,22 @@ namespace TMSim.Core.Tests
 
             for (int i = 0; i < directions.Count; i++)
                 Assert.IsTrue(turingMachine.Transitions[0].MoveDirections[i] == turingTransition.MoveDirections[i]);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ImportFileIsNotValidException))]
+        public void ImportFromTextFile_throwsImportFileIsNotValidException()
+        {
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_invalid.tmsim");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InputAlphabetHasToBeASubsetOfTapeAlphabetException))]
+        public void ImportFromTextFile_throwsInputAlphabetHasToBeASubsetOfTapeAlphabetException()
+        {
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_input_alphabet_is_no_subset_of_tape_alphabet.tmsim");
         }
 
         [TestMethod]

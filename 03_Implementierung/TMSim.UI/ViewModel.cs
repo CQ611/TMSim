@@ -333,6 +333,8 @@ namespace TMSim.UI
         public string TransitionDoesNotExistText { get => Translator.GetString("TEXT_TransitionDoesNotExist"); set { OnPropertyChanged(nameof(TransitionDoesNotExistText)); } }
         public string TransitionExistsText { get => Translator.GetString("TEXT_TransitionExists"); set { OnPropertyChanged(nameof(TransitionExistsText)); } }
         public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
+        public string ImportFileIsNotValidText { get => Translator.GetString("TEXT_ImportFileIsNotValid"); set { OnPropertyChanged(nameof(ImportFileIsNotValidText)); } }
+        public string InputAlphabetIsNoSubsetOfTapeAlphabetText { get => Translator.GetString("TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet"); set { OnPropertyChanged(nameof(InputAlphabetIsNoSubsetOfTapeAlphabetText)); } }
         public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSuccessText)); } }
         public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationFailureText)); } }
         public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsRunningText)); } }
@@ -718,7 +720,15 @@ namespace TMSim.UI
                 }
                 catch (WriteSymbolDoesNotExistException e)
                 {
-                    QuickWarning(WriteSymbolDoesNotExistText+ $" ({e.Message})");
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (ImportFileIsNotValidException) {
+                    QuickWarning(ImportFileIsNotValidText);
+                    return;
+                }
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
                     return;
                 }
                 DeleteTapeContent();
@@ -759,7 +769,7 @@ namespace TMSim.UI
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
-                try 
+                try
                 {
                     TM.ImportFromTextFile(loadExampleFileDialog.FileName);
                 }
@@ -796,6 +806,13 @@ namespace TMSim.UI
                 catch (WriteSymbolDoesNotExistException e)
                 {
                     QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                } catch (ImportFileIsNotValidException) {
+                    QuickWarning(ImportFileIsNotValidText);
+                    return;
+                }
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
                     return;
                 }
                 DeleteTapeContent();

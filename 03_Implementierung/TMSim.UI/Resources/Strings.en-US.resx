@@ -348,4 +348,10 @@
   <data name="TEXT_Info_InputWordWrittenOnTape" xml:space="preserve">
     <value>Input word written on tape</value>
   </data>
+  <data name="TEXT_ImportFileIsNotValid" xml:space="preserve">
+    <value>The imported file is not valid</value>
+  </data>
+  <data name="TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet" xml:space="preserve">
+    <value>Input alphabet has to be a subset of tape alphabet</value>
+  </data>
 </root>
