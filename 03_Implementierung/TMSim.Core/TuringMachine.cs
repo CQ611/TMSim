@@ -52,8 +52,7 @@ namespace TMSim.Core
 
         private void FromJsonString(string jsonString)
         {
-            ImportExportStructure tm;
-            tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString); 
+            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString); 
             TapeAlphabet = new TuringAlphabet(tm.TapeAlphabet);
             BlankChar = tm.Blank;
             InputAlphabet = new TuringAlphabet(tm.InputAlphabet);
