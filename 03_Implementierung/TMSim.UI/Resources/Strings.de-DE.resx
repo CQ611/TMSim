@@ -121,31 +121,31 @@
     <value>Englisch</value>
   </data>
   <data name="TEXT_Examples" xml:space="preserve">
-    <value>Beispiele</value>
+    <value>Beis_piele</value>
   </data>
   <data name="TEXT_Exit" xml:space="preserve">
-    <value>Schließen</value>
+    <value>S_chließen</value>
   </data>
   <data name="TEXT_File" xml:space="preserve">
-    <value>Datei</value>
+    <value>_Datei</value>
   </data>
   <data name="TEXT_German" xml:space="preserve">
     <value>Deutsch</value>
   </data>
   <data name="TEXT_Highlight" xml:space="preserve">
-    <value>Zustand hervorheben</value>
+    <value>Zustand _hervorheben</value>
   </data>
   <data name="TEXT_Inputword" xml:space="preserve">
-    <value>Eingabewort: </value>
+    <value>Eingabe_wort: </value>
   </data>
   <data name="TEXT_Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
   <data name="TEXT_New" xml:space="preserve">
-    <value>Neu</value>
+    <value>_Neu</value>
   </data>
   <data name="TEXT_Open" xml:space="preserve">
-    <value>Öffnen</value>
+    <value>Ö_ffnen</value>
   </data>
   <data name="TEXT_PopupAccept" xml:space="preserve">
     <value>Akzeptieren</value>
@@ -178,10 +178,10 @@
     <value>Symbol:</value>
   </data>
   <data name="TEXT_Preferences" xml:space="preserve">
-    <value>Einstellungen</value>
+    <value>_Einstellungen</value>
   </data>
   <data name="TEXT_Save" xml:space="preserve">
-    <value>Speichern</value>
+    <value>_Speichern</value>
   </data>
   <data name="TEXT_SpeedLabel" xml:space="preserve">
     <value>Tempo:</value>
@@ -205,7 +205,7 @@
     <value>Transformation #5</value>
   </data>
   <data name="TEXT_Upload" xml:space="preserve">
-    <value>Laden</value>
+    <value>_Laden</value>
   </data>
   <data name="TEXT_Comment" xml:space="preserve">
     <value>Kommentar</value>
@@ -241,7 +241,7 @@
     <value>Eingabewort hier eingeben</value>
   </data>
   <data name="TOOLTIP_Pause" xml:space="preserve">
-    <value>pausieren</value>
+    <value>Pausieren</value>
   </data>
   <data name="TOOLTIP_Play" xml:space="preserve">
     <value>Animation starten</value>
@@ -253,7 +253,7 @@
     <value>Schritt</value>
   </data>
   <data name="TOOLTIP_Stop" xml:space="preserve">
-    <value>stoppen</value>
+    <value>Stoppen</value>
   </data>
   <data name="TOOLTIP_Transformation1" xml:space="preserve">
     <value>Kein Übergang führt in den Startzustand und keiner der Übergänge beginnt in einem akzeptierenden Zustand</value>
