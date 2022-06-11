@@ -88,12 +88,18 @@ namespace TMSim.UI
 
         private void RefreshDiagramData()
         {
-            DData.Nodes.Values.First((n) => n.IsCurrentNode).IsCurrentNode = false;
-            DData.Nodes.Values.First((n) => n.State == TM.CurrentState).IsCurrentNode = true;
-            NodeConnection current = FindConnectionWhere((c) => c.IsCurrentTransition);
-            if (current != null) current.IsCurrentTransition = false;
-            NodeConnection next = FindConnectionWhere((c) => c.Transition == TM.CurrentTransition);
-            if (next != null) next.IsCurrentTransition = true;
+            Node curNode = DData.Nodes.Values.FirstOrDefault((n) => n.IsCurrentNode);
+            if (curNode != null) curNode.IsCurrentNode = false;
+            NodeConnection curCon = FindConnectionWhere((c) => c.IsCurrentTransition);
+            if (curCon != null) curCon.IsCurrentTransition = false;
+
+            if (HighlightCurrentState)
+            {
+                Node nextNode = DData.Nodes.Values.FirstOrDefault((n) => n.State == TM.CurrentState);
+                if (nextNode != null) nextNode.IsCurrentNode = true;
+                NodeConnection nextCon = FindConnectionWhere((c) => c.Transition == TM.CurrentTransition);
+                if (nextCon != null) nextCon.IsCurrentTransition = true;
+            }
             RefreshDiagramHighlightEvent?.Invoke();
         }
 

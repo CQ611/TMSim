@@ -167,6 +167,8 @@ namespace TMSim.UI
             {
                 _highlightIsChecked = value;
                 OnPropertyChanged(nameof(HighlightIsChecked));
+                RefreshDiagramData();
+                RefreshTableData();
             }
         }
 
@@ -427,7 +429,7 @@ namespace TMSim.UI
         }
         #endregion
 
-        public bool HighlightCurrentState { get; set; } = true;
+        public bool HighlightCurrentState { get { return HighlightIsChecked; } }
         public bool IsSimulationRunning { get; set; } = true;
         public DiagramData DData { get; set; }
 

@@ -125,7 +125,7 @@ namespace TMSim.UI
             if(TM.CurrentTransition != null)
             {
                 var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
-                if (cellForHighlight != null)
+                if (cellForHighlight != null && vm.HighlightCurrentState)
                     cellForHighlight.Highlight = true;
             }
         }
