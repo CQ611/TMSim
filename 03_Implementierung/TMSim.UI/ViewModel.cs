@@ -636,11 +636,7 @@ namespace TMSim.UI
             StepEnabled = true;
         }
 
-        private void OnTansformTuringMachine()
-        {
-            //TM.TansformTuringMachine();
-            throw new NotImplementedException("OnTransformTuringMachine >> ViewModel");
-        }
+        private void OnTansformTuringMachine(){}
 
         private void OnTransformation1()
         {
