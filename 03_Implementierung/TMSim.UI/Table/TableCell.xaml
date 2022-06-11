@@ -10,7 +10,7 @@
     <Border BorderBrush="Black" BorderThickness="2">
 
         <Grid x:Name="TableCellGrid">
-            <Label x:Name="TransitionText" FontSize="14" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label x:Name="TransitionText" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Grid>
 
     </Border>

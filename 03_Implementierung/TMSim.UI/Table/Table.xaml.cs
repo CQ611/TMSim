@@ -124,7 +124,7 @@ namespace TMSim.UI
 
             if(TM.CurrentTransition != null)
             {
-                var cellForHighlight = tableCells.Find(x => x.State == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
+                var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
                 if (cellForHighlight != null)
                     cellForHighlight.Highlight = true;
             }
@@ -132,12 +132,13 @@ namespace TMSim.UI
 
         private void OverwriteTransition(int row, int column, bool highlight, TuringTransition transition)
         {
-            var state = transition.Source.Identifier;
+            var sourceState = transition.Source.Identifier;
+            var targetState = transition.Target.Identifier;
             var direction = transition.MoveDirections[0].ToString();
             var symbolWrite = transition.SymbolsWrite[0].ToString();
             var symbolRead = transition.SymbolsRead[0].ToString();
 
-            tableCells.Add(new TableCell(state, direction, symbolWrite, symbolRead, highlight));
+            tableCells.Add(new TableCell(sourceState, targetState, direction, symbolWrite, symbolRead, highlight));
             TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
             Grid.SetRow(tableCells[tableCells.Count() - 1], row);
             Grid.SetColumn(tableCells[tableCells.Count() - 1], column);
