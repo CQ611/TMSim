@@ -96,7 +96,7 @@ namespace TMSim.UI
             if (heldNode != null)
             {
                 heldNode.Position = Mouse.GetPosition(this);
-                ConstrainToScreen(heldNode);
+                heldNode.Position = ConstrainToScreen(heldNode.Position);
             }
 
             foreach (Node n in DData.Nodes.Values)
@@ -325,8 +325,7 @@ namespace TMSim.UI
                 foreach (Node n in DData.Nodes.Values)
                 {
                     maxForce = Math.Max(resultingVectors[ctr].Length, maxForce);
-                    n.Position = Vector.Add(resultingVectors[ctr], n.Position);
-                    ConstrainToScreen(n);
+                    n.Position = ConstrainToScreen(Vector.Add(resultingVectors[ctr], n.Position));
                     ctr++;
                 }
 
@@ -399,16 +398,14 @@ namespace TMSim.UI
                 return dir * gravityStrength;
             }
         }
-        private Node ConstrainToScreen(Node n)
+        private Point ConstrainToScreen(Point p)
         {
-            Point tmp = n.Position;
             var rand = new Random();
-            double x = Math.Clamp(tmp.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
-            double y = Math.Clamp(tmp.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
-            if (tmp.X == double.NaN) tmp.X = rand.Next((int)DData.Width);
-            if (tmp.Y == double.NaN) tmp.Y = rand.Next((int)DData.Height);
-            n.Position = new Point(x, y);
-            return n;
+            double x = Math.Clamp(p.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
+            double y = Math.Clamp(p.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
+            if (p.X == double.NaN) p.X = rand.Next((int)DData.Width);
+            if (p.Y == double.NaN) p.Y = rand.Next((int)DData.Height);
+            return new Point(x, y);
         }
 
         private Point OffsetPoint(Point p, double offX, double offY)
