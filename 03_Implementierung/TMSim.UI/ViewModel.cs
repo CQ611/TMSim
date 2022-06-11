@@ -654,11 +654,7 @@ namespace TMSim.UI
             StepEnabled = true;
         }
 
-        private void OnTansformTuringMachine()
-        {
-            //TM.TansformTuringMachine();
-            throw new NotImplementedException("OnTransformTuringMachine >> ViewModel");
-        }
+        private void OnTansformTuringMachine(){}
 
         private void OnTransformation1()
         {
@@ -667,7 +663,8 @@ namespace TMSim.UI
 
         private void OnTransformation2()
         {
-            TransformT2();
+            TM = new Transformation2().Execute(TM);
+            OnTMChanged();
         }
 
         private void OnTransformation3()
@@ -676,33 +673,18 @@ namespace TMSim.UI
             if (t3d.ShowDialog() == true)
             {
                 char newBlank = t3d.Blank;
-                TransformT3(newBlank);
+                TM = new Transformation3().Execute(TM, newBlank);
+                OnTMChanged();
             }
         }
 
         private void OnTransformation4()
         {
-            throw new NotImplementedException("OnTransformation4 >> ViewModel");
+            TM = new Transformation4().Execute(TM);
+            OnTMChanged();
         }
 
         private void OnTransformation5()
-        {
-            TransformT5();
-        }
-
-        public void TransformT2()
-        {
-            TM = new Transformation2().Execute(TM);
-            OnTMChanged();
-        }
-
-        public void TransformT3(char newBlank)
-        {
-            TM = new Transformation3().Execute(TM, newBlank);
-            OnTMChanged();
-        }
-
-        public void TransformT5()
         {
             TM = new Transformation5().Execute(TM);
             OnTMChanged();
