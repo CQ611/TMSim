@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMSim.UI"
-        ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="Transition" Height="217" Width="372" ResizeMode="NoResize">
@@ -22,7 +21,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="45" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="45" />
             <RowDefinition Height="40" />
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -34,27 +33,25 @@
         <ComboBox x:Name="targetState_cmb" HorizontalAlignment="Left" Margin="5,20,5,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Height="22" DisplayMemberPath="DisplayValue" SelectedValuePath="InternalValue"/>
 
         <Label x:Name="readSymbols_lbl" Content="{Binding ReadSymbolsText}" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-        <TextBox x:Name="readSymbols_txt" HorizontalAlignment="Left" Margin="5,20,5,0" Grid.Row="1" Text="This should not be visible" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" Height="17"/>
+        <ComboBox x:Name="readSymbols_lst" SelectedIndex="0" HorizontalAlignment="Left" Margin="5,20,5,0" Grid.Row="1" VerticalAlignment="Top" Width="120" Height="22"/>
 
         <Label x:Name="writeSymbols_lbl" Content="{Binding WriteSymbolsText}" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox x:Name="writeSymbols_txt" HorizontalAlignment="Left" Text="This should not be visible" TextWrapping="NoWrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="5,20,5,0" Grid.Row="1" Height="17"/>
+        <ComboBox x:Name="writeSymbols_lst" SelectedIndex="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120" Grid.Column="1" Margin="5,20,5,0" Grid.Row="1" Height="22"/>
 
         <Label x:Name="comment_lbl" Content="{Binding CommentText}" HorizontalAlignment="Left" Margin="5,0,0,0" Grid.Row="2" VerticalAlignment="Top"/>
         <TextBox x:Name="comment_txt" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="250" Grid.RowSpan="2"/>
 
         <WrapPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,5,0,5">
             <Button IsDefault="True" x:Name="ok_cmd" Click="ok_cmd_Click" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupOKText}"></Button>
-            <Button IsCancel="True" MinWidth="60" Content="{Binding PopupCancelText}"></Button>
+            <Button IsCancel="True" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupCancelText}"></Button>
+            <Button x:Name="addSymbol_bt" MinWidth="60" Content="{Binding PopupAddSymbolText}" Click="addSymbol_bt_Click"/>
         </WrapPanel>
 
         <Label x:Name="directions_lbl" Content="{Binding DirectionsText}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" Height="26" Width="82"/>
-        <ListBox Grid.Column="2" Grid.RowSpan="3" x:Name="directions_lst" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" Margin="0,20,0,0" Height="103" VerticalAlignment="Top">
-            <!--<ListBox.ItemTemplate>
-                <DataTemplate>
-                    <ComboBox Name="dir_cmb" ItemsSource="{Binding Items}" DisplayMemberPath="DisplayValue" SelectedValuePath="InternalValue"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>-->
-        </ListBox>
+        <ListBox Grid.Column="2" x:Name="directions_lst" HorizontalContentAlignment="Stretch" Margin="0,0,5,0" VerticalAlignment="Bottom" BorderThickness="0" Background="Transparent"/>
+
+        
+
     </Grid>
 </Window>
  

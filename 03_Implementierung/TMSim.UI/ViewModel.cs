@@ -994,10 +994,9 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols, TM.InputSymbols);
             if (atd.ShowDialog() == true)
             {
-                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
@@ -1012,16 +1011,20 @@ namespace TMSim.UI
                     QuickWarning(TransitionExistsText);
                     return;
                 }
+                catch (ReadSymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
 
         public void EditTransition(TuringTransition tt)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols, TM.InputSymbols);
             if (atd.ShowDialog() == true)
             {
-                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
@@ -1034,6 +1037,11 @@ namespace TMSim.UI
                 catch (TransitionAlreadyExistsException)
                 {
                     QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
                     return;
                 }
                 OnTMChanged();
