@@ -73,13 +73,13 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
-        public void Execute_example2Transformation4_TransitionsCountIs7()
+        public void Execute_example2Transformation4_TransitionsCountIs8()
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example2_transformation4.tmsim");
             ITransformation transformation = new Transformation4();
             TuringMachine newTuringMachine = transformation.Execute(turingMachine);
-            Assert.IsTrue(newTuringMachine.Transitions.Count == 7);
+            Assert.IsTrue(newTuringMachine.Transitions.Count == 8);
         }
     }
 }

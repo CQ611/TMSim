@@ -8,96 +8,64 @@ namespace TMSim.Core
     {
         public TuringMachine Execute(TuringMachine tm, char ch = ' ')
         {
-
-            if (tm.Tapes.Count != 1)
+            if (tm.Tapes.Count != 1) throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
+            TuringMachine newTm = getPrepairedTuringMachine(tm);
+            foreach (TuringTransition tt in tm.Transitions)
             {
-                throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
-            }
-
-            TuringMachine newTuringMachine = tm.GetCopy();
-            TuringMachine temporaryTuringMachine = tm.GetCopy();
-
-            foreach (TuringState ts in tm.States)  //Anpassung für Transformationen die auf sich selber verweisen!!!
-            {
-                int directionRightCounter = 0;
-                int directionLeftCounter = 0;
-
-                foreach (TuringTransition itt in ts.IncomingTransitions)
+                if (tt.Source == tm.StartState)
                 {
-                    if (itt.MoveDirections[0] == TuringTransition.Direction.Right) directionRightCounter++;
-                    if (itt.MoveDirections[0] == TuringTransition.Direction.Left) directionLeftCounter++;
+                    if (tt.MoveDirections[0] == TuringTransition.Direction.Right)
+                    {
+                        TuringTransition newTt = new TuringTransition(newTm.StartState, newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_right"), tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections);
+                        newTm.AddTransition(newTt);
+                    }
+                    else if (tt.MoveDirections[0] == TuringTransition.Direction.Left)
+                    {
+                        TuringTransition newTt = new TuringTransition(newTm.StartState, newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_left"), tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections);
+                        newTm.AddTransition(newTt);
+                    }
                 }
-
-                if ((directionRightCounter >= 1) && (directionLeftCounter >= 1))
+                if (tt.MoveDirections[0] == TuringTransition.Direction.Right)
                 {
-                    TuringState currentState = temporaryTuringMachine.States.Find(x => x.Identifier == ts.Identifier);
-
-                    if (directionRightCounter >= 1)
-                    {
-                        TuringState currentStateRight = new TuringState(ts.Identifier + "_right");
-                        newTuringMachine.AddState(currentStateRight);
-
-                        foreach (TuringTransition tt in currentState.IncomingTransitions)
-                        {
-
-                            if (tt.MoveDirections[0] == TuringTransition.Direction.Right)
-                            {
-                                TuringTransition transitionToRemove = newTuringMachine.Transitions.Find(x => (x.Source.Identifier == tt.Source.Identifier) && (x.SymbolsRead[0] == tt.SymbolsRead[0]));
-                                newTuringMachine.RemoveTransition(transitionToRemove);
-                                if (tt.Source.Identifier != tt.Target.Identifier)
-                                {
-                                    newTuringMachine.AddTransition(new TuringTransition(newTuringMachine.States.Find(x => x.Identifier == tt.Source.Identifier), currentStateRight, tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-
-                                }
-                                else
-                                {
-                                    newTuringMachine.AddTransition(new TuringTransition(currentStateRight, currentStateRight, tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-                                }
-                            }
-
-
-                        }
-                        foreach (TuringTransition tt in currentState.OutgoingTransitions)
-                        {
-                            if (tt.Source.Identifier != tt.Target.Identifier) newTuringMachine.AddTransition(new TuringTransition(currentStateRight, newTuringMachine.States.Find(x => x.Identifier == tt.Target.Identifier), tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-                        }
-
-                    }
-                    if (directionLeftCounter >= 1)
-                    {
-                        TuringState currentStateLeft = new TuringState(ts.Identifier + "_left");
-                        newTuringMachine.AddState(currentStateLeft);
-                        foreach (TuringTransition tt in currentState.IncomingTransitions)
-                        {
-                            if (tt.MoveDirections[0] == TuringTransition.Direction.Left)
-                            {
-                                TuringTransition transitionToRemove = newTuringMachine.Transitions.Find(x => (x.Source.Identifier == tt.Source.Identifier) && (x.SymbolsRead[0] == tt.SymbolsRead[0]));
-                                newTuringMachine.RemoveTransition(transitionToRemove);
-                                if (tt.Source.Identifier != tt.Target.Identifier)
-                                {
-                                    newTuringMachine.AddTransition(new TuringTransition(newTuringMachine.States.Find(x => x.Identifier == tt.Source.Identifier), currentStateLeft, tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-                                }
-                                else
-                                {
-                                    newTuringMachine.AddTransition(new TuringTransition(currentStateLeft, currentStateLeft, tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-
-                                }
-
-                            }
-                        }
-                        foreach (TuringTransition tt in currentState.OutgoingTransitions)
-                        {
-                            if (tt.Source.Identifier != tt.Target.Identifier) newTuringMachine.AddTransition(new TuringTransition(currentStateLeft, newTuringMachine.States.Find(x => x.Identifier == tt.Target.Identifier), tt.SymbolsRead, tt.SymbolsWrite, tt.MoveDirections, tt.Comment));
-                        }
-                    }
-
-                    newTuringMachine.RemoveState(newTuringMachine.States.Find(x => x.Identifier == currentState.Identifier)); //Damit sollten alle alten Transitionen gelöscht werden
-
-                    temporaryTuringMachine.Reset();
-                    temporaryTuringMachine = newTuringMachine.GetCopy();
+                    TuringTransition newTtLeft = new TuringTransition(
+                        newTm.States.Find(x => x.Identifier == tt.Source.Identifier + "_left"),
+                        newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_right"),
+                        tt.SymbolsRead,
+                        tt.SymbolsWrite,
+                        tt.MoveDirections
+                        );
+                    TuringTransition newTtRight = new TuringTransition(
+                        newTm.States.Find(x => x.Identifier == tt.Source.Identifier + "_right"),
+                        newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_right"),
+                        tt.SymbolsRead,
+                        tt.SymbolsWrite,
+                        tt.MoveDirections
+                        );
+                    newTm.AddTransition(newTtRight);
+                    newTm.AddTransition(newTtLeft);
+                }
+                else if (tt.MoveDirections[0] == TuringTransition.Direction.Left)
+                {
+                    TuringTransition newTtLeft = new TuringTransition(
+                        newTm.States.Find(x => x.Identifier == tt.Source.Identifier + "_left"),
+                        newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_left"),
+                        tt.SymbolsRead,
+                        tt.SymbolsWrite,
+                        tt.MoveDirections
+                        );
+                    TuringTransition newTtRight = new TuringTransition(
+                        newTm.States.Find(x => x.Identifier == tt.Source.Identifier + "_right"),
+                        newTm.States.Find(x => x.Identifier == tt.Target.Identifier + "_left"),
+                        tt.SymbolsRead,
+                        tt.SymbolsWrite,
+                        tt.MoveDirections
+                        );
+                    newTm.AddTransition(newTtRight);
+                    newTm.AddTransition(newTtLeft);
                 }
             }
-            return newTuringMachine;
+            deleteUnusedStates(newTm);
+            return newTm;
         }
 
         public bool IsExecutable(TuringMachine tm)
@@ -108,6 +76,41 @@ namespace TMSim.Core
                 if (tt.MoveDirections[0] == TuringTransition.Direction.Neutral) noNeutralTransition = false;
             }
             return noNeutralTransition;
+        }
+
+        private void deleteUnusedStates(TuringMachine tm) {
+            List<TuringState> unusedStates = new List<TuringState>();
+            foreach (TuringState state in tm.States)
+            {
+                if (state.IncomingTransitions.Count == 0 && state != tm.StartState)
+                {
+                    unusedStates.Add(state);
+                }
+            }
+            foreach (TuringState state in unusedStates)
+            {
+                tm.RemoveState(state);
+            }
+        }
+
+        private TuringMachine getPrepairedTuringMachine(TuringMachine tm) {
+            TuringMachine newTm = new TuringMachine();
+            foreach (char c in tm.TapeSymbols)
+            {
+                if (tm.InputSymbols.Contains(c)) newTm.AddSymbol(c, true);
+                else newTm.AddSymbol(c, false);
+            }
+            newTm.BlankChar = tm.BlankChar;
+            foreach (TuringState state in tm.States)
+            {
+                TuringState rightState = new TuringState(state.Identifier + "_right", isAccepting: state.IsAccepting);
+                TuringState leftState = new TuringState(state.Identifier + "_left", isAccepting: state.IsAccepting);
+                newTm.AddState(rightState);
+                newTm.AddState(leftState);
+            }
+            TuringState startState = new TuringState(tm.StartState.Identifier, isStart: true);
+            newTm.AddState(startState);
+            return newTm;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace TMSim.UI
                 }
                 else
                 {
-                    double theta = ((double)ctr / TM.States.Count) * 2*Math.PI;
+                    double theta = (ctr + rand.NextDouble() * 0.1) / TM.States.Count * 2 * Math.PI;
                     double r = 3 * DData.NodeSize;
                     pos = new Point(
                         DData.Width/2 + r * Math.Cos(theta),
