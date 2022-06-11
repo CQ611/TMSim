@@ -433,6 +433,7 @@ namespace TMSim.UI
 
         public static ResourceManager Translator;
         private TuringMachine tm;
+
         public TuringMachine TM
         {
             get
@@ -513,6 +514,7 @@ namespace TMSim.UI
         {
             UpdateTapeData();
             RefreshTableData();
+            RefreshDiagramData();
         }
 
         private bool startIsActive = false;
@@ -753,6 +755,7 @@ namespace TMSim.UI
                 }
                 DeleteTapeContent();
                 OnTMChanged();
+                DData.ArangeFlag = true;
                 UploadTextEnabled = true;
             }
         }

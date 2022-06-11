@@ -15,39 +15,30 @@ namespace TMSim.UI
         public static DiagramData UpdateDiagramData(DiagramData DData, TuringMachine TM)
         {
             var rand = new Random();
+            DiagramData tmpDData = new DiagramData();
 
-            HashSet<string> newStates = new HashSet<string>(); //set of identifiers of states
-            HashSet<string> oldStates = new HashSet<string>(); //set of identifiers of states
-
-            TM.States.ForEach(ts => newStates.Add(ts.Identifier));
-            DData.Nodes.Values.ToList().ForEach(n => oldStates.Add(n.Identifier));
-
-            HashSet<string> addedStates = newStates.Except(oldStates).ToHashSet();
-            HashSet<string> deletedStates = oldStates.Except(newStates).ToHashSet();
-
-            deletedStates.ToList().ForEach(id => DData.Nodes.Remove(id));
-
-            if (addedStates.Count > 1)
+            int ctr = 0;
+            foreach (TuringState ts in TM.States)
             {
-                int ctr = 1;
-                foreach (string identfier in addedStates)
+                Point pos;
+                if (DData.Nodes.Keys.Contains(ts.Identifier))
                 {
-                    TuringState ts = TM.States.First(x => x.Identifier == identfier);
-                    Node n = new Node(ts, 
-                        new Point(ctr * DData.NodeSize, ctr * DData.NodeSize * 0.8));
-                    DData.Nodes.Add(n.Identifier, n);
-                    ctr++;
+                    pos = DData.Nodes[ts.Identifier].Position;
                 }
-                DData.ArangeFlag = true;
-            }
-            else if (addedStates.Count == 1)
-            {
-                TuringState ts = TM.States.First(x => x.Identifier == addedStates.ToArray()[0]);
-                Node n = new Node(ts, DData.AddNodePoint);
-                DData.Nodes.Add(n.Identifier, n);
+                else
+                {
+                    double theta = ((double)ctr / TM.States.Count) * 2*Math.PI;
+                    double r = 3 * DData.NodeSize;
+                    pos = new Point(
+                        DData.Width/2 + r * Math.Cos(theta),
+                        DData.Height/2 + r * Math.Sin(theta));
+                }
+                tmpDData.Nodes.Add(ts.Identifier, new Node(ts, pos, ts == TM.CurrentState));
+                ctr++;
             }
 
 
+            DData.Nodes = tmpDData.Nodes;
             DData.Connections.Clear();
             foreach (TuringTransition tt in TM.Transitions)
             {
@@ -56,7 +47,7 @@ namespace TMSim.UI
                     DData.Nodes[tt.Source.Identifier],
                     DData.Nodes[tt.Target.Identifier]
                     );
-                bool foundParentCon = false;
+                bool foundParentCon = false;                
                 foreach(NodeConnection nc2 in DData.Connections)
                 {
                     if (nc2.IsCollinear(nc))
@@ -89,6 +80,43 @@ namespace TMSim.UI
                 if (!foundParentCon) DData.Connections.Add(nc);
             }
             return DData;
+        }
+
+
+        public delegate void RefreshDiagramHighlight();
+        public event RefreshDiagramHighlight RefreshDiagramHighlightEvent;
+
+        private void RefreshDiagramData()
+        {
+            DData.Nodes.Values.First((n) => n.IsCurrentNode).IsCurrentNode = false;
+            DData.Nodes.Values.First((n) => n.State == TM.CurrentState).IsCurrentNode = true;
+            NodeConnection current = FindConnectionWhere((c) => c.IsCurrentTransition);
+            if (current != null) current.IsCurrentTransition = false;
+            NodeConnection next = FindConnectionWhere((c) => c.Transition == TM.CurrentTransition);
+            if (next != null) next.IsCurrentTransition = true;
+            RefreshDiagramHighlightEvent?.Invoke();
+        }
+
+        private NodeConnection FindConnectionWhere(Predicate<NodeConnection> match)
+        {
+            //Function for iterating through the tree structures of NodeConnections
+            foreach (NodeConnection nc in DData.Connections)
+            {
+                if (match(nc)) return nc;
+                foreach (NodeConnection ncCol in nc.CollinearConnections)
+                {
+                    if (match(ncCol)) return ncCol;
+                }
+                if (nc.OpposedConnection != null)
+                {
+                    if (match(nc.OpposedConnection)) return nc.OpposedConnection;
+                    foreach (NodeConnection ncOps in nc.OpposedConnection.CollinearConnections)
+                    {
+                        if (match(ncOps)) return ncOps;
+                    }
+                }
+            }
+            return null;
         }
     }
 }

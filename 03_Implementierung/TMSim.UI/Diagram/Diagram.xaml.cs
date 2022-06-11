@@ -61,13 +61,20 @@ namespace TMSim.UI
         private static readonly Brush accentBrush = Brushes.LightGray;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
 
+        private static readonly Brush highlightBrush = Brushes.Yellow;
+        private static readonly Pen highlightPen = new Pen(highlightBrush, 1);
+
         private Dictionary<Rect, NodeConnection> connectionLocations = new Dictionary<Rect, NodeConnection>();
 
         public Diagram()
         {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(OnDiagramLoaded);
-            VM = (ViewModel)DataContext;
+        }
+
+        private void OnRefreshHighlight()
+        {
+            InvalidateVisual();
         }
 
         private void OnDiagramLoaded(object sender, RoutedEventArgs e)
@@ -76,6 +83,7 @@ namespace TMSim.UI
             DData.Height = ActualHeight;
 
             DData.ForcePropertyChanged += PropertyChangedCallback;
+            VM.RefreshDiagramHighlightEvent += OnRefreshHighlight;
         }
 
         protected override async void OnRender(DrawingContext dc)
@@ -110,8 +118,9 @@ namespace TMSim.UI
 
         private void DrawNode(DrawingContext dc, Node n)
         {
-            dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
-            if(n.IsAccepting) dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
+            Brush b = n.IsCurrentNode ? highlightBrush: bgBrush;
+            dc.DrawEllipse(b, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
+            if(n.IsAccepting) dc.DrawEllipse(Brushes.Transparent, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
             FormattedText ft = new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
@@ -230,7 +239,8 @@ namespace TMSim.UI
             dc.PushTransform(new TranslateTransform(
                 textCenter.X - fText.Width / 2, 
                 textCenter.Y - fText.Height / 2));
-            dc.DrawRectangle(accentBrush, null, new Rect(new Size(fText.Width, fText.Height)));
+            Brush b = con.IsCurrentTransition ? highlightBrush : accentBrush;
+            dc.DrawRectangle(b, null, new Rect(new Size(fText.Width, fText.Height)));
             dc.DrawText(fText, new Point(0,0));
             dc.Pop();
 
