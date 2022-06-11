@@ -61,7 +61,7 @@ namespace TMSim.UI
             vm = (ViewModel)DataContext;
             vm.ClearTableEvent += Vm_ClearTableEvent;
             vm.LoadTableEvent += Vm_LoadTableEvent;
-            vm.RefreshActiveHighlightEvent += Vm_RefreshActiveHighlightEvent;
+            vm.RefreshTableHighlightEvent += Vm_RefreshActiveHighlightEvent;
         }
 
         private void RowHeader_EditStateEvent(string identifier)
