@@ -38,6 +38,14 @@ namespace TMSim.UI
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
         public RelayCommand EnglishLanguageSelected { get; set; }
+        public RelayCommand IncreaseSpeed { get; set; }
+        public RelayCommand DecreaseSpeed { get; set; }
+        public RelayCommand ToggleHighlight { get; set; }
+        public RelayCommand ToggleDiagramView { get; set; }
+        public RelayCommand ToggleTableView { get; set; }
+        public RelayCommand PlayPause { get; set; }
+        public RelayCommand Stop { get; set; }
+        public RelayCommand Step { get; set; }
 
         #endregion
 
@@ -468,6 +476,14 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
+            IncreaseSpeed = new RelayCommand((o) => { OnIncreaseSpeed(); });
+            DecreaseSpeed = new RelayCommand((o) => { OnDecreaseSpeed(); });
+            ToggleHighlight = new RelayCommand((o) => { OnToggleHighlight(); });
+            ToggleDiagramView = new RelayCommand((o) => { OnToggleDiagramView(); });
+            ToggleTableView = new RelayCommand((o) => { OnToggleTableView(); });
+            PlayPause = new RelayCommand((o) => { OnPlayPause(); });
+            Stop = new RelayCommand((o) => { OnStop(); });
+            Step = new RelayCommand((o) => { OnStep(); });
 
             TM = new TuringMachine();
 
@@ -1139,6 +1155,48 @@ namespace TMSim.UI
         private void SetInputTapeWordToolTip()
         {
             TapeWordInputToolTip = PopupIsInputAlphabetText + ": " + string.Join(", ", TM.InputSymbols.ToArray());
+        }
+
+        private void OnDecreaseSpeed()
+        {
+            if (TapeVelocity + 100 < 2000) TapeVelocity += 100;
+            else TapeVelocity = 2000;
+        }
+
+        private void OnIncreaseSpeed()
+        {
+            if (TapeVelocity - 100 > 0) TapeVelocity -= 100;
+            else TapeVelocity = 0;
+        }
+
+        private void OnToggleHighlight()
+        {
+            HighlightIsChecked = !HighlightIsChecked;
+        }
+
+        private void OnToggleDiagramView()
+        {
+            if (TableViewIsChecked) DiagramViewIsChecked = !DiagramViewIsChecked;
+        }
+
+        private void OnToggleTableView()
+        {
+            if (DiagramViewIsChecked) TableViewIsChecked = !TableViewIsChecked;
+        }
+
+        private void OnPlayPause()
+        {
+            if (StartEnabled) OnStartPauseSimulation();
+        }
+
+        private void OnStop()
+        {
+            if (StopEnabled) OnStopSimulation();
+        }
+
+        private void OnStep()
+        {
+            if (StepEnabled) OnStepSimulation();
         }
     }
 }

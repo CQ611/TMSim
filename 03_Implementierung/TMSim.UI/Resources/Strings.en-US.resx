@@ -121,31 +121,31 @@
     <value>English</value>
   </data>
   <data name="TEXT_Examples" xml:space="preserve">
-    <value>Examples</value>
+    <value>Exam_ples</value>
   </data>
   <data name="TEXT_Exit" xml:space="preserve">
-    <value>Exit</value>
+    <value>E_xit</value>
   </data>
   <data name="TEXT_File" xml:space="preserve">
-    <value>File</value>
+    <value>_File</value>
   </data>
   <data name="TEXT_German" xml:space="preserve">
     <value>German</value>
   </data>
   <data name="TEXT_Highlight" xml:space="preserve">
-    <value>Highlight State</value>
+    <value>_Highlight State</value>
   </data>
   <data name="TEXT_Inputword" xml:space="preserve">
-    <value>Input word: </value>
+    <value>Input _word: </value>
   </data>
   <data name="TEXT_Language" xml:space="preserve">
     <value>Language</value>
   </data>
   <data name="TEXT_New" xml:space="preserve">
-    <value>New</value>
+    <value>_New</value>
   </data>
   <data name="TEXT_Open" xml:space="preserve">
-    <value>Open</value>
+    <value>_Open</value>
   </data>
   <data name="TEXT_PopupAccept" xml:space="preserve">
     <value>Accepting</value>
@@ -178,10 +178,10 @@
     <value>Symbol:</value>
   </data>
   <data name="TEXT_Preferences" xml:space="preserve">
-    <value>Preferences</value>
+    <value>Pr_eferences</value>
   </data>
   <data name="TEXT_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>_Save</value>
   </data>
   <data name="TEXT_SpeedLabel" xml:space="preserve">
     <value>Speed: </value>
@@ -205,7 +205,7 @@
     <value>transformation No. 5</value>
   </data>
   <data name="TEXT_Upload" xml:space="preserve">
-    <value>Load</value>
+    <value>_Load</value>
   </data>
   <data name="TEXT_Comment" xml:space="preserve">
     <value>Comment</value>
