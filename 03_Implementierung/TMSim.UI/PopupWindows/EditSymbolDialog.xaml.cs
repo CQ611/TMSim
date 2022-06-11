@@ -25,12 +25,6 @@ namespace TMSim.UI
             IsInInput = isInput;
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            symbol_txt.SelectAll();
-            symbol_txt.Focus();
-        }
-
         private void ok_cmd_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
@@ -38,14 +32,14 @@ namespace TMSim.UI
 
         public char Symbol
         {
-            get { return symbol_txt.Text[0]; }
-            set { symbol_txt.Text = value.ToString(); }
+            get { return symbol.Content.ToString().ToCharArray()[0]; }
+            set { symbol.Content = value.ToString(); }
         }
 
         public bool IsInInput
         {
             get { return (bool)isInInput_chk.IsChecked; }
-            set { isInInput_chk.IsChecked = IsInInput; }
+            set { isInInput_chk.IsChecked = value; }
         }
 
 

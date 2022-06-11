@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMSim.UI"
-        ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="{Binding PopupAddSymbolText}" Height="139" Width="315">
@@ -16,25 +15,28 @@
 
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <WrapPanel Grid.Row="1" Grid.Column="1">
-            <CheckBox x:Name="isInInput_chk" Content="{Binding PopupIsInputAlphabetText}"/>
-        </WrapPanel>
+        <CheckBox x:Name="isInInput_chk" Grid.Row="0" Grid.Column="1" VerticalContentAlignment="Center" Content="{Binding PopupIsInputAlphabetText}"/>
 
-        <Label Name="symbol_lbl" Target="{Binding symbol_txt}" Grid.Column="0" Content="{Binding PopupSymbolText}"/>
-        <TextBox Name="symbol_txt" Grid.Row="1" Grid.Column="0" Margin="0,0,10,35" Grid.RowSpan="2" MinWidth="130" Text=""/>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Name="symbol_lbl" Grid.Column="0" VerticalContentAlignment="Center" Content="{Binding PopupSymbolText}"/>
+            <Label Name="symbol" Grid.Column="1" VerticalContentAlignment="Center"/>
+        </Grid>
 
 
-        <WrapPanel Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Center" Margin="0,10,0,0">
+        <WrapPanel Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center" Margin="0,10,0,0">
             <Button IsDefault="True" x:Name="ok_cmd" Click="ok_cmd_Click" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupOKText}"></Button>
             <Button IsCancel="True" MinWidth="60" Content="{Binding PopupCancelText}"></Button>
         </WrapPanel>

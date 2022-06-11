@@ -27,16 +27,31 @@ namespace TMSim.UI
         public delegate void RemoveTransition(string identifier, string symbolRead);
         public static event RemoveTransition RemoveTransitionEvent;
 
-        private string _state;
-        public string State
+        private string _sourceState;
+        public string SourceState
         {
             get
             {
-                return _state;
+                return _sourceState;
             }
             set
             {
-                _state = value;
+                _sourceState = value;
+                SetCellText();
+            }
+        }
+
+        private string _targetState;
+        public string TargetState
+        {
+            get
+            {
+                return _targetState;
+            }
+            set
+            {
+                _targetState = value;
+                SetCellText();
             }
         }
 
@@ -50,7 +65,7 @@ namespace TMSim.UI
             set
             {
                 _symbolRead = value;
-                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
+                SetCellText();
             }
         }
 
@@ -64,7 +79,7 @@ namespace TMSim.UI
             set
             {
                 _symbolWrite = value;
-                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
+                SetCellText();
             }
         }
 
@@ -78,7 +93,7 @@ namespace TMSim.UI
             set
             {
                 _direction = value;
-                TransitionText.Content = SymbolRead + " | " + Direction + " | " + SymbolWrite;
+                SetCellText();
             }
         }
 
@@ -126,15 +141,21 @@ namespace TMSim.UI
             TableCellGrid.Background = Highlight ? Brushes.Yellow : Brushes.White;
         }
 
+        private void SetCellText()
+        {
+            TransitionText.Content = SymbolWrite + ", " + Direction + ", " + TargetState;
+        }
+
         public TableCell()
         {
             InitializeComponent();
         }
 
-        public TableCell(string state, string direction, string symbolWrite, string symbolRead, bool highlight)
+        public TableCell(string sourceState, string targetState, string direction, string symbolWrite, string symbolRead, bool highlight)
         {
             InitializeComponent();
-            State = state;
+            SourceState = sourceState;
+            TargetState = targetState;
             Direction = SetDirection(direction);
             SymbolWrite = symbolWrite;
             SymbolRead = symbolRead;
@@ -149,12 +170,12 @@ namespace TMSim.UI
 
         private void edit_transition_click(object sender, RoutedEventArgs e)
         {
-            EditTransitionEvent?.Invoke(State, SymbolRead);
+            EditTransitionEvent?.Invoke(SourceState, SymbolRead);
         }
 
         private void remove_transition_click(object sender, RoutedEventArgs e)
         {
-            RemoveTransitionEvent?.Invoke(State, SymbolRead);
+            RemoveTransitionEvent?.Invoke(SourceState, SymbolRead);
         }
     }
 }
