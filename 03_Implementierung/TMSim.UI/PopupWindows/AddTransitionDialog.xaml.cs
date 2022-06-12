@@ -29,10 +29,13 @@ namespace TMSim.UI
         }
 
         private int TapeCount;
+        private ViewModel vm;
         private List<ComboBoxItemWrapper> items = new List<ComboBoxItemWrapper>();
 
-        public AddTransitionDialog(List<TuringState> states, TuringTransition tt)
+        public AddTransitionDialog(List<TuringState> states, TuringTransition tt, List<char> tapeSymbols, List<char> inputSymbols)
         {
+            vm = (ViewModel)DataContext;
+
             Init(states, tt.Source, tt.Target, tt.SymbolsRead.Count);
             List<ComboBox> LVitems = new List<ComboBox>();
             for (int i = 0; i < tt.SymbolsRead.Count; i++)
@@ -47,16 +50,17 @@ namespace TMSim.UI
                 LVitems.Add(cb);
             }
             directions_lst.ItemsSource = LVitems;
-            readSymbols_txt.Text = new string(tt.SymbolsRead.ToArray());
-            writeSymbols_txt.Text = new string(tt.SymbolsWrite.ToArray());
             comment_txt.Text = tt.Comment;
+
+            readSymbols_lst.ItemsSource = InputSymbols = inputSymbols;
+            writeSymbols_lst.ItemsSource = TapeSymbols = tapeSymbols;
         }
 
-        public AddTransitionDialog(List<TuringState> states,
-            TuringState source, TuringState target, int tapeCount = 1,
-            string defaultSymbols = "")
+        public AddTransitionDialog(List<TuringState> states, TuringState source, TuringState target, List<char> tapeSymbols, List<char> inputSymbols, int tapeCount = 1)
         {
-            Init(states, source, target, tapeCount, defaultSymbols);
+            vm = (ViewModel)DataContext;
+
+            Init(states, source, target, tapeCount);
             List<ComboBox> LVitems = new List<ComboBox>();
             for (int i = 0; i < tapeCount; i++)
             {
@@ -70,11 +74,12 @@ namespace TMSim.UI
                 LVitems.Add(cb);
             }
             directions_lst.ItemsSource = LVitems;
+
+            readSymbols_lst.ItemsSource = InputSymbols = inputSymbols;
+            writeSymbols_lst.ItemsSource = TapeSymbols = tapeSymbols;
         }
 
-        private void Init(List<TuringState> states,
-            TuringState source, TuringState target, int tapeCount = 1,
-            string defaultSymbols = "")
+        private void Init(List<TuringState> states, TuringState source, TuringState target, int tapeCount = 1)
         {
             InitializeComponent();
 
@@ -87,53 +92,68 @@ namespace TMSim.UI
             sourceState_cmb.SelectedValue = source;
             targetState_cmb.SelectedValue = target;
 
-            readSymbols_txt.Text = defaultSymbols;
-            writeSymbols_txt.Text = defaultSymbols;
-
             items.Add(new ComboBoxItemWrapper("→", TuringTransition.Direction.Right));
             items.Add(new ComboBoxItemWrapper("←", TuringTransition.Direction.Left));
             items.Add(new ComboBoxItemWrapper("•", TuringTransition.Direction.Neutral));
         }
 
-        private void Window_ContentRendered(object sender, EventArgs e)
-        {
-            readSymbols_txt.SelectAll();
-            readSymbols_txt.Focus();
-        }
-
         private void ok_cmd_Click(object sender, RoutedEventArgs e)
         {
             ResourceManager t = ViewModel.Translator;
-            if (SymbolsWrite.Count != TapeCount)
-            {
-                ViewModel.QuickWarning(t.GetString("TEXT_Warn_SymWrCount") +SymbolsWrite.Count + 
-                    t.GetString("TEXT_Warn_SymCount") + TapeCount + t.GetString("TEXT_Tapes"));
-                return;
-            }
-
-            if (SymbolsRead.Count != TapeCount)
-            {
-                ViewModel.QuickWarning(t.GetString("TEXT_Warn_SymReCount") + SymbolsRead.Count +
-                      t.GetString("TEXT_Warn_SymCount") + TapeCount + t.GetString("TEXT_Tapes"));
-                return;
-            }
-
             this.DialogResult = true;
         }
 
         public TuringState Source { get { return (TuringState)sourceState_cmb.SelectedValue; } }
         public TuringState Target { get { return (TuringState)targetState_cmb.SelectedValue; } }
-        public List<char> SymbolsRead { get { return new List<char>(readSymbols_txt.Text); } }
-        public List<char> SymbolsWrite { get { return new List<char>(writeSymbols_txt.Text); } }
-        public string Comment { get { return comment_txt.Text; } }        
-        public List<TuringTransition.Direction> Directions {
-            get {
+        private List<char> _inputSymbols = new List<char>();
+        private List<char> InputSymbols
+        {
+            get { return _inputSymbols; }
+            set { _inputSymbols = value;  }
+        }
+        
+        private List<char> _tapeSymbols = new List<char>();
+        private List<char> TapeSymbols
+        {
+            get { return _tapeSymbols; }
+            set { _tapeSymbols = value; }
+        }
+
+        public List<char> SymbolsRead { get { return new List<char>(readSymbols_lst.Text); } }
+        public List<char> SymbolsWrite { get { return new List<char>(writeSymbols_lst.Text); } }
+
+
+        public string Comment { get { return comment_txt.Text; } }
+        public List<TuringTransition.Direction> Directions
+        {
+            get
+            {
                 List<TuringTransition.Direction> dirs = new List<TuringTransition.Direction>();
                 foreach (ComboBox box in directions_lst.Items)
                 {
                     dirs.Add((TuringTransition.Direction)box.SelectedValue);
                 }
-                return dirs; } }
+                return dirs;
+            }
+        }
+
+        private void addSymbol_bt_Click(object sender, RoutedEventArgs e)
+        {
+            AddSymbolDialog asd = new AddSymbolDialog();
+            if (asd.ShowDialog() == true)
+            {
+                char symbol = asd.Symbol;
+                bool isInputAlphabet = asd.IsInInput;
+
+                TapeSymbols.Add(symbol);
+                if (isInputAlphabet) { InputSymbols.Add(symbol); }
+
+                readSymbols_lst.ItemsSource = InputSymbols;
+                readSymbols_lst.Items.Refresh();
+                writeSymbols_lst.ItemsSource = TapeSymbols;
+                writeSymbols_lst.Items.Refresh();
+            }
+        }
     }
 }
 

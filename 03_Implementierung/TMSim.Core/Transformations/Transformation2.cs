@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMSim.Core.Exceptions;
 
 namespace TMSim.Core
 {
     public class Transformation2 : ITransformation
     {
-        public TuringMachine Execute(TuringMachine tm)
+        public TuringMachine Execute(TuringMachine tm, Char ch = ' ')
         {
             if (tm.Tapes.Count != 1)
             {
@@ -30,18 +31,54 @@ namespace TMSim.Core
 
             foreach (TuringTransition nt in neutralTransitions)
             {
-                TuringState intermediateState = new TuringState(nt.Source.Identifier + "'", "intermediate state t2", false, false);
-                newTuringMachine.States.Add(intermediateState);
-                newTuringMachine.Transitions.Add(new TuringTransition(nt.Source, intermediateState, nt.SymbolsRead, nt.SymbolsWrite, new List<TuringTransition.Direction>() { TuringTransition.Direction.Right }));
-
+                try
+                {
+                    TuringState helperState = new TuringState(nt.Source.Identifier + "\'", "intermediate state t2", false, false);
+                    newTuringMachine.AddState(helperState);
+                    // Do not add states multiple times
+                }
+                catch (StateAlreadyExistsException) { };
+                TuringState intermediateState = newTuringMachine.States.Find(x => x.Identifier == nt.Source.Identifier + "\'");
+                TuringState sourceState = newTuringMachine.States.Find(x => x.Identifier == nt.Source.Identifier);
+                TuringTransition ntInNewTm = newTuringMachine.Transitions.Find(
+                    x => (
+                        x.Source.Identifier == nt.Source.Identifier &&
+                        x.SymbolsRead.SequenceEqual(nt.SymbolsRead)
+                    )
+                );
+                try
+                {
+                    newTuringMachine.RemoveTransition(ntInNewTm);
+                    // Maybe the transition was already removed
+                }
+                catch (TransitionDoesNotExistException) { }
+                TuringTransition newTT = new TuringTransition(
+                    sourceState,
+                    intermediateState,
+                    nt.SymbolsRead,
+                    nt.SymbolsWrite,
+                    new List<TuringTransition.Direction>() { TuringTransition.Direction.Right }
+                );
+                newTuringMachine.AddTransition(newTT);
+                TuringState targetState = newTuringMachine.States.Find(x => x.Identifier == nt.Target.Identifier);
                 foreach (char tapeSymbol in newTuringMachine.TapeSymbols)
                 {
-                    newTuringMachine.Transitions.Add(new TuringTransition(intermediateState, nt.Target, new List<char>() { tapeSymbol }, new List<char>() { tapeSymbol }, new List<TuringTransition.Direction>() { TuringTransition.Direction.Left }));
+                    try
+                    {
+                        newTuringMachine.AddTransition(
+                            new TuringTransition(
+                                intermediateState,
+                                targetState,
+                                new List<char>() { tapeSymbol },
+                                new List<char>() { tapeSymbol },
+                                new List<TuringTransition.Direction>() { TuringTransition.Direction.Left }
+                            )
+                        );
+                        // Do not add Transitions multiple Times
+                    }
+                    catch (TransitionAlreadyExistsException) { }
                 }
             }
-
-            newTuringMachine.Transitions.RemoveAll(x => x.MoveDirections[0] == TuringTransition.Direction.Neutral);
-
             return newTuringMachine;
         }
 

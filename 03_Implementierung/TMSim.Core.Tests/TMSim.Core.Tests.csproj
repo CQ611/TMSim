@@ -18,6 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="res\example2_transformation4.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_import_transformation3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="res\example_import.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -25,6 +31,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="res\example_contains_only_a_or_b.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_input_alphabet_is_no_subset_of_tape_alphabet.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_invalid.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_transformation4.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="res\example_with_neutral_transitions.tmsim">

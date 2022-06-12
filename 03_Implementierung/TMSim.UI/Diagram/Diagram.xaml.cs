@@ -61,13 +61,20 @@ namespace TMSim.UI
         private static readonly Brush accentBrush = Brushes.LightGray;
         private static readonly Pen accentPen = new Pen(accentBrush, 1);
 
+        private static readonly Brush highlightBrush = Brushes.Yellow;
+        private static readonly Pen highlightPen = new Pen(highlightBrush, 1);
+
         private Dictionary<Rect, NodeConnection> connectionLocations = new Dictionary<Rect, NodeConnection>();
 
         public Diagram()
         {
             InitializeComponent();
             this.Loaded += new RoutedEventHandler(OnDiagramLoaded);
-            VM = (ViewModel)DataContext;
+        }
+
+        private void OnRefreshHighlight()
+        {
+            InvalidateVisual();
         }
 
         private void OnDiagramLoaded(object sender, RoutedEventArgs e)
@@ -76,6 +83,7 @@ namespace TMSim.UI
             DData.Height = ActualHeight;
 
             DData.ForcePropertyChanged += PropertyChangedCallback;
+            VM.RefreshDiagramHighlightEvent += OnRefreshHighlight;
         }
 
         protected override async void OnRender(DrawingContext dc)
@@ -88,7 +96,7 @@ namespace TMSim.UI
             if (heldNode != null)
             {
                 heldNode.Position = Mouse.GetPosition(this);
-                ConstrainToScreen(heldNode);
+                heldNode.Position = ConstrainToScreen(heldNode.Position);
             }
 
             foreach (Node n in DData.Nodes.Values)
@@ -110,8 +118,9 @@ namespace TMSim.UI
 
         private void DrawNode(DrawingContext dc, Node n)
         {
-            dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
-            if(n.IsAccepting) dc.DrawEllipse(bgBrush, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
+            Brush b = n.IsCurrentNode ? highlightBrush: bgBrush;
+            dc.DrawEllipse(b, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
+            if(n.IsAccepting) dc.DrawEllipse(Brushes.Transparent, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
             FormattedText ft = new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
@@ -230,7 +239,8 @@ namespace TMSim.UI
             dc.PushTransform(new TranslateTransform(
                 textCenter.X - fText.Width / 2, 
                 textCenter.Y - fText.Height / 2));
-            dc.DrawRectangle(accentBrush, null, new Rect(new Size(fText.Width, fText.Height)));
+            Brush b = con.IsCurrentTransition ? highlightBrush : accentBrush;
+            dc.DrawRectangle(b, null, new Rect(new Size(fText.Width, fText.Height)));
             dc.DrawText(fText, new Point(0,0));
             dc.Pop();
 
@@ -315,8 +325,7 @@ namespace TMSim.UI
                 foreach (Node n in DData.Nodes.Values)
                 {
                     maxForce = Math.Max(resultingVectors[ctr].Length, maxForce);
-                    n.Position = Vector.Add(resultingVectors[ctr], n.Position);
-                    ConstrainToScreen(n);
+                    n.Position = ConstrainToScreen(Vector.Add(resultingVectors[ctr], n.Position));
                     ctr++;
                 }
 
@@ -389,16 +398,14 @@ namespace TMSim.UI
                 return dir * gravityStrength;
             }
         }
-        private Node ConstrainToScreen(Node n)
+        private Point ConstrainToScreen(Point p)
         {
-            Point tmp = n.Position;
             var rand = new Random();
-            double x = Math.Clamp(tmp.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
-            double y = Math.Clamp(tmp.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
-            if (tmp.X == double.NaN) tmp.X = rand.Next((int)DData.Width);
-            if (tmp.Y == double.NaN) tmp.Y = rand.Next((int)DData.Height);
-            n.Position = new Point(x, y);
-            return n;
+            double x = Math.Clamp(p.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
+            double y = Math.Clamp(p.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
+            if (p.X == double.NaN) p.X = rand.Next((int)DData.Width);
+            if (p.Y == double.NaN) p.Y = rand.Next((int)DData.Height);
+            return new Point(x, y);
         }
 
         private Point OffsetPoint(Point p, double offX, double offY)

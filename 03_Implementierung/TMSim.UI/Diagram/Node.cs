@@ -25,11 +25,13 @@ namespace TMSim.UI
         public bool IsAccepting { get { return State.IsAccepting; } }
         public Point Position { get; set; } = new Point(50, 50);
         public string Comment { get { return State.Comment; } }
+        public bool IsCurrentNode { get; set; } = false;
 
-        public Node(TuringState st, Point pos)
+        public Node(TuringState st, Point pos, bool isCurrent = false)
         {
             State = st;
             Position = pos;
+            IsCurrentNode = isCurrent;
         }
     }
 }

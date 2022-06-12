@@ -1,0 +1,95 @@
+﻿{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q2",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "abcde",
+  "TapeAlphabet": "abcde_",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "a"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "a"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "b"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "c"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "q1"
+  ]
+}

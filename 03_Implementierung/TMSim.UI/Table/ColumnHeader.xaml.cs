@@ -48,6 +48,7 @@ namespace TMSim.UI
             set
             {
                 _isInput = value;
+                LabelSymbol.FontWeight = value ? FontWeights.Bold : FontWeights.Normal;
             }
         }
 

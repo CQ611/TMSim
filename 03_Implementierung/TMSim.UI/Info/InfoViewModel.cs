@@ -44,6 +44,7 @@ namespace TMSim.UI
             SimulationIsPaused,
             SimulationIsStopped,
             SimulationSingleStep,
+            InputWordWrittenOnTape,
             DefaultMessage
         }
 
@@ -102,6 +103,9 @@ namespace TMSim.UI
                     break;
                 case MessageIdentification.DefaultMessage:
                     UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
+                    break;
+                case MessageIdentification.InputWordWrittenOnTape:
+                    UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
                     break;
             }
         }

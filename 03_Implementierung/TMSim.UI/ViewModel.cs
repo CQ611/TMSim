@@ -38,6 +38,14 @@ namespace TMSim.UI
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
         public RelayCommand EnglishLanguageSelected { get; set; }
+        public RelayCommand IncreaseSpeed { get; set; }
+        public RelayCommand DecreaseSpeed { get; set; }
+        public RelayCommand ToggleHighlight { get; set; }
+        public RelayCommand ToggleDiagramView { get; set; }
+        public RelayCommand ToggleTableView { get; set; }
+        public RelayCommand PlayPause { get; set; }
+        public RelayCommand Stop { get; set; }
+        public RelayCommand Step { get; set; }
 
         #endregion
 
@@ -167,6 +175,8 @@ namespace TMSim.UI
             {
                 _highlightIsChecked = value;
                 OnPropertyChanged(nameof(HighlightIsChecked));
+                RefreshDiagramData();
+                RefreshTableData();
             }
         }
 
@@ -267,6 +277,18 @@ namespace TMSim.UI
                 OnPropertyChanged(nameof(MenuElementEnabled));
             }
         }
+
+        private string _tapeWordInputToolTip;
+        public string TapeWordInputToolTip
+        {
+            get { return _tapeWordInputToolTip; }
+            set
+            {
+                _tapeWordInputToolTip = value;
+                OnPropertyChanged(nameof(TapeWordInputToolTip));
+            }
+
+        }
         #endregion
 
         #region Translation
@@ -333,6 +355,8 @@ namespace TMSim.UI
         public string TransitionDoesNotExistText { get => Translator.GetString("TEXT_TransitionDoesNotExist"); set { OnPropertyChanged(nameof(TransitionDoesNotExistText)); } }
         public string TransitionExistsText { get => Translator.GetString("TEXT_TransitionExists"); set { OnPropertyChanged(nameof(TransitionExistsText)); } }
         public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
+        public string ImportFileIsNotValidText { get => Translator.GetString("TEXT_ImportFileIsNotValid"); set { OnPropertyChanged(nameof(ImportFileIsNotValidText)); } }
+        public string InputAlphabetIsNoSubsetOfTapeAlphabetText { get => Translator.GetString("TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet"); set { OnPropertyChanged(nameof(InputAlphabetIsNoSubsetOfTapeAlphabetText)); } }
         public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSuccessText)); } }
         public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationFailureText)); } }
         public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsRunningText)); } }
@@ -340,8 +364,9 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
-        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionTabelle)); } }
-        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
+        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
          
         private void RefreshTextFromUi()
         {
@@ -407,15 +432,18 @@ namespace TMSim.UI
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
+            InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
+            SetInputTapeWordToolTip();
         }
         #endregion
 
-        public bool HighlightCurrentState { get; set; } = true;
+        public bool HighlightCurrentState { get { return HighlightIsChecked; } }
         public bool IsSimulationRunning { get; set; } = true;
         public DiagramData DData { get; set; }
 
         public static ResourceManager Translator;
         private TuringMachine tm;
+
         public TuringMachine TM
         {
             get
@@ -450,6 +478,14 @@ namespace TMSim.UI
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
+            IncreaseSpeed = new RelayCommand((o) => { OnIncreaseSpeed(); });
+            DecreaseSpeed = new RelayCommand((o) => { OnDecreaseSpeed(); });
+            ToggleHighlight = new RelayCommand((o) => { OnToggleHighlight(); });
+            ToggleDiagramView = new RelayCommand((o) => { OnToggleDiagramView(); });
+            ToggleTableView = new RelayCommand((o) => { OnToggleTableView(); });
+            PlayPause = new RelayCommand((o) => { OnPlayPause(); });
+            Stop = new RelayCommand((o) => { OnStop(); });
+            Step = new RelayCommand((o) => { OnStep(); });
 
             TM = new TuringMachine();
 
@@ -482,23 +518,37 @@ namespace TMSim.UI
             UpdateTapeData();
             UpdateTableData();
 
+            if (TM.InputSymbols.Count > 0)
+                UploadTextEnabled = true;
+            else
+                UploadTextEnabled = false;
+
             OnPropertyChanged(nameof(TM));
+
+            SetInputTapeWordToolTip();
         }
 
         public void OnTmRefresh()
         {
             UpdateTapeData();
             RefreshTableData();
+            RefreshDiagramData();
         }
 
         private bool startIsActive = false;
+        private bool simulationIsRunning = false;
 
 
         private void OnStartPauseSimulation()
         {
-            StopEnabled = true;
-            UploadTextEnabled = false;
-            MenuElementEnabled = false;
+            if (simulationIsRunning == false)
+            {
+                simulationIsRunning = true;
+                StopEnabled = true;
+                UploadTextEnabled = false;
+                MenuElementEnabled = false;
+            }
+
             if (startIsActive)
             {
                 startIsActive = false;
@@ -529,7 +579,7 @@ namespace TMSim.UI
         {
             timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
-
+        
         private void OnStopSimulation()
         {
             TM.Reset();
@@ -541,13 +591,18 @@ namespace TMSim.UI
             StepEnabled = false;
             UploadTextEnabled = true;
             MenuElementEnabled = true;
+            simulationIsRunning = false;
             timmy.Stop();
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
-
+        
         private void OnStepSimulation(bool timerStep = false)
         {
+            StopEnabled = true;
+            UploadTextEnabled = false;
+            MenuElementEnabled = false;
+
             if (timerStep == false)
                 UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
 
@@ -593,16 +648,13 @@ namespace TMSim.UI
                 return;
             }
             LoadTapeContent();
+            UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
             StartEnabled = true;
             StopEnabled = false;
             StepEnabled = true;
         }
 
-        private void OnTansformTuringMachine()
-        {
-            //TM.TansformTuringMachine();
-            throw new NotImplementedException("OnTransformTuringMachine >> ViewModel");
-        }
+        private void OnTansformTuringMachine(){}
 
         private void OnTransformation1()
         {
@@ -611,7 +663,8 @@ namespace TMSim.UI
 
         private void OnTransformation2()
         {
-            TransformT2();
+            TM = new Transformation2().Execute(TM);
+            OnTMChanged();
         }
 
         private void OnTransformation3()
@@ -620,32 +673,18 @@ namespace TMSim.UI
             if (t3d.ShowDialog() == true)
             {
                 char newBlank = t3d.Blank;
-                TransformT3(newBlank);
+                TM = new Transformation3().Execute(TM, newBlank);
+                OnTMChanged();
             }
         }
 
         private void OnTransformation4()
         {
-            throw new NotImplementedException("OnTransformation4 >> ViewModel");
-        }
-
-        private void OnTransformation5()
-        {
-            TransformT5();
-        }
-
-        public void TransformT2()
-        {
-            TM = new Transformation2().Execute(TM);
+            TM = new Transformation4().Execute(TM);
             OnTMChanged();
         }
 
-        public void TransformT3(char newBlank)
-        {
-            throw new NotImplementedException("TransformT3 >> ViewModel");
-        }
-
-        public void TransformT5()
+        private void OnTransformation5()
         {
             TM = new Transformation5().Execute(TM);
             OnTMChanged();
@@ -691,6 +730,11 @@ namespace TMSim.UI
                     QuickWarning(InvalidTapeNumberInDefinitionText);
                     return;
                 }
+                catch (TransitionNumberOfTapesIsInconsistentException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
                 catch (ReadSymbolDoesNotExistException e)
                 {
                     QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
@@ -698,11 +742,20 @@ namespace TMSim.UI
                 }
                 catch (WriteSymbolDoesNotExistException e)
                 {
-                    QuickWarning(WriteSymbolDoesNotExistText+ $" ({e.Message})");
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                }
+                catch (ImportFileIsNotValidException) {
+                    QuickWarning(ImportFileIsNotValidText);
+                    return;
+                }
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
                     return;
                 }
                 DeleteTapeContent();
                 OnTMChanged();
+                DData.ArangeFlag = true;
                 UploadTextEnabled = true;
             }
         }
@@ -739,7 +792,7 @@ namespace TMSim.UI
             };
             if (loadExampleFileDialog.ShowDialog() == true)
             {
-                try 
+                try
                 {
                     TM.ImportFromTextFile(loadExampleFileDialog.FileName);
                 }
@@ -768,6 +821,11 @@ namespace TMSim.UI
                     QuickWarning(InvalidTapeNumberInDefinitionText);
                     return;
                 }
+                catch (TransitionNumberOfTapesIsInconsistentException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                    return;
+                }
                 catch (ReadSymbolDoesNotExistException e)
                 {
                     QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
@@ -776,6 +834,13 @@ namespace TMSim.UI
                 catch (WriteSymbolDoesNotExistException e)
                 {
                     QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    return;
+                } catch (ImportFileIsNotValidException) {
+                    QuickWarning(ImportFileIsNotValidText);
+                    return;
+                }
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
                     return;
                 }
                 DeleteTapeContent();
@@ -929,10 +994,9 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols, TM.InputSymbols);
             if (atd.ShowDialog() == true)
             {
-                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
@@ -947,16 +1011,20 @@ namespace TMSim.UI
                     QuickWarning(TransitionExistsText);
                     return;
                 }
+                catch (ReadSymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                    return;
+                }
                 OnTMChanged();
             }
         }
 
         public void EditTransition(TuringTransition tt)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols, TM.InputSymbols);
             if (atd.ShowDialog() == true)
             {
-                //TODO: add checkboxes to decide whether new symbols should be in input alphabet
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
@@ -969,6 +1037,11 @@ namespace TMSim.UI
                 catch (TransitionAlreadyExistsException)
                 {
                     QuickWarning(TransitionExistsText);
+                    return;
+                }
+                catch (ReadSymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
                     return;
                 }
                 OnTMChanged();
@@ -1069,6 +1142,53 @@ namespace TMSim.UI
                 return;
             }
             OnTMChanged();
+        }
+
+        private void SetInputTapeWordToolTip()
+        {
+            TapeWordInputToolTip = PopupIsInputAlphabetText + ": " + string.Join(", ", TM.InputSymbols.ToArray());
+        }
+
+        private void OnDecreaseSpeed()
+        {
+            if (TapeVelocity + 100 < 2000) TapeVelocity += 100;
+            else TapeVelocity = 2000;
+        }
+
+        private void OnIncreaseSpeed()
+        {
+            if (TapeVelocity - 100 > 0) TapeVelocity -= 100;
+            else TapeVelocity = 0;
+        }
+
+        private void OnToggleHighlight()
+        {
+            HighlightIsChecked = !HighlightIsChecked;
+        }
+
+        private void OnToggleDiagramView()
+        {
+            if (TableViewIsChecked) DiagramViewIsChecked = !DiagramViewIsChecked;
+        }
+
+        private void OnToggleTableView()
+        {
+            if (DiagramViewIsChecked) TableViewIsChecked = !TableViewIsChecked;
+        }
+
+        private void OnPlayPause()
+        {
+            if (StartEnabled) OnStartPauseSimulation();
+        }
+
+        private void OnStop()
+        {
+            if (StopEnabled) OnStopSimulation();
+        }
+
+        private void OnStep()
+        {
+            if (StepEnabled) OnStepSimulation();
         }
     }
 }
