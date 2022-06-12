@@ -103,7 +103,7 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
-        public void Execute_exampleImportWithNeutralTransitions_ChangedCOntentToB_ReturnsTrue()
+        public void Execute_exampleImportWithNeutralTransitions_ChangedContentToB_ReturnsTrue()
         {
             TuringMachine turingMachine = new TuringMachine();
             turingMachine.ImportFromTextFile(@"res\example_with_neutral_transitions.tmsim");
@@ -111,7 +111,7 @@ namespace TMSim.Core.Tests
             TuringMachine newTuringMachine = transformation.Execute(turingMachine);
             newTuringMachine.Tapes[0].Content = "a";
             while (newTuringMachine.AdvanceState()) ;
-            Assert.IsTrue(newTuringMachine.Tapes[0].Content == "b");
+            Assert.IsTrue(newTuringMachine.Tapes[0].Content == "b_");
         }
 
     }

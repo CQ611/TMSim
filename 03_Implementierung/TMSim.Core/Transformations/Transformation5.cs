@@ -14,6 +14,9 @@ namespace TMSim.Core
                 throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
             }
             TuringMachine newTuringMachine = tm.GetCopy();
+            foreach (TuringState oldEndstate in newTuringMachine.EndStates) {
+                oldEndstate.IsAccepting = false;
+            }
             newTuringMachine.EndStates.Clear();
             TuringState newEndState = new TuringState("new End State", "", false, true);
             newTuringMachine.AddState(newEndState);
