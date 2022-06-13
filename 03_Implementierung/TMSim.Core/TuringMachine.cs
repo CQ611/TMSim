@@ -127,7 +127,9 @@ namespace TMSim.Core
         public void Reset()
         {
             CurrentState = StartState;
-            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
+            foreach (TuringTape tape in Tapes) {
+                tape.Content = "";
+            }
         }
 
         public bool CheckIsEndState()
@@ -160,6 +162,7 @@ namespace TMSim.Core
             }
           
             if (ts.IsAccepting) { EndStates.Add(ts); }
+            Reset();
         }
 
         public void EditState(TuringState tsOld, TuringState tsNew)
@@ -186,6 +189,7 @@ namespace TMSim.Core
                 StartState = tsOld;
             }
             tsOld.IsStart = tsNew.IsStart;
+            Reset();
         }
 
         public void RemoveState(TuringState ts)
@@ -204,6 +208,7 @@ namespace TMSim.Core
             if (EndStates.Contains(ts)) EndStates.Remove(ts);
             if (StartState == ts) StartState = null;
             States.Remove(ts);
+            Reset();
         }
 
         public void AddTransition(TuringTransition tt)
@@ -217,6 +222,7 @@ namespace TMSim.Core
             Transitions.Add(tt);
             tt.Source.OutgoingTransitions.Add(tt);
             tt.Target.IncomingTransitions.Add(tt);
+            Reset();
         }
 
         public void EditTransition(TuringTransition ttOld, TuringTransition ttNew)
@@ -245,6 +251,7 @@ namespace TMSim.Core
                     }
                 }
             }
+            Reset();
         }
 
         public void AddSymbol(char c, bool isInInput)
@@ -254,6 +261,7 @@ namespace TMSim.Core
                 TapeAlphabet.Symbols.Add(c);
                 if (isInInput) InputAlphabet.Symbols.Add(c);
             }
+            Reset();
         }
 
         public void EditSymbol(char c, bool isInInput)
@@ -261,6 +269,7 @@ namespace TMSim.Core
             if(!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
             if (!InputAlphabet.Symbols.Contains(c) && TapeAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
             else if (InputAlphabet.Symbols.Contains(c) && !isInInput) InputAlphabet.Symbols.Remove(c);
+            Reset();
         }
 
         public void RemoveSymbol(char c)
@@ -276,6 +285,7 @@ namespace TMSim.Core
             foreach (TuringTransition tt in TransitionsToRemove) {
                 RemoveTransition(tt);
             }
+            Reset();
         }
 
         public TuringMachine GetCopy()
