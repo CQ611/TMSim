@@ -98,6 +98,8 @@ namespace TMSim.Core
             ImportExportStructure importExportStructure = new ImportExportStructure(this);
             string jsonString = JsonConvert.SerializeObject(importExportStructure, Formatting.Indented);
             System.IO.File.WriteAllText(filePath, jsonString);
+            
+           
         }
 
         public bool AdvanceState()
