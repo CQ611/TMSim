@@ -10,7 +10,87 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\0.png" />
+    <None Remove="Images\1.png" />
+    <None Remove="Images\HelpWindow_00_de-DE.png" />
+    <None Remove="Images\HelpWindow_00_en-US.png" />
+    <None Remove="Images\HelpWindow_01_de-DE.png" />
+    <None Remove="Images\HelpWindow_01_en-US.png" />
+    <None Remove="Images\HelpWindow_02_de-DE.png" />
+    <None Remove="Images\HelpWindow_02_en-US.png" />
+    <None Remove="Images\HelpWindow_03_de-DE.png" />
+    <None Remove="Images\HelpWindow_03_en-US.png" />
+    <None Remove="Images\HelpWindow_04_de-DE.png" />
+    <None Remove="Images\HelpWindow_04_en-US.png" />
+    <None Remove="Images\HelpWindow_05_de-DE.png" />
+    <None Remove="Images\HelpWindow_05_en-US.png" />
+    <None Remove="Images\HelpWindow_06_de-DE.png" />
+    <None Remove="Images\HelpWindow_06_en-US.png" />
+    <None Remove="Images\HelpWindow_07_de-DE.png" />
+    <None Remove="Images\HelpWindow_07_en-US.png" />
+    <None Remove="Images\HelpWindow_08_de-DE.png" />
+    <None Remove="Images\HelpWindow_08_en-US.png" />
+    <None Remove="Images\HelpWindow_09_de-DE.png" />
+    <None Remove="Images\HelpWindow_09_en-US.png" />
+    <None Remove="Images\HelpWindow_0_de-DE.bmp" />
+    <None Remove="Images\HelpWindow_0_de-DE.jpg" />
+    <None Remove="Images\HelpWindow_0_de-DE.png" />
+    <None Remove="Images\HelpWindow_0_en-US.png" />
+    <None Remove="Images\HelpWindow_10_de-DE.png" />
+    <None Remove="Images\HelpWindow_10_en-US.png" />
+    <None Remove="Images\HelpWindow_11_de-DE.png" />
+    <None Remove="Images\HelpWindow_11_en-US.png" />
+    <None Remove="Images\HelpWindow_1_de-DE.bmp" />
+    <None Remove="Images\HelpWindow_1_de-DE.jpg" />
+    <None Remove="Images\HelpWindow_1_de-DE.png" />
+    <None Remove="Images\HelpWindow_1_en-US.png" />
+    <None Remove="Images\HelpWindow_2_de-DE.png" />
+    <None Remove="Images\HelpWindow_2_en-US.png" />
+    <None Remove="Images\HelpWindow_3_de-DE.png" />
+    <None Remove="Images\HelpWindow_3_en-US.png" />
+    <None Remove="Images\HelpWindow_4_de-DE.png" />
+    <None Remove="Images\HelpWindow_4_en-US.png" />
+    <None Remove="Images\HelpWindow_5_de-DE.png" />
+    <None Remove="Images\HelpWindow_5_en-US.png" />
+    <None Remove="Images\HelpWindow_6_de-DE.png" />
+    <None Remove="Images\HelpWindow_6_en-US.png" />
+    <None Remove="Images\HelpWindow_7_de-DE.png" />
+    <None Remove="Images\HelpWindow_7_en-US.png" />
+    <None Remove="Images\HelpWindow_8_de-DE.png" />
+    <None Remove="Images\HelpWindow_8_en-US.png" />
+    <None Remove="Images\HelpWindow_9_de-DE.png" />
+    <None Remove="Images\HelpWindow_9_en-US.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TMSim.Core\TMSim.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\HelpWindow_00_de-DE.png" />
+    <Resource Include="Images\HelpWindow_00_en-US.png" />
+    <Resource Include="Images\HelpWindow_01_de-DE.png" />
+    <Resource Include="Images\HelpWindow_01_en-US.png" />
+    <Resource Include="Images\HelpWindow_02_de-DE.png" />
+    <Resource Include="Images\HelpWindow_02_en-US.png" />
+    <Resource Include="Images\HelpWindow_03_de-DE.png" />
+    <Resource Include="Images\HelpWindow_03_en-US.png" />
+    <Resource Include="Images\HelpWindow_04_de-DE.png" />
+    <Resource Include="Images\HelpWindow_04_en-US.png" />
+    <Resource Include="Images\HelpWindow_05_de-DE.png" />
+    <Resource Include="Images\HelpWindow_05_en-US.png" />
+    <Resource Include="Images\HelpWindow_06_de-DE.png" />
+    <Resource Include="Images\HelpWindow_06_en-US.png" />
+    <Resource Include="Images\HelpWindow_07_de-DE.png" />
+    <Resource Include="Images\HelpWindow_07_en-US.png" />
+    <Resource Include="Images\HelpWindow_08_de-DE.png" />
+    <Resource Include="Images\HelpWindow_08_en-US.png" />
+    <Resource Include="Images\HelpWindow_09_de-DE.png" />
+    <Resource Include="Images\HelpWindow_09_en-US.png" />
+    <Resource Include="Images\HelpWindow_10_de-DE.png" />
+    <Resource Include="Images\HelpWindow_10_en-US.png" />
+    <Resource Include="Images\HelpWindow_11_de-DE.png" />
+    <Resource Include="Images\HelpWindow_11_en-US.png" />
   </ItemGroup>
 
   <ItemGroup>

@@ -354,4 +354,97 @@
   <data name="TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet" xml:space="preserve">
     <value>Das Eingabealphabet muss eine Teilmenge des Bandalphabets sein</value>
   </data>
+  <data name="TEXT_HelpWindow_00" xml:space="preserve">
+    <value>Diese Einführung dient dazu Sie mit dem Bedienen der Anwendung und Turingmaschinen vertraut zu machen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_01" xml:space="preserve">
+    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit der Tabelle eine neue Turingmaschine erstellen können, die das Eingabewort "ABC" in "123" umwandelt.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_00" xml:space="preserve">
+    <value>Willkommen zu TMSim</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_01" xml:space="preserve">
+    <value>Wie man die Tabelle benutzt</value>
+  </data>
+  <data name="TEXT_HelpWindow_10" xml:space="preserve">
+    <value>Rechtsklicken Sie auf einen Zustand und wählen Sie "Add Transition".
+Wie man diese neu geöffnete Textbox liest:
+Die Turingmaschine befindet sich in Zustand "Start" und ist aktuell über dem Zeichen "A" auf dem Band. 
+Die Turingmaschine ersetzt "A" durch "1" und bewegt sich eine Zelle nach rechts. 
+Die Turingmaschine ist nun im Zustand "q1".</value>
+  </data>
+  <data name="TEXT_HelpWindow_11" xml:space="preserve">
+    <value>Wenn Ihr Diagramm genauso aussieht, wie hier gezeigt, dann kan die Turingmaschine das Eingabewort "ABC" in "123" umwandeln.
+Da Sie jetzt den Umgang mit dem Diagramm kennen, können Sie sich an komplexere und damit auch interessantere Turingmaschinen wagen.
+Wollen Sie sich inspirieren lassen, dann können Sie in den verfügbaren Beispielen stöbern.</value>
+  </data>
+  <data name="TEXT_HelpWindow_02" xml:space="preserve">
+    <value>Mit dem Kontrollkästchen bei (2) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Ist es im Eingabealphabet können Sie es im Eingabewort verwenden und auf das Band schreiben. Andernfalls kann es nur die Turingmaschine auf das Band schreiben.
+Sie können Symbole nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_03" xml:space="preserve">
+    <value>Das Kontrollkästchen "Start" legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand sein.
+Das Kontrollkästchen "Akzeptieren" legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben.
+Sie können Zustände nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_04" xml:space="preserve">
+    <value>Wiederholen Sie die letzten zwei Schritte bis die Tabelle so aussieht.</value>
+  </data>
+  <data name="TEXT_HelpWindow_05" xml:space="preserve">
+    <value>Wie man diese Textbox liest:
+Die Turingmaschine befindet sich in Zustand "Start" und ist aktuell über dem Zeichen "A" auf dem Band. 
+Die Turingmaschine ersetzt "A" durch "1" und bewegt sich eine Zelle nach rechts. 
+Die Turingmaschine ist nun im Zustand "q1".</value>
+  </data>
+  <data name="TEXT_HelpWindow_06" xml:space="preserve">
+    <value>Wenn Ihre Tabelle genauso aussieht. wie hier gezeigt, dann kann die Turingmaschine das Eingabewort "ABC" in "123" umwandeln.
+Da Sie jetzt den Umgang mit der Tabelle kennen, können Sie sich an komplexere und damit auch interessantere Turingmaschinen wagen.
+Wollen Sie sich inspirieren lassen, dann können Sie in den verfügbaren Beispielen stöbern.</value>
+  </data>
+  <data name="TEXT_HelpWindow_07" xml:space="preserve">
+    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit dem Diagramm eine neue Turingmaschine erstellen können, die das Eingabewort "ABC" in "123" umwandelt.</value>
+  </data>
+  <data name="TEXT_HelpWindow_08" xml:space="preserve">
+    <value>Mit einem Rechtsklick auf den leeren Platz des Diagramms kann ein neuer Zustand hinzugefügt werden.
+Das Kontrollkästchen "Start" legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand sein.
+Das Kontrollkästchen "Akzeptieren" legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben.
+Sie können Zustände nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_09" xml:space="preserve">
+    <value>Hierfür muss mindestens ein Zustand im Diagramm vorhanden sein.
+Rechtsklicken Sie auf einen Zustand und wählen Sie "Add Transition" (1) aus.
+Klicken Sie nun auf "Symbol hinzufügen" (2).
+Mit dem Kontrollkästchen bei (3) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Ist es im Eingabealphabet können Sie es im Eingabewort verwenden und auf das Band schreiben. Andernfalls kann es nur die Turingmaschine auf das Band schreiben.
+Sie können Symbole nachträglich editieren oder löschen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_10" xml:space="preserve">
+    <value>Hinzufügen eines Zustandsübergangs</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_11" xml:space="preserve">
+    <value>Endresultat</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_02" xml:space="preserve">
+    <value>Hinzufügen eines Symbols</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_03" xml:space="preserve">
+    <value>Hinzufügen eines Zustands</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_04" xml:space="preserve">
+    <value>Aktuelles Ziel</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_05" xml:space="preserve">
+    <value>Hinzufügen eines Zustandsübergangs</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_06" xml:space="preserve">
+    <value>Endresultat</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_07" xml:space="preserve">
+    <value>Wie man das Diagramm benutzt</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_08" xml:space="preserve">
+    <value>Hinzufügen eines Zustands</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_09" xml:space="preserve">
+    <value>Hinzufügen eines Symbols</value>
+  </data>
 </root>
