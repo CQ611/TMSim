@@ -663,7 +663,8 @@ namespace TMSim.UI
 
         private void OnTransformation1()
         {
-            throw new NotImplementedException("OnTransformation1 >> ViewModel");
+            TM = new Transformation1().Execute(TM);
+            OnTMChanged();
         }
 
         private void OnTransformation2()
