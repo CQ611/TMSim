@@ -43,6 +43,15 @@ namespace TMSim.UI
             get { return (bool)isInInput_chk.IsChecked; }
         }
 
+        private void symbol_txt_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ok_cmd.IsEnabled = symbol_txt.Text != "";        
+        }
 
+        private void symbol_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (e.Text.Length != 1) e.Handled = true;
+        }
+            
     }
 }
