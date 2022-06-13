@@ -370,7 +370,10 @@ namespace TMSim.UI
         public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
         public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
         public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
-         
+        public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnTransformation4Text)); } }
+        public string WarnTransformation5Text { get => Translator.GetString("TEXT_Warn_Transformation5"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnTransformation5Text)); } }
+        public string WarnMemoryText { get => Translator.GetString("TEXT_Warn_Memory"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnMemoryText)); } }
+
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -436,6 +439,9 @@ namespace TMSim.UI
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
+            WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
+            WarnTransformation5Text = Translator.GetString("TEXT_Warn_Transformation5");
+            WarnMemoryText = Translator.GetString("TEXT_Warn_Memory");
             SetInputTapeWordToolTip();
             TranslateHelpWindow();
         }
@@ -688,14 +694,28 @@ namespace TMSim.UI
 
         private void OnTransformation4()
         {
-            TM = new Transformation4().Execute(TM);
-            OnTMChanged();
+            if (new Transformation4().IsExecutable(TM))
+            {
+                TM = new Transformation4().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation4Text);
+            }
         }
 
         private void OnTransformation5()
         {
-            TM = new Transformation5().Execute(TM);
-            OnTMChanged();
+            if (new Transformation5().IsExecutable(TM))
+            {
+                TM = new Transformation5().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation5Text);
+            }
         }
 
         private void OnImportFromTextFile()
@@ -777,9 +797,13 @@ namespace TMSim.UI
                 FilterIndex = 2,
                 RestoreDirectory = true
             };
-            if (exportFileDialog.ShowDialog() == true)
+            try
             {
                 TM.ExportToTextFile(exportFileDialog.FileName);
+            }
+            catch (SystemException)
+            {
+                QuickWarning(WarnMemoryText);
             }
         }
 
