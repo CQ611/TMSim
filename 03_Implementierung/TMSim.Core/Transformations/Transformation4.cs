@@ -75,7 +75,10 @@ namespace TMSim.Core
             {
                 if (tt.MoveDirections[0] == TuringTransition.Direction.Neutral) noNeutralTransition = false;
             }
-            return noNeutralTransition;
+            bool startStateNotEndStateAndNotNull = true;
+            if (tm.EndStates.Contains(tm.StartState) || tm.StartState==null) startStateNotEndStateAndNotNull = false;
+
+            return noNeutralTransition && startStateNotEndStateAndNotNull;
         }
 
         private void deleteUnusedStates(TuringMachine tm) {
