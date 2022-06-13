@@ -36,35 +36,76 @@ namespace TMSim.Core
 
         public void ImportFromTextFile(string filePath)
         {
+            TuringMachine copy = GetCopy();
             string jsonString = System.IO.File.ReadAllText(filePath);
             try
             {
                 FromJsonString(jsonString);
             }
-            catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException e) { 
-                throw e; 
-            }
-            catch (Exception)
+            catch (Exception e)
             {
+                TapeAlphabet = copy.TapeAlphabet;
+                BlankChar = copy.BlankChar;
+                InputAlphabet = copy.InputAlphabet;
+                States = copy.States;
+                StartState = copy.StartState;
+                EndStates = copy.EndStates;
+                Transitions = copy.Transitions;
+                Tapes = copy.Tapes;
+                Reset();
+                if (e is InputAlphabetHasToBeASubsetOfTapeAlphabetException) throw e;
+                else if (e is ReadSymbolDoesNotExistException) throw e;
+                else if (e is SourceStateOfTransitionDoesNotExistException) throw e;
+                else if (e is StateAlreadyExistsException) throw e;
+                else if (e is SymbolAlreadyExistsException) throw e;
+                else if (e is SymbolDoesNotExistException) throw e;
+                else if (e is TargetStateOfTransitionDoesNotExistException) throw e;
+                else if (e is TransitionAlreadyExistsException) throw e;
+                else if (e is TransitionNumberOfTapesIsInconsistentException) throw e;
+                else if (e is WriteSymbolDoesNotExistException) throw e;
                 throw new ImportFileIsNotValidException();
             }
         }
 
         private void FromJsonString(string jsonString)
         {
-            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString); 
-            TapeAlphabet = new TuringAlphabet(tm.TapeAlphabet);
+            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
+            if (tm.States == null) {
+                // States are not defined in inputfile
+                tm.States = new List<State> { };
+            }
+            if (tm.EndStates == null) {
+                // Endstates are not defined in inputfile
+                tm.EndStates = new List<string> { };
+            }
+            if (tm.TapeAlphabet == null) {
+                // TapeAlphabet is not defined in inputfile
+                tm.TapeAlphabet = "";
+            }
+            if (tm.InputAlphabet == null) {
+                // InputAlphabet is not defined in inputfile
+                tm.InputAlphabet = "";
+            }
             BlankChar = tm.Blank;
-            InputAlphabet = new TuringAlphabet(tm.InputAlphabet);
-            if (!InputAlphabet.Symbols.All(c => TapeAlphabet.Symbols.Contains(c))) {
-                throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
+            TapeAlphabet = new TuringAlphabet("");
+            InputAlphabet = new TuringAlphabet("");
+            foreach (char c in tm.TapeAlphabet.ToList()) {
+                 AddSymbol(c, false);
+            }
+            foreach (char c in tm.InputAlphabet.ToList()) {
+                try
+                {
+                    EditSymbol(c, true);
+                }
+                catch (SymbolDoesNotExistException) {
+                    throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
+                }
             }
 
             States.Clear();
             EndStates.Clear();
             Transitions.Clear();
             Tapes.Clear();
-
             foreach (State state in tm.States)
             {
                 bool isStart = false;
@@ -74,11 +115,16 @@ namespace TMSim.Core
                 AddState(new TuringState(state.Identifier, comment: state.Comment, isStart: isStart, isAccepting: isAccepting));
             }
             CurrentState = StartState;
-            if (tm.Transitions.Count() > 0) {
+            if (tm.Transitions.Count() > 0)
+            {
                 for (int i = 0; i < tm.Transitions[0].SymbolsRead.Count(); i++)
                 {
                     Tapes.Add(new TuringTape("", BlankChar));
                 }
+            }
+            else {
+                // definition contains no transitions
+                Tapes.Add(new TuringTape("", BlankChar));
             }
             foreach (Transition transition in tm.Transitions)
             {
@@ -290,7 +336,7 @@ namespace TMSim.Core
         public void WriteTapeWord(string inputWord)
         {
             if (!InputAlphabet.WordIsContainedIn(inputWord) || inputWord.Length == 0) throw new WordIsNoValidInputException();
-            //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
+            //TODO: more than one tape?
             foreach (var tape in Tapes)
             {
                 tape.Content = inputWord;

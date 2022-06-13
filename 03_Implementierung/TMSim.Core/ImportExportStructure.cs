@@ -44,8 +44,8 @@ namespace TMSim.Core
                 internalState.Comment = state.Comment;
                 States.Add(internalState);
             }
-            InputAlphabet = new String(turingMachine.InputSymbols.ToArray());
-            TapeAlphabet = new String(turingMachine.TapeSymbols.ToArray());
+            InputAlphabet = new string(turingMachine.InputSymbols.ToArray());
+            TapeAlphabet = new string(turingMachine.TapeSymbols.ToArray());
             foreach (TuringTransition turingTransition in turingMachine.Transitions) {
                 Transition transition = new Transition();
                 transition.SourceState = turingTransition.Source.Identifier;
@@ -56,7 +56,10 @@ namespace TMSim.Core
                 transition.Comment = turingTransition.Comment;
                 Transitions.Add(transition);
             }
-            StartState = turingMachine.StartState.Identifier;
+            if (turingMachine.StartState != null)
+            {
+                StartState = turingMachine.StartState.Identifier;
+            }
             Blank = turingMachine.BlankChar;
             foreach (TuringState endState in turingMachine.EndStates) 
             {
