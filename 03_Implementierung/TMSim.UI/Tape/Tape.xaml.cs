@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Animation;
 
 namespace TMSim.UI
@@ -30,6 +31,58 @@ namespace TMSim.UI
             vm.DeleteTapeWordEvent += Vm_DeleteTapeWordEvent;
             vm.UpdateTapeEvent += Vm_UpdateTapeEvent;
             vm.SetBlankEvent += Vm_SetBlankEvent;
+            vm.UpdateAlphabetEvent += Vm_UpdateAlphabetEvent;
+
+            Vm_UpdateAlphabetEvent(new List<char>(), new List<char>());
+        }
+
+        private void Vm_UpdateAlphabetEvent(List<char> tapeAlphabet, List<char> inputAlphabet)
+        {
+            //alphabet_tb.Inlines.Clear();
+            //bool firstRun = true;
+
+            //alphabet_tb.Inlines.Add(new Run("Alphabet={"));
+            //foreach (var c in tapeAlphabet)
+            //{
+            //    if (!firstRun)
+            //    {
+            //        alphabet_tb.Inlines.Add(new Run(", "));
+            //    }
+            //    else firstRun = false;
+
+            //    if (inputAlphabet.Contains(c))
+            //        alphabet_tb.Inlines.Add(new Run(c.ToString()) { FontWeight = FontWeights.Bold });
+            //    else
+            //        alphabet_tb.Inlines.Add(new Run(c.ToString()));
+            //}
+            //alphabet_tb.Inlines.Add(new Run("}"));
+
+            alphabet_tb.Inlines.Clear();
+            bool firstRun = true;
+
+            alphabet_tb.Inlines.Add(new Run("Alphabet={"));
+            foreach (var c in inputAlphabet)
+            {
+                if (!firstRun)
+                    alphabet_tb.Inlines.Add(new Run(", "));
+                else firstRun = false;
+                alphabet_tb.Inlines.Add(new Run(c.ToString()) { FontWeight = FontWeights.Bold });
+            }
+
+            foreach (var c in tapeAlphabet)
+            {
+                if (!inputAlphabet.Contains(c))
+                {
+                    if (!firstRun)
+                    {
+                        alphabet_tb.Inlines.Add(new Run(", "));
+                    }
+                    else firstRun = false;
+
+                    alphabet_tb.Inlines.Add(new Run(c.ToString()));
+                }
+            }
+            alphabet_tb.Inlines.Add(new Run("}"));
         }
 
         private void Vm_SetBlankEvent(char blank)

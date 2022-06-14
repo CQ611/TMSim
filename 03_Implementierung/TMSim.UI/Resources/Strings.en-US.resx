@@ -486,4 +486,7 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_Table" xml:space="preserve">
     <value>Table</value>
   </data>
+  <data name="TEXT_AddSymbol" xml:space="preserve">
+    <value>Add Symbol</value>
+  </data>
 </root>

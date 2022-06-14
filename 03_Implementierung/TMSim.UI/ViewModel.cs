@@ -280,18 +280,6 @@ namespace TMSim.UI
                 OnPropertyChanged(nameof(MenuElementEnabled));
             }
         }
-
-        private string _tapeWordInputToolTip;
-        public string TapeWordInputToolTip
-        {
-            get { return _tapeWordInputToolTip; }
-            set
-            {
-                _tapeWordInputToolTip = value;
-                OnPropertyChanged(nameof(TapeWordInputToolTip));
-            }
-
-        }
         #endregion
 
         #region Translation
@@ -376,6 +364,7 @@ namespace TMSim.UI
         public string TableText { get => Translator.GetString("TEXT_Table"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(TableText)); } }
         public string EditSymbolText { get => Translator.GetString("TEXT_EditSymbol"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditSymbolText)); } }
         public string RemoveSymbolText { get => Translator.GetString("TEXT_RemoveSymbol"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveSymbolText)); } }
+        public string AddSymbolText { get => Translator.GetString("TEXT_AddSymbol"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(AddSymbolText)); } }
         public string AddTransitionText { get => Translator.GetString("TEXT_AddTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(AddTransitionText)); } }
         public string RemoveTransitionText { get => Translator.GetString("TEXT_RemoveTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveTransitionText)); } }
         public string EditTransitionText { get => Translator.GetString("TEXT_EditTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditTransitionText)); } }
@@ -455,6 +444,7 @@ namespace TMSim.UI
             TableText = Translator.GetString("TEXT_Table");
             EditSymbolText = Translator.GetString("TEXT_EditSymbol");
             RemoveSymbolText = Translator.GetString("TEXT_RemoveSymbol");
+            AddSymbolText = Translator.GetString("TEXT_AddSymbol");
             AddTransitionText = Translator.GetString("TEXT_AddTransition");
             EditTransitionText = Translator.GetString("TEXT_EditTransition");
             RemoveTransitionText = Translator.GetString("TEXT_RemoveTransition");
@@ -462,7 +452,6 @@ namespace TMSim.UI
             RemoveStateText = Translator.GetString("TEXT_RemoveState");
             NextBtnText = Translator.GetString("TEXT_NextBtn");
             PrevBtnText = Translator.GetString("TEXT_PrevBtn");
-            SetInputTapeWordToolTip();
             TranslateHelpWindow();
         }
         #endregion
@@ -558,8 +547,6 @@ namespace TMSim.UI
                 UploadTextEnabled = false;
 
             OnPropertyChanged(nameof(TM));
-
-            SetInputTapeWordToolTip();
         }
 
         public void OnTmRefresh()
@@ -1228,11 +1215,6 @@ namespace TMSim.UI
                 return;
             }
             OnTMChanged();
-        }
-
-        private void SetInputTapeWordToolTip()
-        {
-            TapeWordInputToolTip = PopupIsInputAlphabetText + ": " + string.Join(", ", TM.InputSymbols.ToArray());
         }
 
         private void OnDecreaseSpeed()

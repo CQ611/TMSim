@@ -486,4 +486,7 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   <data name="TEXT_Table" xml:space="preserve">
     <value>Tabelle</value>
   </data>
+  <data name="TEXT_AddSymbol" xml:space="preserve">
+    <value>Zeichen hinzufügen</value>
+  </data>
 </root>
