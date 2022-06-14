@@ -20,7 +20,6 @@ namespace TMSim.Core
                     x.SymbolsWrite[0] = newBlancToWrite;
                 }
             });
-            turingMachine.AddSymbol(newBlancToWrite, false);
             return turingMachine;
         }
 
