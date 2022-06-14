@@ -12,8 +12,8 @@
 
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
-            <MenuItem Header="Edit symbol" Click="EditSymbol_Click"/>
-            <MenuItem Header="Remove symbol" Click="RemoveSymbol_Click"/>
+            <MenuItem Header="{Binding EditSymbolText}" Click="EditSymbol_Click"/>
+            <MenuItem Header="{Binding RemoveSymbolText}" Click="RemoveSymbol_Click"/>
         </ContextMenu>
     </UserControl.ContextMenu>
 

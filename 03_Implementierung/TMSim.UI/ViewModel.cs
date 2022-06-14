@@ -373,6 +373,17 @@ namespace TMSim.UI
         public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnTransformation4Text)); } }
         public string WarnTransformation5Text { get => Translator.GetString("TEXT_Warn_Transformation5"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnTransformation5Text)); } }
         public string WarnMemoryText { get => Translator.GetString("TEXT_Warn_Memory"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(WarnMemoryText)); } }
+        public string TableText { get => Translator.GetString("TEXT_Table"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(TableText)); } }
+        public string EditSymbolText { get => Translator.GetString("TEXT_EditSymbol"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditSymbolText)); } }
+        public string RemoveSymbolText { get => Translator.GetString("TEXT_RemoveSymbol"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveSymbolText)); } }
+        public string AddTransitionText { get => Translator.GetString("TEXT_AddTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(AddTransitionText)); } }
+        public string RemoveTransitionText { get => Translator.GetString("TEXT_RemoveTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveTransitionText)); } }
+        public string EditTransitionText { get => Translator.GetString("TEXT_EditTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditTransitionText)); } }
+        public string EditStateText { get => Translator.GetString("TEXT_EditState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditStateText)); } }
+        public string RemoveStateText { get => Translator.GetString("TEXT_RemoveState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveStateText)); } }
+        public string NextBtnText { get => Translator.GetString("TEXT_NextBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(NextBtnText)); } }
+        public string PrevBtnText { get => Translator.GetString("TEXT_PrevBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(PrevBtnText)); } }
+  
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -441,6 +452,16 @@ namespace TMSim.UI
             WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
             WarnTransformation5Text = Translator.GetString("TEXT_Warn_Transformation5");
             WarnMemoryText = Translator.GetString("TEXT_Warn_Memory");
+            TableText = Translator.GetString("TEXT_Table");
+            EditSymbolText = Translator.GetString("TEXT_EditSymbol");
+            RemoveSymbolText = Translator.GetString("TEXT_RemoveSymbol");
+            AddTransitionText = Translator.GetString("TEXT_AddTransition");
+            EditTransitionText = Translator.GetString("TEXT_EditTransition");
+            RemoveTransitionText = Translator.GetString("TEXT_RemoveTransition");
+            EditStateText = Translator.GetString("TEXT_EditState");
+            RemoveStateText = Translator.GetString("TEXT_RemoveState");
+            NextBtnText = Translator.GetString("TEXT_NextBtn");
+            PrevBtnText = Translator.GetString("TEXT_PrevBtn");
             SetInputTapeWordToolTip();
             TranslateHelpWindow();
         }
