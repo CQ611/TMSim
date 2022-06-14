@@ -30,7 +30,13 @@ namespace TMSim.Core
 
         public char GetCurrentSymbol()
         {
-            return content[HeadIndex];
+            try
+            {
+                return content[HeadIndex];
+            }
+            catch (IndexOutOfRangeException) {
+                return Blank;
+            }
         }
 
         public void SetCurrentSymbol(char newSymbol)

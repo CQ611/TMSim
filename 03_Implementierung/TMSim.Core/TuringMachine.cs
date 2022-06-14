@@ -24,9 +24,9 @@ namespace TMSim.Core
         public TuringMachine()
         {
             TapeAlphabet = new TuringAlphabet("");
-            BlankChar = ' ';
             InputAlphabet = new TuringAlphabet("");
             States = new List<TuringState>();
+            BlankChar = '\0';
             StartState = null;
             CurrentState = null;
             EndStates = new List<TuringState>();
@@ -58,6 +58,7 @@ namespace TMSim.Core
                 else if (e is SourceStateOfTransitionDoesNotExistException) throw e;
                 else if (e is StateAlreadyExistsException) throw e;
                 else if (e is SymbolAlreadyExistsException) throw e;
+                else if (e is SymbolCanNotBeInputAndBlankException) throw e;
                 else if (e is SymbolDoesNotExistException) throw e;
                 else if (e is TargetStateOfTransitionDoesNotExistException) throw e;
                 else if (e is TransitionAlreadyExistsException) throw e;
@@ -86,7 +87,6 @@ namespace TMSim.Core
                 // InputAlphabet is not defined in inputfile
                 tm.InputAlphabet = "";
             }
-            BlankChar = tm.Blank;
             TapeAlphabet = new TuringAlphabet("");
             InputAlphabet = new TuringAlphabet("");
             foreach (char c in tm.TapeAlphabet.ToList()) {
@@ -100,6 +100,13 @@ namespace TMSim.Core
                 catch (SymbolDoesNotExistException) {
                     throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
                 }
+            }
+            if (InputAlphabet.Symbols.Contains(tm.Blank)) {
+                throw new SymbolCanNotBeInputAndBlankException();
+            }
+            if (tm.Blank != '\0')
+            {
+                EditSymbol(tm.Blank, false, true);
             }
 
             States.Clear();
@@ -150,6 +157,12 @@ namespace TMSim.Core
 
         public bool AdvanceState()
         {
+            if (BlankChar == '\0') {
+                throw new BlankCharMustBeSetException();
+            }
+            if (StartState == null) {
+                throw new NoStartStateException();
+            }
             try
             {
                 CurrentTransition = GetTransition();
@@ -162,10 +175,6 @@ namespace TMSim.Core
                 CurrentState = CurrentTransition.Target;
             }
             catch (TransitionNotFoundException)
-            {
-                return false;
-            }
-            catch (NoStartStateException)
             {
                 return false;
             }
@@ -192,7 +201,6 @@ namespace TMSim.Core
         private TuringTransition GetTransition()
         {
             if (CurrentState == null) CurrentState = StartState;
-            if (CurrentState == null) throw new NoStartStateException();
             foreach (TuringTransition transition in CurrentState.OutgoingTransitions)
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
@@ -302,21 +310,47 @@ namespace TMSim.Core
             Reset();
         }
 
-        public void AddSymbol(char c, bool isInInput)
+        public void AddSymbol(char c, bool isInInput, bool isBlank=false)
         {
+            if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (TapeAlphabet.Symbols.Contains(c)) throw new SymbolAlreadyExistsException();
             else {
                 TapeAlphabet.Symbols.Add(c);
                 if (isInInput) InputAlphabet.Symbols.Add(c);
+                if (isBlank) {
+                    BlankChar = c;
+                    if (Tapes.Count() == 0) Tapes.Add(new TuringTape("", BlankChar));
+                    else {
+                        List<TuringTape> newTapes = new List<TuringTape>();
+                        foreach (TuringTape _ in Tapes) {
+                            newTapes.Add(new TuringTape("", BlankChar));
+                        }
+                        Tapes = newTapes;
+                    }
+                }
             }
             Reset();
         }
 
-        public void EditSymbol(char c, bool isInInput)
+        public void EditSymbol(char c, bool isInInput, bool isBlank=false)
         {
             if(!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
+            if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (!InputAlphabet.Symbols.Contains(c) && TapeAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
             else if (InputAlphabet.Symbols.Contains(c) && !isInInput) InputAlphabet.Symbols.Remove(c);
+            if (isBlank) {
+                BlankChar = c;
+                if (Tapes.Count() == 0) Tapes.Add(new TuringTape("", BlankChar));
+                else
+                {
+                    List<TuringTape> newTapes = new List<TuringTape>();
+                    foreach (TuringTape _ in Tapes)
+                    {
+                        newTapes.Add(new TuringTape("", BlankChar));
+                    }
+                    Tapes = newTapes;
+                }
+            }
             Reset();
         }
 
@@ -332,6 +366,14 @@ namespace TMSim.Core
             }
             foreach (TuringTransition tt in TransitionsToRemove) {
                 RemoveTransition(tt);
+            }
+            if (c == BlankChar) {
+                BlankChar = '\0';
+                List<TuringTape> newTapes = new List<TuringTape>();
+                foreach (TuringTape _ in Tapes) {
+                    newTapes.Add(new TuringTape("", BlankChar));
+                }
+                Tapes = newTapes;
             }
             Reset();
         }
