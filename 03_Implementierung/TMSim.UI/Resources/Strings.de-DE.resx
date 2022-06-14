@@ -489,6 +489,21 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   <data name="TEXT_AddSymbol" xml:space="preserve">
     <value>Zeichen hinzufügen</value>
   </data>
+  <data name="TEXT_PopupIsBlankChar" xml:space="preserve">
+    <value>Leerzeichen</value>
+  </data>
+  <data name="TEXT_Warn_BlankCharMustBeSet" xml:space="preserve">
+    <value>Das Leerzeichen muss festgelegt sein</value>
+  </data>
+  <data name="TEXT_Warn_SymbolIsInputAndBlank" xml:space="preserve">
+    <value>Das Zeichen kann nicht gleichzeitig im Eingabealphabet vorkommen und das Leerzeichen sein </value>
+  </data>
+  <data name="TEXT_Warn_NoStartState" xml:space="preserve">
+    <value>Es gibt keinen Startzustand!</value>
+  </data>
+  <data name="TEXT_Warn_UnsupportedLanguage" xml:space="preserve">
+    <value>Diese Sprache steht wird nicht unterstützt!</value>
+  </data>
   <data name="TEXT_AddState" xml:space="preserve">
     <value>Zustand hinzufügen</value>
   </data>

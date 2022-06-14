@@ -489,6 +489,21 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_AddSymbol" xml:space="preserve">
     <value>Add Symbol</value>
   </data>
+  <data name="TEXT_PopupIsBlankChar" xml:space="preserve">
+    <value>Blank character</value>
+  </data>
+  <data name="TEXT_Warn_BlankCharMustBeSet" xml:space="preserve">
+    <value>The blank character must be set</value>
+  </data>
+  <data name="TEXT_Warn_SymbolIsInputAndBlank" xml:space="preserve">
+    <value>The symbol can't be in the input alphabet while also being the blank character</value>
+  </data>
+  <data name="TEXT_Warn_NoStartState" xml:space="preserve">
+    <value>There is no start state!</value>
+  </data>
+  <data name="TEXT_Warn_UnsupportedLanguage" xml:space="preserve">
+    <value>This language is not supported!</value>
+  </data>
   <data name="TEXT_AddState" xml:space="preserve">
     <value>Add State</value>
   </data>

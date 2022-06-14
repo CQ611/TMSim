@@ -16,13 +16,14 @@ namespace TMSim.UI
 
     public partial class EditSymbolDialog : Window
     {
-        public EditSymbolDialog(char symbol, bool isInput)
+        public EditSymbolDialog(char symbol, bool isInput, bool isBlankChar)
         {
             InitializeComponent();
             var vm = (ViewModel)DataContext;
 
             Symbol = symbol;
             IsInInput = isInput;
+            IsBlankChar = isBlankChar;
         }
 
         private void ok_cmd_Click(object sender, RoutedEventArgs e)
@@ -42,6 +43,10 @@ namespace TMSim.UI
             set { isInInput_chk.IsChecked = value; }
         }
 
-
+        public bool IsBlankChar
+        {
+            get { return (bool)isBlankChar_chk.IsChecked; }
+            set { isBlankChar_chk.IsChecked = value; }
+        }
     }
 }

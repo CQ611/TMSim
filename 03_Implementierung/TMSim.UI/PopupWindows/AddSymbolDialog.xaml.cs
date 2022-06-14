@@ -43,6 +43,11 @@ namespace TMSim.UI
             get { return (bool)isInInput_chk.IsChecked; }
         }
 
+        public bool IsBlankChar
+        {
+            get { return (bool)isBlankChar_chk.IsChecked; }
+        }
+
         private void symbol_txt_TextChanged(object sender, TextChangedEventArgs e)
         {
             ok_cmd.IsEnabled = symbol_txt.Text != "";        

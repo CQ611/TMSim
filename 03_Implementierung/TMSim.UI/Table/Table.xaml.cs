@@ -74,9 +74,9 @@ namespace TMSim.UI
             vm.RemoveState(identifier);
         }
 
-        private void ColumnHeader_EditSymbolEvent(string symbol, bool isInput)
+        private void ColumnHeader_EditSymbolEvent(string symbol, bool isInput, bool isBlankChar)
         {
-            vm.EditSymbol(symbol, isInput);
+            vm.EditSymbol(symbol, isInput, isBlankChar);
         }
 
         private void ColumnHeader_RemoveSymbolEvent(string symbol)
@@ -106,7 +106,7 @@ namespace TMSim.UI
 
         private void Vm_LoadTableEvent(TuringMachine TM)
         {
-            TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s)));
+            TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s), s == TM.BlankChar));
             TM.States.ForEach(s => AddRow(s.Identifier, s == TM.StartState, TM.EndStates.Contains(s)));
 
             TM.Transitions.ForEach(t => OverwriteTransition(
@@ -183,13 +183,13 @@ namespace TMSim.UI
             vm.AddSymbol();
         }
 
-        private void AddColumn(string symbol, bool isInInputAlphabet)
+        private void AddColumn(string symbol, bool isInInputAlphabet, bool isBlankChar)
         {
             TableGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(65) });
 
             Grid.SetColumn(AddColumnButton, TableGrid.ColumnDefinitions.Count() - 1);
 
-            var newColumnHeader = new ColumnHeader(symbol, isInInputAlphabet);
+            var newColumnHeader = new ColumnHeader(symbol, isInInputAlphabet, isBlankChar);
             columnHeaders.Add(newColumnHeader);
             TableGrid.Children.Add(columnHeaders[columnHeaders.Count() - 1]);
             Grid.SetColumn(columnHeaders[columnHeaders.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);
