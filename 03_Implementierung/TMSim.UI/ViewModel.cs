@@ -46,6 +46,9 @@ namespace TMSim.UI
         public RelayCommand PlayPause { get; set; }
         public RelayCommand Stop { get; set; }
         public RelayCommand Step { get; set; }
+        public RelayCommand OpenHelpWindow { get; set; }
+        public RelayCommand NextHelpPage { get; set; }
+        public RelayCommand PreviousHelpPage { get; set; }
 
         #endregion
 
@@ -439,6 +442,7 @@ namespace TMSim.UI
             WarnTransformation5Text = Translator.GetString("TEXT_Warn_Transformation5");
             WarnMemoryText = Translator.GetString("TEXT_Warn_Memory");
             SetInputTapeWordToolTip();
+            TranslateHelpWindow();
         }
         #endregion
 
@@ -491,6 +495,9 @@ namespace TMSim.UI
             PlayPause = new RelayCommand((o) => { OnPlayPause(); });
             Stop = new RelayCommand((o) => { OnStop(); });
             Step = new RelayCommand((o) => { OnStep(); });
+            OpenHelpWindow = new RelayCommand((o) => { OnOpenHelpWindow(); });
+            NextHelpPage = new RelayCommand((o) => { OnNextHelpPage(); });
+            PreviousHelpPage = new RelayCommand((o) => { OnPreviousHelpPage(); });
 
             TM = new TuringMachine();
 
@@ -502,6 +509,7 @@ namespace TMSim.UI
             SetTimerInterval();
 
             UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
+            TranslateHelpWindow();
         }
 
         private void InitResoureManager()
@@ -883,6 +891,35 @@ namespace TMSim.UI
             DData.OnForcePropertyChanged();
         }
 
+        private void OnOpenHelpWindow()
+        {
+            HelpWindow helpWindow = new HelpWindow();
+            helpWindow.Owner = Application.Current.MainWindow;
+            helpWindow.Show();
+        }
+
+        private void OnNextHelpPage()
+        {
+            CurrentPageNumber++;
+
+            if (CurrentPageNumber == 1)
+                PreviousHelpPageAvailable = true;
+
+            if (CurrentPageNumber == lastPageNumber)
+                NextHelpPageAvailable = false;
+        }
+
+        private void OnPreviousHelpPage()
+        {
+            CurrentPageNumber--;
+
+            if (CurrentPageNumber == lastPageNumber - 1)
+                NextHelpPageAvailable = true;
+
+            if (CurrentPageNumber == 0)
+                PreviousHelpPageAvailable = false;
+        }
+
         private void OnExitApplication()
         {
             Application.Current.Shutdown();
@@ -912,6 +949,7 @@ namespace TMSim.UI
             Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
 
             RefreshTextFromUi();
+            CurrentImageLanguage = language;
         }
 
         private void OnGermanLanguageSelected()
