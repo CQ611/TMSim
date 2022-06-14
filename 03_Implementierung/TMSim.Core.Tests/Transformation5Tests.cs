@@ -59,7 +59,7 @@ namespace TMSim.Core.Tests
             ITransformation transfromation = new Transformation5();
             TuringMachine newTuringMachine = transfromation.Execute(turingMachine);
             Assert.IsTrue(newTuringMachine.EndStates.Count() == 1);
-            Assert.IsTrue(newTuringMachine.EndStates[0].Identifier == "new End State");
+            Assert.IsTrue(newTuringMachine.EndStates[0].Identifier == "New Endstate");
             Assert.IsTrue(newTuringMachine.EndStates[0].IncomingTransitions.Count() == 2);
         }
 
