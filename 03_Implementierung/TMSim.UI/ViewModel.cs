@@ -36,7 +36,6 @@ namespace TMSim.UI
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
         public RelayCommand ClearTuringMachine { get; set; }
-        public RelayCommand _loadExample;
         public RelayCommand LoadExample { get; set; }
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
