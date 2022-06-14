@@ -456,4 +456,34 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   <data name="TEXT_Warn_Transformation5" xml:space="preserve">
     <value>Transformation 5 kann momentan nicht ausgeführt werden. Bitte überprüfen, dass es mindestens ein akzeptierender Zustand existiert.</value>
   </data>
+  <data name="TEXT_AddTransition" xml:space="preserve">
+    <value>Transition hinzufügen</value>
+  </data>
+  <data name="TEXT_EditState" xml:space="preserve">
+    <value>Zustand beabeiten</value>
+  </data>
+  <data name="TEXT_EditSymbol" xml:space="preserve">
+    <value>Zeichen bearbeiten</value>
+  </data>
+  <data name="TEXT_EditTransition" xml:space="preserve">
+    <value>Transition bearbeiten</value>
+  </data>
+  <data name="TEXT_NextBtn" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="TEXT_PrevBtn" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="TEXT_RemoveState" xml:space="preserve">
+    <value>Zustand entfernen</value>
+  </data>
+  <data name="TEXT_RemoveSymbol" xml:space="preserve">
+    <value>Zeichen entfernen</value>
+  </data>
+  <data name="TEXT_RemoveTransition" xml:space="preserve">
+    <value>Transition entfernen</value>
+  </data>
+  <data name="TEXT_Table" xml:space="preserve">
+    <value>Tabelle</value>
+  </data>
 </root>
