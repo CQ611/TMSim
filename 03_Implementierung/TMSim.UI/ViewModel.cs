@@ -372,9 +372,12 @@ namespace TMSim.UI
         public string EditTransitionText { get => Translator.GetString("TEXT_EditTransition"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditTransitionText)); } }
         public string EditStateText { get => Translator.GetString("TEXT_EditState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(EditStateText)); } }
         public string RemoveStateText { get => Translator.GetString("TEXT_RemoveState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveStateText)); } }
+        public string AddStateText { get => Translator.GetString("TEXT_AddState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(AddStateText)); } }
         public string NextBtnText { get => Translator.GetString("TEXT_NextBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(NextBtnText)); } }
         public string PrevBtnText { get => Translator.GetString("TEXT_PrevBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(PrevBtnText)); } }
-
+        public string ArrangeText { get => Translator.GetString("TEXT_Arrange"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(ArrangeText)); } }
+        public string AnimateText { get => Translator.GetString("TEXT_Animate"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(AnimateText)); } }
+        
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -454,6 +457,9 @@ namespace TMSim.UI
             RemoveStateText = Translator.GetString("TEXT_RemoveState");
             NextBtnText = Translator.GetString("TEXT_NextBtn");
             PrevBtnText = Translator.GetString("TEXT_PrevBtn");
+            AddStateText = Translator.GetString("TEXT_AddState");
+            ArrangeText = Translator.GetString("TEXT_Arrange");
+            AnimateText = Translator.GetString("TEXT_Animate");
             TranslateHelpWindow();
         }
         #endregion
