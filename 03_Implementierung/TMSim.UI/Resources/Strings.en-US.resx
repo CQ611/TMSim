@@ -489,4 +489,13 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_AddSymbol" xml:space="preserve">
     <value>Add Symbol</value>
   </data>
+  <data name="TEXT_AddState" xml:space="preserve">
+    <value>Add State</value>
+  </data>
+  <data name="TEXT_Animate" xml:space="preserve">
+    <value>Animate</value>
+  </data>
+  <data name="TEXT_Arrange" xml:space="preserve">
+    <value>Arrange</value>
+  </data>
 </root>
