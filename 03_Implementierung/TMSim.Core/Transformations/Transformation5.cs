@@ -17,8 +17,23 @@ namespace TMSim.Core
             foreach (TuringState oldEndstate in newTuringMachine.EndStates) {
                 oldEndstate.IsAccepting = false;
             }
+            String newEndStateName = "New Endstate";
+            bool nameAlreadyExists;
+            do
+            {
+                nameAlreadyExists = false;
+                foreach (TuringState ts in newTuringMachine.States)
+                {
+                    if (ts.Identifier == newEndStateName)
+                    {
+                        newEndStateName = newEndStateName + "*";
+                        nameAlreadyExists = true;
+                        break;
+                    }
+                }
+            } while (nameAlreadyExists);
             newTuringMachine.EndStates.Clear();
-            TuringState newEndState = new TuringState("new End State", "", false, true);
+            TuringState newEndState = new TuringState(newEndStateName, "", false, true);
             newTuringMachine.AddState(newEndState);
             foreach(TuringState endState in tm.EndStates)
             {
