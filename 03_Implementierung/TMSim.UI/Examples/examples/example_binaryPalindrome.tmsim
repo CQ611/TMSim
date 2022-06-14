@@ -49,7 +49,7 @@
       "Comment": ""
     }
   ],
-  "InputAlphabet": "_01",
+  "InputAlphabet": "01",
   "TapeAlphabet": "_01",
   "Transitions": [
     {
