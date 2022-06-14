@@ -103,7 +103,8 @@ namespace TMSim.Core
                 if (tm.InputSymbols.Contains(c)) newTm.AddSymbol(c, true);
                 else newTm.AddSymbol(c, false);
             }
-            newTm.BlankChar = tm.BlankChar;
+            //newTm.BlankChar = tm.BlankChar;
+            newTm.EditSymbol(tm.BlankChar, false, true);
             foreach (TuringState state in tm.States)
             {
                 TuringState rightState = new TuringState(state.Identifier + "_right", isAccepting: state.IsAccepting);

@@ -57,7 +57,7 @@
       "Comment": ""
     }
   ],
-  "InputAlphabet": "0123456789_",
+  "InputAlphabet": "0123456789",
   "TapeAlphabet": "0123456789_",
   "Transitions": [
     {
