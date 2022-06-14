@@ -17,7 +17,6 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="45"/>
             <RowDefinition Height="65"/>
-            <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
         <Border Grid.Row="0">

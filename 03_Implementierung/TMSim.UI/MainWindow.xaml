@@ -42,7 +42,7 @@
                 <MenuItem Header="{Binding OpenText}" Command="{Binding ImportFromTextFile}"/>
                 <MenuItem Header="{Binding SaveText}" Command="{Binding ExportToTextFile}"/>
                 <Separator />
-                <MenuItem Header="{Binding ExamplesText}" Command="{Binding LoadExample}"/>
+                <MenuItem x:Name="ExamplesMenue" Header="{Binding ExamplesText}"/>
                 <Separator />
                 <MenuItem Header="{Binding ExitText}" Command="{Binding ExitApplication}"/>
             </MenuItem>

@@ -38,25 +38,6 @@ namespace TMSim.UI
 
         private void Vm_UpdateAlphabetEvent(List<char> tapeAlphabet, List<char> inputAlphabet)
         {
-            //alphabet_tb.Inlines.Clear();
-            //bool firstRun = true;
-
-            //alphabet_tb.Inlines.Add(new Run("Alphabet={"));
-            //foreach (var c in tapeAlphabet)
-            //{
-            //    if (!firstRun)
-            //    {
-            //        alphabet_tb.Inlines.Add(new Run(", "));
-            //    }
-            //    else firstRun = false;
-
-            //    if (inputAlphabet.Contains(c))
-            //        alphabet_tb.Inlines.Add(new Run(c.ToString()) { FontWeight = FontWeights.Bold });
-            //    else
-            //        alphabet_tb.Inlines.Add(new Run(c.ToString()));
-            //}
-            //alphabet_tb.Inlines.Add(new Run("}"));
-
             alphabet_tb.Inlines.Clear();
             bool firstRun = true;
 

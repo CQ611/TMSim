@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,6 +11,7 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using TMSim.Core;
@@ -34,6 +36,7 @@ namespace TMSim.UI
         public RelayCommand ImportFromTextFile { get; set; }
         public RelayCommand ExportToTextFile { get; set; }
         public RelayCommand ClearTuringMachine { get; set; }
+        public RelayCommand _loadExample;
         public RelayCommand LoadExample { get; set; }
         public RelayCommand ExitApplication { get; set; }
         public RelayCommand GermanLanguageSelected { get; set; }
@@ -372,7 +375,7 @@ namespace TMSim.UI
         public string RemoveStateText { get => Translator.GetString("TEXT_RemoveState"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(RemoveStateText)); } }
         public string NextBtnText { get => Translator.GetString("TEXT_NextBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(NextBtnText)); } }
         public string PrevBtnText { get => Translator.GetString("TEXT_PrevBtn"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(PrevBtnText)); } }
-  
+
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -493,7 +496,7 @@ namespace TMSim.UI
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
             ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
-            LoadExample = new RelayCommand((o) => { OnLoadExample(); });
+            LoadExample = new RelayCommand((o) => { OnLoadExample(o); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
@@ -600,7 +603,7 @@ namespace TMSim.UI
         {
             timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
-        
+
         private void OnStopSimulation()
         {
             TM.Reset();
@@ -617,7 +620,7 @@ namespace TMSim.UI
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
-        
+
         private void OnStepSimulation(bool timerStep = false)
         {
             StopEnabled = true;
@@ -675,7 +678,7 @@ namespace TMSim.UI
             StepEnabled = true;
         }
 
-        private void OnTansformTuringMachine(){}
+        private void OnTansformTuringMachine() { }
 
         private void OnTransformation1()
         {
@@ -781,11 +784,13 @@ namespace TMSim.UI
                     QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
                     return;
                 }
-                catch (ImportFileIsNotValidException) {
+                catch (ImportFileIsNotValidException)
+                {
                     QuickWarning(ImportFileIsNotValidText);
                     return;
                 }
-                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException)
+                {
                     QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
                     return;
                 }
@@ -811,7 +816,7 @@ namespace TMSim.UI
                 {
                     TM.ExportToTextFile(exportFileDialog.FileName);
                 }
-                catch(SystemException)
+                catch (SystemException)
                 {
                     QuickWarning(WarnMemoryText);
                 }
@@ -824,72 +829,65 @@ namespace TMSim.UI
             OnTMChanged();
         }
 
-        private void OnLoadExample()
+        private void OnLoadExample(object o)
         {
-            OpenFileDialog loadExampleFileDialog = new OpenFileDialog
+            try
             {
-                Title = "Load example turingmachine",
-                Filter = "TMSim file (*.tmsim)|*.tmsim",
-                FilterIndex = 2,
-                InitialDirectory = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\Examples")
-            };
-            if (loadExampleFileDialog.ShowDialog() == true)
-            {
-                try
-                {
-                    TM.ImportFromTextFile(loadExampleFileDialog.FileName);
-                }
-                catch (StateAlreadyExistsException)
-                {
-                    QuickWarning(StateExistsText);
-                    return;
-                }
-                catch (TransitionAlreadyExistsException)
-                {
-                    QuickWarning(TransitionExistsText);
-                    return;
-                }
-                catch (SourceStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(SourceStateDoesNotExistText);
-                    return;
-                }
-                catch (TargetStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(TargetStateDoesNotExistText);
-                    return;
-                }
-                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
-                }
-                catch (TransitionNumberOfTapesIsInconsistentException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
-                }
-                catch (ReadSymbolDoesNotExistException e)
-                {
-                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
-                }
-                catch (WriteSymbolDoesNotExistException e)
-                {
-                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
-                } catch (ImportFileIsNotValidException) {
-                    QuickWarning(ImportFileIsNotValidText);
-                    return;
-                }
-                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
-                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
-                    return;
-                }
-                DeleteTapeContent();
-                OnTMChanged();
-                UploadTextEnabled = true;
+                TM.ImportFromTextFile(o.ToString());
             }
+            catch (StateAlreadyExistsException)
+            {
+                QuickWarning(StateExistsText);
+                return;
+            }
+            catch (TransitionAlreadyExistsException)
+            {
+                QuickWarning(TransitionExistsText);
+                return;
+            }
+            catch (SourceStateOfTransitionDoesNotExistException)
+            {
+                QuickWarning(SourceStateDoesNotExistText);
+                return;
+            }
+            catch (TargetStateOfTransitionDoesNotExistException)
+            {
+                QuickWarning(TargetStateDoesNotExistText);
+                return;
+            }
+            catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+            {
+                QuickWarning(InvalidTapeNumberInDefinitionText);
+                return;
+            }
+            catch (TransitionNumberOfTapesIsInconsistentException)
+            {
+                QuickWarning(InvalidTapeNumberInDefinitionText);
+                return;
+            }
+            catch (ReadSymbolDoesNotExistException e)
+            {
+                QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                return;
+            }
+            catch (WriteSymbolDoesNotExistException e)
+            {
+                QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                return;
+            }
+            catch (ImportFileIsNotValidException)
+            {
+                QuickWarning(ImportFileIsNotValidText);
+                return;
+            }
+            catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException)
+            {
+                QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
+                return;
+            }
+            DeleteTapeContent();
+            OnTMChanged();
+            UploadTextEnabled = true;
         }
 
         private void UpdateDiagramData()
@@ -978,7 +976,7 @@ namespace TMSim.UI
         {
             MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-            
+
         public void AddState()
         {
             AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count < 1);
