@@ -354,6 +354,99 @@
   <data name="TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet" xml:space="preserve">
     <value>Input alphabet has to be a subset of tape alphabet</value>
   </data>
+  <data name="TEXT_HelpWindow_00" xml:space="preserve">
+    <value>This introduction is meant to familiarize you with using the application and turing machines.</value>
+  </data>
+  <data name="TEXT_HelpWindow_01" xml:space="preserve">
+    <value>This chapter will teach you how to create a turing machine from scratch that can convert the input word "ABC" to "123" using only the table.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_00" xml:space="preserve">
+    <value>Welcome to TMSIM</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_01" xml:space="preserve">
+    <value>How to use the table</value>
+  </data>
+  <data name="TEXT_HelpWindow_10" xml:space="preserve">
+    <value>Rightclick on a state and then click on "Add Transition".
+How to read the newly opened textbox:
+The turing machine is in the state "Start" and reads the symbol "A" on the tape. 
+The turing machine then replaces "A" with "1" and moves one cell to the right. 
+The turing machine is now in the state "q1".</value>
+  </data>
+  <data name="TEXT_HelpWindow_11" xml:space="preserve">
+    <value>If your diagram looks like this then it can transform the input word "ABC" to "123".
+Now that you have written a simple turing machine you can experiment with more complex and therefor interesting ones.
+If you need some inspiration then have a look at the included examples.</value>
+  </data>
+  <data name="TEXT_HelpWindow_02" xml:space="preserve">
+    <value>The checkbox at (2)  decides whether the newly added character should be in the input alphabet or not. If it's in the input alphabet then you can use it in your input word to write on the tape. Otherwise only the turing machine can write it on the tape.
+You can edit or remove symbols by rightclicking on them.</value>
+  </data>
+  <data name="TEXT_HelpWindow_03" xml:space="preserve">
+    <value>The checkbox "Start" determines if this state is where the turing machine starts. There can only be one start state at a time. The first added state is always a start state.
+The checkbox "Accepting" determines whether the state is an end state. There can be multiple end states at a time.
+You can edit or remove states by rightclicking on them.</value>
+  </data>
+  <data name="TEXT_HelpWindow_04" xml:space="preserve">
+    <value>Repeat the last two steps until the table looks like this.</value>
+  </data>
+  <data name="TEXT_HelpWindow_05" xml:space="preserve">
+    <value>How to read this textbox:
+The turing machine is in the state "Start" and reads the symbol "A" on the tape. 
+The turing machine then replaces "A" with "1" and moves one cell to the right. 
+The turing machine is now in the state "q1".</value>
+  </data>
+  <data name="TEXT_HelpWindow_06" xml:space="preserve">
+    <value>If your table looks like this then it can transform the input word "ABC" to "123".
+Now that you have written a simple turing machine you can experiment with more complex and therefor interesting ones.
+If you need some inspiration then have a look at the included examples.</value>
+  </data>
+  <data name="TEXT_HelpWindow_07" xml:space="preserve">
+    <value>This chapter will teach you how to create a turing machine from scratch that can convert the input word "ABC" to "123" using only the diagram.</value>
+  </data>
+  <data name="TEXT_HelpWindow_08" xml:space="preserve">
+    <value>Rightclick on an empty space of the diagram allows you to add new transitions.
+The checkbox "Start" determines if this state is where the turing machine starts. There can only be one start state at a time. The first added state is always a start state.
+The checkbox "Accepting" determines whether the state is an end state. There can be multiple end states at a time.
+You can edit or remove states by rightclicking on them.</value>
+  </data>
+  <data name="TEXT_HelpWindow_09" xml:space="preserve">
+    <value>For this to work there needs to be at least one state in the diagram.
+Rightclick on a state and then click on "Add Transition" (1).
+Now click on "Add Symbol" (2).
+The checkbox at (3)  decides whether the newly added character should be in the input alphabet or not. If it's in the input alphabet then you can use it in your input word to write on the tape. Otherwise only the turing machine can write it on the tape.
+You can edit or remove symbols by rightclicking on them.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_10" xml:space="preserve">
+    <value>Adding a new transition</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_11" xml:space="preserve">
+    <value>Final result</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_02" xml:space="preserve">
+    <value>Adding a new symbol</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_03" xml:space="preserve">
+    <value>Adding a new state</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_04" xml:space="preserve">
+    <value>Current goal</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_05" xml:space="preserve">
+    <value>Adding a new transition</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_06" xml:space="preserve">
+    <value>Final result</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_07" xml:space="preserve">
+    <value>How to use the diagram</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_08" xml:space="preserve">
+    <value>Adding a new state</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_09" xml:space="preserve">
+    <value>Adding a new symbol</value>
+  </data>
   <data name="TEXT_Warn_Memory" xml:space="preserve">
     <value>The saving process could not be executed properly.</value>
   </data>

@@ -74,7 +74,7 @@
                 <Separator/>
                 <MenuItem Header="{Binding Transformation5Text}" ToolTip="{Binding Transformation5Tooltip}" Command="{Binding Transformation5}" />
             </MenuItem>
-            <MenuItem Header="?" HorizontalAlignment="Right" IsEnabled="{Binding MenuElementEnabled}"/>
+            <MenuItem Header="?" HorizontalAlignment="Right" IsEnabled="{Binding MenuElementEnabled}" Command="{Binding OpenHelpWindow}"/>
         </Menu>
         <Border Grid.Row="1" Background="White" CornerRadius="10" Margin="3">
             <Grid >
