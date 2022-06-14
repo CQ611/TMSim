@@ -592,5 +592,20 @@ namespace TMSim.UI
         {
             ArangeDiagram();
         }
+
+        private void EditSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.EditSymbol();
+        }
+
+        private void RemoveSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.RemoveSymbol();
+        }
+
+        private void AddSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.AddSymbol();
+        }
     }
 }
