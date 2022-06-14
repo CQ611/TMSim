@@ -1179,7 +1179,7 @@ namespace TMSim.UI
             }
         }
 
-        public void EditSymbol(string actSymbol, bool isInput)
+        public void EditSymbol(string actSymbol = " ", bool isInput = false)
         {
             EditSymbolDialog esd = new EditSymbolDialog(actSymbol.ToCharArray()[0], isInput);
             if (esd.ShowDialog() == true)
@@ -1200,7 +1200,7 @@ namespace TMSim.UI
             }
         }
 
-        public void RemoveSymbol(string symbol)
+        public void RemoveSymbol(string symbol = " ")
         {
             try
             {
