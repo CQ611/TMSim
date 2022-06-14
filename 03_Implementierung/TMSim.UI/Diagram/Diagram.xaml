@@ -15,6 +15,10 @@
     </Grid>
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
+            <MenuItem Header="{Binding AddSymbolText}" /> 
+            <MenuItem Header="{Binding EditSymbolText}" />
+            <MenuItem Header="{Binding RemoveSymbolText}"/>
+            <Separator/>
             <MenuItem x:Name="add_state_btn" Header="Add state" Click="add_state_btn_Click"/>
             <MenuItem x:Name="edit_state_btn" Header="Edit state" Click="edit_state_btn_Click"/>
             <MenuItem x:Name="remove_state_btn" Header="Remove state" Click="remove_state_btn_Click"/>
