@@ -197,6 +197,15 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
+        public void AddSymbol_symbolIsSetAsBlankCharAndIsAddedToTapeAlphabet()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', false, true);
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+            Assert.IsTrue(tm.BlankChar == 'a');
+        }
+
+        [TestMethod]
         public void AddSymbol_symbolIsAddedToInputAlphabet()
         {
             TuringMachine tm = new TuringMachine();
@@ -225,6 +234,18 @@ namespace TMSim.Core.Tests
             tm.EditSymbol('a', false);
             Assert.IsFalse(tm.InputSymbols.Contains('a'));
             Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+        }
+
+        [TestMethod]
+        public void EditSymbol_symbolIsSetAsBlankChar()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            Assert.IsTrue(tm.InputSymbols.Contains('a'));
+            tm.EditSymbol('a', false, true);
+            Assert.IsFalse(tm.InputSymbols.Contains('a'));
+            Assert.IsTrue(tm.TapeSymbols.Contains('a'));
+            Assert.IsTrue(tm.BlankChar == 'a');
         }
 
         [TestMethod]
@@ -258,6 +279,17 @@ namespace TMSim.Core.Tests
             Assert.IsFalse(tm.Transitions.Contains(tt));
             Assert.IsFalse(tm.States[0].IncomingTransitions.Contains(tt));
             Assert.IsFalse(tm.States[0].OutgoingTransitions.Contains(tt));
+        }
+
+        [TestMethod]
+        public void RemoveSymbol_BlankCharIsSetToNullWhenBlankCharIsRemoved()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('#', false, true);
+            Assert.IsTrue(tm.BlankChar == '#');
+            tm.RemoveSymbol('#');
+            Assert.IsTrue(tm.BlankChar == '\0');
+            Assert.IsTrue(tm.Tapes[0].GetCurrentSymbol() == '\0');
         }
 
         [TestMethod]
@@ -549,12 +581,30 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(SymbolCanNotBeInputAndBlankException))]
+        public void AddSymbol_throwsSymbolCanNotBeInputAndBlankException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true, true);
+        }
+
+        [TestMethod]
         [ExpectedException(typeof(SymbolDoesNotExistException))]
         public void Editymbol_throwsSymbolDoesNotExistException()
         {
             TuringMachine tm = new TuringMachine();
             tm.EditSymbol('a', false);
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(SymbolCanNotBeInputAndBlankException))]
+        public void Editymbol_throwsSymbolCanNotBeInputAndBlankException()
+        {
+            TuringMachine tm = new TuringMachine();
+            tm.AddSymbol('a', true);
+            tm.EditSymbol('a', true, true);
+        }
+
         [TestMethod]
         [ExpectedException(typeof(SymbolDoesNotExistException))]
         public void RemoveSymbol_throwsSymbolDoesNotExistException()
@@ -572,7 +622,8 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
-        public void AdvanceState_returnsFasleForEmptyTuringMachine()
+        [ExpectedException(typeof(BlankCharMustBeSetException))]
+        public void AdvanceState_throwsBlankCharMusBeSetException_forEmptyTuringMachine()
         {
             TuringMachine tm = new TuringMachine();
             Assert.IsFalse(tm.AdvanceState());
