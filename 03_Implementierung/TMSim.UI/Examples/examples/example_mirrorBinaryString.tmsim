@@ -25,7 +25,7 @@
       "Comment": ""
     }
   ],
-  "InputAlphabet": "01oi_",
+  "InputAlphabet": "01oi",
   "TapeAlphabet": "01oi_",
   "Transitions": [
     {
