@@ -554,6 +554,18 @@ namespace TMSim.UI
             {
                 EnglishLanguageIsChecked = true;
             }
+
+            try
+            {
+                FrameworkElement.LanguageProperty.OverrideMetadata(
+                        typeof(FrameworkElement),
+                        new FrameworkPropertyMetadata(
+                            XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            }
+            catch (Exception)
+            {
+                QuickWarning(WarnUnsupportedLanguageText);
+            }
         }
 
         public void OnTMChanged()
@@ -962,20 +974,6 @@ namespace TMSim.UI
             Thread.CurrentThread.CurrentUICulture = vCulture;
             CultureInfo.DefaultThreadCurrentCulture = vCulture;
             CultureInfo.DefaultThreadCurrentUICulture = vCulture;
-
-            try
-            {
-                FrameworkElement.LanguageProperty.OverrideMetadata(
-                    typeof(FrameworkElement),
-                    new FrameworkPropertyMetadata(
-                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-            }
-            catch (Exception)
-            {
-                QuickWarning(WarnUnsupportedLanguageText);
-            }
-
-            Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
 
             RefreshTextFromUi();
             CurrentImageLanguage = language;
