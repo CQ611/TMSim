@@ -1,0 +1,141 @@
+{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q2",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q3",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "tmsi",
+  "TapeAlphabet": "tmsi_TMS",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "t"
+      ],
+      "SymbolsWrite": [
+        "T"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "m"
+      ],
+      "SymbolsWrite": [
+        "M"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "s"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "i"
+      ],
+      "SymbolsWrite": [
+        "i"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "i"
+      ],
+      "SymbolsWrite": [
+        "S"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "m"
+      ],
+      "SymbolsWrite": [
+        "i"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q3",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "m"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "q3"
+  ]
+}
