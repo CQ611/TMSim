@@ -746,7 +746,14 @@ namespace TMSim.UI
             if (t3d.ShowDialog() == true)
             {
                 char newBlank = t3d.Blank;
-                TM = new Transformation3().Execute(TM, newBlank);
+                try
+                {
+                    TM = new Transformation3().Execute(TM, newBlank);
+                }
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(WarnSymbolAlreadyExistsText);
+                }
                 OnTMChanged();
             }
         }
@@ -1102,7 +1109,7 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols, TM.InputSymbols);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols);
             if (atd.ShowDialog() == true)
             {
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
@@ -1144,7 +1151,7 @@ namespace TMSim.UI
 
         public void EditTransition(TuringTransition tt)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols, TM.InputSymbols);
+            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols);
             if (atd.ShowDialog() == true)
             {
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
@@ -1231,12 +1238,13 @@ namespace TMSim.UI
 
         public void AddSymbol()
         {
-            AddSymbolDialog asd = new AddSymbolDialog();
-            if (asd.ShowDialog() == true)
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.AddModus = true;
+            if (aersd.ShowDialog() == true)
             {
-                char symbol = asd.Symbol;
-                bool isInputAlphabet = asd.IsInInput;
-                bool isBlankChar = asd.IsBlankChar;
+                char symbol = aersd.Symbol;
+                bool isInputAlphabet = aersd.IsInInput;
+                bool isBlankChar = aersd.IsBlankChar;
 
                 try
                 {
@@ -1254,18 +1262,24 @@ namespace TMSim.UI
             }
         }
 
-        public void EditSymbol(string actSymbol = " ", bool isInput = false, bool isBlank = false)
+        public void EditSymbol(string symbol = " ", bool isInput = false, bool isBlank = false)
         {
-            EditSymbolDialog esd = new EditSymbolDialog(actSymbol.ToCharArray()[0], isInput, isBlank);
-            if (esd.ShowDialog() == true)
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.Symbol = symbol.ToCharArray()[0];
+            aersd.TapeSymbols = TM.TapeSymbols;
+            aersd.IsInInput = isInput;
+            aersd.IsBlankChar = isBlank;
+            aersd.EditModus = true;
+
+            if (aersd.ShowDialog() == true)
             {
-                char symbol = esd.Symbol;
-                bool isInputAlphabet = esd.IsInInput;
-                bool isBlankChar = esd.IsBlankChar;
+                char actSymbol = aersd.Symbol;
+                bool isInputAlphabet = aersd.IsInInput;
+                bool isBlankChar = aersd.IsBlankChar;
 
                 try
                 {
-                    TM.EditSymbol(symbol, isInputAlphabet, isBlankChar);
+                    TM.EditSymbol(actSymbol, isInputAlphabet, isBlankChar);
                 }
                 catch (SymbolDoesNotExistException)
                 {
@@ -1281,15 +1295,29 @@ namespace TMSim.UI
 
         public void RemoveSymbol(string symbol = " ")
         {
-            try
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.Symbol = symbol.ToCharArray()[0];
+            aersd.TapeSymbols = TM.TapeSymbols;
+            aersd.IsInInput = TM.InputSymbols.Contains(symbol.ToCharArray()[0]);
+            aersd.IsBlankChar = TM.BlankChar.Equals(symbol.ToCharArray()[0]);
+            aersd.RemoveModus = true;
+
+            if (aersd.ShowDialog() == true)
             {
-                TM.RemoveSymbol(symbol.ToCharArray()[0]);
+                try
+                {
+                    TM.RemoveSymbol(aersd.Symbol);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                }
+                catch (SymbolCanNotBeInputAndBlankException)
+                {
+                    QuickWarning(WarnSymbolIsInputAndBlankText);
+                }
+                OnTMChanged();
             }
-            catch (SymbolDoesNotExistException)
-            {
-                QuickWarning(SymbolDoesNotExistText);
-            }
-            OnTMChanged();
         }
 
         private void OnDecreaseSpeed()

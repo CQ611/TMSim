@@ -32,10 +32,8 @@ namespace TMSim.UI
         private ViewModel vm;
         private List<ComboBoxItemWrapper> items = new List<ComboBoxItemWrapper>();
 
-        public AddTransitionDialog(List<TuringState> states, TuringTransition tt, List<char> tapeSymbols, List<char> inputSymbols)
+        public AddTransitionDialog(List<TuringState> states, TuringTransition tt, List<char> tapeSymbols)
         {
-            vm = (ViewModel)DataContext;
-
             Init(states, tt.Source, tt.Target, tt.SymbolsRead.Count);
             List<ComboBox> LVitems = new List<ComboBox>();
             for (int i = 0; i < tt.SymbolsRead.Count; i++)
@@ -52,14 +50,12 @@ namespace TMSim.UI
             directions_lst.ItemsSource = LVitems;
             comment_txt.Text = tt.Comment;
 
-            readSymbols_lst.ItemsSource = InputSymbols = inputSymbols;
+            readSymbols_lst.ItemsSource = InputSymbols = tapeSymbols;
             writeSymbols_lst.ItemsSource = TapeSymbols = tapeSymbols;
         }
 
-        public AddTransitionDialog(List<TuringState> states, TuringState source, TuringState target, List<char> tapeSymbols, List<char> inputSymbols, int tapeCount = 1)
+        public AddTransitionDialog(List<TuringState> states, TuringState source, TuringState target, List<char> tapeSymbols, int tapeCount = 1)
         {
-            vm = (ViewModel)DataContext;
-
             Init(states, source, target, tapeCount);
             List<ComboBox> LVitems = new List<ComboBox>();
             for (int i = 0; i < tapeCount; i++)
@@ -75,7 +71,7 @@ namespace TMSim.UI
             }
             directions_lst.ItemsSource = LVitems;
 
-            readSymbols_lst.ItemsSource = InputSymbols = inputSymbols;
+            readSymbols_lst.ItemsSource = InputSymbols = tapeSymbols;
             writeSymbols_lst.ItemsSource = TapeSymbols = tapeSymbols;
         }
 
@@ -95,6 +91,8 @@ namespace TMSim.UI
             items.Add(new ComboBoxItemWrapper("→", TuringTransition.Direction.Right));
             items.Add(new ComboBoxItemWrapper("←", TuringTransition.Direction.Left));
             items.Add(new ComboBoxItemWrapper("•", TuringTransition.Direction.Neutral));
+
+            vm = (ViewModel)DataContext;
         }
 
         private void ok_cmd_Click(object sender, RoutedEventArgs e)
@@ -134,24 +132,6 @@ namespace TMSim.UI
                     dirs.Add((TuringTransition.Direction)box.SelectedValue);
                 }
                 return dirs;
-            }
-        }
-
-        private void addSymbol_bt_Click(object sender, RoutedEventArgs e)
-        {
-            AddSymbolDialog asd = new AddSymbolDialog();
-            if (asd.ShowDialog() == true)
-            {
-                char symbol = asd.Symbol;
-                bool isInputAlphabet = asd.IsInInput;
-
-                TapeSymbols.Add(symbol);
-                if (isInputAlphabet) { InputSymbols.Add(symbol); }
-
-                readSymbols_lst.ItemsSource = InputSymbols;
-                readSymbols_lst.Items.Refresh();
-                writeSymbols_lst.ItemsSource = TapeSymbols;
-                writeSymbols_lst.Items.Refresh();
             }
         }
     }

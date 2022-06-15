@@ -44,7 +44,6 @@
         <WrapPanel Grid.Row="3" Grid.ColumnSpan="3" HorizontalAlignment="Center" Margin="0,5,0,5">
             <Button IsDefault="True" x:Name="ok_cmd" Click="ok_cmd_Click" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupOKText}"></Button>
             <Button IsCancel="True" MinWidth="60" Margin="0,0,10,0" Content="{Binding PopupCancelText}"></Button>
-            <Button x:Name="addSymbol_bt" MinWidth="60" Content="{Binding PopupAddSymbolText}" Click="addSymbol_bt_Click"/>
         </WrapPanel>
 
         <Label x:Name="directions_lbl" Content="{Binding DirectionsText}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Margin="0,0,0,0" Height="26" Width="82"/>
