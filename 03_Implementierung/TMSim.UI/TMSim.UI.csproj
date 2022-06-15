@@ -151,6 +151,9 @@
     <None Update="Examples\example_transitionAlreadyExists.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\test_examples\test_blankCharMustBeSet.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\test_examples\test_invalidTapeNumberInDefinition1.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -158,6 +161,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\test_examples\test_invalidTapeNumberInDefinition3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\test_noStarteState.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\test_examples\test_readSymbolDoesNotExist.tmsim">
@@ -169,10 +175,19 @@
     <None Update="Examples\test_examples\test_stateAlreadyExists.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\test_examples\test_symbolAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\test_symbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\test_examples\test_targetStateDoesNotExist.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\test_examples\test_transitionAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\test_transitionNotFound.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\test_examples\test_writeSymbolDoesNotExist.tmsim">

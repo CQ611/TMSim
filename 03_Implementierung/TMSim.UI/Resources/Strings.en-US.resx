@@ -513,4 +513,10 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_Arrange" xml:space="preserve">
     <value>Arrange</value>
   </data>
+  <data name="TEXT_Warn_SymbolAlreadyExists" xml:space="preserve">
+    <value>At least one symbol in the tape alphabet appears twice!</value>
+  </data>
+  <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
+    <value>Not all symbols that the turing machine uses are part of the input alphabet!</value>
+  </data>
 </root>
