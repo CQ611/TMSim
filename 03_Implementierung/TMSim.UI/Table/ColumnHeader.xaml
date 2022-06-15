@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="80">
     <Border Background="White" BorderBrush="Black" BorderThickness="2">
-        <Label x:Name="LabelSymbol" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" FontSize="12"/>
+        <Label x:Name="LabelSymbol" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" FontSize="16"/>
     </Border>
 
     <UserControl.ContextMenu>

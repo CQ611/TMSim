@@ -31,7 +31,7 @@ namespace TMSim.Core
             CurrentState = null;
             EndStates = new List<TuringState>();
             Transitions = new List<TuringTransition>();
-            Tapes = new List<TuringTape> { new TuringTape("", BlankChar)};
+            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
         }
 
         public void ImportFromTextFile(string filePath)
@@ -71,37 +71,45 @@ namespace TMSim.Core
         private void FromJsonString(string jsonString)
         {
             var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
-            if (tm.States == null) {
+            if (tm.States == null)
+            {
                 // States are not defined in inputfile
                 tm.States = new List<State> { };
             }
-            if (tm.EndStates == null) {
+            if (tm.EndStates == null)
+            {
                 // Endstates are not defined in inputfile
                 tm.EndStates = new List<string> { };
             }
-            if (tm.TapeAlphabet == null) {
+            if (tm.TapeAlphabet == null)
+            {
                 // TapeAlphabet is not defined in inputfile
                 tm.TapeAlphabet = "";
             }
-            if (tm.InputAlphabet == null) {
+            if (tm.InputAlphabet == null)
+            {
                 // InputAlphabet is not defined in inputfile
                 tm.InputAlphabet = "";
             }
             TapeAlphabet = new TuringAlphabet("");
             InputAlphabet = new TuringAlphabet("");
-            foreach (char c in tm.TapeAlphabet.ToList()) {
-                 AddSymbol(c, false);
+            foreach (char c in tm.TapeAlphabet.ToList())
+            {
+                AddSymbol(c, false);
             }
-            foreach (char c in tm.InputAlphabet.ToList()) {
+            foreach (char c in tm.InputAlphabet.ToList())
+            {
                 try
                 {
                     EditSymbol(c, true);
                 }
-                catch (SymbolDoesNotExistException) {
+                catch (SymbolDoesNotExistException)
+                {
                     throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
                 }
             }
-            if (InputAlphabet.Symbols.Contains(tm.Blank)) {
+            if (InputAlphabet.Symbols.Contains(tm.Blank))
+            {
                 throw new SymbolCanNotBeInputAndBlankException();
             }
             if (tm.Blank != '\0')
@@ -129,7 +137,8 @@ namespace TMSim.Core
                     Tapes.Add(new TuringTape("", BlankChar));
                 }
             }
-            else {
+            else
+            {
                 // definition contains no transitions
                 Tapes.Add(new TuringTape("", BlankChar));
             }
@@ -151,16 +160,18 @@ namespace TMSim.Core
             ImportExportStructure importExportStructure = new ImportExportStructure(this);
             string jsonString = JsonConvert.SerializeObject(importExportStructure, Formatting.Indented);
             System.IO.File.WriteAllText(filePath, jsonString);
-            
-           
+
+
         }
 
         public bool AdvanceState()
         {
-            if (BlankChar == '\0') {
+            if (BlankChar == '\0')
+            {
                 throw new BlankCharMustBeSetException();
             }
-            if (StartState == null) {
+            if (StartState == null)
+            {
                 throw new NoStartStateException();
             }
             try
@@ -183,10 +194,13 @@ namespace TMSim.Core
 
         public void Reset()
         {
-            CurrentState = StartState;
-            foreach (TuringTape tape in Tapes) {
-                tape.Content = "";
+            List<TuringTape> newTapes = new List<TuringTape>();
+            foreach (TuringTape _ in Tapes)
+            {
+                newTapes.Add(new TuringTape("", BlankChar));
             }
+            Tapes = newTapes;
+            CurrentState = StartState;
         }
 
         public bool CheckIsEndState()
@@ -212,11 +226,12 @@ namespace TMSim.Core
         {
             foreach (TuringState state in States) if (state.Identifier == ts.Identifier) throw new StateAlreadyExistsException();
             States.Add(ts);
-            if (ts.IsStart) {
-                if (StartState != null) StartState.IsStart = false; 
-                StartState = ts; 
+            if (ts.IsStart)
+            {
+                if (StartState != null) StartState.IsStart = false;
+                StartState = ts;
             }
-          
+
             if (ts.IsAccepting) { EndStates.Add(ts); }
             Reset();
         }
@@ -293,16 +308,21 @@ namespace TMSim.Core
             tt.Source.OutgoingTransitions.Remove(tt);
             tt.Target.IncomingTransitions.Remove(tt);
             Transitions.Remove(tt);
-            if (removeUnusedSymbols) {
-                foreach (char symbolToRemove in tt.SymbolsRead) {
+            if (removeUnusedSymbols)
+            {
+                foreach (char symbolToRemove in tt.SymbolsRead)
+                {
                     bool shouldBeRemoved = true;
-                    foreach (TuringTransition transition in Transitions) {
-                        if (tt.SymbolsRead.Contains(symbolToRemove) || tt.SymbolsWrite.Contains(symbolToRemove)) { 
+                    foreach (TuringTransition transition in Transitions)
+                    {
+                        if (tt.SymbolsRead.Contains(symbolToRemove) || tt.SymbolsWrite.Contains(symbolToRemove))
+                        {
                             shouldBeRemoved = false;
                             break;
                         }
                     }
-                    if (shouldBeRemoved) {
+                    if (shouldBeRemoved)
+                    {
                         RemoveSymbol(symbolToRemove);
                     }
                 }
@@ -310,46 +330,35 @@ namespace TMSim.Core
             Reset();
         }
 
-        public void AddSymbol(char c, bool isInInput, bool isBlank=false)
+        public void AddSymbol(char c, bool isInInput, bool isBlank = false)
         {
             if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (TapeAlphabet.Symbols.Contains(c)) throw new SymbolAlreadyExistsException();
-            else {
+            else
+            {
                 TapeAlphabet.Symbols.Add(c);
                 if (isInInput) InputAlphabet.Symbols.Add(c);
-                if (isBlank) {
+                if (isBlank)
+                {
                     BlankChar = c;
-                    if (Tapes.Count() == 0) Tapes.Add(new TuringTape("", BlankChar));
-                    else {
-                        List<TuringTape> newTapes = new List<TuringTape>();
-                        foreach (TuringTape _ in Tapes) {
-                            newTapes.Add(new TuringTape("", BlankChar));
-                        }
-                        Tapes = newTapes;
-                    }
                 }
             }
             Reset();
         }
 
-        public void EditSymbol(char c, bool isInInput, bool isBlank=false)
+        public void EditSymbol(char c, bool isInInput, bool isBlank = false)
         {
-            if(!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
+            if (!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
             if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (!InputAlphabet.Symbols.Contains(c) && TapeAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
             else if (InputAlphabet.Symbols.Contains(c) && !isInInput) InputAlphabet.Symbols.Remove(c);
-            if (isBlank) {
+            if (isBlank)
+            {
                 BlankChar = c;
-                if (Tapes.Count() == 0) Tapes.Add(new TuringTape("", BlankChar));
-                else
-                {
-                    List<TuringTape> newTapes = new List<TuringTape>();
-                    foreach (TuringTape _ in Tapes)
-                    {
-                        newTapes.Add(new TuringTape("", BlankChar));
-                    }
-                    Tapes = newTapes;
-                }
+            }
+            if(isBlank == false && c == BlankChar)
+            {
+                BlankChar = '\0';
             }
             Reset();
         }
@@ -360,20 +369,17 @@ namespace TMSim.Core
             if (InputAlphabet.Symbols.Contains(c)) InputAlphabet.Symbols.Remove(c);
             if (TapeAlphabet.Symbols.Contains(c)) TapeAlphabet.Symbols.Remove(c);
             List<TuringTransition> TransitionsToRemove = new List<TuringTransition>();
-            foreach (TuringTransition tt in Transitions) 
+            foreach (TuringTransition tt in Transitions)
             {
                 if (tt.SymbolsRead.Contains(c) || tt.SymbolsWrite.Contains(c)) TransitionsToRemove.Add(tt);
             }
-            foreach (TuringTransition tt in TransitionsToRemove) {
+            foreach (TuringTransition tt in TransitionsToRemove)
+            {
                 RemoveTransition(tt);
             }
-            if (c == BlankChar) {
+            if (c == BlankChar)
+            {
                 BlankChar = '\0';
-                List<TuringTape> newTapes = new List<TuringTape>();
-                foreach (TuringTape _ in Tapes) {
-                    newTapes.Add(new TuringTape("", BlankChar));
-                }
-                Tapes = newTapes;
             }
             Reset();
         }
@@ -396,8 +402,9 @@ namespace TMSim.Core
                 tape.Content = inputWord;
             }
         }
-        private bool checkTransitionAlreadyExists(TuringTransition tt) {
-            foreach (TuringTransition transition in Transitions) 
+        private bool checkTransitionAlreadyExists(TuringTransition tt)
+        {
+            foreach (TuringTransition transition in Transitions)
             {
                 if (transition.Source == tt.Source && transition.SymbolsRead.SequenceEqual(tt.SymbolsRead)) return true;
             }

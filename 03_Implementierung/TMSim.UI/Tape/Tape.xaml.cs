@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace TMSim.UI
@@ -33,10 +34,10 @@ namespace TMSim.UI
             vm.SetBlankEvent += Vm_SetBlankEvent;
             vm.UpdateAlphabetEvent += Vm_UpdateAlphabetEvent;
 
-            Vm_UpdateAlphabetEvent(new List<char>(), new List<char>());
+            Vm_UpdateAlphabetEvent(new List<char>(), new List<char>(), new Char());
         }
 
-        private void Vm_UpdateAlphabetEvent(List<char> tapeAlphabet, List<char> inputAlphabet)
+        private void Vm_UpdateAlphabetEvent(List<char> tapeAlphabet, List<char> inputAlphabet, char blank)
         {
             alphabet_tb.Inlines.Clear();
             bool firstRun = true;
@@ -54,15 +55,23 @@ namespace TMSim.UI
             {
                 if (!inputAlphabet.Contains(c))
                 {
-                    if (!firstRun)
+                    if (c != blank)
                     {
-                        alphabet_tb.Inlines.Add(new Run(", "));
-                    }
-                    else firstRun = false;
+                        if (!firstRun)
+                        {
+                            alphabet_tb.Inlines.Add(new Run(", "));
+                        }
+                        else firstRun = false;
 
-                    alphabet_tb.Inlines.Add(new Run(c.ToString()));
+                        alphabet_tb.Inlines.Add(new Run(c.ToString()));
+                    }
                 }
             }
+            if (!firstRun)
+            {
+                alphabet_tb.Inlines.Add(new Run(", "));
+            }
+            alphabet_tb.Inlines.Add(new Run(blank.ToString()) { Foreground = Brushes.Red });
             alphabet_tb.Inlines.Add(new Run("}"));
         }
 
