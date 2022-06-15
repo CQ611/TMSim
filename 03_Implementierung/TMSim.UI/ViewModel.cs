@@ -382,6 +382,8 @@ namespace TMSim.UI
         public string WarnBlankCharMustBeSetText { get => Translator.GetString("TEXT_Warn_BlankCharMustBeSet"); set { OnPropertyChanged(nameof(WarnBlankCharMustBeSetText)); } }
         public string WarnNoStartStateText { get => Translator.GetString("TEXT_Warn_NoStartState"); set { OnPropertyChanged(nameof(WarnNoStartStateText)); } }
         public string WarnUnsupportedLanguageText { get => Translator.GetString("TEXT_Warn_UnsupportedLanguage"); set { OnPropertyChanged(nameof(WarnUnsupportedLanguageText)); } }
+        public string WarnSymbolAlreadyExistsText { get => Translator.GetString("TEXT_Warn_SymbolAlreadyExists"); set { OnPropertyChanged(nameof(WarnSymbolAlreadyExistsText)); } }
+        public string WarnSymbolDoesNotExistText { get => Translator.GetString("TEXT_Warn_SymbolDoesNotExist"); set { OnPropertyChanged(nameof(WarnSymbolDoesNotExistText)); } }
 
 
         private void RefreshTextFromUi()
@@ -471,6 +473,8 @@ namespace TMSim.UI
             WarnBlankCharMustBeSetText = Translator.GetString("TEXT_Warn_BlankCharMustBeSet");
             WarnNoStartStateText = Translator.GetString("TEXT_Warn_NoStartState");
             WarnUnsupportedLanguageText = Translator.GetString("TEXT_Warn_UnsupportedLanguage");
+            WarnSymbolAlreadyExistsText = Translator.GetString("TEXT_Warn_SymbolAlreadyExists");
+            WarnSymbolDoesNotExistText = Translator.GetString("TEXT_Warn_SymbolDoesNotExist");
 
             TranslateHelpWindow();
             TranslateCurrentInfo();
@@ -832,7 +836,14 @@ namespace TMSim.UI
                 {
                     QuickWarning(WarnSymbolIsInputAndBlankText);
                 }
-
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(WarnSymbolAlreadyExistsText);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(WarnSymbolDoesNotExistText);
+                }
 
                 DeleteTapeContent();
                 OnTMChanged();
@@ -918,6 +929,14 @@ namespace TMSim.UI
             catch (SymbolCanNotBeInputAndBlankException)
             {
                 QuickWarning(WarnSymbolIsInputAndBlankText);
+            }
+            catch (SymbolAlreadyExistsException)
+            {
+                QuickWarning(WarnSymbolAlreadyExistsText);
+            }
+            catch (SymbolDoesNotExistException)
+            {
+                QuickWarning(WarnSymbolDoesNotExistText);
             }
 
             DeleteTapeContent();
@@ -1099,9 +1118,25 @@ namespace TMSim.UI
                 {
                     QuickWarning(TransitionExistsText);
                 }
-                catch (ReadSymbolDoesNotExistException)
+                catch (ReadSymbolDoesNotExistException e)
                 {
-                    QuickWarning(SymbolDoesNotExistText);
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
                 }
                 OnTMChanged();
             }
@@ -1115,6 +1150,8 @@ namespace TMSim.UI
                 atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
                 atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
 
+                // This function calls TM.RemoveTransition and TM.AddTransition so their exceptions must be
+                // caught here too
                 try
                 {
                     TM.EditTransition(tt, new TuringTransition(
@@ -1125,9 +1162,29 @@ namespace TMSim.UI
                 {
                     QuickWarning(TransitionExistsText);
                 }
-                catch (ReadSymbolDoesNotExistException)
+                catch (ReadSymbolDoesNotExistException e)
                 {
-                    QuickWarning(SymbolDoesNotExistText);
+                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                }
+                catch (WriteSymbolDoesNotExistException e)
+                {
+                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                }
+                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                {
+                    QuickWarning(InvalidTapeNumberInDefinitionText);
+                }
+                catch (SourceStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(SourceStateDoesNotExistText);
+                }
+                catch (TargetStateOfTransitionDoesNotExistException)
+                {
+                    QuickWarning(TargetStateDoesNotExistText);
+                }
+                catch (TransitionDoesNotExistException)
+                {
+                    QuickWarning(TransitionDoesNotExistText);
                 }
                 OnTMChanged();
             }

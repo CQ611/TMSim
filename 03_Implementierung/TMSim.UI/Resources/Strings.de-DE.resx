@@ -513,4 +513,10 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   <data name="TEXT_Arrange" xml:space="preserve">
     <value>Anordnen</value>
   </data>
+  <data name="TEXT_Warn_SymbolAlreadyExists" xml:space="preserve">
+    <value>Im Bandalphabet ist mindestens ein Zeichen doppelt!</value>
+  </data>
+  <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
+    <value>Nicht alle Zeichen die die Turingmaschine verwendet sind im Bandalphabet vorhanden!</value>
+  </data>
 </root>
