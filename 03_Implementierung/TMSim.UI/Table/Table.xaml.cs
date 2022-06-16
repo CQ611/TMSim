@@ -84,9 +84,9 @@ namespace TMSim.UI
             vm.RemoveSymbol(symbol);
         }
 
-        private void TableCell_AddTransitionEvent()
+        private void TableCell_AddTransitionEvent(string identifier, string symbolRead)
         {
-            vm.AddTransition();
+            vm.AddTransition(identifier, symbolRead);
         }
 
         private void TableCell_EditTransitionEvent(string identifier, string symbolRead)
@@ -199,9 +199,13 @@ namespace TMSim.UI
 
         private void SetTableCellsToNewRow()
         {
+            string state = rowHeaders.Last().Identifier;
+
             for (int i = 0; i < columnHeaders.Count(); i++)
             {
-                tableCells.Add(new TableCell());
+                string symbol = columnHeaders[i].Symbol;
+
+                tableCells.Add(new TableCell(state, symbol));
                 TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
                 Grid.SetRow(tableCells[tableCells.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
                 Grid.SetColumn(tableCells[tableCells.Count() - 1], i + 1);
@@ -210,9 +214,13 @@ namespace TMSim.UI
 
         private void SetTableCellsToNewColumn()
         {
+            string symbol = columnHeaders.Last().Symbol;
+
             for (int i = 0; i < rowHeaders.Count(); i++)
             {
-                tableCells.Add(new TableCell());
+                string state = rowHeaders[i].Identifier;
+
+                tableCells.Add(new TableCell(state, symbol));
                 TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
                 Grid.SetRow(tableCells[tableCells.Count() - 1], i + 1);
                 Grid.SetColumn(tableCells[tableCells.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);

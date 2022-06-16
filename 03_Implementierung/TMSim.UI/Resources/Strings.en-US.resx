@@ -210,8 +210,8 @@
   <data name="TEXT_Comment" xml:space="preserve">
     <value>Comment</value>
   </data>
-  <data name="TEXT_Directions" xml:space="preserve">
-    <value>Directions</value>
+  <data name="TEXT_Direction" xml:space="preserve">
+    <value>Direction</value>
   </data>
   <data name="TEXT_ReadSymbols" xml:space="preserve">
     <value>Read symbols</value>

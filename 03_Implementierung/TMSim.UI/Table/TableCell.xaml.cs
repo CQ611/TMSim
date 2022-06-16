@@ -18,7 +18,7 @@ namespace TMSim.UI
     /// </summary>
     public partial class TableCell : UserControl
     {
-        public delegate void AddTransition();
+        public delegate void AddTransition(string identifier, string symbolRead);
         public static event AddTransition AddTransitionEvent;
 
         public delegate void EditTransition(string identifier, string symbolRead);
@@ -143,12 +143,15 @@ namespace TMSim.UI
 
         private void SetCellText()
         {
-            TransitionText.Content = SymbolWrite + ", " + Direction + ", " + TargetState;
+            if ((SymbolWrite + Direction + TargetState).Length != 0)
+                TransitionText.Content = SymbolWrite + ", " + Direction + ", " + TargetState;
         }
 
-        public TableCell()
+        public TableCell(string sourceState, string symbolRead)
         {
             InitializeComponent();
+            SourceState = sourceState;
+            SymbolRead = symbolRead;
         }
 
         public TableCell(string sourceState, string targetState, string direction, string symbolWrite, string symbolRead, bool highlight)
@@ -165,7 +168,7 @@ namespace TMSim.UI
 
         private void add_transition_click(object sender, RoutedEventArgs e)
         {
-            AddTransitionEvent?.Invoke();
+            AddTransitionEvent?.Invoke(SourceState, SymbolRead);
         }
 
         private void edit_transition_click(object sender, RoutedEventArgs e)
