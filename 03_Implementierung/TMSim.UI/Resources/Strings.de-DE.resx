@@ -210,8 +210,8 @@
   <data name="TEXT_Comment" xml:space="preserve">
     <value>Kommentar</value>
   </data>
-  <data name="TEXT_Directions" xml:space="preserve">
-    <value>Richtungen</value>
+  <data name="TEXT_Direction" xml:space="preserve">
+    <value>Richtung</value>
   </data>
   <data name="TEXT_ReadSymbols" xml:space="preserve">
     <value>Lesesymbole</value>
@@ -563,5 +563,8 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   </data>
   <data name="TEXT_HelpWindow_Menu_TuringMachine_Transformation" xml:space="preserve">
     <value>Transformationen erklärt</value>
+  </data>
+  <data name="TEXT_Warn_Transformation1" xml:space="preserve">
+    <value>Transformation 1 kann momentan nicht ausgeführt werden. Bitte überprüfen, ob es einen Startzustand und/oder Endzustand gibt!</value>
   </data>
 </root>

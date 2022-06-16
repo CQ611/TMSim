@@ -226,7 +226,7 @@
     <Page Update="PopupWindows\AddEditRemoveSymbolDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
-    <Page Update="PopupWindows\AddTransitionDialog.xaml">
+    <Page Update="PopupWindows\AddEditTransitionDialog.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
     </Page>
     <Page Update="PopupWindows\EditStateDialog.xaml">
