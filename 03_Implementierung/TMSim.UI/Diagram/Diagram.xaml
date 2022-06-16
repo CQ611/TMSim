@@ -15,10 +15,6 @@
     </Grid>
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
-            <MenuItem Header="{Binding AddSymbolText}" Click="AddSymbol_Click"/> 
-            <MenuItem Header="{Binding EditSymbolText}" Click="EditSymbol_Click"/>
-            <MenuItem Header="{Binding RemoveSymbolText}" Click="RemoveSymbol_Click"/>
-            <Separator/>
             <MenuItem x:Name="add_state_btn" Header="{Binding AddStateText}" Click="add_state_btn_Click"/>
             <MenuItem x:Name="edit_state_btn" Header="{Binding EditStateText}" Click="edit_state_btn_Click"/>
             <MenuItem x:Name="remove_state_btn" Header="{Binding RemoveStateText}" Click="remove_state_btn_Click"/>
@@ -26,6 +22,10 @@
             <MenuItem x:Name="add_transition_btn" Header="{Binding AddTransitionText}" Click="add_transition_btn_Click"/>
             <MenuItem x:Name="edit_transition_btn" Header="{Binding EditTransitionText}" Click="edit_transition_btn_Click"/>
             <MenuItem x:Name="remove_transition_btn" Header="{Binding RemoveTransitionText}" Click="remove_transition_btn_Click"/>
+            <Separator/>
+            <MenuItem Header="{Binding AddSymbolText}" Click="AddSymbol_Click"/> 
+            <MenuItem Header="{Binding EditSymbolText}" Click="EditSymbol_Click"/>
+            <MenuItem Header="{Binding RemoveSymbolText}" Click="RemoveSymbol_Click"/>
             <Separator/>
             <MenuItem Header="{Binding ArrangeText}" Click="arrange_btn_Click"/>
             <MenuItem Header="{Binding AnimateText}" IsChecked="{Binding Path=AnimateDiagram, Mode=TwoWay}" IsCheckable="True"/>
