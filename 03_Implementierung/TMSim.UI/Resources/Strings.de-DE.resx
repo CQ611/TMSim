@@ -210,8 +210,8 @@
   <data name="TEXT_Comment" xml:space="preserve">
     <value>Kommentar</value>
   </data>
-  <data name="TEXT_Directions" xml:space="preserve">
-    <value>Richtungen</value>
+  <data name="TEXT_Direction" xml:space="preserve">
+    <value>Richtung</value>
   </data>
   <data name="TEXT_ReadSymbols" xml:space="preserve">
     <value>Lesesymbole</value>

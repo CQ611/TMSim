@@ -320,7 +320,7 @@ namespace TMSim.UI
         public string SourceStateText { get => Translator.GetString("TEXT_SourceState"); set { OnPropertyChanged(nameof(SourceStateText)); } }
         public string TargetStateText { get => Translator.GetString("TEXT_TargetState"); set { OnPropertyChanged(nameof(TargetStateText)); } }
         public string CommentText { get => Translator.GetString("TEXT_Comment"); set { OnPropertyChanged(nameof(CommentText)); } }
-        public string DirectionsText { get => Translator.GetString("TEXT_Directions"); set { OnPropertyChanged(nameof(DirectionsText)); } }
+        public string DirectionText { get => Translator.GetString("TEXT_Direction"); set { OnPropertyChanged(nameof(DirectionText)); } }
         public string PlayTooltip { get => Translator.GetString("TOOLTIP_Play"); set { OnPropertyChanged(nameof(PlayTooltip)); } }
         public string PauseTooltip { get => Translator.GetString("TOOLTIP_Pause"); set { OnPropertyChanged(nameof(PauseTooltip)); } }
         public string StopTooltip { get => Translator.GetString("TOOLTIP_Stop"); set { OnPropertyChanged(nameof(StopTooltip)); } }
@@ -1109,91 +1109,177 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols);
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = source,
+                TargetState = target
+            };
+
             if (atd.ShowDialog() == true)
             {
-                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
+                {
+                    var tt = new TuringTransition(atd.SourceState,
+                                                  atd.TargetState,
+                                                  new List<char>() { (char)atd.ReadSymbol },
+                                                  new List<char>() { (char)atd.WriteSymbol },
+                                                  new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                  atd.Comment);
 
-                try
-                {
-                    TM.AddTransition(new TuringTransition(
-                        atd.Source, atd.Target, atd.SymbolsRead,
-                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                    try
+                    {
+                        TM.AddTransition(tt);
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (TransitionAlreadyExistsException)
+            }
+        }
+
+        public void AddTransition(string identifier, string symbolRead)
+        {
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = TM.States.FirstOrDefault(o => o.Identifier == identifier),
+                ReadSymbol = symbolRead.Length == 1 ? (char?)symbolRead[0] : null
+            };
+
+            if (atd.ShowDialog() == true)
+            {
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
                 {
-                    QuickWarning(TransitionExistsText);
+                    var tt = new TuringTransition(atd.SourceState,
+                                                  atd.TargetState,
+                                                  new List<char>() { (char)atd.ReadSymbol },
+                                                  new List<char>() { (char)atd.WriteSymbol },
+                                                  new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                  atd.Comment);
+
+                    try
+                    {
+                        TM.AddTransition(tt);
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (ReadSymbolDoesNotExistException e)
-                {
-                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
-                }
-                catch (WriteSymbolDoesNotExistException e)
-                {
-                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
-                }
-                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                }
-                catch (SourceStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(SourceStateDoesNotExistText);
-                }
-                catch (TargetStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(TargetStateDoesNotExistText);
-                }
-                OnTMChanged();
             }
         }
 
         public void EditTransition(TuringTransition tt)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols);
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = tt.Source,
+                TargetState = tt.Target,
+                ReadSymbol = tt.SymbolsRead[0],
+                WriteSymbol = tt.SymbolsWrite[0],
+                Direction = tt.MoveDirections[0],
+                Comment = tt.Comment
+            };
+
             if (atd.ShowDialog() == true)
             {
-                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-
-                // This function calls TM.RemoveTransition and TM.AddTransition so their exceptions must be
-                // caught here too
-                try
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
                 {
-                    TM.EditTransition(tt, new TuringTransition(
-                        atd.Source, atd.Target, atd.SymbolsRead,
-                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                    // This function calls TM.RemoveTransition and TM.AddTransition so their exceptions must be
+                    // caught here too
+                    try
+                    {
+                        TM.EditTransition(tt, new TuringTransition(atd.SourceState,
+                                                                   atd.TargetState,
+                                                                   new List<char>() { (char)atd.ReadSymbol },
+                                                                   new List<char>() { (char)atd.WriteSymbol },
+                                                                   new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                                   atd.Comment));
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    catch (TransitionDoesNotExistException)
+                    {
+                        QuickWarning(TransitionDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (TransitionAlreadyExistsException)
-                {
-                    QuickWarning(TransitionExistsText);
-                }
-                catch (ReadSymbolDoesNotExistException e)
-                {
-                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
-                }
-                catch (WriteSymbolDoesNotExistException e)
-                {
-                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
-                }
-                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                }
-                catch (SourceStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(SourceStateDoesNotExistText);
-                }
-                catch (TargetStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(TargetStateDoesNotExistText);
-                }
-                catch (TransitionDoesNotExistException)
-                {
-                    QuickWarning(TransitionDoesNotExistText);
-                }
-                OnTMChanged();
             }
         }
 
