@@ -105,7 +105,8 @@ namespace TMSim.Core
         }
         public bool IsExecutable(TuringMachine tm)
         {
-            return true;
+            if (tm.EndStates.Count > 0 && tm.StartState.IsStart) return true;
+            return false;
         }
     }
 }
