@@ -360,6 +360,7 @@ namespace TMSim.UI
         public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
         public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
         public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
+        public string WarnTransformation1Text { get => Translator.GetString("TEXT_Warn_Transformation1"); set { OnPropertyChanged(nameof(WarnTransformation1Text)); } }
         public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { OnPropertyChanged(nameof(WarnTransformation4Text)); } }
         public string WarnTransformation5Text { get => Translator.GetString("TEXT_Warn_Transformation5"); set { OnPropertyChanged(nameof(WarnTransformation5Text)); } }
         public string WarnMemoryText { get => Translator.GetString("TEXT_Warn_Memory"); set { OnPropertyChanged(nameof(WarnMemoryText)); } }
@@ -451,6 +452,7 @@ namespace TMSim.UI
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
+            WarnTransformation1Text = Translator.GetString("TEXT_Warn_Transformation1");
             WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
             WarnTransformation5Text = Translator.GetString("TEXT_Warn_Transformation5");
             WarnMemoryText = Translator.GetString("TEXT_Warn_Memory");
@@ -730,8 +732,15 @@ namespace TMSim.UI
 
         private void OnTransformation1()
         {
-            TM = new Transformation1().Execute(TM);
-            OnTMChanged();
+            if (new Transformation1().IsExecutable(TM))
+            {
+                TM = new Transformation1().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation1Text);
+            }
         }
 
         private void OnTransformation2()

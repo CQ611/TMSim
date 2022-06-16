@@ -519,4 +519,7 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
     <value>Not all symbols that the turing machine uses are part of the input alphabet!</value>
   </data>
+  <data name="TEXT_Warn_Transformation1" xml:space="preserve">
+    <value>Transformation 1 can not be executed currently. Please check if there is at least an startstate and/or endstate</value>
+  </data>
 </root>
