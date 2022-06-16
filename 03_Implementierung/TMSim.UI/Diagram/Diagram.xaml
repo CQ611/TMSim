@@ -8,10 +8,16 @@
              d:DesignHeight="450" d:DesignWidth="700"
              MouseLeftButtonDown="UserControl_MouseLeftButtonDown" MouseLeftButtonUp="UserControl_MouseLeftButtonUp"
              MouseRightButtonDown="UserControl_MouseRightButtonDown" MouseRightButtonUp="UserControl_MouseRightButtonUp"
-             MouseLeave="UserControl_MouseLeave"
+             MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave"
+             MouseMove="UserControl_MouseMove"
              >
     <Grid>
-        <Canvas/>
+        <Canvas x:Name="bg"/>
+        <Popup Name="myToolTip" IsOpen="False" Placement="Relative" HorizontalOffset="0" VerticalOffset="0" PlacementTarget="{Binding ElementName=bg}">
+            <Border BorderBrush="Gray" BorderThickness="1" >
+                <TextBlock Name="myToolTipText"  Background="WhiteSmoke" Padding="3,1" TextWrapping="Wrap"/>
+            </Border>
+        </Popup>
     </Grid>
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">

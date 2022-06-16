@@ -31,8 +31,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <Label Name="symbol_lbl" Target="{Binding symbol_txt}" Grid.Column="0" Content="{Binding PopupSymbolText}" VerticalContentAlignment="Center"/>
-            <TextBox Name="symbol_txt" PreviewTextInput="symbol_PreviewTextInput" Grid.Column="1" Text="" Margin="5,0,10,0" MaxLength="1" TextChanged="symbol_txt_TextChanged" VerticalAlignment="Center" Visibility="Hidden"/>
+            <Label Name="symbol_lbl" Target="{Binding ElementName=symbol_txt}" Grid.Column="0" Content="{Binding PopupSymbolText}" VerticalContentAlignment="Center"/>
+            <TextBox x:Name="symbol_txt" PreviewTextInput="symbol_PreviewTextInput" Grid.Column="1" Text="" Margin="5,0,10,0" MaxLength="1" TextChanged="symbol_txt_TextChanged" VerticalAlignment="Center" Visibility="Hidden"/>
             <ComboBox Name="symbol_cb" Grid.Column="1" Text="" Margin="5,0,10,0" VerticalAlignment="Center" Visibility="Hidden"/>
         </Grid>
         

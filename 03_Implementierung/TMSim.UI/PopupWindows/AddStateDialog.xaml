@@ -7,7 +7,8 @@
         ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="State" Height="169" Width="259">
+        Title="State"
+        SizeToContent="Height" Width="250">
 
 
     <Window.DataContext>
@@ -17,14 +18,14 @@
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <WrapPanel Grid.Row="0" Grid.Column="1">
@@ -38,7 +39,7 @@
         <TextBox x:Name="ident_txt" Grid.Row="1" Grid.Column="0" Margin="0,0,10,0" MinWidth="130" Text="This should not be visible"/>
 
         <Label x:Name="comment_lbl" Content="{Binding CommentText}" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="2" VerticalAlignment="Top" Grid.RowSpan="2"/>
-        <TextBox x:Name="comment_txt" Margin="0,20,-6,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="comment_txt" MaxWidth="220" Margin="0,20,0,0" Grid.Row="2" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
 
 
         <WrapPanel Grid.ColumnSpan="2" Grid.Row="3" HorizontalAlignment="Center" Margin="0,10,0,0">
