@@ -28,6 +28,7 @@ namespace TMSim.UI
         public string SymbolsRead
         { get { return new string(Transition.SymbolsRead.ToArray()); } }
         public bool IsCurrentTransition { get; set; } = false;
+        public string Comment { get { return Transition.Comment; } }
 
         public string Directions
         {
