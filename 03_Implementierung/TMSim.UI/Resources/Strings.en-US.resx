@@ -519,4 +519,49 @@ You can edit or remove symbols by rightclicking on them.</value>
   <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
     <value>Not all symbols that the turing machine uses are part of the input alphabet!</value>
   </data>
+  <data name="TEXT_HelpWindow_Menu_ChapterSelection" xml:space="preserve">
+    <value>Chapter selection</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Diagram" xml:space="preserve">
+    <value>Diagram</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Introduction" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program_GeneralUse" xml:space="preserve">
+    <value>Usage</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program_Shortcuts" xml:space="preserve">
+    <value>Keyboard shortcuts</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddState" xml:space="preserve">
+    <value>Adding a state</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddSymbol" xml:space="preserve">
+    <value>Adding a symbol</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddTransition" xml:space="preserve">
+    <value>Adding a transition</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_Explanation" xml:space="preserve">
+    <value>Explanation</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_Goal" xml:space="preserve">
+    <value>Goal</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine" xml:space="preserve">
+    <value>Turing Machine</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine_Explanation" xml:space="preserve">
+    <value>Turing Machine explained</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine_Transformation" xml:space="preserve">
+    <value>Transformations explained</value>
+  </data>
 </root>

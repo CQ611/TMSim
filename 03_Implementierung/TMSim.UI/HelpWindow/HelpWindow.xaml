@@ -25,6 +25,35 @@
                     <DockPanel HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
+            <MenuItem Header="{Binding HelpWindowChapterSelectionText}">
+                <MenuItem Header="{Binding HelpWindowIntroductionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="0"/>
+                
+                <MenuItem Header="{Binding HelpWindowProgramText}">
+                    <MenuItem Header="{Binding HelpWindowProgramGeneralUseText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="1"/>
+                    <MenuItem Header="{Binding HelpWindowProgramShortcutsText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="2"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowTuringMachineText}">
+                    <MenuItem Header="{Binding HelpWindowTuringMachineExplanationText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="3"/>
+                    <MenuItem Header="{Binding HelpWindowTuringMachineTransformationText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="4"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowTableText}">
+                    <MenuItem Header="{Binding HelpWindowTableDiagramExplanationText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="5"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddSymbolText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="6"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddStateText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="7"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddTransitionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="8"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramGoalText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="9"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowDiagramText}">
+                    <MenuItem Header="{Binding HelpWindowTableDiagramExplanationText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="10"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddSymbolText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="11"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddStateText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="12"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddTransitionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="13"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramGoalText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="14"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="{Binding LanguageText}">
                 <MenuItem Header="{Binding GermanText}" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
                 <MenuItem Header="{Binding EnglishText}" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>

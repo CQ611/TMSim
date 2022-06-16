@@ -51,6 +51,7 @@ namespace TMSim.UI
         public RelayCommand OpenHelpWindow { get; set; }
         public RelayCommand NextHelpPage { get; set; }
         public RelayCommand PreviousHelpPage { get; set; }
+        public RelayCommand HelpWindowMenuItemChanged { get; set; }
 
         #endregion
 
@@ -384,6 +385,21 @@ namespace TMSim.UI
         public string WarnUnsupportedLanguageText { get => Translator.GetString("TEXT_Warn_UnsupportedLanguage"); set { OnPropertyChanged(nameof(WarnUnsupportedLanguageText)); } }
         public string WarnSymbolAlreadyExistsText { get => Translator.GetString("TEXT_Warn_SymbolAlreadyExists"); set { OnPropertyChanged(nameof(WarnSymbolAlreadyExistsText)); } }
         public string WarnSymbolDoesNotExistText { get => Translator.GetString("TEXT_Warn_SymbolDoesNotExist"); set { OnPropertyChanged(nameof(WarnSymbolDoesNotExistText)); } }
+        public string HelpWindowChapterSelectionText { get => Translator.GetString("TEXT_HelpWindow_Menu_ChapterSelection"); set { OnPropertyChanged(nameof(HelpWindowChapterSelectionText)); } }
+        public string HelpWindowIntroductionText { get => Translator.GetString("TEXT_HelpWindow_Menu_Introduction"); set { OnPropertyChanged(nameof(HelpWindowIntroductionText)); } }
+        public string HelpWindowProgramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program"); set { OnPropertyChanged(nameof(HelpWindowProgramText)); } }
+        public string HelpWindowProgramGeneralUseText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse"); set { OnPropertyChanged(nameof(HelpWindowProgramGeneralUseText)); } }
+        public string HelpWindowProgramShortcutsText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts"); set { OnPropertyChanged(nameof(HelpWindowProgramShortcutsText)); } }
+        public string HelpWindowTuringMachineText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineText)); } }
+        public string HelpWindowTuringMachineExplanationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanationText)); } }
+        public string HelpWindowTuringMachineTransformationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineTransformationText)); } }
+        public string HelpWindowTableText { get => Translator.GetString("TEXT_HelpWindow_Menu_Table"); set { OnPropertyChanged(nameof(HelpWindowTableText)); } }
+        public string HelpWindowTableDiagramExplanationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Explanation"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramExplanationText)); } }
+        public string HelpWindowTableDiagramAddSymbolText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddSymbol"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddSymbolText)); } }
+        public string HelpWindowTableDiagramAddStateText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddStateText)); } }
+        public string HelpWindowTableDiagramAddTransitionText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddTransitionText)); } }
+        public string HelpWindowTableDiagramGoalText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Goal"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramGoalText)); } }
+        public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
 
 
         private void RefreshTextFromUi()
@@ -475,8 +491,23 @@ namespace TMSim.UI
             WarnUnsupportedLanguageText = Translator.GetString("TEXT_Warn_UnsupportedLanguage");
             WarnSymbolAlreadyExistsText = Translator.GetString("TEXT_Warn_SymbolAlreadyExists");
             WarnSymbolDoesNotExistText = Translator.GetString("TEXT_Warn_SymbolDoesNotExist");
+            HelpWindowChapterSelectionText = Translator.GetString("TEXT_HelpWindow_Menu_ChapterSelection");
+            HelpWindowIntroductionText = Translator.GetString("TEXT_HelpWindow_Menu_Introduction");
+            HelpWindowProgramText = Translator.GetString("TEXT_HelpWindow_Menu_Program");
+            HelpWindowProgramGeneralUseText = Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse");
+            HelpWindowProgramShortcutsText = Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts");
+            HelpWindowTuringMachineText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine");
+            HelpWindowTuringMachineExplanationText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation");
+            HelpWindowTuringMachineTransformationText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation");
+            HelpWindowTableText = Translator.GetString("TEXT_HelpWindow_Menu_Table");
+            HelpWindowTableDiagramExplanationText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Explanation");
+            HelpWindowTableDiagramAddSymbolText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddSymbol");
+            HelpWindowTableDiagramAddStateText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState");
+            HelpWindowTableDiagramAddTransitionText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition");
+            HelpWindowTableDiagramGoalText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Goal");
+            HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
 
-            TranslateHelpWindow();
+                TranslateHelpWindow();
             TranslateCurrentInfo();
         }
         #endregion
@@ -533,6 +564,7 @@ namespace TMSim.UI
             OpenHelpWindow = new RelayCommand((o) => { OnOpenHelpWindow(); });
             NextHelpPage = new RelayCommand((o) => { OnNextHelpPage(); });
             PreviousHelpPage = new RelayCommand((o) => { OnPreviousHelpPage(); });
+            HelpWindowMenuItemChanged = new RelayCommand((o) => { OnHelpWindowMenuItemChanged(o); });
 
             TM = new TuringMachine();
 
@@ -985,6 +1017,18 @@ namespace TMSim.UI
 
             if (CurrentPageNumber == 0)
                 PreviousHelpPageAvailable = false;
+        }
+
+        private void OnHelpWindowMenuItemChanged(object o)
+        {
+            try
+            {
+                CurrentPageNumber = Int32.Parse(o.ToString());
+            }
+            catch (FormatException)
+            {
+                CurrentPageNumber = 0;
+            }
         }
 
         private void OnExitApplication()

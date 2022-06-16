@@ -65,6 +65,11 @@ namespace TMSim.UI
             }
             set
             {
+                if (value < 0)
+                    _currentPageNumber = 0;
+                else if (value > lastPageNumber)
+                    _currentPageNumber = lastPageNumber;
+                else
                 _currentPageNumber = value;
 
                 // Update text and image according to new page number
@@ -74,7 +79,7 @@ namespace TMSim.UI
                 OnPropertyChanged(nameof(CurrentPageNumber));
             }
         }
-
+        
         private string _currentImageLanguage = "de-DE";
         public string CurrentImageLanguage
         {
