@@ -28,7 +28,7 @@ namespace TMSim.Core.Tests
 
             
             Assert.AreEqual(5, newTransformatedTuringMachine.States.Count);
-            Assert.AreEqual(30, newTransformatedTuringMachine.Transitions.Count);
+            Assert.AreEqual(40, newTransformatedTuringMachine.Transitions.Count);
         }
 
 
@@ -64,7 +64,7 @@ namespace TMSim.Core.Tests
         }
 
         [TestMethod]
-        public void NewStateHas4IncomingTransitionsAndThreeOutgoingTransitions()
+        public void NewStateHas4IncomingTransitionsAndThirteenOutgoingTransitions()
         {
             //init
             TuringMachine turingMachine = new TuringMachine();
@@ -78,7 +78,7 @@ namespace TMSim.Core.Tests
 
             //assert
             Assert.AreEqual(4, turingState.IncomingTransitions.Count);
-            Assert.AreEqual(3, turingState.OutgoingTransitions.Count);
+            Assert.AreEqual(13, turingState.OutgoingTransitions.Count);
         }
 
 
@@ -102,13 +102,22 @@ namespace TMSim.Core.Tests
             Assert.AreEqual(6, newTransformatedTuringMachine.Transitions.Count);
         }
 
+        [TestMethod]
+        public void AlternativeStartState_isRemovedWhenNoTransitionLeadsToStartState() {
+            TuringMachine turingMachine = new TuringMachine();
+            turingMachine.ImportFromTextFile(@"res\example_transformation_1_no_transition_to_start_state.tmsim");
+            ITransformation transformation = new Transformation1();
 
+            //before act
+            Assert.AreEqual(2, turingMachine.States.Count);
+            Assert.AreEqual(2, turingMachine.Transitions.Count);
 
-        
+            //act
+            TuringMachine newTransformatedTuringMachine = transformation.Execute(turingMachine);
 
-
-
-
-
+            //assert
+            Assert.AreEqual(3, newTransformatedTuringMachine.States.Count);
+            Assert.AreEqual(4, newTransformatedTuringMachine.Transitions.Count);
+        }
     }
 }
