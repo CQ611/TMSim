@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using TMSim.Core.Exceptions;
 
 namespace TMSim.Core
 {
@@ -20,13 +21,13 @@ namespace TMSim.Core
 
             if (IsPointingToStartState() || IsTransitionExitingAcceptingState())
             {
-                Transform(tm);
+                Transform();
             }
 
             return turingMachine;
         }
 
-        private void Transform(TuringMachine tm)
+        private void Transform()
         {
             TuringState alternativeStartState = new TuringState(GetNewIdentifier(), "", false, turingMachine.StartState.IsAccepting);
             turingMachine.AddState(alternativeStartState);
@@ -38,26 +39,40 @@ namespace TMSim.Core
                 turingMachine.AddTransition(new TuringTransition(alternativeStartState, target, transition.SymbolsRead, transition.SymbolsWrite, transition.MoveDirections));
             }
             List<TuringTransition> incomingTransitions = new List<TuringTransition>(turingMachine.StartState.IncomingTransitions);
-            foreach (TuringTransition transition in incomingTransitions) {
-                turingMachine.RemoveTransition(transition);
-                turingMachine.AddTransition(new TuringTransition(turingMachine.StartState, alternativeStartState, transition.SymbolsRead, transition.SymbolsWrite, transition.MoveDirections));
+            if (incomingTransitions.Count() > 0)
+            {
+                foreach (TuringTransition transition in incomingTransitions)
+                {
+                    turingMachine.RemoveTransition(transition);
+                    try
+                    {
+                        turingMachine.AddTransition(new TuringTransition(transition.Source, alternativeStartState, transition.SymbolsRead, transition.SymbolsWrite, transition.MoveDirections));
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        // happens when a transition leads from startState to startState
+                    }
+                }
+            }
+            else { // no transition leads back to startstate
+                turingMachine.RemoveState(alternativeStartState);
             }
             List<TuringState> oldEndStates = new List<TuringState> (turingMachine.EndStates);
             TuringState newEndState = new TuringState(GetNewIdentifier(), "", false, true);
             turingMachine.AddState(newEndState);
 
-            foreach (TuringState endState in tm.EndStates)
+            foreach (TuringState endState in oldEndStates)
             {
                 List<char> symbolsRead = new List<char>();
                 foreach (TuringTransition transition in endState.OutgoingTransitions)
                 {
                     symbolsRead.Add(transition.SymbolsRead[0]);
                 }
-                List<char> newTransitionSymbols = tm.TapeSymbols.Except(symbolsRead).ToList();
+                List<char> newTransitionSymbols = turingMachine.TapeSymbols.Except(symbolsRead).ToList();
                 foreach (char symbol in newTransitionSymbols)
                 {
                     TuringTransition transition = new TuringTransition(
-                        turingMachine.States.Find(item => item.Identifier == endState.Identifier),
+                        endState,
                         newEndState,
                         new List<char>() { symbol },
                         new List<char>() { symbol },
