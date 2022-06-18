@@ -122,11 +122,19 @@ namespace TMSim.UI
             if (highlightedCell != null)
                 highlightedCell.Highlight = false;
 
+            var highlightedRow = rowHeaders.Find(x => x.Highlight);
+            if (highlightedRow != null)
+                highlightedRow.Highlight = false;
+
             if(TM.CurrentTransition != null)
             {
-                var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
+                var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead[0]) && x.TargetState != null);
                 if (cellForHighlight != null && vm.HighlightCurrentState)
                     cellForHighlight.Highlight = true;
+
+                var rowForHighlight = rowHeaders.Find(x => x.Identifier == TM.CurrentTransition.Target.Identifier);
+                if (rowForHighlight != null && vm.HighlightCurrentState)
+                    rowForHighlight.Highlight = true;
             }
         }
 
@@ -170,7 +178,7 @@ namespace TMSim.UI
 
             Grid.SetRow(AddRowButton, TableGrid.RowDefinitions.Count() - 1);
 
-            var newRowHeader = new RowHeader(isStart, isAccepting, identifier);
+            var newRowHeader = new RowHeader(isStart, isAccepting, identifier, false);
             rowHeaders.Add(newRowHeader);
             TableGrid.Children.Add(rowHeaders[rowHeaders.Count() - 1]);
             Grid.SetRow(rowHeaders[rowHeaders.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
