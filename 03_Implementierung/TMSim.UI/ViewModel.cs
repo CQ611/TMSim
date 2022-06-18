@@ -894,8 +894,8 @@ namespace TMSim.UI
                 }
 
                 DeleteTapeContent();
-                OnTMChanged();
                 DData.ArangeFlag = true;
+                OnTMChanged();
                 UploadTextEnabled = true;
             }
         }
@@ -988,6 +988,7 @@ namespace TMSim.UI
             }
 
             DeleteTapeContent();
+            DData.ArangeFlag = true;
             OnTMChanged();
             UploadTextEnabled = true;
         }
