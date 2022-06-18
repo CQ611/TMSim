@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="TEXT_English" xml:space="preserve">
-    <value>Englisch</value>
+    <value>E_nglisch</value>
   </data>
   <data name="TEXT_Examples" xml:space="preserve">
     <value>Beis_piele</value>
@@ -130,7 +130,7 @@
     <value>_Datei</value>
   </data>
   <data name="TEXT_German" xml:space="preserve">
-    <value>Deutsch</value>
+    <value>De_utsch</value>
   </data>
   <data name="TEXT_Highlight" xml:space="preserve">
     <value>Zustand _hervorheben</value>
@@ -139,7 +139,7 @@
     <value>Eingabe_wort: </value>
   </data>
   <data name="TEXT_Language" xml:space="preserve">
-    <value>Sprache</value>
+    <value>_Sprache</value>
   </data>
   <data name="TEXT_New" xml:space="preserve">
     <value>_Neu</value>
@@ -187,22 +187,22 @@
     <value>Tempo:</value>
   </data>
   <data name="TEXT_Transform" xml:space="preserve">
-    <value>Transformieren</value>
+    <value>_Transformieren</value>
   </data>
   <data name="TEXT_Transformation1" xml:space="preserve">
-    <value>Transformation #1</value>
+    <value>Transformation #_1</value>
   </data>
   <data name="TEXT_Transformation2" xml:space="preserve">
-    <value>Transformation #2</value>
+    <value>Transformation #_2</value>
   </data>
   <data name="TEXT_Transformation3" xml:space="preserve">
-    <value>Transformation #3</value>
+    <value>Transformation #_3</value>
   </data>
   <data name="TEXT_Transformation4" xml:space="preserve">
-    <value>Transformation #4</value>
+    <value>Transformation #_4</value>
   </data>
   <data name="TEXT_Transformation5" xml:space="preserve">
-    <value>Transformation #5</value>
+    <value>Transformation #_5</value>
   </data>
   <data name="TEXT_Upload" xml:space="preserve">
     <value>_Laden</value>
@@ -220,7 +220,7 @@
     <value>Ausgangszustand</value>
   </data>
   <data name="TEXT_Tapes" xml:space="preserve">
-    <value> Band/Bänder!</value>
+    <value>Band/Bänder!</value>
   </data>
   <data name="TEXT_TargetState" xml:space="preserve">
     <value>Zielzustand</value>
@@ -274,13 +274,13 @@
     <value>Eingabewort auf das Band hochladen</value>
   </data>
   <data name="TEXT_DiagramView" xml:space="preserve">
-    <value>Diagramm</value>
+    <value>D_iagramm</value>
   </data>
   <data name="TEXT_TableView" xml:space="preserve">
-    <value>Tabelle</value>
+    <value>Tabe_lle</value>
   </data>
   <data name="TEXT_View" xml:space="preserve">
-    <value>Ansicht</value>
+    <value>_Ansicht</value>
   </data>
   <data name="TEXT_InvalidInputWord" xml:space="preserve">
     <value>Das Eingabewort ist nicht gültig!</value>
@@ -357,95 +357,101 @@
   <data name="TEXT_HelpWindow_00" xml:space="preserve">
     <value>Diese Einführung dient dazu Sie mit dem Bedienen der Anwendung und Turingmaschinen vertraut zu machen.</value>
   </data>
-  <data name="TEXT_HelpWindow_01" xml:space="preserve">
-    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit der Tabelle eine neue Turingmaschine erstellen können, die das Eingabewort "ABC" in "123" umwandelt.</value>
+  <data name="TEXT_HelpWindow_07" xml:space="preserve">
+    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit der Tabelle eine neue Turingmaschine erstellen können, die Ihr Eingabewort daraufhin überprüft, ob die Anzahl der eingegebenen Nullen gerade ist oder nicht.</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_00" xml:space="preserve">
     <value>Willkommen zu TMSim</value>
   </data>
-  <data name="TEXT_HelpWindow_Heading_01" xml:space="preserve">
+  <data name="TEXT_HelpWindow_Heading_07" xml:space="preserve">
     <value>Wie man die Tabelle benutzt</value>
   </data>
-  <data name="TEXT_HelpWindow_10" xml:space="preserve">
-    <value>Rechtsklicken Sie auf einen Zustand und wählen Sie "Add Transition".
-Wie man diese neu geöffnete Textbox liest:
-Die Turingmaschine befindet sich in Zustand "Start" und ist aktuell über dem Zeichen "A" auf dem Band. 
-Die Turingmaschine ersetzt "A" durch "1" und bewegt sich eine Zelle nach rechts. 
-Die Turingmaschine ist nun im Zustand "q1".</value>
+  <data name="TEXT_HelpWindow_17" xml:space="preserve">
+    <value>Mit einem Rechtsklick auf einen Zustand öffnet sich ein Menü, über das Sie einen neuen Zustandsübergang hinzufügen können. Sie können auch auf einen Zustand rechtsklicken und diese Taste erst loslassen, wenn Sie Ihren Zielzustand erreicht haben, um direkt in das Popup zu gelangen.
+Wie man das sich nun öffnende Popup liest:
+Die Turingmaschine befindet sich in Zustand "Start" und der Lese-/Schreibkopf ist aktuell über dem Zeichen "0" auf dem Band. 
+Die Turingmaschine ersetzt "0" durch "0" und bewegt sich eine Zelle nach rechts. 
+Die Turingmaschine ist nun im Zustand "q1".
+Der rote Punkt bei (1) signalisiert, dass dieser Zustandsübergang einen Kommentar besitzt. Positionieren Sie Ihre Maus über dem grau hinterlegten Text um ihn anzuzeigen.
+Sie können Zustandübergänge nachträglich über einen Rechtsklick auf den grau hinterlegten Text editieren oder löschen.</value>
   </data>
-  <data name="TEXT_HelpWindow_11" xml:space="preserve">
-    <value>Wenn Ihr Diagramm genauso aussieht, wie hier gezeigt, dann kan die Turingmaschine das Eingabewort "ABC" in "123" umwandeln.
+  <data name="TEXT_HelpWindow_18" xml:space="preserve">
+    <value>Wenn Ihr Diagramm und Alphabet genauso aussieht, wie hier gezeigt, dann kann die Turingmaschine bestimmen, ob Ihr Eingabewort eine gerade oder ungerade Anzahl an Nullen enthält. Ist die Anzahl gerade erreicht Sie einen akzeptierenden Endzustand, ansonsten nicht.
 Da Sie jetzt den Umgang mit dem Diagramm kennen, können Sie sich an komplexere und damit auch interessantere Turingmaschinen wagen.
 Wollen Sie sich inspirieren lassen, dann können Sie in den verfügbaren Beispielen stöbern.</value>
   </data>
-  <data name="TEXT_HelpWindow_02" xml:space="preserve">
-    <value>Mit dem Kontrollkästchen bei (2) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Ist es im Eingabealphabet können Sie es im Eingabewort verwenden und auf das Band schreiben. Andernfalls kann es nur die Turingmaschine auf das Band schreiben.
-Sie können Symbole nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  <data name="TEXT_HelpWindow_08" xml:space="preserve">
+    <value>Mit dem Kontrollkästchen bei (1) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Damit kann es im Eingabewort verwendet werden.
+ Diese Zeichen werden fettgedruckt abgebildet.
+Mit dem Kontrollkästchen bei (2) entscheiden Sie, ob das neue Zeichen das Leerzeichen darstellen soll. Es muss immer ein Leerzeichen explizit von Ihnen festgelegt werden. Dieses Zeichen ist rot gefärbt.
+Sie können Zeichen nachträglich durch einen Rechtsklick auf diese editieren oder löschen.</value>
   </data>
-  <data name="TEXT_HelpWindow_03" xml:space="preserve">
-    <value>Das Kontrollkästchen "Start" legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand sein.
-Das Kontrollkästchen "Akzeptieren" legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben.
-Sie können Zustände nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  <data name="TEXT_HelpWindow_09" xml:space="preserve">
+    <value>Das Kontrollkästchen bei (1) legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand. 
+Das Kontrollkästchen bei (2) legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben. 
+Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren oder löschen.</value>
   </data>
-  <data name="TEXT_HelpWindow_04" xml:space="preserve">
-    <value>Wiederholen Sie die letzten zwei Schritte bis die Tabelle so aussieht.</value>
+  <data name="TEXT_HelpWindow_10" xml:space="preserve">
+    <value>Wiederholen Sie die letzten zwei Schritte bis die Tabelle so aussieht. Der Unterstrich '_' ist hier das Leerzeichen.</value>
   </data>
-  <data name="TEXT_HelpWindow_05" xml:space="preserve">
-    <value>Wie man diese Textbox liest:
-Die Turingmaschine befindet sich in Zustand "Start" und ist aktuell über dem Zeichen "A" auf dem Band. 
-Die Turingmaschine ersetzt "A" durch "1" und bewegt sich eine Zelle nach rechts. 
+  <data name="TEXT_HelpWindow_11" xml:space="preserve">
+    <value>Mit einem Rechtsklick auf eine Zelle können Sie einen Zustandsübergang hinzufügen (funktioniert nicht bei den Zellen ganz oben und ganz links).
+Wie man das sich nun öffnende Popup liest:
+Die Turingmaschine befindet sich im Zustand "Start" und der Lese-/Schreibkopf ist aktuell über dem Zeichen "0" auf dem Band. 
+Die Turingmaschine ersetzt "0" durch "0" und bewegt den Lese-/Schreibkopf eine Zelle nach rechts. 
 Die Turingmaschine ist nun im Zustand "q1".</value>
   </data>
-  <data name="TEXT_HelpWindow_06" xml:space="preserve">
-    <value>Wenn Ihre Tabelle genauso aussieht. wie hier gezeigt, dann kann die Turingmaschine das Eingabewort "ABC" in "123" umwandeln.
+  <data name="TEXT_HelpWindow_12" xml:space="preserve">
+    <value>Wenn Ihre Tabelle genauso aussieht, wie hier gezeigt, dann kann die Turingmaschine bestimmen, ob Ihr Eingabewort eine gerade oder ungerade Anzahl an Nullen enthält. Ist die Anzahl gerade erreicht Sie einen akzeptierenden Endzustand, ansonsten nicht.
 Da Sie jetzt den Umgang mit der Tabelle kennen, können Sie sich an komplexere und damit auch interessantere Turingmaschinen wagen.
 Wollen Sie sich inspirieren lassen, dann können Sie in den verfügbaren Beispielen stöbern.</value>
   </data>
-  <data name="TEXT_HelpWindow_07" xml:space="preserve">
-    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit dem Diagramm eine neue Turingmaschine erstellen können, die das Eingabewort "ABC" in "123" umwandelt.</value>
+  <data name="TEXT_HelpWindow_13" xml:space="preserve">
+    <value>Dieser Abschnitt zeigt Ihnen, wie Sie nur mit dem Diagramm eine neue Turingmaschine erstellen können, die Ihr Eingabewort daraufhin überprüft, ob die Anzahl der eingegebenen Nullen gerade ist oder nicht.</value>
   </data>
-  <data name="TEXT_HelpWindow_08" xml:space="preserve">
-    <value>Mit einem Rechtsklick auf den leeren Platz des Diagramms kann ein neuer Zustand hinzugefügt werden.
-Das Kontrollkästchen "Start" legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand sein.
-Das Kontrollkästchen "Akzeptieren" legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben.
-Sie können Zustände nachträglich durch einen Rechtsklick editieren oder löschen.</value>
+  <data name="TEXT_HelpWindow_14" xml:space="preserve">
+    <value>Mit einem Rechtsklick auf die Fläche des Diagramms öffnet sich ein Menü, über das Sie ein neues Zeichen hinzufügen können.
+Mit dem Kontrollkästchen bei (1) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Damit kann es im Eingabewort verwendet werden.
+ Diese Zeichen werden fettgedruckt abgebildet.
+Mit dem Kontrollkästchen bei (2) entscheiden Sie, ob das neue Zeichen das Leerzeichen darstellen soll. Es muss immer ein Leerzeichen explizit von Ihnen festgelegt werden. Dieses Zeichen ist rot gefärbt.
+Sie können Zeichen nachträglich über das Menü editieren oder löschen.</value>
   </data>
-  <data name="TEXT_HelpWindow_09" xml:space="preserve">
-    <value>Hierfür muss mindestens ein Zustand im Diagramm vorhanden sein.
-Rechtsklicken Sie auf einen Zustand und wählen Sie "Add Transition" (1) aus.
-Klicken Sie nun auf "Symbol hinzufügen" (2).
-Mit dem Kontrollkästchen bei (3) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Ist es im Eingabealphabet können Sie es im Eingabewort verwenden und auf das Band schreiben. Andernfalls kann es nur die Turingmaschine auf das Band schreiben.
-Sie können Symbole nachträglich editieren oder löschen.</value>
+  <data name="TEXT_HelpWindow_15" xml:space="preserve">
+    <value>Mit einem Rechtsklick auf die Fläche des Diagramms öffnet sich ein Menü, über das Sie einen neuen Zustand hinzufügen können.
+Das Kontrollkästchen bei (1) legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand. 
+Das Kontrollkästchen bei (2) legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben.
+Der rote Punkt bei (3) signalisiert, dass dieser Zustand einen Kommentar besitzt. Positionieren Sie Ihre Maus über dem Zustand um ihn anzuzeigen. 
+Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren oder löschen.</value>
   </data>
-  <data name="TEXT_HelpWindow_Heading_10" xml:space="preserve">
+  <data name="TEXT_HelpWindow_Heading_17" xml:space="preserve">
     <value>Hinzufügen eines Zustandsübergangs</value>
   </data>
-  <data name="TEXT_HelpWindow_Heading_11" xml:space="preserve">
+  <data name="TEXT_HelpWindow_Heading_18" xml:space="preserve">
     <value>Endresultat</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_02" xml:space="preserve">
-    <value>Hinzufügen eines Symbols</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_03" xml:space="preserve">
-    <value>Hinzufügen eines Zustands</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_04" xml:space="preserve">
-    <value>Aktuelles Ziel</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_05" xml:space="preserve">
-    <value>Hinzufügen eines Zustandsübergangs</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_06" xml:space="preserve">
-    <value>Endresultat</value>
-  </data>
-  <data name="TEXT_HelpWindow_Heading_07" xml:space="preserve">
-    <value>Wie man das Diagramm benutzt</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_08" xml:space="preserve">
-    <value>Hinzufügen eines Zustands</value>
+    <value>Hinzufügen eines Zeichens</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_09" xml:space="preserve">
-    <value>Hinzufügen eines Symbols</value>
+    <value>Hinzufügen eines Zustands</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_10" xml:space="preserve">
+    <value>Aktuelles Ziel</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_11" xml:space="preserve">
+    <value>Hinzufügen eines Zustandsübergangs</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_12" xml:space="preserve">
+    <value>Endresultat</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_13" xml:space="preserve">
+    <value>Wie man das Diagramm benutzt</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_14" xml:space="preserve">
+    <value>Hinzufügen eines Zeichens</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_15" xml:space="preserve">
+    <value>Hinzufügen eines Zustands</value>
   </data>
   <data name="TEXT_Warn_Memory" xml:space="preserve">
     <value>Das Speichern hat aufgrund eines Fehlers nicht funktioniert.</value>
@@ -467,12 +473,6 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   </data>
   <data name="TEXT_EditTransition" xml:space="preserve">
     <value>Transition bearbeiten</value>
-  </data>
-  <data name="TEXT_NextBtn" xml:space="preserve">
-    <value>Weiter</value>
-  </data>
-  <data name="TEXT_PrevBtn" xml:space="preserve">
-    <value>Zurück</value>
   </data>
   <data name="TEXT_RemoveState" xml:space="preserve">
     <value>Zustand entfernen</value>
@@ -519,7 +519,120 @@ Sie können Symbole nachträglich editieren oder löschen.</value>
   <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
     <value>Nicht alle Zeichen die die Turingmaschine verwendet sind im Bandalphabet vorhanden!</value>
   </data>
+  <data name="TEXT_HelpWindow_Menu_ChapterSelection" xml:space="preserve">
+    <value>_Kapitelauswahl</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Diagram" xml:space="preserve">
+    <value>Zustan_dsdiagramm</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Introduction" xml:space="preserve">
+    <value>_Einführung</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program" xml:space="preserve">
+    <value>_Programm</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program_GeneralUse" xml:space="preserve">
+    <value>_Benutzung</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program_Shortcuts" xml:space="preserve">
+    <value>_Tastenkürzel</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Table" xml:space="preserve">
+    <value>T_abelle</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddState" xml:space="preserve">
+    <value>Zusta_nd hinzufügen</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddCharacter" xml:space="preserve">
+    <value>_Zeichen hinzufügen</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_AddTransition" xml:space="preserve">
+    <value>Zus_tandsübergang hinzufügen</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_Outlook" xml:space="preserve">
+    <value>A_usblick</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_Result" xml:space="preserve">
+    <value>End_resultat</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine" xml:space="preserve">
+    <value>_Turingmaschine</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine_Explanation1" xml:space="preserve">
+    <value>Turingmaschine erklärt (Teil _1)</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine_Transformation" xml:space="preserve">
+    <value>Trans_formationen erklärt</value>
+  </data>
   <data name="TEXT_Warn_Transformation1" xml:space="preserve">
     <value>Transformation 1 kann momentan nicht ausgeführt werden. Bitte überprüfen, ob es einen Startzustand und/oder Endzustand gibt!</value>
+  </data>
+  <data name="TEXT_HelpWindow_01" xml:space="preserve">
+    <value>Hier sehen Sie, wo Sie die wichtigsten Funktionenen dieses Programms finden. Wie Sie Turingmaschinen mittels Tabelle und Diagramm erstellen wird später ausführlich erklärt.</value>
+  </data>
+  <data name="TEXT_HelpWindow_02" xml:space="preserve">
+    <value>Hier sehen Sie ein paar Beispiele für Tastenkürzel. Alle benutzen die "Alt"-Taste und die Taste des unterstrichenen Buchstabens.</value>
+  </data>
+  <data name="TEXT_HelpWindow_03" xml:space="preserve">
+    <value>Hier sehen Sie alle Funktionstasten und deren Funktion.</value>
+  </data>
+  <data name="TEXT_HelpWindow_04" xml:space="preserve">
+    <value>Eine Turingmaschine ist eine abstrakte Maschine die bestimmen kann, ob Ihr Eingabewort teil der Sprache der Maschine ist.
+Sprache: Legt die Reihenfolge fest, in der Zeichen aufeinander folgen.
+Bandalphabet: Alle Zeichen, die die Turingmaschine vom Band lesen und auf dieses schreiben kann.
+Leerzeichen: Spezielles Zeichen, das eine leere Zelle auf dem Band symbolisiert.
+Eingabealphabet: Alle Zeichen, die im Eingabewort vorkommen können (Teil des Bandalphabets).
+Eingabewort: Dieses Wort steht auf dem Band, bevor die Turingmaschine zu arbeiten beginnt.
+Lese-/Schreibkopf: Liest Zeichen vom und schreibt Zeichen auf das Band.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_01" xml:space="preserve">
+    <value>Die wichtigsten Funktionen im Überblick</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_02" xml:space="preserve">
+    <value>Tastenkürzel</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_03" xml:space="preserve">
+    <value>Funktionstasten</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_04" xml:space="preserve">
+    <value>Was ist eine Turingmaschine? (Teil 1)</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_Program_FunctionKeys" xml:space="preserve">
+    <value>_Funktionstasten</value>
+  </data>
+  <data name="TEXT_HelpText" xml:space="preserve">
+    <value>_Hilfe</value>
+  </data>
+  <data name="TEXT_HelpWindow_05" xml:space="preserve">
+    <value>Startzustand: Zustand in dem die Turingmaschine sich befindet, wenn sie beginnt zu arbeiten.
+Endzustand: Zustand in dem die Turingmaschine anhält und überprüft, ob Ihr Eingabewort teil der Sprache der Turingmaschine ist oder nicht.
+Zustandsübergang: Abhängig vom Zeichen unter dem Lese-/Schreibkopf und dem Zustand in dem die Maschine aktuell ist. Ersetzt das Zeichen unter dem Lese-/Schreibkopf, bewegt diesen entweder nach rechts, links oder gar nicht und die Maschine geht dann entweder in einen neuen Zustand über oder bleibt im alten.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_05" xml:space="preserve">
+    <value>Was ist eine Turingmaschine? (Teil 2)</value>
+  </data>
+  <data name="TEXT_HelpWindow_16" xml:space="preserve">
+    <value>Wiederholen Sie die letzten zwei Schritte bis das Diagramm und Alphabet so aussieht. Der Unterstrich '_' ist hier das Leerzeichen.</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_16" xml:space="preserve">
+    <value>Aktuelles Ziel</value>
+  </data>
+  <data name="TEXT_HelpWindow_06" xml:space="preserve">
+    <value>Eine Transformation fügt extra Einschränkungen hinzu, die die Turingmaschine einhalten muss. Das hat keinen Einfluss darauf, ob ein gewisses Eingabewort teil der Sprache der Maschine ist oder nicht.
+Die Turingmaschine kann auf folgende Arten transformiert werden:
+1) Kein Zustandsübergang kann wieder in den Startzustand führen und der Startzustand kann kein Endzustand sein.
+2) Jeder Zustandsübergang muss den Lese-/Schreibkopf entweder nach links oder rechts bewegen.
+3) Sie können ein neues Leerzeichen definieren, welches das alte ersetzt, wenn es geschrieben wird. Das beeinflusst nur Zustandsübergänge und nicht die leeren Zellen links und rechts des Eingabeworts.
+4) Alle Zustandsübergänge werden in eine linke und eine rechte Hälfte aufgeteilt. In der linken sind nur Zustandsübergänge, die den Lese-/Schreibkopf nach links bewegen. (Voraussetzungen: Transformation 1 und 2)
+5) Es gibt genau einen Endzustand. (Voraussetzungen: Mindestens ein Endzustand muss bereits vorhanden sein)</value>
+  </data>
+  <data name="TEXT_HelpWindow_Heading_06" xml:space="preserve">
+    <value>Was ist eine Transformation?</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TableDiagram_CurrentGoal" xml:space="preserve">
+    <value>Aktuelles Z_iel</value>
+  </data>
+  <data name="TEXT_HelpWindow_Menu_TuringMachine_Explanation2" xml:space="preserve">
+    <value>Turingmaschine erklärt (Teil _2)</value>
   </data>
 </root>
