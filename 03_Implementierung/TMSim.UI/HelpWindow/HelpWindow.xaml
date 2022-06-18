@@ -25,6 +25,39 @@
                     <DockPanel HorizontalAlignment="Left"/>
                 </ItemsPanelTemplate>
             </Menu.ItemsPanel>
+            <MenuItem Header="{Binding HelpWindowChapterSelectionText}">
+                <MenuItem Header="{Binding HelpWindowIntroductionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="0"/>
+                
+                <MenuItem Header="{Binding HelpWindowProgramText}">
+                    <MenuItem Header="{Binding HelpWindowProgramGeneralUseText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="1"/>
+                    <MenuItem Header="{Binding HelpWindowProgramShortcutsText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="2"/>
+                    <MenuItem Header="{Binding HelpWindowProgramFunctionKeysText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="3"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowTuringMachineText}">
+                    <MenuItem Header="{Binding HelpWindowTuringMachineExplanation1Text}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="4"/>
+                    <MenuItem Header="{Binding HelpWindowTuringMachineExplanation2Text}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="5"/>
+                    <MenuItem Header="{Binding HelpWindowTuringMachineTransformationText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="6"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowTableText}">
+                    <MenuItem Header="{Binding HelpWindowTableDiagramOutlookText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="7"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddCharacterText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="8"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddStateText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="9"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramCurrentGoalText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="10"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddTransitionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="11"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramResultText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="12"/>
+                </MenuItem>
+                
+                <MenuItem Header="{Binding HelpWindowDiagramText}">
+                    <MenuItem Header="{Binding HelpWindowTableDiagramOutlookText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="13"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddCharacterText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="14"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddStateText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="15"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramCurrentGoalText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="16"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramAddTransitionText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="17"/>
+                    <MenuItem Header="{Binding HelpWindowTableDiagramResultText}" Command="{Binding HelpWindowMenuItemChanged}" CommandParameter="18"/>
+                </MenuItem>
+            </MenuItem>
             <MenuItem Header="{Binding LanguageText}">
                 <MenuItem Header="{Binding GermanText}" Command="{Binding GermanLanguageSelected}" IsChecked="{Binding GermanLanguageIsChecked}" IsCheckable="True"/>
                 <MenuItem Header="{Binding EnglishText}" Command="{Binding EnglishLanguageSelected}" IsChecked="{Binding EnglishLanguageIsChecked}" IsCheckable="True"/>
@@ -47,8 +80,8 @@
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Grid.Column="0" Content="{Binding PrevBtnText}" Width="50" Height="20" HorizontalAlignment="Right" Margin="10" Command="{Binding PreviousHelpPage}" IsEnabled="{Binding PreviousHelpPageAvailable}"/>
-                <Button Grid.Column="1" Content="{Binding NextBtnText}" Width="50" Height="20" HorizontalAlignment="Left" Margin="10" Command="{Binding NextHelpPage}" IsEnabled="{Binding NextHelpPageAvailable}"/>
+                <Button Grid.Column="0" Style="{StaticResource PrevPageButtonStyle}" HorizontalAlignment="Right" Margin="0,0,15,0" Command="{Binding PreviousHelpPage}" IsEnabled="{Binding PreviousHelpPageAvailable}"/>
+                <Button Grid.Column="1" Style="{StaticResource NextPageButtonStyle}" HorizontalAlignment="Left" Margin="15,0,0,0" Command="{Binding NextHelpPage}" IsEnabled="{Binding NextHelpPageAvailable}"/>
             </Grid>
         </Border>
     </Grid>

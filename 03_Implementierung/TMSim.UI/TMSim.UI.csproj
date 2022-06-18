@@ -40,6 +40,20 @@
     <None Remove="Images\HelpWindow_10_en-US.png" />
     <None Remove="Images\HelpWindow_11_de-DE.png" />
     <None Remove="Images\HelpWindow_11_en-US.png" />
+    <None Remove="Images\HelpWindow_12_de-DE.png" />
+    <None Remove="Images\HelpWindow_12_en-US.png" />
+    <None Remove="Images\HelpWindow_13_de-DE.png" />
+    <None Remove="Images\HelpWindow_13_en-US.png" />
+    <None Remove="Images\HelpWindow_14_de-DE.png" />
+    <None Remove="Images\HelpWindow_14_en-US.png" />
+    <None Remove="Images\HelpWindow_15_de-DE.png" />
+    <None Remove="Images\HelpWindow_15_en-US.png" />
+    <None Remove="Images\HelpWindow_16_de-DE.png" />
+    <None Remove="Images\HelpWindow_16_en-US.png" />
+    <None Remove="Images\HelpWindow_17_de-DE.png" />
+    <None Remove="Images\HelpWindow_17_en-US.png" />
+    <None Remove="Images\HelpWindow_18_de-DE.png" />
+    <None Remove="Images\HelpWindow_18_en-US.png" />
     <None Remove="Images\HelpWindow_1_de-DE.bmp" />
     <None Remove="Images\HelpWindow_1_de-DE.jpg" />
     <None Remove="Images\HelpWindow_1_de-DE.png" />
@@ -91,6 +105,20 @@
     <Resource Include="Images\HelpWindow_10_en-US.png" />
     <Resource Include="Images\HelpWindow_11_de-DE.png" />
     <Resource Include="Images\HelpWindow_11_en-US.png" />
+    <Resource Include="Images\HelpWindow_12_de-DE.png" />
+    <Resource Include="Images\HelpWindow_12_en-US.png" />
+    <Resource Include="Images\HelpWindow_13_de-DE.png" />
+    <Resource Include="Images\HelpWindow_13_en-US.png" />
+    <Resource Include="Images\HelpWindow_14_de-DE.png" />
+    <Resource Include="Images\HelpWindow_14_en-US.png" />
+    <Resource Include="Images\HelpWindow_15_de-DE.png" />
+    <Resource Include="Images\HelpWindow_15_en-US.png" />
+    <Resource Include="Images\HelpWindow_16_de-DE.png" />
+    <Resource Include="Images\HelpWindow_16_en-US.png" />
+    <Resource Include="Images\HelpWindow_17_de-DE.png" />
+    <Resource Include="Images\HelpWindow_17_en-US.png" />
+    <Resource Include="Images\HelpWindow_18_de-DE.png" />
+    <Resource Include="Images\HelpWindow_18_en-US.png" />
   </ItemGroup>
 
   <ItemGroup>
