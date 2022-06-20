@@ -40,6 +40,20 @@
     <None Remove="Images\HelpWindow_10_en-US.png" />
     <None Remove="Images\HelpWindow_11_de-DE.png" />
     <None Remove="Images\HelpWindow_11_en-US.png" />
+    <None Remove="Images\HelpWindow_12_de-DE.png" />
+    <None Remove="Images\HelpWindow_12_en-US.png" />
+    <None Remove="Images\HelpWindow_13_de-DE.png" />
+    <None Remove="Images\HelpWindow_13_en-US.png" />
+    <None Remove="Images\HelpWindow_14_de-DE.png" />
+    <None Remove="Images\HelpWindow_14_en-US.png" />
+    <None Remove="Images\HelpWindow_15_de-DE.png" />
+    <None Remove="Images\HelpWindow_15_en-US.png" />
+    <None Remove="Images\HelpWindow_16_de-DE.png" />
+    <None Remove="Images\HelpWindow_16_en-US.png" />
+    <None Remove="Images\HelpWindow_17_de-DE.png" />
+    <None Remove="Images\HelpWindow_17_en-US.png" />
+    <None Remove="Images\HelpWindow_18_de-DE.png" />
+    <None Remove="Images\HelpWindow_18_en-US.png" />
     <None Remove="Images\HelpWindow_1_de-DE.bmp" />
     <None Remove="Images\HelpWindow_1_de-DE.jpg" />
     <None Remove="Images\HelpWindow_1_de-DE.png" />
@@ -91,6 +105,20 @@
     <Resource Include="Images\HelpWindow_10_en-US.png" />
     <Resource Include="Images\HelpWindow_11_de-DE.png" />
     <Resource Include="Images\HelpWindow_11_en-US.png" />
+    <Resource Include="Images\HelpWindow_12_de-DE.png" />
+    <Resource Include="Images\HelpWindow_12_en-US.png" />
+    <Resource Include="Images\HelpWindow_13_de-DE.png" />
+    <Resource Include="Images\HelpWindow_13_en-US.png" />
+    <Resource Include="Images\HelpWindow_14_de-DE.png" />
+    <Resource Include="Images\HelpWindow_14_en-US.png" />
+    <Resource Include="Images\HelpWindow_15_de-DE.png" />
+    <Resource Include="Images\HelpWindow_15_en-US.png" />
+    <Resource Include="Images\HelpWindow_16_de-DE.png" />
+    <Resource Include="Images\HelpWindow_16_en-US.png" />
+    <Resource Include="Images\HelpWindow_17_de-DE.png" />
+    <Resource Include="Images\HelpWindow_17_en-US.png" />
+    <Resource Include="Images\HelpWindow_18_de-DE.png" />
+    <Resource Include="Images\HelpWindow_18_en-US.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -107,6 +135,45 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\asdf_to_Tobi.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\BlankCharMustBeSet.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\InvalidTapeNumberInDefinition1.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\InvalidTapeNumberInDefinition2.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\InvalidTapeNumberInDefinition3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\NoStartState.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\ReadSymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\SourceStateDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\StateAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\SymbolAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\SymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\TargetStateDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\TransitionAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Error Examples\WriteSymbolDoesNotExist.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\examples\example_binaryPalindrome.tmsim">
@@ -172,6 +239,39 @@
     <None Update="Examples\example_transitionAlreadyExists.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\test_examples\BlankCharMustBeSet.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\InvalidTapeNumberInDefinition1.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\InvalidTapeNumberInDefinition2.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\InvalidTapeNumberInDefinition3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\NoStartState.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\ReadSymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\SourceStateDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\StateAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\SymbolAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\SymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\TargetStateDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\test_examples\test_blankCharMustBeSet.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -214,10 +314,49 @@
     <None Update="Examples\test_examples\test_writeSymbolDoesNotExist.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\test_examples\TransitionAlreadyExists.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\test_examples\WriteSymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\test_readSymbolDoesNotExist.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Examples\test_writeSymbolDoesNotExist.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\TM Examples\BinaryPalindrome.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\TM Examples\DecimalToBinary.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\TM Examples\EvenAmountOfZeros.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\TM Examples\MirrorBinaryString.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation1V1.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation1V2.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation1V3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation2.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation3.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation4.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Transformation Examples\Transformation5.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

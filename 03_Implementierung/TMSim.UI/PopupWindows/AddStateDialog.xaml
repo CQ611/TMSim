@@ -8,7 +8,7 @@
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Title="State"
-        SizeToContent="Height" Width="250">
+        SizeToContent="Height" Width="260">
 
 
     <Window.DataContext>

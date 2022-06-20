@@ -375,8 +375,6 @@ namespace TMSim.UI
         public string EditStateText { get => Translator.GetString("TEXT_EditState"); set { OnPropertyChanged(nameof(EditStateText)); } }
         public string RemoveStateText { get => Translator.GetString("TEXT_RemoveState"); set { OnPropertyChanged(nameof(RemoveStateText)); } }
         public string AddStateText { get => Translator.GetString("TEXT_AddState"); set { OnPropertyChanged(nameof(AddStateText)); } }
-        public string NextBtnText { get => Translator.GetString("TEXT_NextBtn"); set { OnPropertyChanged(nameof(NextBtnText)); } }
-        public string PrevBtnText { get => Translator.GetString("TEXT_PrevBtn"); set { OnPropertyChanged(nameof(PrevBtnText)); } }
         public string ArrangeText { get => Translator.GetString("TEXT_Arrange"); set { OnPropertyChanged(nameof(ArrangeText)); } }
         public string AnimateText { get => Translator.GetString("TEXT_Animate"); set { OnPropertyChanged(nameof(AnimateText)); } }
         public string PopupIsBlankCharText { get => Translator.GetString("TEXT_PopupIsBlankChar"); set { OnPropertyChanged(nameof(PopupIsBlankCharText)); } }
@@ -391,17 +389,20 @@ namespace TMSim.UI
         public string HelpWindowProgramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program"); set { OnPropertyChanged(nameof(HelpWindowProgramText)); } }
         public string HelpWindowProgramGeneralUseText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse"); set { OnPropertyChanged(nameof(HelpWindowProgramGeneralUseText)); } }
         public string HelpWindowProgramShortcutsText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts"); set { OnPropertyChanged(nameof(HelpWindowProgramShortcutsText)); } }
+        public string HelpWindowProgramFunctionKeysText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_FunctionKeys"); set { OnPropertyChanged(nameof(HelpWindowProgramFunctionKeysText)); } }
         public string HelpWindowTuringMachineText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineText)); } }
-        public string HelpWindowTuringMachineExplanationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanationText)); } }
+        public string HelpWindowTuringMachineExplanation1Text { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation1"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanation1Text)); } }
+        public string HelpWindowTuringMachineExplanation2Text { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation2"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanation2Text)); } }
         public string HelpWindowTuringMachineTransformationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineTransformationText)); } }
         public string HelpWindowTableText { get => Translator.GetString("TEXT_HelpWindow_Menu_Table"); set { OnPropertyChanged(nameof(HelpWindowTableText)); } }
-        public string HelpWindowTableDiagramExplanationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Explanation"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramExplanationText)); } }
-        public string HelpWindowTableDiagramAddSymbolText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddSymbol"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddSymbolText)); } }
+        public string HelpWindowTableDiagramOutlookText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Outlook"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramOutlookText)); } }
+        public string HelpWindowTableDiagramAddCharacterText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddCharacter"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddCharacterText)); } }
         public string HelpWindowTableDiagramAddStateText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddStateText)); } }
+        public string HelpWindowTableDiagramCurrentGoalText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_CurrentGoal"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramCurrentGoalText)); } }
         public string HelpWindowTableDiagramAddTransitionText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddTransitionText)); } }
-        public string HelpWindowTableDiagramGoalText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Goal"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramGoalText)); } }
+        public string HelpWindowTableDiagramResultText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramResultText)); } }
         public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
-
+        public string HelpText { get => Translator.GetString("TEXT_HelpText"); set { OnPropertyChanged(nameof(HelpText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -481,8 +482,6 @@ namespace TMSim.UI
             RemoveTransitionText = Translator.GetString("TEXT_RemoveTransition");
             EditStateText = Translator.GetString("TEXT_EditState");
             RemoveStateText = Translator.GetString("TEXT_RemoveState");
-            NextBtnText = Translator.GetString("TEXT_NextBtn");
-            PrevBtnText = Translator.GetString("TEXT_PrevBtn");
             AddStateText = Translator.GetString("TEXT_AddState");
             ArrangeText = Translator.GetString("TEXT_Arrange");
             AnimateText = Translator.GetString("TEXT_Animate");
@@ -498,16 +497,20 @@ namespace TMSim.UI
             HelpWindowProgramText = Translator.GetString("TEXT_HelpWindow_Menu_Program");
             HelpWindowProgramGeneralUseText = Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse");
             HelpWindowProgramShortcutsText = Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts");
+            HelpWindowProgramFunctionKeysText = Translator.GetString("TEXT_HelpWindow_Menu_Program_FunctionKeys");
             HelpWindowTuringMachineText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine");
-            HelpWindowTuringMachineExplanationText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation");
+            HelpWindowTuringMachineExplanation1Text = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation1");
+            HelpWindowTuringMachineExplanation2Text = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation2");
             HelpWindowTuringMachineTransformationText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation");
             HelpWindowTableText = Translator.GetString("TEXT_HelpWindow_Menu_Table");
-            HelpWindowTableDiagramExplanationText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Explanation");
-            HelpWindowTableDiagramAddSymbolText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddSymbol");
+            HelpWindowTableDiagramOutlookText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Outlook");
+            HelpWindowTableDiagramAddCharacterText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddCharacter");
             HelpWindowTableDiagramAddStateText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState");
+            HelpWindowTableDiagramCurrentGoalText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_CurrentGoal");
             HelpWindowTableDiagramAddTransitionText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition");
-            HelpWindowTableDiagramGoalText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Goal");
+            HelpWindowTableDiagramResultText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result");
             HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
+            HelpText =  Translator.GetString("TEXT_HelpText");
 
                 TranslateHelpWindow();
             TranslateCurrentInfo();
@@ -1010,23 +1013,23 @@ namespace TMSim.UI
         private void OnNextHelpPage()
         {
             CurrentPageNumber++;
-
-            if (CurrentPageNumber == 1)
-                PreviousHelpPageAvailable = true;
-
-            if (CurrentPageNumber == lastPageNumber)
-                NextHelpPageAvailable = false;
         }
 
         private void OnPreviousHelpPage()
         {
             CurrentPageNumber--;
+        }
 
-            if (CurrentPageNumber == lastPageNumber - 1)
-                NextHelpPageAvailable = true;
-
-            if (CurrentPageNumber == 0)
-                PreviousHelpPageAvailable = false;
+        private void OnHelpWindowMenuItemChanged(object o)
+        {
+            try
+            {
+                CurrentPageNumber = Int32.Parse(o.ToString());
+            }
+            catch (FormatException)
+            {
+                CurrentPageNumber = 0;
+            }
         }
 
         private void OnHelpWindowMenuItemChanged(object o)

@@ -6,7 +6,7 @@ namespace TMSim.UI
 {
     public partial class ViewModel : ObservableObject
     {
-        private readonly int lastPageNumber = 11;
+        private readonly int lastPageNumber = 18;
         private readonly string imageSourcePrefix = "/Images/HelpWindow_";
         private readonly string imageNumberLangCodeDelimiter = "_";
         private readonly string imageFileEnding = ".png";
@@ -50,8 +50,7 @@ namespace TMSim.UI
             }
             set
             {
-                _headingText = Translator.GetString(
-                                headingTextPrefix + NecessaryLeadingZeros() + value);
+                _headingText = Translator.GetString(headingTextPrefix + NecessaryLeadingZeros() + value);
                 OnPropertyChanged(nameof(HeadingText));
             }
         }
@@ -71,6 +70,14 @@ namespace TMSim.UI
                     _currentPageNumber = lastPageNumber;
                 else
                 _currentPageNumber = value;
+
+                PreviousHelpPageAvailable = true;
+                NextHelpPageAvailable = true;
+
+                if (_currentPageNumber == 0)
+                    PreviousHelpPageAvailable = false;
+                else if (_currentPageNumber == lastPageNumber)
+                    NextHelpPageAvailable = false;
 
                 // Update text and image according to new page number
                 HeadingText = _currentPageNumber.ToString();

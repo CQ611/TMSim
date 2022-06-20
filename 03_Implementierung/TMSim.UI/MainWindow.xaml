@@ -14,6 +14,7 @@
         <local:BoolToColumnWidthConverter x:Key="BoolToColumnWidthConverter"/>
     </Window.Resources>
     <Window.InputBindings>
+        <KeyBinding Key="F1" Command="{Binding OpenHelpWindow}"/>
         <KeyBinding Key="F2" Command="{Binding ToggleHighlight}" />
         <KeyBinding Key="F3" Command="{Binding ToggleTableView}" />
         <KeyBinding Key="F4" Command="{Binding ToggleDiagramView}" />
@@ -74,7 +75,7 @@
                 <Separator/>
                 <MenuItem Header="{Binding Transformation5Text}" ToolTip="{Binding Transformation5Tooltip}" Command="{Binding Transformation5}" />
             </MenuItem>
-            <MenuItem Header="?" HorizontalAlignment="Right" IsEnabled="{Binding MenuElementEnabled}" Command="{Binding OpenHelpWindow}"/>
+            <MenuItem Header="{Binding HelpText}" HorizontalAlignment="Right" Command="{Binding OpenHelpWindow}"/>
         </Menu>
         <Border Grid.Row="1" Background="White" CornerRadius="10" Margin="3">
             <Grid >
