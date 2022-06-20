@@ -74,9 +74,9 @@ namespace TMSim.UI
             vm.RemoveState(identifier);
         }
 
-        private void ColumnHeader_EditSymbolEvent(string symbol, bool isInput)
+        private void ColumnHeader_EditSymbolEvent(string symbol, bool isInput, bool isBlankChar)
         {
-            vm.EditSymbol(symbol, isInput);
+            vm.EditSymbol(symbol, isInput, isBlankChar);
         }
 
         private void ColumnHeader_RemoveSymbolEvent(string symbol)
@@ -84,9 +84,9 @@ namespace TMSim.UI
             vm.RemoveSymbol(symbol);
         }
 
-        private void TableCell_AddTransitionEvent()
+        private void TableCell_AddTransitionEvent(string identifier, string symbolRead)
         {
-            vm.AddTransition();
+            vm.AddTransition(identifier, symbolRead);
         }
 
         private void TableCell_EditTransitionEvent(string identifier, string symbolRead)
@@ -106,7 +106,7 @@ namespace TMSim.UI
 
         private void Vm_LoadTableEvent(TuringMachine TM)
         {
-            TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s)));
+            TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s), s == TM.BlankChar));
             TM.States.ForEach(s => AddRow(s.Identifier, s == TM.StartState, TM.EndStates.Contains(s)));
 
             TM.Transitions.ForEach(t => OverwriteTransition(
@@ -122,11 +122,19 @@ namespace TMSim.UI
             if (highlightedCell != null)
                 highlightedCell.Highlight = false;
 
+            var highlightedRow = rowHeaders.Find(x => x.Highlight);
+            if (highlightedRow != null)
+                highlightedRow.Highlight = false;
+
             if(TM.CurrentTransition != null)
             {
-                var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead.ToCharArray()[0]));
+                var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead[0]) && x.TargetState != null);
                 if (cellForHighlight != null && vm.HighlightCurrentState)
                     cellForHighlight.Highlight = true;
+
+                var rowForHighlight = rowHeaders.Find(x => x.Identifier == TM.CurrentTransition.Target.Identifier);
+                if (rowForHighlight != null && vm.HighlightCurrentState)
+                    rowForHighlight.Highlight = true;
             }
         }
 
@@ -170,7 +178,7 @@ namespace TMSim.UI
 
             Grid.SetRow(AddRowButton, TableGrid.RowDefinitions.Count() - 1);
 
-            var newRowHeader = new RowHeader(isStart, isAccepting, identifier);
+            var newRowHeader = new RowHeader(isStart, isAccepting, identifier, false);
             rowHeaders.Add(newRowHeader);
             TableGrid.Children.Add(rowHeaders[rowHeaders.Count() - 1]);
             Grid.SetRow(rowHeaders[rowHeaders.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
@@ -183,13 +191,13 @@ namespace TMSim.UI
             vm.AddSymbol();
         }
 
-        private void AddColumn(string symbol, bool isInInputAlphabet)
+        private void AddColumn(string symbol, bool isInInputAlphabet, bool isBlankChar)
         {
             TableGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(65) });
 
             Grid.SetColumn(AddColumnButton, TableGrid.ColumnDefinitions.Count() - 1);
 
-            var newColumnHeader = new ColumnHeader(symbol, isInInputAlphabet);
+            var newColumnHeader = new ColumnHeader(symbol, isInInputAlphabet, isBlankChar);
             columnHeaders.Add(newColumnHeader);
             TableGrid.Children.Add(columnHeaders[columnHeaders.Count() - 1]);
             Grid.SetColumn(columnHeaders[columnHeaders.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);
@@ -199,9 +207,13 @@ namespace TMSim.UI
 
         private void SetTableCellsToNewRow()
         {
+            string state = rowHeaders.Last().Identifier;
+
             for (int i = 0; i < columnHeaders.Count(); i++)
             {
-                tableCells.Add(new TableCell());
+                string symbol = columnHeaders[i].Symbol;
+
+                tableCells.Add(new TableCell(state, symbol));
                 TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
                 Grid.SetRow(tableCells[tableCells.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
                 Grid.SetColumn(tableCells[tableCells.Count() - 1], i + 1);
@@ -210,9 +222,13 @@ namespace TMSim.UI
 
         private void SetTableCellsToNewColumn()
         {
+            string symbol = columnHeaders.Last().Symbol;
+
             for (int i = 0; i < rowHeaders.Count(); i++)
             {
-                tableCells.Add(new TableCell());
+                string state = rowHeaders[i].Identifier;
+
+                tableCells.Add(new TableCell(state, symbol));
                 TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
                 Grid.SetRow(tableCells[tableCells.Count() - 1], i + 1);
                 Grid.SetColumn(tableCells[tableCells.Count() - 1], TableGrid.ColumnDefinitions.Count() - 2);

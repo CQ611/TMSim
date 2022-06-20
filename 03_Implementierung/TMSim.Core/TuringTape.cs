@@ -8,36 +8,49 @@ namespace TMSim.Core
 {
     public class TuringTape
     {
-        public string Content { get; set; }
+        private string content;
+        public string Content {
+            get { return content; }
+            set {
+                content = value;
+                HeadIndex = 0;
+            }
+        }
         private char Blank {get; set;}
 
         public int HeadIndex { get; private set; }
 
         public TuringTape(string content, char blank)
         {
-            this.Content = content;
-            this.Blank = blank;
-            this.HeadIndex = 0;
+            this.content = content;
+            Blank = blank;
+            HeadIndex = 0;
         }
 
 
         public char GetCurrentSymbol()
         {
-            return Content[HeadIndex];
+            try
+            {
+                return content[HeadIndex];
+            }
+            catch (IndexOutOfRangeException) {
+                return Blank;
+            }
         }
 
         public void SetCurrentSymbol(char newSymbol)
         {
-            char[] chars = Content.ToCharArray();
+            char[] chars = content.ToCharArray();
             chars[HeadIndex] = newSymbol;
-            Content = new string(chars);
+            content = new string(chars);
         }
 
         public void MoveLeft()
         {
             if(HeadIndex == 0)
             {
-                Content = Blank + Content;
+                content = Blank + content;
             }
             else
             {
@@ -48,9 +61,9 @@ namespace TMSim.Core
         public void MoveRight()
         {
             HeadIndex++;
-            if(HeadIndex == Content.Length)
+            if(HeadIndex == content.Length)
             {
-                Content = Content + Blank;
+                content = content + Blank;
             }
         }
     }

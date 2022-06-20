@@ -75,7 +75,10 @@ namespace TMSim.Core
             {
                 if (tt.MoveDirections[0] == TuringTransition.Direction.Neutral) noNeutralTransition = false;
             }
-            return noNeutralTransition;
+            bool startStateNotEndStateAndNotNull = true;
+            if (tm.EndStates.Contains(tm.StartState) || tm.StartState==null) startStateNotEndStateAndNotNull = false;
+
+            return noNeutralTransition && startStateNotEndStateAndNotNull;
         }
 
         private void deleteUnusedStates(TuringMachine tm) {
@@ -100,7 +103,7 @@ namespace TMSim.Core
                 if (tm.InputSymbols.Contains(c)) newTm.AddSymbol(c, true);
                 else newTm.AddSymbol(c, false);
             }
-            newTm.BlankChar = tm.BlankChar;
+            newTm.EditSymbol(tm.BlankChar, false, true);
             foreach (TuringState state in tm.States)
             {
                 TuringState rightState = new TuringState(state.Identifier + "_right", isAccepting: state.IsAccepting);

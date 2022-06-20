@@ -31,7 +31,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Label Content="TMSim" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" FontSize="12"/>
-                    <Label Content="Table" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontSize="12"/>
+                    <Label Content="{Binding TableText}" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontSize="12"/>
                 </Grid>
             </Border>
 

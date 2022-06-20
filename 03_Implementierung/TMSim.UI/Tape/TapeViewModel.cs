@@ -50,6 +50,9 @@ namespace TMSim.UI
             SetBlankEvent?.Invoke(TM.BlankChar);
         }
 
+        public delegate void UpdateAlphabet(List<char> tapeAlphabet, List<char> inputAlphabet, char blank);
+        public event UpdateAlphabet UpdateAlphabetEvent;
+
         public delegate void DeleteTapeWord();
         public event DeleteTapeWord DeleteTapeWordEvent;
         private void DeleteTapeContent()
@@ -64,6 +67,7 @@ namespace TMSim.UI
             SetBlankEvent?.Invoke(TM.BlankChar);
             UpdateTapeEvent?.Invoke(TM.Tapes[0].HeadIndex, TapeVelocity);
             UpdateTapeWordEvent?.Invoke(TM.Tapes[0].Content);
+            UpdateAlphabetEvent?.Invoke(TM.TapeSymbols, TM.InputSymbols, TM.BlankChar);
         }
     }
 }

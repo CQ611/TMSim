@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -10,6 +11,7 @@ using System.Reflection;
 using System.Resources;
 using System.Threading;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Threading;
 using TMSim.Core;
@@ -46,6 +48,10 @@ namespace TMSim.UI
         public RelayCommand PlayPause { get; set; }
         public RelayCommand Stop { get; set; }
         public RelayCommand Step { get; set; }
+        public RelayCommand OpenHelpWindow { get; set; }
+        public RelayCommand NextHelpPage { get; set; }
+        public RelayCommand PreviousHelpPage { get; set; }
+        public RelayCommand HelpWindowMenuItemChanged { get; set; }
 
         #endregion
 
@@ -277,18 +283,6 @@ namespace TMSim.UI
                 OnPropertyChanged(nameof(MenuElementEnabled));
             }
         }
-
-        private string _tapeWordInputToolTip;
-        public string TapeWordInputToolTip
-        {
-            get { return _tapeWordInputToolTip; }
-            set
-            {
-                _tapeWordInputToolTip = value;
-                OnPropertyChanged(nameof(TapeWordInputToolTip));
-            }
-
-        }
         #endregion
 
         #region Translation
@@ -327,7 +321,7 @@ namespace TMSim.UI
         public string SourceStateText { get => Translator.GetString("TEXT_SourceState"); set { OnPropertyChanged(nameof(SourceStateText)); } }
         public string TargetStateText { get => Translator.GetString("TEXT_TargetState"); set { OnPropertyChanged(nameof(TargetStateText)); } }
         public string CommentText { get => Translator.GetString("TEXT_Comment"); set { OnPropertyChanged(nameof(CommentText)); } }
-        public string DirectionsText { get => Translator.GetString("TEXT_Directions"); set { OnPropertyChanged(nameof(DirectionsText)); } }
+        public string DirectionText { get => Translator.GetString("TEXT_Direction"); set { OnPropertyChanged(nameof(DirectionText)); } }
         public string PlayTooltip { get => Translator.GetString("TOOLTIP_Play"); set { OnPropertyChanged(nameof(PlayTooltip)); } }
         public string PauseTooltip { get => Translator.GetString("TOOLTIP_Pause"); set { OnPropertyChanged(nameof(PauseTooltip)); } }
         public string StopTooltip { get => Translator.GetString("TOOLTIP_Stop"); set { OnPropertyChanged(nameof(StopTooltip)); } }
@@ -357,17 +351,59 @@ namespace TMSim.UI
         public string WriteSymbolDoesNotExistText { get => Translator.GetString("TEXT_WriteSymbolDoesNotExist"); set { OnPropertyChanged(nameof(WriteSymbolDoesNotExistText)); } }
         public string ImportFileIsNotValidText { get => Translator.GetString("TEXT_ImportFileIsNotValid"); set { OnPropertyChanged(nameof(ImportFileIsNotValidText)); } }
         public string InputAlphabetIsNoSubsetOfTapeAlphabetText { get => Translator.GetString("TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet"); set { OnPropertyChanged(nameof(InputAlphabetIsNoSubsetOfTapeAlphabetText)); } }
-        public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSuccessText)); } }
-        public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationFailureText)); } }
-        public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsRunningText)); } }
-        public string SimulationIsPausedText { get => Translator.GetString("TEXT_Info_SimulationIsPaused"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsPausedText)); } }
-        public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
-        public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(SimulationSingleStepText)); } }
+        public string SimulationSuccessText { get => Translator.GetString("TEXT_Info_SimulationSuccess"); set { OnPropertyChanged(nameof(SimulationSuccessText)); } }
+        public string SimulationFailureText { get => Translator.GetString("TEXT_Info_SimulationFailure"); set { OnPropertyChanged(nameof(SimulationFailureText)); } }
+        public string SimulationIsRunningText { get => Translator.GetString("TEXT_Info_SimulationIsRunning"); set { OnPropertyChanged(nameof(SimulationIsRunningText)); } }
+        public string SimulationIsPausedText { get => Translator.GetString("TEXT_Info_SimulationIsPaused"); set { OnPropertyChanged(nameof(SimulationIsPausedText)); } }
+        public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
+        public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
         public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
         public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
-        public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
-         
+        public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
+        public string WarnTransformation1Text { get => Translator.GetString("TEXT_Warn_Transformation1"); set { OnPropertyChanged(nameof(WarnTransformation1Text)); } }
+        public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { OnPropertyChanged(nameof(WarnTransformation4Text)); } }
+        public string WarnTransformation5Text { get => Translator.GetString("TEXT_Warn_Transformation5"); set { OnPropertyChanged(nameof(WarnTransformation5Text)); } }
+        public string WarnMemoryText { get => Translator.GetString("TEXT_Warn_Memory"); set { OnPropertyChanged(nameof(WarnMemoryText)); } }
+        public string TableText { get => Translator.GetString("TEXT_Table"); set { OnPropertyChanged(nameof(TableText)); } }
+        public string EditSymbolText { get => Translator.GetString("TEXT_EditSymbol"); set { OnPropertyChanged(nameof(EditSymbolText)); } }
+        public string RemoveSymbolText { get => Translator.GetString("TEXT_RemoveSymbol"); set { OnPropertyChanged(nameof(RemoveSymbolText)); } }
+        public string AddSymbolText { get => Translator.GetString("TEXT_AddSymbol"); set { OnPropertyChanged(nameof(AddSymbolText)); } }
+        public string AddTransitionText { get => Translator.GetString("TEXT_AddTransition"); set { OnPropertyChanged(nameof(AddTransitionText)); } }
+        public string RemoveTransitionText { get => Translator.GetString("TEXT_RemoveTransition"); set { OnPropertyChanged(nameof(RemoveTransitionText)); } }
+        public string EditTransitionText { get => Translator.GetString("TEXT_EditTransition"); set { OnPropertyChanged(nameof(EditTransitionText)); } }
+        public string EditStateText { get => Translator.GetString("TEXT_EditState"); set { OnPropertyChanged(nameof(EditStateText)); } }
+        public string RemoveStateText { get => Translator.GetString("TEXT_RemoveState"); set { OnPropertyChanged(nameof(RemoveStateText)); } }
+        public string AddStateText { get => Translator.GetString("TEXT_AddState"); set { OnPropertyChanged(nameof(AddStateText)); } }
+        public string ArrangeText { get => Translator.GetString("TEXT_Arrange"); set { OnPropertyChanged(nameof(ArrangeText)); } }
+        public string AnimateText { get => Translator.GetString("TEXT_Animate"); set { OnPropertyChanged(nameof(AnimateText)); } }
+        public string PopupIsBlankCharText { get => Translator.GetString("TEXT_PopupIsBlankChar"); set { OnPropertyChanged(nameof(PopupIsBlankCharText)); } }
+        public string WarnSymbolIsInputAndBlankText { get => Translator.GetString("TEXT_Warn_SymbolIsInputAndBlank"); set { OnPropertyChanged(nameof(WarnSymbolIsInputAndBlankText)); } }
+        public string WarnBlankCharMustBeSetText { get => Translator.GetString("TEXT_Warn_BlankCharMustBeSet"); set { OnPropertyChanged(nameof(WarnBlankCharMustBeSetText)); } }
+        public string WarnNoStartStateText { get => Translator.GetString("TEXT_Warn_NoStartState"); set { OnPropertyChanged(nameof(WarnNoStartStateText)); } }
+        public string WarnUnsupportedLanguageText { get => Translator.GetString("TEXT_Warn_UnsupportedLanguage"); set { OnPropertyChanged(nameof(WarnUnsupportedLanguageText)); } }
+        public string WarnSymbolAlreadyExistsText { get => Translator.GetString("TEXT_Warn_SymbolAlreadyExists"); set { OnPropertyChanged(nameof(WarnSymbolAlreadyExistsText)); } }
+        public string WarnSymbolDoesNotExistText { get => Translator.GetString("TEXT_Warn_SymbolDoesNotExist"); set { OnPropertyChanged(nameof(WarnSymbolDoesNotExistText)); } }
+        public string HelpWindowChapterSelectionText { get => Translator.GetString("TEXT_HelpWindow_Menu_ChapterSelection"); set { OnPropertyChanged(nameof(HelpWindowChapterSelectionText)); } }
+        public string HelpWindowIntroductionText { get => Translator.GetString("TEXT_HelpWindow_Menu_Introduction"); set { OnPropertyChanged(nameof(HelpWindowIntroductionText)); } }
+        public string HelpWindowProgramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program"); set { OnPropertyChanged(nameof(HelpWindowProgramText)); } }
+        public string HelpWindowProgramGeneralUseText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse"); set { OnPropertyChanged(nameof(HelpWindowProgramGeneralUseText)); } }
+        public string HelpWindowProgramShortcutsText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts"); set { OnPropertyChanged(nameof(HelpWindowProgramShortcutsText)); } }
+        public string HelpWindowProgramFunctionKeysText { get => Translator.GetString("TEXT_HelpWindow_Menu_Program_FunctionKeys"); set { OnPropertyChanged(nameof(HelpWindowProgramFunctionKeysText)); } }
+        public string HelpWindowTuringMachineText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineText)); } }
+        public string HelpWindowTuringMachineExplanation1Text { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation1"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanation1Text)); } }
+        public string HelpWindowTuringMachineExplanation2Text { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation2"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineExplanation2Text)); } }
+        public string HelpWindowTuringMachineTransformationText { get => Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation"); set { OnPropertyChanged(nameof(HelpWindowTuringMachineTransformationText)); } }
+        public string HelpWindowTableText { get => Translator.GetString("TEXT_HelpWindow_Menu_Table"); set { OnPropertyChanged(nameof(HelpWindowTableText)); } }
+        public string HelpWindowTableDiagramOutlookText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Outlook"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramOutlookText)); } }
+        public string HelpWindowTableDiagramAddCharacterText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddCharacter"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddCharacterText)); } }
+        public string HelpWindowTableDiagramAddStateText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddStateText)); } }
+        public string HelpWindowTableDiagramCurrentGoalText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_CurrentGoal"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramCurrentGoalText)); } }
+        public string HelpWindowTableDiagramAddTransitionText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramAddTransitionText)); } }
+        public string HelpWindowTableDiagramResultText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramResultText)); } }
+        public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
+        public string HelpText { get => Translator.GetString("TEXT_HelpText"); set { OnPropertyChanged(nameof(HelpText)); } }
+
         private void RefreshTextFromUi()
         {
             FileText = Translator.GetString("TEXT_File");
@@ -433,7 +469,51 @@ namespace TMSim.UI
             DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
             DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
-            SetInputTapeWordToolTip();
+            WarnTransformation1Text = Translator.GetString("TEXT_Warn_Transformation1");
+            WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
+            WarnTransformation5Text = Translator.GetString("TEXT_Warn_Transformation5");
+            WarnMemoryText = Translator.GetString("TEXT_Warn_Memory");
+            TableText = Translator.GetString("TEXT_Table");
+            EditSymbolText = Translator.GetString("TEXT_EditSymbol");
+            RemoveSymbolText = Translator.GetString("TEXT_RemoveSymbol");
+            AddSymbolText = Translator.GetString("TEXT_AddSymbol");
+            AddTransitionText = Translator.GetString("TEXT_AddTransition");
+            EditTransitionText = Translator.GetString("TEXT_EditTransition");
+            RemoveTransitionText = Translator.GetString("TEXT_RemoveTransition");
+            EditStateText = Translator.GetString("TEXT_EditState");
+            RemoveStateText = Translator.GetString("TEXT_RemoveState");
+            AddStateText = Translator.GetString("TEXT_AddState");
+            ArrangeText = Translator.GetString("TEXT_Arrange");
+            AnimateText = Translator.GetString("TEXT_Animate");
+            PopupIsBlankCharText = Translator.GetString("TEXT_PopupIsBlankChar");
+            WarnSymbolIsInputAndBlankText = Translator.GetString("TEXT_Warn_SymbolIsInputAndBlank");
+            WarnBlankCharMustBeSetText = Translator.GetString("TEXT_Warn_BlankCharMustBeSet");
+            WarnNoStartStateText = Translator.GetString("TEXT_Warn_NoStartState");
+            WarnUnsupportedLanguageText = Translator.GetString("TEXT_Warn_UnsupportedLanguage");
+            WarnSymbolAlreadyExistsText = Translator.GetString("TEXT_Warn_SymbolAlreadyExists");
+            WarnSymbolDoesNotExistText = Translator.GetString("TEXT_Warn_SymbolDoesNotExist");
+            HelpWindowChapterSelectionText = Translator.GetString("TEXT_HelpWindow_Menu_ChapterSelection");
+            HelpWindowIntroductionText = Translator.GetString("TEXT_HelpWindow_Menu_Introduction");
+            HelpWindowProgramText = Translator.GetString("TEXT_HelpWindow_Menu_Program");
+            HelpWindowProgramGeneralUseText = Translator.GetString("TEXT_HelpWindow_Menu_Program_GeneralUse");
+            HelpWindowProgramShortcutsText = Translator.GetString("TEXT_HelpWindow_Menu_Program_Shortcuts");
+            HelpWindowProgramFunctionKeysText = Translator.GetString("TEXT_HelpWindow_Menu_Program_FunctionKeys");
+            HelpWindowTuringMachineText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine");
+            HelpWindowTuringMachineExplanation1Text = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation1");
+            HelpWindowTuringMachineExplanation2Text = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Explanation2");
+            HelpWindowTuringMachineTransformationText = Translator.GetString("TEXT_HelpWindow_Menu_TuringMachine_Transformation");
+            HelpWindowTableText = Translator.GetString("TEXT_HelpWindow_Menu_Table");
+            HelpWindowTableDiagramOutlookText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Outlook");
+            HelpWindowTableDiagramAddCharacterText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddCharacter");
+            HelpWindowTableDiagramAddStateText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddState");
+            HelpWindowTableDiagramCurrentGoalText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_CurrentGoal");
+            HelpWindowTableDiagramAddTransitionText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition");
+            HelpWindowTableDiagramResultText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result");
+            HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
+            HelpText =  Translator.GetString("TEXT_HelpText");
+
+                TranslateHelpWindow();
+            TranslateCurrentInfo();
         }
         #endregion
 
@@ -474,7 +554,7 @@ namespace TMSim.UI
             ImportFromTextFile = new RelayCommand((o) => { OnImportFromTextFile(); });
             ExportToTextFile = new RelayCommand((o) => { OnExportToTextFile(); });
             ClearTuringMachine = new RelayCommand((o) => { OnClearTuringMachine(); });
-            LoadExample = new RelayCommand((o) => { OnLoadExample(); });
+            LoadExample = new RelayCommand((o) => { OnLoadExample(o); });
             ExitApplication = new RelayCommand((o) => { OnExitApplication(); });
             GermanLanguageSelected = new RelayCommand((o) => { OnGermanLanguageSelected(); });
             EnglishLanguageSelected = new RelayCommand((o) => { OnEnglishLanguageSelected(); });
@@ -486,6 +566,10 @@ namespace TMSim.UI
             PlayPause = new RelayCommand((o) => { OnPlayPause(); });
             Stop = new RelayCommand((o) => { OnStop(); });
             Step = new RelayCommand((o) => { OnStep(); });
+            OpenHelpWindow = new RelayCommand((o) => { OnOpenHelpWindow(); });
+            NextHelpPage = new RelayCommand((o) => { OnNextHelpPage(); });
+            PreviousHelpPage = new RelayCommand((o) => { OnPreviousHelpPage(); });
+            HelpWindowMenuItemChanged = new RelayCommand((o) => { OnHelpWindowMenuItemChanged(o); });
 
             TM = new TuringMachine();
 
@@ -497,6 +581,7 @@ namespace TMSim.UI
             SetTimerInterval();
 
             UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
+            TranslateHelpWindow();
         }
 
         private void InitResoureManager()
@@ -509,6 +594,18 @@ namespace TMSim.UI
             else if (CultureInfo.CurrentCulture.Name == "en-US")
             {
                 EnglishLanguageIsChecked = true;
+            }
+
+            try
+            {
+                FrameworkElement.LanguageProperty.OverrideMetadata(
+                        typeof(FrameworkElement),
+                        new FrameworkPropertyMetadata(
+                            XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+            }
+            catch (Exception)
+            {
+                QuickWarning(WarnUnsupportedLanguageText);
             }
         }
 
@@ -524,8 +621,6 @@ namespace TMSim.UI
                 UploadTextEnabled = false;
 
             OnPropertyChanged(nameof(TM));
-
-            SetInputTapeWordToolTip();
         }
 
         public void OnTmRefresh()
@@ -579,7 +674,7 @@ namespace TMSim.UI
         {
             timmy.Interval = TimeSpan.FromMilliseconds(TapeVelocity * 1.5);
         }
-        
+
         private void OnStopSimulation()
         {
             TM.Reset();
@@ -596,9 +691,11 @@ namespace TMSim.UI
             OnTmRefresh();
             UpdateInfo(MessageIdentification.SimulationIsStopped, SimulationIsStoppedText);
         }
-        
+
         private void OnStepSimulation(bool timerStep = false)
         {
+            bool stateAdvanced = false;
+
             StopEnabled = true;
             UploadTextEnabled = false;
             MenuElementEnabled = false;
@@ -606,7 +703,20 @@ namespace TMSim.UI
             if (timerStep == false)
                 UpdateInfo(MessageIdentification.SimulationSingleStep, SimulationSingleStepText);
 
-            if (!TM.AdvanceState())
+            try
+            {
+                stateAdvanced = TM.AdvanceState();
+            }
+            catch (NoStartStateException)
+            {
+                QuickWarning(WarnNoStartStateText);
+            }
+            catch (BlankCharMustBeSetException)
+            {
+                QuickWarning(WarnBlankCharMustBeSetText);
+            }
+
+            if (stateAdvanced == false)
             {
                 startIsActive = false;
                 StartVisibility = Visibility.Visible;
@@ -645,7 +755,6 @@ namespace TMSim.UI
             catch (WordIsNoValidInputException)
             {
                 QuickWarning(InvalidInputWordText);
-                return;
             }
             LoadTapeContent();
             UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
@@ -654,11 +763,19 @@ namespace TMSim.UI
             StepEnabled = true;
         }
 
-        private void OnTansformTuringMachine(){}
+        private void OnTansformTuringMachine() { }
 
         private void OnTransformation1()
         {
-            throw new NotImplementedException("OnTransformation1 >> ViewModel");
+            if (new Transformation1().IsExecutable(TM))
+            {
+                TM = new Transformation1().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation1Text);
+            }
         }
 
         private void OnTransformation2()
@@ -673,21 +790,42 @@ namespace TMSim.UI
             if (t3d.ShowDialog() == true)
             {
                 char newBlank = t3d.Blank;
-                TM = new Transformation3().Execute(TM, newBlank);
+                try
+                {
+                    TM = new Transformation3().Execute(TM, newBlank);
+                }
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(WarnSymbolAlreadyExistsText);
+                }
                 OnTMChanged();
             }
         }
 
         private void OnTransformation4()
         {
-            TM = new Transformation4().Execute(TM);
-            OnTMChanged();
+            if (new Transformation4().IsExecutable(TM))
+            {
+                TM = new Transformation4().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation4Text);
+            }
         }
 
         private void OnTransformation5()
         {
-            TM = new Transformation5().Execute(TM);
-            OnTMChanged();
+            if (new Transformation5().IsExecutable(TM))
+            {
+                TM = new Transformation5().Execute(TM);
+                OnTMChanged();
+            }
+            else
+            {
+                QuickWarning(WarnTransformation5Text);
+            }
         }
 
         private void OnImportFromTextFile()
@@ -708,54 +846,59 @@ namespace TMSim.UI
                 catch (StateAlreadyExistsException)
                 {
                     QuickWarning(StateExistsText);
-                    return;
                 }
                 catch (TransitionAlreadyExistsException)
                 {
                     QuickWarning(TransitionExistsText);
-                    return;
                 }
                 catch (SourceStateOfTransitionDoesNotExistException)
                 {
                     QuickWarning(SourceStateDoesNotExistText);
-                    return;
                 }
                 catch (TargetStateOfTransitionDoesNotExistException)
                 {
                     QuickWarning(TargetStateDoesNotExistText);
-                    return;
                 }
                 catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
                 {
                     QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
                 }
                 catch (TransitionNumberOfTapesIsInconsistentException)
                 {
                     QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
                 }
                 catch (ReadSymbolDoesNotExistException e)
                 {
                     QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
                 }
                 catch (WriteSymbolDoesNotExistException e)
                 {
                     QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
                 }
-                catch (ImportFileIsNotValidException) {
+                catch (ImportFileIsNotValidException)
+                {
                     QuickWarning(ImportFileIsNotValidText);
-                    return;
                 }
-                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
+                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException)
+                {
                     QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
-                    return;
                 }
+                catch (SymbolCanNotBeInputAndBlankException)
+                {
+                    QuickWarning(WarnSymbolIsInputAndBlankText);
+                }
+                catch (SymbolAlreadyExistsException)
+                {
+                    QuickWarning(WarnSymbolAlreadyExistsText);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(WarnSymbolDoesNotExistText);
+                }
+
                 DeleteTapeContent();
-                OnTMChanged();
                 DData.ArangeFlag = true;
+                OnTMChanged();
                 UploadTextEnabled = true;
             }
         }
@@ -771,7 +914,14 @@ namespace TMSim.UI
             };
             if (exportFileDialog.ShowDialog() == true)
             {
-                TM.ExportToTextFile(exportFileDialog.FileName);
+                try
+                {
+                    TM.ExportToTextFile(exportFileDialog.FileName);
+                }
+                catch (SystemException)
+                {
+                    QuickWarning(WarnMemoryText);
+                }
             }
         }
 
@@ -781,72 +931,69 @@ namespace TMSim.UI
             OnTMChanged();
         }
 
-        private void OnLoadExample()
+        private void OnLoadExample(object o)
         {
-            OpenFileDialog loadExampleFileDialog = new OpenFileDialog
+            try
             {
-                Title = "Load example turingmachine",
-                Filter = "TMSim file (*.tmsim)|*.tmsim",
-                FilterIndex = 2,
-                InitialDirectory = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory) + "\\Examples")
-            };
-            if (loadExampleFileDialog.ShowDialog() == true)
-            {
-                try
-                {
-                    TM.ImportFromTextFile(loadExampleFileDialog.FileName);
-                }
-                catch (StateAlreadyExistsException)
-                {
-                    QuickWarning(StateExistsText);
-                    return;
-                }
-                catch (TransitionAlreadyExistsException)
-                {
-                    QuickWarning(TransitionExistsText);
-                    return;
-                }
-                catch (SourceStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(SourceStateDoesNotExistText);
-                    return;
-                }
-                catch (TargetStateOfTransitionDoesNotExistException)
-                {
-                    QuickWarning(TargetStateDoesNotExistText);
-                    return;
-                }
-                catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
-                }
-                catch (TransitionNumberOfTapesIsInconsistentException)
-                {
-                    QuickWarning(InvalidTapeNumberInDefinitionText);
-                    return;
-                }
-                catch (ReadSymbolDoesNotExistException e)
-                {
-                    QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
-                }
-                catch (WriteSymbolDoesNotExistException e)
-                {
-                    QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
-                    return;
-                } catch (ImportFileIsNotValidException) {
-                    QuickWarning(ImportFileIsNotValidText);
-                    return;
-                }
-                catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException) {
-                    QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
-                    return;
-                }
-                DeleteTapeContent();
-                OnTMChanged();
-                UploadTextEnabled = true;
+                TM.ImportFromTextFile(o.ToString());
             }
+            catch (StateAlreadyExistsException)
+            {
+                QuickWarning(StateExistsText);
+            }
+            catch (TransitionAlreadyExistsException)
+            {
+                QuickWarning(TransitionExistsText);
+            }
+            catch (SourceStateOfTransitionDoesNotExistException)
+            {
+                QuickWarning(SourceStateDoesNotExistText);
+            }
+            catch (TargetStateOfTransitionDoesNotExistException)
+            {
+                QuickWarning(TargetStateDoesNotExistText);
+            }
+            catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+            {
+                QuickWarning(InvalidTapeNumberInDefinitionText);
+            }
+            catch (TransitionNumberOfTapesIsInconsistentException)
+            {
+                QuickWarning(InvalidTapeNumberInDefinitionText);
+            }
+            catch (ReadSymbolDoesNotExistException e)
+            {
+                QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+            }
+            catch (WriteSymbolDoesNotExistException e)
+            {
+                QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+            }
+            catch (ImportFileIsNotValidException)
+            {
+                QuickWarning(ImportFileIsNotValidText);
+            }
+            catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException)
+            {
+                QuickWarning(InputAlphabetIsNoSubsetOfTapeAlphabetText);
+            }
+            catch (SymbolCanNotBeInputAndBlankException)
+            {
+                QuickWarning(WarnSymbolIsInputAndBlankText);
+            }
+            catch (SymbolAlreadyExistsException)
+            {
+                QuickWarning(WarnSymbolAlreadyExistsText);
+            }
+            catch (SymbolDoesNotExistException)
+            {
+                QuickWarning(WarnSymbolDoesNotExistText);
+            }
+
+            DeleteTapeContent();
+            DData.ArangeFlag = true;
+            OnTMChanged();
+            UploadTextEnabled = true;
         }
 
         private void UpdateDiagramData()
@@ -854,6 +1001,35 @@ namespace TMSim.UI
             DData = UpdateDiagramData(DData, TM);
             //OnPropertyChanged(nameof(DData));
             DData.OnForcePropertyChanged();
+        }
+
+        private void OnOpenHelpWindow()
+        {
+            HelpWindow helpWindow = new HelpWindow();
+            helpWindow.Owner = Application.Current.MainWindow;
+            helpWindow.Show();
+        }
+
+        private void OnNextHelpPage()
+        {
+            CurrentPageNumber++;
+        }
+
+        private void OnPreviousHelpPage()
+        {
+            CurrentPageNumber--;
+        }
+
+        private void OnHelpWindowMenuItemChanged(object o)
+        {
+            try
+            {
+                CurrentPageNumber = Int32.Parse(o.ToString());
+            }
+            catch (FormatException)
+            {
+                CurrentPageNumber = 0;
+            }
         }
 
         private void OnExitApplication()
@@ -870,21 +1046,8 @@ namespace TMSim.UI
             CultureInfo.DefaultThreadCurrentCulture = vCulture;
             CultureInfo.DefaultThreadCurrentUICulture = vCulture;
 
-            try
-            {
-                FrameworkElement.LanguageProperty.OverrideMetadata(
-                    typeof(FrameworkElement),
-                    new FrameworkPropertyMetadata(
-                        XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("SelectedLanguageChanged Exeption: " + ex.ToString());
-            }
-
-            Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
-
             RefreshTextFromUi();
+            CurrentImageLanguage = language;
         }
 
         private void OnGermanLanguageSelected()
@@ -905,7 +1068,7 @@ namespace TMSim.UI
         {
             MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
-            
+
         public void AddState()
         {
             AddStateDialog asd = new AddStateDialog($"q{TM.States.Count}", TM.States.Count < 1);
@@ -923,7 +1086,6 @@ namespace TMSim.UI
                 catch (StateAlreadyExistsException)
                 {
                     QuickWarning(StateExistsText);
-                    return;
                 }
                 OnTMChanged();
             }
@@ -946,7 +1108,6 @@ namespace TMSim.UI
                 catch (StateAlreadyExistsException)
                 {
                     QuickWarning(StateExistsText);
-                    return;
                 }
                 OnTMChanged();
             }
@@ -974,7 +1135,6 @@ namespace TMSim.UI
             catch (StateDoesNotExistException)
             {
                 QuickWarning(StateDoesNotExistText);
-                return;
             }
             OnTMChanged();
         }
@@ -994,57 +1154,177 @@ namespace TMSim.UI
 
         public void AddTransition(TuringState source = null, TuringState target = null)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, source, target, TM.TapeSymbols, TM.InputSymbols);
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = source,
+                TargetState = target
+            };
+
             if (atd.ShowDialog() == true)
             {
-                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
+                {
+                    var tt = new TuringTransition(atd.SourceState,
+                                                  atd.TargetState,
+                                                  new List<char>() { (char)atd.ReadSymbol },
+                                                  new List<char>() { (char)atd.WriteSymbol },
+                                                  new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                  atd.Comment);
 
-                try
-                {
-                    TM.AddTransition(new TuringTransition(
-                        atd.Source, atd.Target, atd.SymbolsRead,
-                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                    try
+                    {
+                        TM.AddTransition(tt);
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (TransitionAlreadyExistsException)
+            }
+        }
+
+        public void AddTransition(string identifier, string symbolRead)
+        {
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = TM.States.FirstOrDefault(o => o.Identifier == identifier),
+                ReadSymbol = symbolRead.Length == 1 ? (char?)symbolRead[0] : null
+            };
+
+            if (atd.ShowDialog() == true)
+            {
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
                 {
-                    QuickWarning(TransitionExistsText);
-                    return;
+                    var tt = new TuringTransition(atd.SourceState,
+                                                  atd.TargetState,
+                                                  new List<char>() { (char)atd.ReadSymbol },
+                                                  new List<char>() { (char)atd.WriteSymbol },
+                                                  new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                  atd.Comment);
+
+                    try
+                    {
+                        TM.AddTransition(tt);
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (ReadSymbolDoesNotExistException)
-                {
-                    QuickWarning(SymbolDoesNotExistText);
-                    return;
-                }
-                OnTMChanged();
             }
         }
 
         public void EditTransition(TuringTransition tt)
         {
-            AddTransitionDialog atd = new AddTransitionDialog(TM.States, tt, TM.TapeSymbols, TM.InputSymbols);
+            AddEditTransitionDialog atd = new AddEditTransitionDialog(TM.States, TM.TapeSymbols)
+            {
+                SourceState = tt.Source,
+                TargetState = tt.Target,
+                ReadSymbol = tt.SymbolsRead[0],
+                WriteSymbol = tt.SymbolsWrite[0],
+                Direction = tt.MoveDirections[0],
+                Comment = tt.Comment
+            };
+
             if (atd.ShowDialog() == true)
             {
-                atd.SymbolsWrite.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-                atd.SymbolsRead.ForEach((o) => { if (!TM.TapeSymbols.Contains(o)) { TM.AddSymbol(o, true); } });
-
-                try
+                if (atd.SourceState != null && //Fehlerprüfung noch in den Dialog auslagern!
+                    atd.TargetState != null &&
+                    atd.ReadSymbol != null &&
+                    atd.WriteSymbol != null &&
+                    atd.Direction != null)
                 {
-                    TM.EditTransition(tt, new TuringTransition(
-                        atd.Source, atd.Target, atd.SymbolsRead,
-                        atd.SymbolsWrite, atd.Directions, atd.Comment));
+                    // This function calls TM.RemoveTransition and TM.AddTransition so their exceptions must be
+                    // caught here too
+                    try
+                    {
+                        TM.EditTransition(tt, new TuringTransition(atd.SourceState,
+                                                                   atd.TargetState,
+                                                                   new List<char>() { (char)atd.ReadSymbol },
+                                                                   new List<char>() { (char)atd.WriteSymbol },
+                                                                   new List<TuringTransition.Direction>() { (TuringTransition.Direction)atd.Direction },
+                                                                   atd.Comment));
+                    }
+                    catch (TransitionAlreadyExistsException)
+                    {
+                        QuickWarning(TransitionExistsText);
+                    }
+                    catch (ReadSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(ReadSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (WriteSymbolDoesNotExistException e)
+                    {
+                        QuickWarning(WriteSymbolDoesNotExistText + $" ({e.Message})");
+                    }
+                    catch (NumberOfTapesDoesNotMatchToTransitionDefinitionException)
+                    {
+                        QuickWarning(InvalidTapeNumberInDefinitionText);
+                    }
+                    catch (SourceStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(SourceStateDoesNotExistText);
+                    }
+                    catch (TargetStateOfTransitionDoesNotExistException)
+                    {
+                        QuickWarning(TargetStateDoesNotExistText);
+                    }
+                    catch (TransitionDoesNotExistException)
+                    {
+                        QuickWarning(TransitionDoesNotExistText);
+                    }
+                    OnTMChanged();
                 }
-                catch (TransitionAlreadyExistsException)
-                {
-                    QuickWarning(TransitionExistsText);
-                    return;
-                }
-                catch (ReadSymbolDoesNotExistException)
-                {
-                    QuickWarning(SymbolDoesNotExistText);
-                    return;
-                }
-                OnTMChanged();
             }
         }
 
@@ -1070,7 +1350,6 @@ namespace TMSim.UI
             catch (TransitionDoesNotExistException)
             {
                 QuickWarning(TransitionDoesNotExistText);
-                return;
             }
             OnTMChanged();
         }
@@ -1090,63 +1369,86 @@ namespace TMSim.UI
 
         public void AddSymbol()
         {
-            AddSymbolDialog asd = new AddSymbolDialog();
-            if (asd.ShowDialog() == true)
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.AddModus = true;
+            if (aersd.ShowDialog() == true)
             {
-                char symbol = asd.Symbol;
-                bool isInputAlphabet = asd.IsInInput;
+                char symbol = aersd.Symbol;
+                bool isInputAlphabet = aersd.IsInInput;
+                bool isBlankChar = aersd.IsBlankChar;
 
                 try
                 {
-                    TM.AddSymbol(symbol, isInputAlphabet);
+                    TM.AddSymbol(symbol, isInputAlphabet, isBlankChar);
                 }
                 catch (SymbolAlreadyExistsException)
                 {
                     QuickWarning(SymbolExistsText);
-                    return;
+                }
+                catch (SymbolCanNotBeInputAndBlankException)
+                {
+                    QuickWarning(WarnSymbolIsInputAndBlankText);
                 }
                 OnTMChanged();
             }
         }
 
-        public void EditSymbol(string actSymbol, bool isInput)
+        public void EditSymbol(string symbol = " ", bool isInput = false, bool isBlank = false)
         {
-            EditSymbolDialog esd = new EditSymbolDialog(actSymbol.ToCharArray()[0], isInput);
-            if (esd.ShowDialog() == true)
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.Symbol = symbol.ToCharArray()[0];
+            aersd.TapeSymbols = TM.TapeSymbols;
+            aersd.IsInInput = isInput;
+            aersd.IsBlankChar = isBlank;
+            aersd.EditModus = true;
+
+            if (aersd.ShowDialog() == true)
             {
-                char symbol = esd.Symbol;
-                bool isInputAlphabet = esd.IsInInput;
+                char actSymbol = aersd.Symbol;
+                bool isInputAlphabet = aersd.IsInInput;
+                bool isBlankChar = aersd.IsBlankChar;
 
                 try
                 {
-                    TM.EditSymbol(symbol, isInputAlphabet);
+                    TM.EditSymbol(actSymbol, isInputAlphabet, isBlankChar);
                 }
                 catch (SymbolDoesNotExistException)
                 {
                     QuickWarning(SymbolDoesNotExistText);
-                    return;
+                }
+                catch (SymbolCanNotBeInputAndBlankException)
+                {
+                    QuickWarning(WarnSymbolIsInputAndBlankText);
                 }
                 OnTMChanged();
             }
         }
 
-        public void RemoveSymbol(string symbol)
+        public void RemoveSymbol(string symbol = " ")
         {
-            try
-            {
-                TM.RemoveSymbol(symbol.ToCharArray()[0]);
-            }
-            catch (SymbolDoesNotExistException)
-            {
-                QuickWarning(SymbolDoesNotExistText);
-                return;
-            }
-            OnTMChanged();
-        }
+            AddEditRemoveSymbolDialog aersd = new AddEditRemoveSymbolDialog();
+            aersd.Symbol = symbol.ToCharArray()[0];
+            aersd.TapeSymbols = TM.TapeSymbols;
+            aersd.IsInInput = TM.InputSymbols.Contains(symbol.ToCharArray()[0]);
+            aersd.IsBlankChar = TM.BlankChar.Equals(symbol.ToCharArray()[0]);
+            aersd.RemoveModus = true;
 
-        private void SetInputTapeWordToolTip()
-        {
-            TapeWordInputToolTip = PopupIsInputAlphabetText + ": " + string.Join(", ", TM.InputSymbols.ToArray());
+            if (aersd.ShowDialog() == true)
+            {
+                try
+                {
+                    TM.RemoveSymbol(aersd.Symbol);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    QuickWarning(SymbolDoesNotExistText);
+                }
+                catch (SymbolCanNotBeInputAndBlankException)
+                {
+                    QuickWarning(WarnSymbolIsInputAndBlankText);
+                }
+                OnTMChanged();
+            }
         }
 
         private void OnDecreaseSpeed()

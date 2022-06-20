@@ -45,12 +45,15 @@ namespace TMSim.UI
             get { return (ViewModel)GetValue(VMProperty); }
             set { SetValue(VMProperty, value); }
         }
+        double NS { get { return DData.NodeSize; } }
 
         private Node heldNode;
         private Node rightClickedNode;
+        private Node rightClickedNodeForContextMenu;
         private NodeConnection rightClickedConnection;
+        private Vector mouseClickpos;
 
-        Vector mouseClickpos;
+        private static readonly double notifR = 2;
 
         private static readonly Brush bgBrush = Brushes.White;
         private static readonly Pen bgPen = new Pen(bgBrush, 1);
@@ -63,6 +66,9 @@ namespace TMSim.UI
 
         private static readonly Brush highlightBrush = Brushes.Yellow;
         private static readonly Pen highlightPen = new Pen(highlightBrush, 1);
+
+        private static readonly Brush notifyBrush = Brushes.Red;
+        private static readonly Pen notifyPen = new Pen(notifyBrush, 1);
 
         private Dictionary<Rect, NodeConnection> connectionLocations = new Dictionary<Rect, NodeConnection>();
 
@@ -119,13 +125,14 @@ namespace TMSim.UI
         private void DrawNode(DrawingContext dc, Node n)
         {
             Brush b = n.IsCurrentNode ? highlightBrush: bgBrush;
-            dc.DrawEllipse(b, outlinePen, n.Position, DData.NodeSize / 2, DData.NodeSize / 2);
-            if(n.IsAccepting) dc.DrawEllipse(Brushes.Transparent, outlinePen, n.Position, DData.NodeSize / 2.5, DData.NodeSize / 2.5);
+            dc.DrawEllipse(b, outlinePen, n.Position, NS / 2, NS / 2);
+            if (n.IsAccepting) dc.DrawEllipse(Brushes.Transparent, outlinePen, n.Position, NS / 2.5, NS / 2.5);
+            if (n.Comment != "") dc.DrawEllipse(notifyBrush, notifyPen, OffsetPoint(n.Position, NS * 0.3535, -NS * 0.3535), notifR, notifR);
             FormattedText ft = new FormattedText(n.Identifier,
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Courier New"),
-                DData.NodeSize / 3, outlineBrush, 1);
+                NS / 3, outlineBrush, 1);
             dc.DrawText(ft, OffsetPoint(n.Position, -ft.Width/2, -ft.Height/2));
 
             if (n.IsStart)
@@ -134,12 +141,12 @@ namespace TMSim.UI
                     CultureInfo.GetCultureInfo("en-us"),
                     FlowDirection.LeftToRight,
                     new Typeface("Courier New"),
-                    DData.NodeSize / 3, outlineBrush, 1);
-                dc.DrawText(ft, OffsetPoint(n.Position, -ft.Width/2, -DData.NodeSize*0.8 - ft.Height/2));
+                    NS / 3, outlineBrush, 1);
+                dc.DrawText(ft, OffsetPoint(n.Position, -ft.Width/2, -NS*0.8 - ft.Height/2));
                 DrawArrwohead(
                     dc,
-                    OffsetPoint(n.Position, 0, -DData.NodeSize / 2),
-                    OffsetPoint(n.Position, 0, -DData.NodeSize) - n.Position);
+                    OffsetPoint(n.Position, 0, -NS / 2),
+                    OffsetPoint(n.Position, 0, -NS) - n.Position);
             }
         }
 
@@ -153,19 +160,19 @@ namespace TMSim.UI
                 using (StreamGeometryContext ctx = sg.Open())
                 {
                     ctx.BeginFigure(
-                        OffsetPoint(n.Position, DData.NodeSize / 2, 0),
+                        OffsetPoint(n.Position, NS / 2, 0),
                         true, false);
                     ctx.ArcTo(
-                        OffsetPoint(n.Position, 0, DData.NodeSize / 2),
-                        new Size(DData.NodeSize, DData.NodeSize/3),
+                        OffsetPoint(n.Position, 0, NS / 2),
+                        new Size(NS, NS/3),
                         0.0, true, SweepDirection.Clockwise, true, true);
                 }
                 sg.Freeze();
                 dc.DrawGeometry(Brushes.Transparent, outlinePen, sg);
-                DrawConnectionTextsAround(dc, con, OffsetPoint(n.Position, DData.NodeSize * 1.2, DData.NodeSize / 4));
+                DrawConnectionTextsAround(dc, con, OffsetPoint(n.Position, NS * 1.2, NS / 4));
                 DrawArrwohead(
                     dc,
-                    OffsetPoint(n.Position, DData.NodeSize / 2, 0),
+                    OffsetPoint(n.Position, NS / 2, 0),
                     new Vector(1, 0));
             }
             else
@@ -185,8 +192,8 @@ namespace TMSim.UI
                 {
                     Vector nodeVector = con.Node2.Position - con.Node1.Position;
                     Point center = con.Node1.Position + nodeVector / 2;
-                    Point pRight = center + MNormalize(PerpVector(nodeVector)) * DData.NodeSize * 0.7;
-                    Point pLeft = center + MNormalize(PerpVector(-nodeVector)) * DData.NodeSize * 0.7;
+                    Point pRight = center + MNormalize(PerpVector(nodeVector)) * NS * 0.7;
+                    Point pLeft = center + MNormalize(PerpVector(-nodeVector)) * NS * 0.7;
 
                     //render con
                     dc.DrawLine(outlinePen,
@@ -214,7 +221,7 @@ namespace TMSim.UI
         private void DrawConnectionTextsAround(DrawingContext dc, NodeConnection con, Point CenterOfMass)
         {
             int collinearCount = con.CollinearConnections.Count;
-            double rowHeight = new FormattedText("|", CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Courier New"), DData.NodeSize / 3, outlineBrush, 1).Height;
+            double rowHeight = new FormattedText("|", CultureInfo.GetCultureInfo("en-us"), FlowDirection.LeftToRight, new Typeface("Courier New"), NS / 3, outlineBrush, 1).Height;
             double spacing = 5;
             double totalHeight = rowHeight * collinearCount + (collinearCount - 1) * spacing;
             for (int i = 0; i < collinearCount; i++)
@@ -234,7 +241,7 @@ namespace TMSim.UI
                 CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight,
                 new Typeface("Courier New"),
-                DData.NodeSize / 3, outlineBrush, 1);
+                NS / 3, outlineBrush, 1);
 
             dc.PushTransform(new TranslateTransform(
                 textCenter.X - fText.Width / 2, 
@@ -242,6 +249,7 @@ namespace TMSim.UI
             Brush b = con.IsCurrentTransition ? highlightBrush : accentBrush;
             dc.DrawRectangle(b, null, new Rect(new Size(fText.Width, fText.Height)));
             dc.DrawText(fText, new Point(0,0));
+            if (con.Comment != "") dc.DrawEllipse(notifyBrush, notifyPen, new Point(fText.Width, 0), notifR, notifR);
             dc.Pop();
 
             Rect r = new Rect(
@@ -260,23 +268,23 @@ namespace TMSim.UI
         {
             Vector direction =  target.Position - source.Position;
             direction.Normalize();
-            return source.Position + direction * DData.NodeSize/2;
+            return source.Position + direction * NS/2;
         }
 
         private Point PointOnBorderTowards(Node n, Point p2)
         {
             Vector direction = p2 - n.Position;
             direction.Normalize();
-            return n.Position + direction * DData.NodeSize / 2;
+            return n.Position + direction * NS / 2;
         }
 
         private void DrawArrwohead(DrawingContext dc, Point tip, Vector direction)
         {
             direction.Normalize();
-            Point corner1 = tip + direction * DData.NodeSize / 6 +
-                PerpVector(direction) * DData.NodeSize / 12;
-            Point corner2 = tip + direction * DData.NodeSize / 6 -
-                PerpVector(direction) * DData.NodeSize / 12;
+            Point corner1 = tip + direction * NS / 6 +
+                PerpVector(direction) * NS / 12;
+            Point corner2 = tip + direction * NS / 6 -
+                PerpVector(direction) * NS / 12;
 
             StreamGeometry sg = new StreamGeometry();
             using (StreamGeometryContext ctx = sg.Open())
@@ -298,14 +306,14 @@ namespace TMSim.UI
         {
             double repulsiveForce = 15000;
             double attractiveForce = 0.07;
-            double relaxedSpringLength = DData.NodeSize * 3;
+            double relaxedSpringLength = NS * 3;
             double gravityStrength = 2;
 
             int iterationCount = 0;
             double maxForce = 1000000;
 
 
-            while (iterationCount < maxIterations && maxForce > stopForce)
+            while (iterationCount < maxIterations && (maxForce > stopForce || double.IsNaN(maxForce)))
             {
                 iterationCount++;
                 double coolingFactor = 1 - iterationCount / maxIterations;
@@ -401,30 +409,30 @@ namespace TMSim.UI
         private Point ConstrainToScreen(Point p)
         {
             var rand = new Random();
-            double x = Math.Clamp(p.X, DData.NodeSize / 2, ActualWidth - DData.NodeSize / 2);
-            double y = Math.Clamp(p.Y, DData.NodeSize / 2, ActualHeight - DData.NodeSize / 2);
-            if (p.X == double.NaN) p.X = rand.Next((int)DData.Width);
-            if (p.Y == double.NaN) p.Y = rand.Next((int)DData.Height);
+            if (double.IsNaN(p.X)) p.X = rand.Next((int)DData.Width);
+            if (double.IsNaN(p.Y)) p.Y = rand.Next((int)DData.Height);
+            double x = Math.Clamp(p.X, NS / 2, ActualWidth - NS / 2);
+            double y = Math.Clamp(p.Y, NS / 2, ActualHeight - NS / 2);
             return new Point(x, y);
         }
 
-        private Point OffsetPoint(Point p, double offX, double offY)
+        private static Point OffsetPoint(Point p, double offX, double offY)
         {
             return new Point(p.X + offX, p.Y + offY);
         }
 
-        private Vector SubtractPositions(Node n1, Node n2)
+        private static Vector SubtractPositions(Node n1, Node n2)
         {
             return Vector.Subtract((Vector)n1.Position, (Vector)n2.Position);
         }
 
-        private Vector MNormalize(Vector v)
+        private static Vector MNormalize(Vector v)
         {
             v.Normalize();
             return v;
         }
 
-        private Vector SumVectors(IEnumerable<Vector> vectors)
+        private static Vector SumVectors(IEnumerable<Vector> vectors)
         {
             Vector res = new Vector(0,0);
             foreach (Vector v in vectors)
@@ -440,12 +448,13 @@ namespace TMSim.UI
             //MessageBox.Show($"clicked at: {pos}");
             foreach (Node n in DData.Nodes.Values)
             {
-                if (Vector.Subtract(mouseClickpos, (Vector)n.Position).Length < DData.NodeSize / 2)
+                if (Vector.Subtract(mouseClickpos, (Vector)n.Position).Length < NS / 2)
                 {
                     heldNode = n;
                     //MessageBox.Show($"picked up node {n.Identifier}");
                 }
             }
+            Mouse.Capture(this, CaptureMode.Element);
 
             InvalidateVisual();
         }
@@ -453,72 +462,41 @@ namespace TMSim.UI
         private void UserControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             heldNode = null;
+            ReleaseMouseCapture();
         }
 
         private void UserControl_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
             mouseClickpos = (Vector)e.GetPosition((IInputElement)sender);
-            bool found = false;
-            foreach (Node n in DData.Nodes.Values)
-            {
-                if (Vector.Subtract(mouseClickpos, (Vector)n.Position).Length < DData.NodeSize / 2)
-                {
-                    rightClickedNode = n;
-                    found = true;
-                    //MessageBox.Show($"picked up node {n.Identifier}");
-                    break;
-                }
-            } 
-            if(!found)
-            {
-                rightClickedNode = null;
-            }
-
-            found = false;
-            foreach (Rect r in connectionLocations.Keys)
-            {
-                if (r.Contains((Point)mouseClickpos)){
-                    rightClickedConnection = connectionLocations[r];
-                    found = true;
-                    break;
-                }
-            }
-            if (!found)
-            {
-                rightClickedConnection = null;
-            }
-
+            rightClickedNode = GetNodeUnder(mouseClickpos);
+            rightClickedNodeForContextMenu = null;
+            rightClickedConnection = GetConnectionUnder(mouseClickpos);
             InvalidateVisual();
         }
 
         private void UserControl_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
-            Node nodeReleasedOver = null;
             //this vvv is intentially not mouseClickpos
             Vector pos = (Vector)e.GetPosition((IInputElement)sender);
-            foreach (Node n in DData.Nodes.Values)
-            {
-                if (Vector.Subtract(pos, (Vector)n.Position).Length < DData.NodeSize / 2)
-                {
-                    nodeReleasedOver = n;
-                    //MessageBox.Show($"picked up node {n.Identifier}");
-                }
-            }
+            Node nodeReleasedOver = GetNodeUnder(pos);
+
             if (nodeReleasedOver == rightClickedNode)
             {
                 //Open context menu
-                // with the option of creating a connection (also) to it self
+                rightClickedNodeForContextMenu = rightClickedNode;
+                rightClickedNode = null;
             }
             else if (nodeReleasedOver != null && rightClickedNode != null)
             {
                 VM.AddTransition(rightClickedNode.State, nodeReleasedOver.State);
+                rightClickedNode = null;
             }
             HandleContextMenuButtons();
         }
 
         private void HandleContextMenuButtons()
         {
-            if (rightClickedNode != null) {
+            if (rightClickedNodeForContextMenu != null) {
                 edit_state_btn.IsEnabled = true;
                 remove_state_btn.IsEnabled = true;
                 add_transition_btn.IsEnabled = true;
@@ -550,25 +528,25 @@ namespace TMSim.UI
 
         private void edit_state_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (rightClickedNode != null)
+            if (rightClickedNodeForContextMenu != null)
             {
-                VM.EditState(rightClickedNode.State);
+                VM.EditState(rightClickedNodeForContextMenu.State);
             }
         }
 
         private void remove_state_btn_Click(object sender, RoutedEventArgs e)
         {
-            if(rightClickedNode != null)
+            if(rightClickedNodeForContextMenu != null)
             {
-                VM.RemoveState(rightClickedNode.State);
+                VM.RemoveState(rightClickedNodeForContextMenu.State);
             }
         }
 
         private void add_transition_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (rightClickedNode != null)
+            if (rightClickedNodeForContextMenu != null)
             {
-                VM.AddTransition(rightClickedNode.State, rightClickedNode.State);
+                VM.AddTransition(rightClickedNodeForContextMenu.State, rightClickedNodeForContextMenu.State);
             }
         }
 
@@ -591,6 +569,93 @@ namespace TMSim.UI
         private void arrange_btn_Click(object sender, RoutedEventArgs e)
         {
             ArangeDiagram();
+        }
+
+        private void EditSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.EditSymbol();
+        }
+
+        private void RemoveSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.RemoveSymbol();
+        }
+
+        private void AddSymbol_Click(object sender, RoutedEventArgs e)
+        {
+            VM.AddSymbol();
+        }
+
+        private void UserControl_MouseEnter(object sender, MouseEventArgs e)
+        {
+            //ToolTipService.SetIsEnabled(this, false);
+        }
+
+        private void UserControl_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (heldNode != null || rightClickedNode != null) { closeToolTip(); return; };
+
+            Vector pos = (Vector)e.GetPosition((IInputElement)sender);
+
+            Node hoverNode = GetNodeUnder(pos);
+            NodeConnection hoverCon = GetConnectionUnder(pos);
+
+            if (hoverCon != null && hoverCon.Comment != "")
+            {
+                updateToolTip(pos, hoverCon.Comment);
+            }
+            else if (hoverNode != null && hoverNode.Comment != "")
+            {
+                updateToolTip(pos, hoverNode.Comment);
+            }
+            else
+            {
+                closeToolTip();
+            }
+
+            Vector updateToolTip(Vector pos, string text)
+            {
+                myToolTipText.Text = text;
+                myToolTip.HorizontalOffset = pos.X;
+                myToolTip.VerticalOffset = pos.Y;
+                myToolTip.IsOpen = true;
+                InvalidateVisual();
+                return pos;
+            }
+
+            void closeToolTip()
+            {
+                myToolTip.IsOpen = false;
+                InvalidateVisual();
+            }
+        }
+
+        private Node GetNodeUnder(Vector pos)
+        {
+            Node hoverNode = null;
+            foreach (Node n in DData.Nodes.Values)
+            {
+                if (Vector.Subtract(pos, (Vector)n.Position).Length < NS / 2)
+                {
+                    hoverNode = n;
+                    break;
+                }
+            }
+            return hoverNode;
+        }
+
+        private NodeConnection GetConnectionUnder(Vector pos)
+        {
+            NodeConnection hoverCon = null;
+            foreach (Rect r in connectionLocations.Keys)
+            {
+                if (r.Contains((Point)pos))
+                {
+                    hoverCon = connectionLocations[r];
+                    break;
+                }
+            }
+            return hoverCon;
         }
     }
 }

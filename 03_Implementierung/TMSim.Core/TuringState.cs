@@ -11,8 +11,8 @@ namespace TMSim.Core
     {
         public string Identifier { get; set; }
         public string Comment { get; set; }
-        public List<TuringTransition> IncomingTransitions { get; private set; }
-        public List<TuringTransition> OutgoingTransitions { get; private set; }
+        public List<TuringTransition> IncomingTransitions { get;set; }
+        public List<TuringTransition> OutgoingTransitions { get;set; }
 
         public bool IsStart = false;
         public bool IsAccepting = false;

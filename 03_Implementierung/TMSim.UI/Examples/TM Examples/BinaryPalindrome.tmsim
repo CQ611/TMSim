@@ -1,0 +1,481 @@
+{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qRight0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qRight1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qSearch0L",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qSearch1L",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qLeft0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qLeft1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qSearch0R",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qSearch1R",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qReject",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qAccept",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "01",
+  "TapeAlphabet": "_01",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "qRight0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight0",
+      "TargetState": "qRight0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight0",
+      "TargetState": "qRight0",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "qRight1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight1",
+      "TargetState": "qRight1",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight1",
+      "TargetState": "qRight1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight0",
+      "TargetState": "qSearch0L",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0L",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qRight1",
+      "TargetState": "qSearch1L",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1L",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft0",
+      "TargetState": "qLeft0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft0",
+      "TargetState": "qLeft0",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "qLeft0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft1",
+      "TargetState": "qLeft1",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft1",
+      "TargetState": "qLeft1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft0",
+      "TargetState": "qSearch0R",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0R",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qLeft1",
+      "TargetState": "qSearch1R",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1R",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0R",
+      "TargetState": "qReject",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1R",
+      "TargetState": "qReject",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0L",
+      "TargetState": "qReject",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1L",
+      "TargetState": "qReject",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0L",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch0R",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1L",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "qSearch1R",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "qLeft1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "qAccept"
+  ]
+}

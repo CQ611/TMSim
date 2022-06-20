@@ -18,7 +18,7 @@ namespace TMSim.UI
     /// </summary>
     public partial class ColumnHeader : UserControl
     {
-        public delegate void EditSymbol(string symbol, bool isInput);
+        public delegate void EditSymbol(string symbol, bool isInput, bool isBlankChar);
         public static event EditSymbol EditSymbolEvent;
 
         public delegate void RemoveSymbol(string symbol);
@@ -52,16 +52,32 @@ namespace TMSim.UI
             }
         }
 
-        public ColumnHeader(string symbol, bool isInput)
+        private bool _isBlankChar;
+        public bool IsBlankChar
+        {
+            get
+            {
+                return _isBlankChar;
+            }
+            set
+            {
+                _isBlankChar = value;
+                LabelSymbol.Foreground = value ? Brushes.Red : Brushes.Black;
+            }
+        }
+            
+
+        public ColumnHeader(string symbol, bool isInput, bool isBlankChar)
         {
             InitializeComponent();
             Symbol = symbol;
             IsInput = isInput;
+            IsBlankChar = isBlankChar;
         }
 
         private void EditSymbol_Click(object sender, RoutedEventArgs e)
         {
-            EditSymbolEvent?.Invoke(Symbol, IsInput);
+            EditSymbolEvent?.Invoke(Symbol, IsInput, IsBlankChar);
         }
 
         private void RemoveSymbol_Click(object sender, RoutedEventArgs e)

@@ -24,47 +24,103 @@ namespace TMSim.Core
         public TuringMachine()
         {
             TapeAlphabet = new TuringAlphabet("");
-            BlankChar = ' ';
             InputAlphabet = new TuringAlphabet("");
             States = new List<TuringState>();
+            BlankChar = '\0';
             StartState = null;
             CurrentState = null;
             EndStates = new List<TuringState>();
             Transitions = new List<TuringTransition>();
-            Tapes = new List<TuringTape> { new TuringTape("", BlankChar)};
+            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
         }
 
         public void ImportFromTextFile(string filePath)
         {
+            TuringMachine copy = GetCopy();
             string jsonString = System.IO.File.ReadAllText(filePath);
             try
             {
                 FromJsonString(jsonString);
             }
-            catch (InputAlphabetHasToBeASubsetOfTapeAlphabetException e) { 
-                throw e; 
-            }
-            catch (Exception)
+            catch (Exception e)
             {
+                TapeAlphabet = copy.TapeAlphabet;
+                BlankChar = copy.BlankChar;
+                InputAlphabet = copy.InputAlphabet;
+                States = copy.States;
+                StartState = copy.StartState;
+                EndStates = copy.EndStates;
+                Transitions = copy.Transitions;
+                Tapes = copy.Tapes;
+                Reset();
+                if (e is InputAlphabetHasToBeASubsetOfTapeAlphabetException) throw e;
+                else if (e is ReadSymbolDoesNotExistException) throw e;
+                else if (e is SourceStateOfTransitionDoesNotExistException) throw e;
+                else if (e is StateAlreadyExistsException) throw e;
+                else if (e is SymbolAlreadyExistsException) throw e;
+                else if (e is SymbolCanNotBeInputAndBlankException) throw e;
+                else if (e is SymbolDoesNotExistException) throw e;
+                else if (e is TargetStateOfTransitionDoesNotExistException) throw e;
+                else if (e is TransitionAlreadyExistsException) throw e;
+                else if (e is TransitionNumberOfTapesIsInconsistentException) throw e;
+                else if (e is WriteSymbolDoesNotExistException) throw e;
                 throw new ImportFileIsNotValidException();
             }
         }
 
         private void FromJsonString(string jsonString)
         {
-            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString); 
-            TapeAlphabet = new TuringAlphabet(tm.TapeAlphabet);
-            BlankChar = tm.Blank;
-            InputAlphabet = new TuringAlphabet(tm.InputAlphabet);
-            if (!InputAlphabet.Symbols.All(c => TapeAlphabet.Symbols.Contains(c))) {
-                throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
+            var tm = JsonConvert.DeserializeObject<ImportExportStructure>(jsonString);
+            if (tm.States == null)
+            {
+                // States are not defined in inputfile
+                tm.States = new List<State> { };
+            }
+            if (tm.EndStates == null)
+            {
+                // Endstates are not defined in inputfile
+                tm.EndStates = new List<string> { };
+            }
+            if (tm.TapeAlphabet == null)
+            {
+                // TapeAlphabet is not defined in inputfile
+                tm.TapeAlphabet = "";
+            }
+            if (tm.InputAlphabet == null)
+            {
+                // InputAlphabet is not defined in inputfile
+                tm.InputAlphabet = "";
+            }
+            TapeAlphabet = new TuringAlphabet("");
+            InputAlphabet = new TuringAlphabet("");
+            foreach (char c in tm.TapeAlphabet.ToList())
+            {
+                AddSymbol(c, false);
+            }
+            foreach (char c in tm.InputAlphabet.ToList())
+            {
+                try
+                {
+                    EditSymbol(c, true);
+                }
+                catch (SymbolDoesNotExistException)
+                {
+                    throw new InputAlphabetHasToBeASubsetOfTapeAlphabetException();
+                }
+            }
+            if (InputAlphabet.Symbols.Contains(tm.Blank))
+            {
+                throw new SymbolCanNotBeInputAndBlankException();
+            }
+            if (tm.Blank != '\0')
+            {
+                EditSymbol(tm.Blank, false, true);
             }
 
             States.Clear();
             EndStates.Clear();
             Transitions.Clear();
             Tapes.Clear();
-
             foreach (State state in tm.States)
             {
                 bool isStart = false;
@@ -74,11 +130,17 @@ namespace TMSim.Core
                 AddState(new TuringState(state.Identifier, comment: state.Comment, isStart: isStart, isAccepting: isAccepting));
             }
             CurrentState = StartState;
-            if (tm.Transitions.Count() > 0) {
+            if (tm.Transitions.Count() > 0)
+            {
                 for (int i = 0; i < tm.Transitions[0].SymbolsRead.Count(); i++)
                 {
                     Tapes.Add(new TuringTape("", BlankChar));
                 }
+            }
+            else
+            {
+                // definition contains no transitions
+                Tapes.Add(new TuringTape("", BlankChar));
             }
             foreach (Transition transition in tm.Transitions)
             {
@@ -98,10 +160,20 @@ namespace TMSim.Core
             ImportExportStructure importExportStructure = new ImportExportStructure(this);
             string jsonString = JsonConvert.SerializeObject(importExportStructure, Formatting.Indented);
             System.IO.File.WriteAllText(filePath, jsonString);
+
+
         }
 
         public bool AdvanceState()
         {
+            if (BlankChar == '\0')
+            {
+                throw new BlankCharMustBeSetException();
+            }
+            if (StartState == null)
+            {
+                throw new NoStartStateException();
+            }
             try
             {
                 CurrentTransition = GetTransition();
@@ -117,17 +189,18 @@ namespace TMSim.Core
             {
                 return false;
             }
-            catch (NoStartStateException)
-            {
-                return false;
-            }
             return true;
         }
 
         public void Reset()
         {
+            List<TuringTape> newTapes = new List<TuringTape>();
+            foreach (TuringTape _ in Tapes)
+            {
+                newTapes.Add(new TuringTape("", BlankChar));
+            }
+            Tapes = newTapes;
             CurrentState = StartState;
-            Tapes = new List<TuringTape> { new TuringTape("", BlankChar) };
         }
 
         public bool CheckIsEndState()
@@ -142,7 +215,6 @@ namespace TMSim.Core
         private TuringTransition GetTransition()
         {
             if (CurrentState == null) CurrentState = StartState;
-            if (CurrentState == null) throw new NoStartStateException();
             foreach (TuringTransition transition in CurrentState.OutgoingTransitions)
             {
                 if (transition.CheckIfTransitionShouldBeActive(Tapes, CurrentState)) return transition;
@@ -154,12 +226,14 @@ namespace TMSim.Core
         {
             foreach (TuringState state in States) if (state.Identifier == ts.Identifier) throw new StateAlreadyExistsException();
             States.Add(ts);
-            if (ts.IsStart) {
-                if (StartState != null) StartState.IsStart = false; 
-                StartState = ts; 
+            if (ts.IsStart)
+            {
+                if (StartState != null) StartState.IsStart = false;
+                StartState = ts;
             }
-          
+
             if (ts.IsAccepting) { EndStates.Add(ts); }
+            Reset();
         }
 
         public void EditState(TuringState tsOld, TuringState tsNew)
@@ -186,6 +260,7 @@ namespace TMSim.Core
                 StartState = tsOld;
             }
             tsOld.IsStart = tsNew.IsStart;
+            Reset();
         }
 
         public void RemoveState(TuringState ts)
@@ -204,6 +279,7 @@ namespace TMSim.Core
             if (EndStates.Contains(ts)) EndStates.Remove(ts);
             if (StartState == ts) StartState = null;
             States.Remove(ts);
+            Reset();
         }
 
         public void AddTransition(TuringTransition tt)
@@ -217,6 +293,7 @@ namespace TMSim.Core
             Transitions.Add(tt);
             tt.Source.OutgoingTransitions.Add(tt);
             tt.Target.IncomingTransitions.Add(tt);
+            Reset();
         }
 
         public void EditTransition(TuringTransition ttOld, TuringTransition ttNew)
@@ -231,36 +308,59 @@ namespace TMSim.Core
             tt.Source.OutgoingTransitions.Remove(tt);
             tt.Target.IncomingTransitions.Remove(tt);
             Transitions.Remove(tt);
-            if (removeUnusedSymbols) {
-                foreach (char symbolToRemove in tt.SymbolsRead) {
+            if (removeUnusedSymbols)
+            {
+                foreach (char symbolToRemove in tt.SymbolsRead)
+                {
                     bool shouldBeRemoved = true;
-                    foreach (TuringTransition transition in Transitions) {
-                        if (tt.SymbolsRead.Contains(symbolToRemove) || tt.SymbolsWrite.Contains(symbolToRemove)) { 
+                    foreach (TuringTransition transition in Transitions)
+                    {
+                        if (tt.SymbolsRead.Contains(symbolToRemove) || tt.SymbolsWrite.Contains(symbolToRemove))
+                        {
                             shouldBeRemoved = false;
                             break;
                         }
                     }
-                    if (shouldBeRemoved) {
+                    if (shouldBeRemoved)
+                    {
                         RemoveSymbol(symbolToRemove);
                     }
                 }
             }
+            Reset();
         }
 
-        public void AddSymbol(char c, bool isInInput)
+        public void AddSymbol(char c, bool isInInput, bool isBlank = false)
         {
+            if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (TapeAlphabet.Symbols.Contains(c)) throw new SymbolAlreadyExistsException();
-            else {
+            else
+            {
                 TapeAlphabet.Symbols.Add(c);
                 if (isInInput) InputAlphabet.Symbols.Add(c);
+                if (isBlank)
+                {
+                    BlankChar = c;
+                }
             }
+            Reset();
         }
 
-        public void EditSymbol(char c, bool isInInput)
+        public void EditSymbol(char c, bool isInInput, bool isBlank = false)
         {
-            if(!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
+            if (!TapeAlphabet.Symbols.Contains(c)) throw new SymbolDoesNotExistException();
+            if (isInInput && isBlank) throw new SymbolCanNotBeInputAndBlankException();
             if (!InputAlphabet.Symbols.Contains(c) && TapeAlphabet.Symbols.Contains(c) && isInInput) InputAlphabet.Symbols.Add(c);
             else if (InputAlphabet.Symbols.Contains(c) && !isInInput) InputAlphabet.Symbols.Remove(c);
+            if (isBlank)
+            {
+                BlankChar = c;
+            }
+            if(isBlank == false && c == BlankChar)
+            {
+                BlankChar = '\0';
+            }
+            Reset();
         }
 
         public void RemoveSymbol(char c)
@@ -269,13 +369,19 @@ namespace TMSim.Core
             if (InputAlphabet.Symbols.Contains(c)) InputAlphabet.Symbols.Remove(c);
             if (TapeAlphabet.Symbols.Contains(c)) TapeAlphabet.Symbols.Remove(c);
             List<TuringTransition> TransitionsToRemove = new List<TuringTransition>();
-            foreach (TuringTransition tt in Transitions) 
+            foreach (TuringTransition tt in Transitions)
             {
                 if (tt.SymbolsRead.Contains(c) || tt.SymbolsWrite.Contains(c)) TransitionsToRemove.Add(tt);
             }
-            foreach (TuringTransition tt in TransitionsToRemove) {
+            foreach (TuringTransition tt in TransitionsToRemove)
+            {
                 RemoveTransition(tt);
             }
+            if (c == BlankChar)
+            {
+                BlankChar = '\0';
+            }
+            Reset();
         }
 
         public TuringMachine GetCopy()
@@ -290,14 +396,15 @@ namespace TMSim.Core
         public void WriteTapeWord(string inputWord)
         {
             if (!InputAlphabet.WordIsContainedIn(inputWord) || inputWord.Length == 0) throw new WordIsNoValidInputException();
-            //TODO: Anpassung der Funktion zum schreiben auf mehreren Baender?
+            //TODO: more than one tape?
             foreach (var tape in Tapes)
             {
                 tape.Content = inputWord;
             }
         }
-        private bool checkTransitionAlreadyExists(TuringTransition tt) {
-            foreach (TuringTransition transition in Transitions) 
+        private bool checkTransitionAlreadyExists(TuringTransition tt)
+        {
+            foreach (TuringTransition transition in Transitions)
             {
                 if (transition.Source == tt.Source && transition.SymbolsRead.SequenceEqual(tt.SymbolsRead)) return true;
             }

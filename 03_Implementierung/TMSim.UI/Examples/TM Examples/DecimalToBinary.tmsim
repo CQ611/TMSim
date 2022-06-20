@@ -1,0 +1,1021 @@
+{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "halve",
+      "Comment": ""
+    },
+    {
+      "Identifier": "addHalf",
+      "Comment": ""
+    },
+    {
+      "Identifier": "jump",
+      "Comment": ""
+    },
+    {
+      "Identifier": "remove0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "goBack",
+      "Comment": ""
+    },
+    {
+      "Identifier": "qAccept",
+      "Comment": ""
+    },
+    {
+      "Identifier": "rest0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "setRest0",
+      "Comment": ""
+    },
+    {
+      "Identifier": "rest1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "setRest1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "continue",
+      "Comment": ""
+    },
+    {
+      "Identifier": "continue2",
+      "Comment": ""
+    },
+    {
+      "Identifier": "rest",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "0123456789",
+  "TapeAlphabet": "0123456789_",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "5"
+      ],
+      "SymbolsWrite": [
+        "5"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "6"
+      ],
+      "SymbolsWrite": [
+        "6"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "7"
+      ],
+      "SymbolsWrite": [
+        "7"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "8"
+      ],
+      "SymbolsWrite": [
+        "8"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "q0",
+      "SymbolsRead": [
+        "9"
+      ],
+      "SymbolsWrite": [
+        "9"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q0",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "addHalf",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "addHalf",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "addHalf",
+      "SymbolsRead": [
+        "5"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "8"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "addHalf",
+      "SymbolsRead": [
+        "9"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "6"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "addHalf",
+      "SymbolsRead": [
+        "7"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "addHalf",
+      "TargetState": "jump",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "5"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "addHalf",
+      "TargetState": "jump",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "6"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "addHalf",
+      "TargetState": "jump",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "7"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "addHalf",
+      "TargetState": "jump",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "8"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "addHalf",
+      "TargetState": "jump",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "9"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "jump",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "jump",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "jump",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "jump",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "jump",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "halve",
+      "TargetState": "remove0",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "remove0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "5"
+      ],
+      "SymbolsWrite": [
+        "5"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "6"
+      ],
+      "SymbolsWrite": [
+        "6"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "7"
+      ],
+      "SymbolsWrite": [
+        "7"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "8"
+      ],
+      "SymbolsWrite": [
+        "8"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "9"
+      ],
+      "SymbolsWrite": [
+        "9"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "remove0",
+      "TargetState": "qAccept",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Neutral"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "2"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "3"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "4"
+      ],
+      "SymbolsWrite": [
+        "4"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "5"
+      ],
+      "SymbolsWrite": [
+        "5"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "6"
+      ],
+      "SymbolsWrite": [
+        "6"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "7"
+      ],
+      "SymbolsWrite": [
+        "7"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "8"
+      ],
+      "SymbolsWrite": [
+        "8"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "goBack",
+      "SymbolsRead": [
+        "9"
+      ],
+      "SymbolsWrite": [
+        "9"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "goBack",
+      "TargetState": "rest",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "rest",
+      "TargetState": "rest0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "rest0",
+      "TargetState": "setRest0",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "rest",
+      "TargetState": "rest1",
+      "SymbolsRead": [
+        "5"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "rest1",
+      "TargetState": "setRest1",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest0",
+      "TargetState": "setRest0",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest0",
+      "TargetState": "setRest0",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest1",
+      "TargetState": "setRest1",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest1",
+      "TargetState": "setRest1",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest0",
+      "TargetState": "continue",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "setRest1",
+      "TargetState": "continue",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "continue",
+      "TargetState": "continue",
+      "SymbolsRead": [
+        "0"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "continue",
+      "TargetState": "continue",
+      "SymbolsRead": [
+        "1"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "continue",
+      "TargetState": "continue2",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "_"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "continue2",
+      "TargetState": "halve",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "0"
+      ],
+      "MoveDirections": [
+        "Left"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "_",
+  "EndStates": [
+    "qAccept"
+  ]
+}

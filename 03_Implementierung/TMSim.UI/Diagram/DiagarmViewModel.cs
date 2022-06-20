@@ -12,7 +12,7 @@ namespace TMSim.UI
 {
     public partial class ViewModel : ObservableObject
     {
-        public static DiagramData UpdateDiagramData(DiagramData DData, TuringMachine TM)
+        public DiagramData UpdateDiagramData(DiagramData DData, TuringMachine TM)
         {
             var rand = new Random();
             DiagramData tmpDData = new DiagramData();
@@ -79,6 +79,7 @@ namespace TMSim.UI
                 }
                 if (!foundParentCon) DData.Connections.Add(nc);
             }
+            RefreshDiagramData();
             return DData;
         }
 

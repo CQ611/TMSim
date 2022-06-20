@@ -66,12 +66,27 @@ namespace TMSim.UI
             }
         }
 
-        public RowHeader(bool isStartState, bool isAcceptingState, string id)
+        private bool _highlight = false;
+        public bool Highlight
+        {
+            get
+            {
+                return _highlight;
+            }
+            set
+            {
+                _highlight = value;
+                SetBackground();
+            }
+        }
+
+        public RowHeader(bool isStartState, bool isAcceptingState, string id, bool highlight)
         {
             InitializeComponent();
             IsStartState = isStartState;
             IsAcceptingState = isAcceptingState;
             Identifier = id;
+            Highlight = highlight;
         }
 
         private void EditState_Click(object sender, RoutedEventArgs e)
@@ -82,6 +97,11 @@ namespace TMSim.UI
         private void RemoveState_Click(object sender, RoutedEventArgs e)
         {
             RemoveStateEvent?.Invoke(Identifier); 
+        }
+
+        private void SetBackground()
+        {
+            RowHeaderGrid.Background = Highlight ? Brushes.Yellow : Brushes.White;
         }
     }
 }

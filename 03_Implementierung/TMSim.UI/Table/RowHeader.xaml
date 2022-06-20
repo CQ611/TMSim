@@ -9,7 +9,7 @@
 
     <Border Background="White" BorderBrush="Black" BorderThickness="2">
 
-        <Grid>
+        <Grid x:Name="RowHeaderGrid" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -43,8 +43,8 @@
 
     <UserControl.ContextMenu>
         <ContextMenu x:Name="ContextMenu">
-            <MenuItem Header="Edit state" Click="EditState_Click"/>
-            <MenuItem Header="Remove state" Click="RemoveState_Click"/>
+            <MenuItem Header="{Binding EditStateText}" Click="EditState_Click"/>
+            <MenuItem Header="{Binding RemoveStateText}" Click="RemoveState_Click"/>
         </ContextMenu>
     </UserControl.ContextMenu>
 

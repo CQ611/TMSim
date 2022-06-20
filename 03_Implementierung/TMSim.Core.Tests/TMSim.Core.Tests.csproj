@@ -18,6 +18,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="res\example_asdf_to_tobi.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_transformation_1_no_transition_to_start_state.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_transformation_eins_AcceptingStateByStart.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="res\example_transformation_eins.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="res\example2_transformation4.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,0 +1,71 @@
+{
+  "States": [
+    {
+      "Identifier": "q0",
+      "Comment": "Startzustand"
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q2",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q3",
+      "Comment": "Endzustand"
+    }
+  ],
+  "InputAlphabet": "abc",
+  "TapeAlphabet": "abc123",
+  "Transitions": [
+    {
+      "SourceState": "q0",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "a"
+      ],
+      "SymbolsWrite": [
+        "1"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "b"
+      ],
+      "SymbolsWrite": [
+        "2"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q3",
+      "SymbolsRead": [
+        "c"
+      ],
+      "SymbolsWrite": [
+        "3"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "q0",
+  "Blank": "\u0000",
+  "EndStates": [
+    "q3"
+  ]
+}
