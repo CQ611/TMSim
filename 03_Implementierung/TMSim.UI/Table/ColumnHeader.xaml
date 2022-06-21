@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TMSim.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="60" d:DesignWidth="80">
+             d:DesignHeight="60" d:DesignWidth="80" MinWidth="60">
     <Border Background="White" BorderBrush="Black" BorderThickness="2">
         <Label x:Name="LabelSymbol" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="" FontSize="16"/>
     </Border>

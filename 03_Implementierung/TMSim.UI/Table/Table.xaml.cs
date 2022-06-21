@@ -107,7 +107,7 @@ namespace TMSim.UI
         private void Vm_LoadTableEvent(TuringMachine TM)
         {
             TM.TapeSymbols.ForEach(s => AddColumn(s.ToString(), TM.InputSymbols.Contains(s), s == TM.BlankChar));
-            TM.States.ForEach(s => AddRow(s.Identifier, s == TM.StartState, TM.EndStates.Contains(s)));
+            TM.States.ForEach(s => AddRow(s.Identifier, s == TM.StartState, TM.EndStates.Contains(s), s.Comment));
 
             TM.Transitions.ForEach(t => OverwriteTransition(
                 TM.States.FindIndex(x => x.Identifier == t.Source.Identifier) + 1,
@@ -145,8 +145,9 @@ namespace TMSim.UI
             var direction = transition.MoveDirections[0].ToString();
             var symbolWrite = transition.SymbolsWrite[0].ToString();
             var symbolRead = transition.SymbolsRead[0].ToString();
+            var comment = transition.Comment;
 
-            tableCells.Add(new TableCell(sourceState, targetState, direction, symbolWrite, symbolRead, highlight));
+            tableCells.Add(new TableCell(sourceState, targetState, direction, symbolWrite, symbolRead, highlight, comment));
             TableGrid.Children.Add(tableCells[tableCells.Count() - 1]);
             Grid.SetRow(tableCells[tableCells.Count() - 1], row);
             Grid.SetColumn(tableCells[tableCells.Count() - 1], column);
@@ -172,13 +173,13 @@ namespace TMSim.UI
             vm.AddState();
         }
 
-        private void AddRow(string identifier, bool isStart, bool isAccepting)
+        private void AddRow(string identifier, bool isStart, bool isAccepting, string comment)
         {
-            TableGrid.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(55) });
+            TableGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
 
             Grid.SetRow(AddRowButton, TableGrid.RowDefinitions.Count() - 1);
 
-            var newRowHeader = new RowHeader(isStart, isAccepting, identifier, false);
+            var newRowHeader = new RowHeader(isStart, isAccepting, identifier, false, comment);
             rowHeaders.Add(newRowHeader);
             TableGrid.Children.Add(rowHeaders[rowHeaders.Count() - 1]);
             Grid.SetRow(rowHeaders[rowHeaders.Count() - 1], TableGrid.RowDefinitions.Count() - 2);
@@ -193,7 +194,7 @@ namespace TMSim.UI
 
         private void AddColumn(string symbol, bool isInInputAlphabet, bool isBlankChar)
         {
-            TableGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(65) });
+            TableGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
             Grid.SetColumn(AddColumnButton, TableGrid.ColumnDefinitions.Count() - 1);
 
