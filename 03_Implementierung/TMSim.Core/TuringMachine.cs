@@ -201,6 +201,7 @@ namespace TMSim.Core
             }
             Tapes = newTapes;
             CurrentState = StartState;
+            CurrentTransition = null;
         }
 
         public bool CheckIsEndState()
@@ -396,6 +397,7 @@ namespace TMSim.Core
         public void WriteTapeWord(string inputWord)
         {
             if (!InputAlphabet.WordIsContainedIn(inputWord) || inputWord.Length == 0) throw new WordIsNoValidInputException();
+            Reset();
             //TODO: more than one tape?
             foreach (var tape in Tapes)
             {
