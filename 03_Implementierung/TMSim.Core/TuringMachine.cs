@@ -116,7 +116,9 @@ namespace TMSim.Core
             {
                 EditSymbol(tm.Blank, false, true);
             }
-
+            StartState = null;
+            CurrentState = null;
+            CurrentTransition = null;
             States.Clear();
             EndStates.Clear();
             Transitions.Clear();
