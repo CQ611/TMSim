@@ -262,7 +262,7 @@
     <value>Es gibt keine Zustandsübergänge mit unbewegtem Lese-/Schreibkopf</value>
   </data>
   <data name="TOOLTIP_Transformation3" xml:space="preserve">
-    <value>Dass Leerzeichen wird nicht geschrieben</value>
+    <value>Das Leerzeichen wird nicht geschrieben</value>
   </data>
   <data name="TOOLTIP_Transformation4" xml:space="preserve">
     <value>Die Zustandsmenge ist in eine rechte und linke Hälfte geteilt</value>
