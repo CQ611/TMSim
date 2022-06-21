@@ -98,8 +98,8 @@
                 <Button x:Name="step_cmd" Margin="3" ToolTip="Step" Style="{StaticResource StepButtonStyle}" Grid.Column="3" Command="{Binding StepSimulation}" IsEnabled="{Binding StepEnabled}"/>
                 <Label x:Name="speedLabel" Grid.Column="5" Content="{Binding SpeedLabelText}" VerticalAlignment="Center" HorizontalAlignment="Left" Target="{Binding ElementName=speed_slider}"/>
                 <Slider x:Name="speed_slider" ToolTip="Speed" Value="{Binding TapeVelocity}" Grid.Column="6" Minimum="0" Maximum="2000" TickFrequency="10" IsSnapToTickEnabled="True" IsDirectionReversed="True" VerticalAlignment="Center" HorizontalAlignment="Left" Width="120" />
-                <Label x:Name="EingabewortLabel" Padding="15,0,0,0" Grid.Column="7" Content="{Binding InputwordText}" VerticalAlignment="Center" HorizontalAlignment="Right" Target="{Binding ElementName=EingabewortTextbox}"/>
-                <TextBox x:Name="EingabewortTextbox" Text="{Binding TapeWordInput, UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center">
+                <Label x:Name="InputWordLabel" Padding="15,0,0,0" Grid.Column="7" Content="{Binding InputwordText}" VerticalAlignment="Center" HorizontalAlignment="Right" Target="{Binding ElementName=InputWordTextbox}"/>
+                <TextBox x:Name="InputWordTextbox" Text="{Binding TapeWordInput, UpdateSourceTrigger=PropertyChanged}" Margin="10" Grid.Column="8" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" VerticalContentAlignment="Center">
                     <TextBox.InputBindings>
                         <KeyBinding Key="Return" Command="{Binding WriteTapeWord}" />
                     </TextBox.InputBindings>
@@ -121,7 +121,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{Binding DefinitionTabelle}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    <Label Grid.Row="0" Content="{Binding DefinitionTable}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                         <local:Table x:Name="table" Margin="5" Highlight="{Binding HighlightIsChecked}" IsEnabled="{Binding MenuElementEnabled}"/>
                     </ScrollViewer>
@@ -133,7 +133,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{Binding DefinitionDiagramm}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
+                    <Label Grid.Row="0" Content="{Binding DefinitionDiagram}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold"/>
                     <local:Diagram x:Name="diagram" Grid.Row="1" Margin="5" DData="{Binding DData, Mode=TwoWay}" VM="{StaticResource sharedViewModel}" IsEnabled="{Binding MenuElementEnabled}"/>
                 </Grid>
             </Border>

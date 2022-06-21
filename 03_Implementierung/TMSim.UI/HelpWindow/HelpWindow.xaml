@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TMSim.UI"
         mc:Ignorable="d"
-        Title="TMSim - Help" Height="600" Width="600" MinHeight="600" MinWidth="600" Background="#cccccc">
+        Title="TMSim - Help" Height="700" Width="600" MinHeight="700" MinWidth="600" Background="#cccccc">
 
     <Window.DataContext>
         <Binding Source="{StaticResource sharedViewModel}"/>
