@@ -17,12 +17,13 @@
 
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <Label x:Name="LabelID" Grid.Column="0" Content="ID:" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12"/>
-                <Label x:Name="ID" Grid.Column="1" Content="..." HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="12"/>
+                <Label x:Name="ID" Grid.Column="1" Content="..." HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="12"/>
+                <Polygon x:Name="Polygon" Fill="White" Points="0,0 0,8 8,0"/>
             </Grid>
 
             <Grid Grid.Row="1">
