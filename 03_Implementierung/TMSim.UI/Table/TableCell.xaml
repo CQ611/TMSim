@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TMSim.UI"
              mc:Ignorable="d" 
-             d:DesignHeight="55" d:DesignWidth="65">
-    
-    <Border BorderBrush="Black" BorderThickness="2">
+             d:DesignHeight="55" d:DesignWidth="80">
+
+    <Border x:Name="TableCellBorder" BorderBrush="Black" BorderThickness="2">
 
         <Grid x:Name="TableCellGrid" Background="White">
-            <Label x:Name="TransitionText" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <TextBlock x:Name="TransitionText" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Polygon x:Name="Polygon" Fill="White" Points="0,0 0,8 8,0"></Polygon>
         </Grid>
 
     </Border>

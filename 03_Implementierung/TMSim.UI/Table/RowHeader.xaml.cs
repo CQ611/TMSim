@@ -80,13 +80,36 @@ namespace TMSim.UI
             }
         }
 
-        public RowHeader(bool isStartState, bool isAcceptingState, string id, bool highlight)
+        private string _cellComment;
+
+        public string CellComment
+        {
+            get { return _cellComment; }
+            set
+            {
+                _cellComment = value;
+
+                if (_cellComment != "")
+                {
+                    RowHeaderGrid.ToolTip = _cellComment;
+                    Polygon.Fill = Brushes.Red;
+                }
+                else
+                {
+                    Polygon.Fill = Brushes.White;
+                }
+            }
+        }
+
+
+        public RowHeader(bool isStartState, bool isAcceptingState, string id, bool highlight, string comment)
         {
             InitializeComponent();
             IsStartState = isStartState;
             IsAcceptingState = isAcceptingState;
             Identifier = id;
             Highlight = highlight;
+            CellComment = comment;
         }
 
         private void EditState_Click(object sender, RoutedEventArgs e)
