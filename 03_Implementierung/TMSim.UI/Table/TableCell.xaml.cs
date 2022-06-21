@@ -122,6 +122,28 @@ namespace TMSim.UI
             }
         }
 
+        private string _cellComment;
+
+        public string CellComment
+        {
+            get { return _cellComment; }
+            set
+            {
+                _cellComment = value;
+                SetCellText();
+                if (_cellComment != "")
+                {
+                    TableCellBorder.ToolTip = _cellComment;
+                    Polygon.Fill = Brushes.Red;
+                }
+                else
+                {
+                    Polygon.Fill = Brushes.White;
+                }
+            }
+        }
+
+
         private void SetButtonEnable(bool enabled)
         {
             addButton.IsEnabled = !enabled;
@@ -144,7 +166,7 @@ namespace TMSim.UI
         private void SetCellText()
         {
             if ((SymbolWrite + Direction + TargetState).Length != 0)
-                TransitionText.Content = SymbolWrite + ", " + Direction + ", " + TargetState;
+                TransitionText.Text = " " + SymbolWrite + " , " + Direction + " , " + TargetState + " ";
         }
 
         public TableCell(string sourceState, string symbolRead)
@@ -154,7 +176,7 @@ namespace TMSim.UI
             SymbolRead = symbolRead;
         }
 
-        public TableCell(string sourceState, string targetState, string direction, string symbolWrite, string symbolRead, bool highlight)
+        public TableCell(string sourceState, string targetState, string direction, string symbolWrite, string symbolRead, bool highlight, string comment)
         {
             InitializeComponent();
             SourceState = sourceState;
@@ -164,6 +186,7 @@ namespace TMSim.UI
             SymbolRead = symbolRead;
             Highlight = highlight;
             TransitionDefined = true;
+            CellComment = comment;
         }
 
         private void add_transition_click(object sender, RoutedEventArgs e)

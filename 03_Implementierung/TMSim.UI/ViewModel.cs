@@ -761,6 +761,7 @@ namespace TMSim.UI
             StartEnabled = true;
             StopEnabled = false;
             StepEnabled = true;
+            OnTmRefresh();
         }
 
         private void OnTansformTuringMachine() { }
