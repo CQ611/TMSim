@@ -66,7 +66,7 @@ namespace TMSim.UI
             set
             {
                 _startVisibility = value;
-                OnPropertyChanged("StartVisibility");
+                OnPropertyChanged(nameof(StartVisibility));
             }
         }
 
@@ -80,7 +80,7 @@ namespace TMSim.UI
             set
             {
                 _stopVisibility = value;
-                OnPropertyChanged("StopVisibility");
+                OnPropertyChanged(nameof(StopVisibility));
             }
         }
 
@@ -94,7 +94,7 @@ namespace TMSim.UI
             set
             {
                 _singleViewVisibility = value;
-                OnPropertyChanged("SingleViewVisibility");
+                OnPropertyChanged(nameof(SingleViewVisibility));
             }
         }
 
@@ -108,7 +108,7 @@ namespace TMSim.UI
             set
             {
                 _multiViewVisibility = value;
-                OnPropertyChanged("MultiViewVisibility");
+                OnPropertyChanged(nameof(MultiViewVisibility));
             }
         }
 
@@ -122,7 +122,7 @@ namespace TMSim.UI
             set
             {
                 _germanLanguageIsChecked = value;
-                OnPropertyChanged("GermanLanguageIsChecked");
+                OnPropertyChanged(nameof(GermanLanguageIsChecked));
             }
         }
 
@@ -136,7 +136,7 @@ namespace TMSim.UI
             set
             {
                 _englishLanguageIsChecked = value;
-                OnPropertyChanged("EnglishLanguageIsChecked");
+                OnPropertyChanged(nameof(EnglishLanguageIsChecked));
             }
         }
 
@@ -210,7 +210,7 @@ namespace TMSim.UI
             set
             {
                 _tapeWordInput = value;
-                OnPropertyChanged("TapeWordInput");
+                OnPropertyChanged(nameof(TapeWordInput));
             }
         }
 
@@ -281,6 +281,42 @@ namespace TMSim.UI
             {
                 _menuElementEnabled = value;
                 OnPropertyChanged(nameof(MenuElementEnabled));
+            }
+        }
+
+        private string _transformation3Blank = String.Empty;
+        public string Transformation3Blank
+        {
+            get
+            {
+                return _transformation3Blank;
+            }
+            set
+            {
+                AllowedToSetNewBlank = false;
+
+                if (_transformation3Blank != value)
+                {
+                    _transformation3Blank = value;
+
+                    if (_transformation3Blank != String.Empty)
+                        AllowedToSetNewBlank = true;
+                }
+                OnPropertyChanged(nameof(Transformation3Blank));
+            }
+        }
+
+        private bool _allowedToSetNewBlank = false;
+        public bool AllowedToSetNewBlank
+        {
+            get
+            {
+                return _allowedToSetNewBlank;
+            }
+            set
+            {
+                _allowedToSetNewBlank = value;
+                OnPropertyChanged(nameof(AllowedToSetNewBlank));
             }
         }
         #endregion
@@ -358,8 +394,8 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
-        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
-        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string DefinitionTable { get => Translator.GetString("TEXT_DefinitionTable"); set { OnPropertyChanged(nameof(DefinitionTable)); } }
+        public string DefinitionDiagram { get => Translator.GetString("TEXT_DefinitionDiagram"); set { OnPropertyChanged(nameof(DefinitionDiagram)); } }
         public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
         public string WarnTransformation1Text { get => Translator.GetString("TEXT_Warn_Transformation1"); set { OnPropertyChanged(nameof(WarnTransformation1Text)); } }
         public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { OnPropertyChanged(nameof(WarnTransformation4Text)); } }
@@ -403,6 +439,7 @@ namespace TMSim.UI
         public string HelpWindowTableDiagramResultText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramResultText)); } }
         public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
         public string HelpText { get => Translator.GetString("TEXT_HelpText"); set { OnPropertyChanged(nameof(HelpText)); } }
+        public string Transformation3DialogNoteText { get => Translator.GetString("TEXT_Transformation3DialogNote"); set { OnPropertyChanged(nameof(Transformation3DialogNoteText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -466,8 +503,8 @@ namespace TMSim.UI
             SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
             SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
-            DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
-            DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
+            DefinitionTable = Translator.GetString("TEXT_DefinitionTable");
+            DefinitionDiagram = Translator.GetString("TEXT_DefinitionDiagram");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
             WarnTransformation1Text = Translator.GetString("TEXT_Warn_Transformation1");
             WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
@@ -511,8 +548,9 @@ namespace TMSim.UI
             HelpWindowTableDiagramResultText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result");
             HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
             HelpText =  Translator.GetString("TEXT_HelpText");
+            Transformation3DialogNoteText = Translator.GetString("TEXT_Transformation3DialogNote");
 
-                TranslateHelpWindow();
+            TranslateHelpWindow();
             TranslateCurrentInfo();
         }
         #endregion
@@ -787,18 +825,27 @@ namespace TMSim.UI
 
         private void OnTransformation3()
         {
+            char previousNewBlank = '\0';
+
+            if (Transformation3Blank != String.Empty)
+                previousNewBlank = Transformation3Blank[0];
+
             Transformation3Dialog t3d = new Transformation3Dialog();
+
             if (t3d.ShowDialog() == true)
             {
-                char newBlank = t3d.Blank;
                 try
                 {
-                    TM = new Transformation3().Execute(TM, newBlank);
+                    TM = new Transformation3().Execute(TM, Transformation3Blank[0]);
                 }
                 catch (SymbolAlreadyExistsException)
                 {
                     QuickWarning(WarnSymbolAlreadyExistsText);
                 }
+                
+                if (previousNewBlank != '\0')
+                    TM.RemoveSymbol(previousNewBlank);
+
                 OnTMChanged();
             }
         }
@@ -901,6 +948,7 @@ namespace TMSim.UI
                 DData.ArangeFlag = true;
                 OnTMChanged();
                 UploadTextEnabled = true;
+                Transformation3Blank = String.Empty;
             }
         }
 
@@ -995,6 +1043,7 @@ namespace TMSim.UI
             DData.ArangeFlag = true;
             OnTMChanged();
             UploadTextEnabled = true;
+            Transformation3Blank = String.Empty;
         }
 
         private void UpdateDiagramData()
