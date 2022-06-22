@@ -651,11 +651,6 @@ namespace TMSim.UI
             UpdateTapeData();
             UpdateTableData();
 
-            if (TM.InputSymbols.Count > 0)
-                UploadTextEnabled = true;
-            else
-                UploadTextEnabled = false;
-
             OnPropertyChanged(nameof(TM));
         }
 
