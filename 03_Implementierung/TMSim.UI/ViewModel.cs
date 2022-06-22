@@ -293,15 +293,9 @@ namespace TMSim.UI
             }
             set
             {
-                AllowedToSetNewBlank = false;
+                _transformation3Blank = value;
+                AllowedToSetNewBlank = _transformation3Blank != String.Empty ? true : false;
 
-                if (_transformation3Blank != value)
-                {
-                    _transformation3Blank = value;
-
-                    if (_transformation3Blank != String.Empty)
-                        AllowedToSetNewBlank = true;
-                }
                 OnPropertyChanged(nameof(Transformation3Blank));
             }
         }
@@ -440,6 +434,8 @@ namespace TMSim.UI
         public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
         public string HelpText { get => Translator.GetString("TEXT_HelpText"); set { OnPropertyChanged(nameof(HelpText)); } }
         public string Transformation3DialogNoteText { get => Translator.GetString("TEXT_Transformation3DialogNote"); set { OnPropertyChanged(nameof(Transformation3DialogNoteText)); } }
+        public string WarnTransformation3Text { get => Translator.GetString("TEXT_Warn_Transformation3"); set { OnPropertyChanged(nameof(WarnTransformation3Text)); } }
+        public string InvalidNewBlankCharText { get => Translator.GetString("TEXT_Warn_NewBlankAlreadyExists"); set { OnPropertyChanged(nameof(InvalidNewBlankCharText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -547,8 +543,10 @@ namespace TMSim.UI
             HelpWindowTableDiagramAddTransitionText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition");
             HelpWindowTableDiagramResultText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result");
             HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
-            HelpText =  Translator.GetString("TEXT_HelpText");
+            HelpText = Translator.GetString("TEXT_HelpText");
             Transformation3DialogNoteText = Translator.GetString("TEXT_Transformation3DialogNote");
+            WarnTransformation3Text = Translator.GetString("TEXT_Warn_Transformation3");
+            InvalidNewBlankCharText = Translator.GetString("TEXT_Warn_NewBlankAlreadyExists");
 
             TranslateHelpWindow();
             TranslateCurrentInfo();
@@ -825,28 +823,27 @@ namespace TMSim.UI
 
         private void OnTransformation3()
         {
-            char previousNewBlank = '\0';
-
-            if (Transformation3Blank != String.Empty)
-                previousNewBlank = Transformation3Blank[0];
-
-            Transformation3Dialog t3d = new Transformation3Dialog();
-
-            if (t3d.ShowDialog() == true)
+            var T3 = new Transformation3();
+            if (T3.IsExecutable(TM))
             {
-                try
-                {
-                    TM = new Transformation3().Execute(TM, Transformation3Blank[0]);
-                }
-                catch (SymbolAlreadyExistsException)
-                {
-                    QuickWarning(WarnSymbolAlreadyExistsText);
-                }
-                
-                if (previousNewBlank != '\0')
-                    TM.RemoveSymbol(previousNewBlank);
+                Transformation3Dialog t3d = new Transformation3Dialog();
 
-                OnTMChanged();
+                if (t3d.ShowDialog() == true)
+                {
+                    try
+                    {
+                        TM = T3.Execute(TM, Transformation3Blank[0]);
+                    }
+                    catch (InvalidNewBlankCharException)
+                    {
+                        QuickWarning(InvalidNewBlankCharText);
+                    }
+                    OnTMChanged();
+                }
+            }
+            else
+            {
+                QuickWarning(WarnTransformation3Text);
             }
         }
 

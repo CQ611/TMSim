@@ -640,4 +640,10 @@ Die Turingmaschine kann auf folgende Arten transformiert werden:
   <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
     <value>Ersetzt bisheriges Leerzeichen bei Zustandsübergängen, aber nicht die Leerzeichen links und rechts des Eingabeworts auf dem Band</value>
   </data>
+  <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
+    <value>Das gewählte Zeichen ist bereits im Bandalphabet enthalten.</value>
+  </data>
+  <data name="TEXT_Warn_Transformation3" xml:space="preserve">
+    <value>Tranformation 3 nicht ausführbar, da bei keinem Übergang ein Leerzeichen geschrieben wird.</value>
+  </data>
 </root>

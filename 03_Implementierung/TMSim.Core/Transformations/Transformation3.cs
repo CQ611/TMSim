@@ -32,8 +32,13 @@ namespace TMSim.Core
 
         private bool IsInvalidTransformation()
         {
-            if (turingMachine.Tapes.Count != 1) throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
-            return turingMachine.TapeSymbols.Contains(newBlank);
+            if (turingMachine.TapeSymbols.Contains(newBlank))
+                throw new InvalidNewBlankCharException();
+
+            if (turingMachine.Tapes.Count != 1)
+                throw new NotImplementedException("This Transformation is only implemented for TuringMachines with one Tape");
+
+            return false;
         }
 
         private void AddBlankTransitions(TuringMachine turingMachine, Char newBlancToWrite)
@@ -55,7 +60,14 @@ namespace TMSim.Core
 
         public bool IsExecutable(TuringMachine tm)
         {
-            throw new NotImplementedException();
+            foreach (var transition in tm.Transitions)
+            {
+                if(transition.SymbolsWrite.Contains(tm.BlankChar))
+                {
+                    return true;
+                }   
+            }
+            return false;
         }
     }
 }

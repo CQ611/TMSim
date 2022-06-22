@@ -22,7 +22,7 @@
         </Grid.RowDefinitions>
 
         <Label Name="blank_lbl" Target="{Binding ElementName=blank_txt}" Grid.Row="0" Content="{Binding PopupBlankText}"/>
-        <TextBox Name="blank_txt" PreviewTextInput="blank_txt_PreviewTextInput" MaxLength="1" Grid.Row="1" Margin="0,0,10,10" MinWidth="130" Text="{Binding Transformation3Blank, FallbackValue='', UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Name="blank_txt" MaxLength="1" Grid.Row="1" Margin="0,0,10,10" MinWidth="130" Text="{Binding Transformation3Blank, FallbackValue='', UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="2" Text="{Binding Transformation3DialogNoteText}" TextWrapping="Wrap" VerticalAlignment="Top"/>
 
         <WrapPanel Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0">
