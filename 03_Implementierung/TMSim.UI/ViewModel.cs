@@ -256,7 +256,7 @@ namespace TMSim.UI
             }
         }
 
-        private bool _uploadTextEnabled = false;
+        private bool _uploadTextEnabled = true;
         public bool UploadTextEnabled
         {
             get
@@ -801,7 +801,14 @@ namespace TMSim.UI
         {
             if (new Transformation1().IsExecutable(TM))
             {
-                TM = new Transformation1().Execute(TM);
+                try
+                {
+                    TM = new Transformation1().Execute(TM);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                }
                 OnTMChanged();
             }
             else
