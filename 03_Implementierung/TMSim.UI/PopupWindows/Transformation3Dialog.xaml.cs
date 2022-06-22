@@ -17,9 +17,11 @@ namespace TMSim.UI.PopupWindows
     /// </summary>
     public partial class Transformation3Dialog : Window
     {
+        ViewModel vm;
         public Transformation3Dialog()
         {
             InitializeComponent();
+            vm = (ViewModel)DataContext;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)

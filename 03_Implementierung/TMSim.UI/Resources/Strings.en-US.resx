@@ -640,4 +640,10 @@ If you want to get some inspiration then you can check out the available example
   <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
     <value>Replaces the current blank character in the transitions, but not the blank characters left and right of the input word on the tape</value>
   </data>
+  <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
+    <value>The chosen character already exists in the tape alphabet.</value>
+  </data>
+  <data name="TEXT_Warn_Transformation3" xml:space="preserve">
+    <value>Tranformation 3 is not excecutable, because no transition writes the blank character.</value>
+  </data>
 </root>
