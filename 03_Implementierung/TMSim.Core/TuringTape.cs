@@ -41,9 +41,16 @@ namespace TMSim.Core
 
         public void SetCurrentSymbol(char newSymbol)
         {
-            char[] chars = content.ToCharArray();
-            chars[HeadIndex] = newSymbol;
-            content = new string(chars);
+            if (content != String.Empty)
+            {
+                char[] chars = content.ToCharArray();
+                chars[HeadIndex] = newSymbol;
+                content = new string(chars);
+            }
+            else
+            {
+                content = newSymbol.ToString();
+            }
         }
 
         public void MoveLeft()

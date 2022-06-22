@@ -1,0 +1,77 @@
+{
+  "States": [
+    {
+      "Identifier": "Start",
+      "Comment": ""
+    },
+    {
+      "Identifier": "Ende",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "Helo",
+  "TapeAlphabet": "Helo_ELO",
+  "Transitions": [
+    {
+      "SourceState": "Start",
+      "TargetState": "Start",
+      "SymbolsRead": [
+        "H"
+      ],
+      "SymbolsWrite": [
+        "H"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Start",
+      "TargetState": "Start",
+      "SymbolsRead": [
+        "e"
+      ],
+      "SymbolsWrite": [
+        "E"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Start",
+      "TargetState": "Start",
+      "SymbolsRead": [
+        "l"
+      ],
+      "SymbolsWrite": [
+        "L"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "Start",
+      "TargetState": "Ende",
+      "SymbolsRead": [
+        "o"
+      ],
+      "SymbolsWrite": [
+        "O"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "Start",
+  "Blank": "_",
+  "EndStates": [
+    "Ende"
+  ]
+}
