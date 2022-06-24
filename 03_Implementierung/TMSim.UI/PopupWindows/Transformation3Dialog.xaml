@@ -7,7 +7,7 @@
         ContentRendered="Window_ContentRendered"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        Title="Transformation 3" Height="220" Width="260">
+        Title="Transformation 3" Height="220" Width="380" ResizeMode="NoResize" ShowInTaskbar="False">
 
     <Window.DataContext>
         <Binding Source="{StaticResource sharedViewModel}"/>
