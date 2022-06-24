@@ -151,7 +151,7 @@
     <value>Akzeptieren</value>
   </data>
   <data name="TEXT_PopupBlank" xml:space="preserve">
-    <value>Neues Leerzeichen:</value>
+    <value>Ersatzsymbol für geschriebenes Leerzeichen:</value>
   </data>
   <data name="TEXT_PopupAddSymbol" xml:space="preserve">
     <value>Symbol hinzufügen</value>
@@ -638,7 +638,7 @@ Die Turingmaschine kann auf folgende Arten transformiert werden:
     <value>Turingmaschine erklärt (Teil _2)</value>
   </data>
   <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
-    <value>Ersetzt bisheriges Leerzeichen bei Zustandsübergängen, aber nicht die Leerzeichen links und rechts des Eingabeworts auf dem Band</value>
+    <value>Bei allen bestehenden Zustandsübergängen, die das (Band-)Leerzeichen schreiben, wird das Schreibsymbol mit dem Ersatzsymbol überschrieben.</value>
   </data>
   <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
     <value>Das gewählte Zeichen ist bereits im Bandalphabet enthalten.</value>

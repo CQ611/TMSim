@@ -151,7 +151,7 @@
     <value>Accepting</value>
   </data>
   <data name="TEXT_PopupBlank" xml:space="preserve">
-    <value>New Blank Symbol:</value>
+    <value>Replacement symbol for written blank character:</value>
   </data>
   <data name="TEXT_PopupAddSymbol" xml:space="preserve">
     <value>Add Symbol</value>
@@ -638,7 +638,7 @@ If you want to get some inspiration then you can check out the available example
     <value>Turing Machine explained (part _2)</value>
   </data>
   <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
-    <value>Replaces the current blank character in the transitions, but not the blank characters left and right of the input word on the tape</value>
+    <value>All existing transitions, that write the (tape-) blank character, will write the replacement symbol instead.</value>
   </data>
   <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
     <value>The chosen character already exists in the tape alphabet.</value>
