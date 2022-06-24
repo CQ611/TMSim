@@ -113,9 +113,9 @@ namespace TMSim.UI
             set
             {
                 // Images 0-9 have a leading zero so that images 10-19 dont appear before 2
-                    _imageSource = imageSourcePrefix + NecessaryLeadingZeros() + 
-                                    value + imageNumberLangCodeDelimiter + 
-                                    CurrentImageLanguage + imageFileEnding;
+                _imageSource = imageSourcePrefix + NecessaryLeadingZeros() + 
+                                value + imageNumberLangCodeDelimiter + 
+                                CurrentImageLanguage + imageFileEnding;
 
                 OnPropertyChanged(nameof(ImageSource));
             }
@@ -139,6 +139,7 @@ namespace TMSim.UI
         public void TranslateHelpWindow()
         {
             HeadingText = _currentPageNumber.ToString();
+            ImageSource = _currentPageNumber.ToString();
             PageText = _currentPageNumber.ToString();
         }
 
