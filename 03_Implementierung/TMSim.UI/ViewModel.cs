@@ -622,22 +622,37 @@ namespace TMSim.UI
 
         private void InitResoureManager()
         {
+            string language;
+            CultureInfo culture;
+
             Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
+
             if (CultureInfo.CurrentCulture.Name == "de-DE")
             {
                 GermanLanguageIsChecked = true;
+                CurrentImageLanguage = "de-DE";
+                language = "de-DE";
+                culture = new CultureInfo("de-DE");
             }
-            else if (CultureInfo.CurrentCulture.Name == "en-US")
+            else
             {
                 EnglishLanguageIsChecked = true;
+                CurrentImageLanguage = "en-US";
+                language = "en-US";
+                culture = new CultureInfo("en-US");
             }
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             try
             {
                 FrameworkElement.LanguageProperty.OverrideMetadata(
                         typeof(FrameworkElement),
                         new FrameworkPropertyMetadata(
-                            XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+                            XmlLanguage.GetLanguage(language)));
             }
             catch (Exception)
             {
