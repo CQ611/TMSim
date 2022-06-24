@@ -41,7 +41,8 @@
             <MenuItem Header="{Binding FileText}" IsEnabled="{Binding MenuElementEnabled}">
                 <MenuItem Header="{Binding NewText}" Command="{Binding ClearTuringMachine}"/>
                 <MenuItem Header="{Binding OpenText}" Command="{Binding ImportFromTextFile}"/>
-                <MenuItem Header="{Binding SaveText}" Command="{Binding ExportToTextFile}"/>
+                <MenuItem Header="{Binding SaveText}" Command="{Binding ExportToCurrentTextFile}"/>
+                <MenuItem Header="{Binding SaveAsText}" Command="{Binding ExportToTextFile}"/>
                 <Separator />
                 <MenuItem x:Name="ExamplesMenue" Header="{Binding ExamplesText}"/>
                 <Separator />
@@ -61,10 +62,6 @@
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="{Binding TransformText}" Command="{Binding TransformTuringMachine}" IsEnabled="{Binding MenuElementEnabled}">
-                <!--
-                <MenuItem Header="_Left-Right only"/>
-                <MenuItem Header="_No self references"/>
-                -->
                 <MenuItem Header="{Binding Transformation1Text}" ToolTip="{Binding Transformation1Tooltip}"  Command="{Binding Transformation1}"/>
                 <Separator/>
                 <MenuItem Header="{Binding Transformation2Text}" ToolTip="{Binding Transformation2Tooltip}" Command="{Binding Transformation2}" />

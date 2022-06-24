@@ -52,6 +52,7 @@ namespace TMSim.UI
         public RelayCommand NextHelpPage { get; set; }
         public RelayCommand PreviousHelpPage { get; set; }
         public RelayCommand HelpWindowMenuItemChanged { get; set; }
+        public RelayCommand ExportToCurrentTextFile { get; set; }
 
         #endregion
 
@@ -436,6 +437,7 @@ namespace TMSim.UI
         public string Transformation3DialogNoteText { get => Translator.GetString("TEXT_Transformation3DialogNote"); set { OnPropertyChanged(nameof(Transformation3DialogNoteText)); } }
         public string WarnTransformation3Text { get => Translator.GetString("TEXT_Warn_Transformation3"); set { OnPropertyChanged(nameof(WarnTransformation3Text)); } }
         public string InvalidNewBlankCharText { get => Translator.GetString("TEXT_Warn_NewBlankAlreadyExists"); set { OnPropertyChanged(nameof(InvalidNewBlankCharText)); } }
+        public string SaveAsText { get => Translator.GetString("TEXT_SaveAs"); set { OnPropertyChanged(nameof(SaveAsText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -547,6 +549,7 @@ namespace TMSim.UI
             Transformation3DialogNoteText = Translator.GetString("TEXT_Transformation3DialogNote");
             WarnTransformation3Text = Translator.GetString("TEXT_Warn_Transformation3");
             InvalidNewBlankCharText = Translator.GetString("TEXT_Warn_NewBlankAlreadyExists");
+            SaveAsText = Translator.GetString("TEXT_SaveAs");
 
             TranslateHelpWindow();
             TranslateCurrentInfo();
@@ -606,6 +609,7 @@ namespace TMSim.UI
             NextHelpPage = new RelayCommand((o) => { OnNextHelpPage(); });
             PreviousHelpPage = new RelayCommand((o) => { OnPreviousHelpPage(); });
             HelpWindowMenuItemChanged = new RelayCommand((o) => { OnHelpWindowMenuItemChanged(o); });
+            ExportToCurrentTextFile = new RelayCommand((o) => { OnExportToCurrentTextFile(); });
 
             TM = new TuringMachine();
 
@@ -875,6 +879,8 @@ namespace TMSim.UI
             }
         }
 
+        string currentTextFilePath = String.Empty;
+
         private void OnImportFromTextFile()
         {
             OpenFileDialog importFileDialog = new OpenFileDialog
@@ -942,12 +948,34 @@ namespace TMSim.UI
                 {
                     QuickWarning(WarnSymbolDoesNotExistText);
                 }
-
+                
                 DeleteTapeContent();
                 DData.ArangeFlag = true;
                 OnTMChanged();
                 UploadTextEnabled = true;
                 Transformation3Blank = String.Empty;
+                currentTextFilePath = importFileDialog.FileName;
+            }
+        }
+
+        private void OnExportToCurrentTextFile()
+        {
+            if (currentTextFilePath != String.Empty)
+            {
+                try
+                {
+                    TM.ExportToTextFile(currentTextFilePath);
+                }
+
+                catch (SystemException)
+                {
+                    QuickWarning(WarnMemoryText);
+                }
+            } 
+
+            else
+            {
+                OnExportToTextFile();
             }
         }
 
@@ -970,6 +998,8 @@ namespace TMSim.UI
                 {
                     QuickWarning(WarnMemoryText);
                 }
+
+                currentTextFilePath = exportFileDialog.FileName;
             }
         }
 
@@ -977,6 +1007,7 @@ namespace TMSim.UI
         {
             TM = new TuringMachine();
             OnTMChanged();
+            currentTextFilePath = String.Empty;
         }
 
         private void OnLoadExample(object o)

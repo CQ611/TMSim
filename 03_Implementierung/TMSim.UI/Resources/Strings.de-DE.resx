@@ -622,7 +622,7 @@ Zustandsübergang: Abhängig vom Zeichen unter dem Lese-/Schreibkopf und dem Zus
   <data name="TEXT_HelpWindow_06" xml:space="preserve">
     <value>Eine Transformation fügt extra Einschränkungen hinzu, die die Turingmaschine einhalten muss. Das hat keinen Einfluss darauf, ob ein gewisses Eingabewort teil der Sprache der Maschine ist oder nicht.
 Die Turingmaschine kann auf folgende Arten transformiert werden:
-1) Kein Zustandsübergang kann wieder in den Startzustand führen, der Startzustand kann kein Endzustand sein und aus einem Endzustand kommt die Maschine nicht mehr heraus (z.B. über eine Schleife auf sich selbst). .
+1) Kein Zustandsübergang kann wieder in den Startzustand führen, der Startzustand kann kein Endzustand sein und aus einem Endzustand führt kein Zustandsübergang mehr heraus (betrifft auch Schleifen auf den Endzustand).
 2) Jeder Zustandsübergang muss den Lese-/Schreibkopf entweder nach links oder rechts bewegen.
 3) Sie können ein neues Leerzeichen definieren, welches das alte ersetzt, wenn es gelesen oder geschrieben wird. Das beeinflusst nur Zustandsübergänge und nicht die leeren Zellen links und rechts des Eingabeworts.
 4) Alle Zustandsübergänge werden in eine linke und eine rechte Hälfte aufgeteilt. In der linken sind nur Zustandsübergänge, die den Lese-/Schreibkopf nach links bewegen. Das gleiche gilt für die rechte. (Voraussetzungen: Transformation 1 und 2)
@@ -645,5 +645,8 @@ Die Turingmaschine kann auf folgende Arten transformiert werden:
   </data>
   <data name="TEXT_Warn_Transformation3" xml:space="preserve">
     <value>Tranformation 3 nicht ausführbar, da bei keinem Übergang ein Leerzeichen geschrieben wird.</value>
+  </data>
+  <data name="TEXT_SaveAs" xml:space="preserve">
+    <value>Speichern _unter</value>
   </data>
 </root>
