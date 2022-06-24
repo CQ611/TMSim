@@ -602,7 +602,7 @@ Read-/writehead: Reads characters from and writes them on the tape.</value>
   <data name="TEXT_HelpWindow_06" xml:space="preserve">
     <value>A transformation adds extra constraints for the turing machine to follow. This has no effect on whether or not a certain input word is part of the language of the machine.
 This turing machine can be transformed in the following ways:
-1) A transition can never lead into the start state, the start state cannot be an accepting state and the machine cannot exit end states (e.g. with a loop on itself).
+1) A transition can never lead into the start state, the start state cannot be an end state and end states cannot be exited with transitions (also counts for transitions that are loops on the end state).
 2) Every transition has to move the read-/writehead either left or right.
 3) You can set a new blank character. This character will be placed on the tape instead of the old one. Only affects transitions and not the content of the empty cells left and right of your input word.
 4) All transitions are split into a left and a right half. The left half only contains transitions where the read-/writehead moves left. The same applies to the right half. (Prerequisits: transformation 1 and 2)
@@ -645,5 +645,8 @@ If you want to get some inspiration then you can check out the available example
   </data>
   <data name="TEXT_Warn_Transformation3" xml:space="preserve">
     <value>Tranformation 3 is not excecutable, because no transition writes the blank character.</value>
+  </data>
+  <data name="TEXT_SaveAs" xml:space="preserve">
+    <value>Save _as</value>
   </data>
 </root>
