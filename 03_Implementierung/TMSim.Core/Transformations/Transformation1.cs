@@ -91,23 +91,17 @@ namespace TMSim.Core
 
         private string GetNewIdentifier()
         {
-            try
+            for (int i = 0; i < turingMachine.States.Count + 5; i++)
             {
-                Regex regex = new Regex("\\D");
-                int maxIdent = turingMachine.Transitions
-                    .Select(x => x.Source.Identifier)
-                    .Select(x => regex.Replace(x.ToString(), ""))
-                    .Select(x => int
-                        .Parse(x.ToString()))
-                        .ToList()
-                        .Max();
-                return "q" + (maxIdent + 2);
+                String newIdentifier = "q" + i; //finding Identifier that does not exist
+                if (!turingMachine.States.Any(x => x.Identifier.Equals(newIdentifier)))
+                {
+                    return newIdentifier;
+                }
             }
-            catch (Exception e)
-            {
-                //If something went wrong return qq0
-                return "qq0";
-            }
+
+            Random rd = new Random();
+            return "q" + rd.Next(1000, 1000000); //if somehow somthing went wrong
         }
 
         public bool IsPointingToStartState()
