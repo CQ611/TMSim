@@ -649,4 +649,19 @@ Die Turingmaschine kann auf folgende Arten transformiert werden:
   <data name="TEXT_SaveAs" xml:space="preserve">
     <value>Speichern _unter</value>
   </data>
+  <data name="TEXT_Info_T1_Executed" xml:space="preserve">
+    <value>Transformation 1 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T2_Executed" xml:space="preserve">
+    <value>Transformation 2 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T3_Executed" xml:space="preserve">
+    <value>Transformation 3 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T4_Executed" xml:space="preserve">
+    <value>Transformation 4 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T5_Executed" xml:space="preserve">
+    <value>Transformation 5 wurde erfolgreich durchgeführt</value>
+  </data>
 </root>

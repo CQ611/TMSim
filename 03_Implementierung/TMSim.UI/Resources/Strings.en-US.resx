@@ -649,4 +649,19 @@ If you want to get some inspiration then you can check out the available example
   <data name="TEXT_SaveAs" xml:space="preserve">
     <value>Save _as</value>
   </data>
+  <data name="TEXT_Info_T1_Executed" xml:space="preserve">
+    <value>Transformation 1 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T2_Executed" xml:space="preserve">
+    <value>Transformation 2 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T3_Executed" xml:space="preserve">
+    <value>Transformation 3 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T4_Executed" xml:space="preserve">
+    <value>Transformation 4 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T5_Executed" xml:space="preserve">
+    <value>Transformation 5 has been executed successfully</value>
+  </data>
 </root>

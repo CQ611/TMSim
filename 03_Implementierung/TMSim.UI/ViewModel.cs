@@ -389,6 +389,11 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationOneExecuted { get => Translator.GetString("TEXT_Info_T1_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationTwoExecuted { get => Translator.GetString("TEXT_Info_T2_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationThreeExecuted { get => Translator.GetString("TEXT_Info_T3_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationFourExecuted { get => Translator.GetString("TEXT_Info_T4_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationFiveExecuted { get => Translator.GetString("TEXT_Info_T5_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
         public string DefinitionTable { get => Translator.GetString("TEXT_DefinitionTable"); set { OnPropertyChanged(nameof(DefinitionTable)); } }
         public string DefinitionDiagram { get => Translator.GetString("TEXT_DefinitionDiagram"); set { OnPropertyChanged(nameof(DefinitionDiagram)); } }
         public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
@@ -501,6 +506,11 @@ namespace TMSim.UI
             SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
             SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
+            TransformationOneExecuted = Translator.GetString("TEXT_Info_T1_Executed");
+            TransformationTwoExecuted = Translator.GetString("TEXT_Info_T2_Executed");
+            TransformationThreeExecuted = Translator.GetString("TEXT_Info_T3_Executed");
+            TransformationFourExecuted = Translator.GetString("TEXT_Info_T4_Executed");
+            TransformationFiveExecuted = Translator.GetString("TEXT_Info_T5_Executed");
             DefinitionTable = Translator.GetString("TEXT_DefinitionTable");
             DefinitionDiagram = Translator.GetString("TEXT_DefinitionDiagram");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
@@ -828,6 +838,8 @@ namespace TMSim.UI
                 {
                     QuickWarning(StateExistsText);
                 }
+
+                UpdateInfo(MessageIdentification.T1Executed, TransformationOneExecuted);
                 OnTMChanged();
             }
             else
@@ -839,40 +851,38 @@ namespace TMSim.UI
         private void OnTransformation2()
         {
             TM = new Transformation2().Execute(TM);
+            UpdateInfo(MessageIdentification.T2Executed, TransformationTwoExecuted);
             OnTMChanged();
         }
 
         private void OnTransformation3()
         {
             var T3 = new Transformation3();
-            if (T3.IsExecutable(TM))
-            {
-                Transformation3Dialog t3d = new Transformation3Dialog();
+            Transformation3Dialog t3d = new Transformation3Dialog();
 
-                if (t3d.ShowDialog() == true)
-                {
-                    try
-                    {
-                        TM = T3.Execute(TM, Transformation3Blank[0]);
-                    }
-                    catch (InvalidNewBlankCharException)
-                    {
-                        QuickWarning(InvalidNewBlankCharText);
-                    }
-                    OnTMChanged();
-                }
-            }
-            else
+            if (t3d.ShowDialog() == true)
             {
-                QuickWarning(WarnTransformation3Text);
+                try
+                {
+                    TM = T3.Execute(TM, Transformation3Blank[0]);
+                }
+                catch (InvalidNewBlankCharException)
+                {
+                    QuickWarning(InvalidNewBlankCharText);
+                }
+
+                UpdateInfo(MessageIdentification.T3Executed, TransformationThreeExecuted);
+                OnTMChanged();
             }
         }
+
 
         private void OnTransformation4()
         {
             if (new Transformation4().IsExecutable(TM))
             {
                 TM = new Transformation4().Execute(TM);
+                UpdateInfo(MessageIdentification.T4Executed, TransformationFourExecuted);
                 OnTMChanged();
             }
             else
@@ -886,6 +896,7 @@ namespace TMSim.UI
             if (new Transformation5().IsExecutable(TM))
             {
                 TM = new Transformation5().Execute(TM);
+                UpdateInfo(MessageIdentification.T5Executed, TransformationFiveExecuted);
                 OnTMChanged();
             }
             else
