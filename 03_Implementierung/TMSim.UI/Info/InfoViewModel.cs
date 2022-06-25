@@ -45,7 +45,12 @@ namespace TMSim.UI
             SimulationIsStopped,
             SimulationSingleStep,
             InputWordWrittenOnTape,
-            DefaultMessage
+            DefaultMessage,
+            T1Executed,
+            T2Executed,
+            T3Executed,
+            T4Executed,
+            T5Executed
         }
 
         private MessageIdentification _messageID;
@@ -104,8 +109,20 @@ namespace TMSim.UI
                 case MessageIdentification.DefaultMessage:
                     UpdateInfo(MessageIdentification.DefaultMessage, DefaultMessageText);
                     break;
-                case MessageIdentification.InputWordWrittenOnTape:
-                    UpdateInfo(MessageIdentification.InputWordWrittenOnTape, InputWordWrittenOnTapeText);
+                case MessageIdentification.T1Executed:
+                    UpdateInfo(MessageIdentification.T1Executed, TransformationOneExecuted);
+                    break;
+                case MessageIdentification.T2Executed:
+                    UpdateInfo(MessageIdentification.T2Executed, TransformationTwoExecuted);
+                    break;
+                case MessageIdentification.T3Executed:
+                    UpdateInfo(MessageIdentification.T3Executed, TransformationThreeExecuted);
+                    break;
+                case MessageIdentification.T4Executed:
+                    UpdateInfo(MessageIdentification.T4Executed, TransformationFourExecuted);
+                    break;
+                case MessageIdentification.T5Executed:
+                    UpdateInfo(MessageIdentification.T5Executed, TransformationFiveExecuted);
                     break;
             }
         }
