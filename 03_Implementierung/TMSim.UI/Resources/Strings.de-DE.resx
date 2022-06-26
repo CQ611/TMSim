@@ -151,7 +151,7 @@
     <value>Akzeptieren</value>
   </data>
   <data name="TEXT_PopupBlank" xml:space="preserve">
-    <value>Neues Leerzeichen:</value>
+    <value>Ersatzsymbol für geschriebenes Leerzeichen:</value>
   </data>
   <data name="TEXT_PopupAddSymbol" xml:space="preserve">
     <value>Symbol hinzufügen</value>
@@ -262,7 +262,7 @@
     <value>Es gibt keine Zustandsübergänge mit unbewegtem Lese-/Schreibkopf</value>
   </data>
   <data name="TOOLTIP_Transformation3" xml:space="preserve">
-    <value>Es wird das Leerzeichen nicht geschrieben</value>
+    <value>Das Leerzeichen wird nicht geschrieben</value>
   </data>
   <data name="TOOLTIP_Transformation4" xml:space="preserve">
     <value>Die Zustandsmenge ist in eine rechte und linke Hälfte geteilt</value>
@@ -271,7 +271,7 @@
     <value>Es gibt genau einen akzeptierenden Zustand</value>
   </data>
   <data name="TOOLTIP_Upload" xml:space="preserve">
-    <value>Eingabewort auf das Band hochladen</value>
+    <value>Eingabewort auf das Band schreiben</value>
   </data>
   <data name="TEXT_DiagramView" xml:space="preserve">
     <value>D_iagramm</value>
@@ -339,10 +339,10 @@
   <data name="TEXT_Info_SimulationSuccess" xml:space="preserve">
     <value>Endzustand wurde erreicht</value>
   </data>
-  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+  <data name="TEXT_DefinitionDiagram" xml:space="preserve">
     <value>Definition als Diagramm</value>
   </data>
-  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+  <data name="TEXT_DefinitionTable" xml:space="preserve">
     <value>Definition als Tabelle</value>
   </data>
   <data name="TEXT_Info_InputWordWrittenOnTape" xml:space="preserve">
@@ -382,13 +382,14 @@ Wollen Sie sich inspirieren lassen, dann können Sie in den verfügbaren Beispie
   </data>
   <data name="TEXT_HelpWindow_08" xml:space="preserve">
     <value>Mit dem Kontrollkästchen bei (1) entscheiden Sie, ob das neue Zeichen im Eingabealphabet enthalten sein soll. Damit kann es im Eingabewort verwendet werden.
- Diese Zeichen werden fettgedruckt abgebildet.
+Diese Zeichen werden fettgedruckt abgebildet.
 Mit dem Kontrollkästchen bei (2) entscheiden Sie, ob das neue Zeichen das Leerzeichen darstellen soll. Es muss immer ein Leerzeichen explizit von Ihnen festgelegt werden. Dieses Zeichen ist rot gefärbt.
 Sie können Zeichen nachträglich durch einen Rechtsklick auf diese editieren oder löschen.</value>
   </data>
   <data name="TEXT_HelpWindow_09" xml:space="preserve">
     <value>Das Kontrollkästchen bei (1) legt fest, ob die Turingmaschine in diesem Zustand starten soll. Es kann nur maximal einen Startzustand geben. Der erste hinzugefügte Zustand ist immer der Startzustand. 
 Das Kontrollkästchen bei (2) legt fest, ob dieser Zustand ein Endzustand ist. Es kann mehrere Endzustände geben. 
+Das rote Dreieck signalisiert, dass dieser Zustand einen Kommentar besitzt. Positionieren Sie Ihre Maus über dem Zustand um ihn anzuzeigen.
 Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren oder löschen.</value>
   </data>
   <data name="TEXT_HelpWindow_10" xml:space="preserve">
@@ -399,7 +400,8 @@ Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren 
 Wie man das sich nun öffnende Popup liest:
 Die Turingmaschine befindet sich im Zustand "Start" und der Lese-/Schreibkopf ist aktuell über dem Zeichen "0" auf dem Band. 
 Die Turingmaschine ersetzt "0" durch "0" und bewegt den Lese-/Schreibkopf eine Zelle nach rechts. 
-Die Turingmaschine ist nun im Zustand "q1".</value>
+Die Turingmaschine ist nun im Zustand "q1".
+Das rote Dreieck signalisiert, dass dieser Zustandsübergang einen Kommentar besitzt. Positionieren Sie Ihre Maus über dem Zustandsübergang um ihn anzuzeigen.</value>
   </data>
   <data name="TEXT_HelpWindow_12" xml:space="preserve">
     <value>Wenn Ihre Tabelle genauso aussieht, wie hier gezeigt, dann kann die Turingmaschine bestimmen, ob Ihr Eingabewort eine gerade oder ungerade Anzahl an Nullen enthält. Ist die Anzahl gerade erreicht Sie einen akzeptierenden Endzustand, ansonsten nicht.
@@ -454,13 +456,13 @@ Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren 
     <value>Hinzufügen eines Zustands</value>
   </data>
   <data name="TEXT_Warn_Memory" xml:space="preserve">
-    <value>Das Speichern hat aufgrund eines Fehlers nicht funktioniert.</value>
+    <value>Das Speichern hat aufgrund eines Fehlers nicht funktioniert!</value>
   </data>
   <data name="TEXT_Warn_Transformation4" xml:space="preserve">
-    <value>Transformation 4 kann momentan nicht ausgeführt werden. Bitte überprüfen, dass der Startzustand kein Endzustand ist und der LSK niemals unbewegt ist.</value>
+    <value>Transformation 4 kann momentan nicht ausgeführt werden. Bitte überprüfen, dass der Startzustand kein Endzustand ist und der Lese-/Schreibkopf niemals unbewegt ist.</value>
   </data>
   <data name="TEXT_Warn_Transformation5" xml:space="preserve">
-    <value>Transformation 5 kann momentan nicht ausgeführt werden. Bitte überprüfen, dass es mindestens ein akzeptierender Zustand existiert.</value>
+    <value>Transformation 5 kann momentan nicht ausgeführt werden. Bitte überprüfen, dass mindestens ein Endzustand existiert.</value>
   </data>
   <data name="TEXT_AddTransition" xml:space="preserve">
     <value>Transition hinzufügen</value>
@@ -493,16 +495,16 @@ Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren 
     <value>Leerzeichen</value>
   </data>
   <data name="TEXT_Warn_BlankCharMustBeSet" xml:space="preserve">
-    <value>Das Leerzeichen muss festgelegt sein</value>
+    <value>Das Leerzeichen muss festgelegt sein!</value>
   </data>
   <data name="TEXT_Warn_SymbolIsInputAndBlank" xml:space="preserve">
-    <value>Das Zeichen kann nicht gleichzeitig im Eingabealphabet vorkommen und das Leerzeichen sein </value>
+    <value>Das Zeichen kann nicht gleichzeitig im Eingabealphabet vorkommen und das Leerzeichen sein!</value>
   </data>
   <data name="TEXT_Warn_NoStartState" xml:space="preserve">
     <value>Es gibt keinen Startzustand!</value>
   </data>
   <data name="TEXT_Warn_UnsupportedLanguage" xml:space="preserve">
-    <value>Diese Sprache steht wird nicht unterstützt!</value>
+    <value>Diese Sprache wird nicht unterstützt!</value>
   </data>
   <data name="TEXT_AddState" xml:space="preserve">
     <value>Zustand hinzufügen</value>
@@ -517,7 +519,7 @@ Sie können Zustände nachträglich durch einen Rechtsklick auf diese editieren 
     <value>Im Bandalphabet ist mindestens ein Zeichen doppelt!</value>
   </data>
   <data name="TEXT_Warn_SymbolDoesNotExist" xml:space="preserve">
-    <value>Nicht alle Zeichen die die Turingmaschine verwendet sind im Bandalphabet vorhanden!</value>
+    <value>Nicht alle Zeichen, die die Turingmaschine verwendet sind im Bandalphabet vorhanden!</value>
   </data>
   <data name="TEXT_HelpWindow_Menu_ChapterSelection" xml:space="preserve">
     <value>_Kapitelauswahl</value>
@@ -606,7 +608,7 @@ Lese-/Schreibkopf: Liest Zeichen vom und schreibt Zeichen auf das Band.</value>
   <data name="TEXT_HelpWindow_05" xml:space="preserve">
     <value>Startzustand: Zustand in dem die Turingmaschine sich befindet, wenn sie beginnt zu arbeiten.
 Endzustand: Zustand in dem die Turingmaschine anhält und überprüft, ob Ihr Eingabewort teil der Sprache der Turingmaschine ist oder nicht.
-Zustandsübergang: Abhängig vom Zeichen unter dem Lese-/Schreibkopf und dem Zustand in dem die Maschine aktuell ist. Ersetzt das Zeichen unter dem Lese-/Schreibkopf, bewegt diesen entweder nach rechts, links oder gar nicht und die Maschine geht dann entweder in einen neuen Zustand über oder bleibt im alten.</value>
+Zustandsübergang: Abhängig vom Zeichen unter dem Lese-/Schreibkopf und dem Zustand in dem die Maschine aktuell ist. Ersetzt das Zeichen unter dem Lese-/Schreibkopf, bewegt diesen entweder nach rechts, links oder gar nicht und die Maschine geht dann entweder in einen neuen Zustand über oder bleibt im aktuellen</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_05" xml:space="preserve">
     <value>Was ist eine Turingmaschine? (Teil 2)</value>
@@ -620,10 +622,10 @@ Zustandsübergang: Abhängig vom Zeichen unter dem Lese-/Schreibkopf und dem Zus
   <data name="TEXT_HelpWindow_06" xml:space="preserve">
     <value>Eine Transformation fügt extra Einschränkungen hinzu, die die Turingmaschine einhalten muss. Das hat keinen Einfluss darauf, ob ein gewisses Eingabewort teil der Sprache der Maschine ist oder nicht.
 Die Turingmaschine kann auf folgende Arten transformiert werden:
-1) Kein Zustandsübergang kann wieder in den Startzustand führen und der Startzustand kann kein Endzustand sein.
+1) Kein Zustandsübergang kann wieder in den Startzustand führen, der Startzustand kann kein Endzustand sein und aus einem Endzustand führt kein Zustandsübergang mehr heraus (betrifft auch Schleifen auf den Endzustand).
 2) Jeder Zustandsübergang muss den Lese-/Schreibkopf entweder nach links oder rechts bewegen.
-3) Sie können ein neues Leerzeichen definieren, welches das alte ersetzt, wenn es geschrieben wird. Das beeinflusst nur Zustandsübergänge und nicht die leeren Zellen links und rechts des Eingabeworts.
-4) Alle Zustandsübergänge werden in eine linke und eine rechte Hälfte aufgeteilt. In der linken sind nur Zustandsübergänge, die den Lese-/Schreibkopf nach links bewegen. (Voraussetzungen: Transformation 1 und 2)
+3) Sie können ein neues Leerzeichen definieren, welches das alte ersetzt, wenn es gelesen oder geschrieben wird. Das beeinflusst nur Zustandsübergänge und nicht die leeren Zellen links und rechts des Eingabeworts.
+4) Alle Zustandsübergänge werden in eine linke und eine rechte Hälfte aufgeteilt. In der linken sind nur Zustandsübergänge, die den Lese-/Schreibkopf nach links bewegen. Das gleiche gilt für die rechte. (Voraussetzungen: Transformation 1 und 2)
 5) Es gibt genau einen Endzustand. (Voraussetzungen: Mindestens ein Endzustand muss bereits vorhanden sein)</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_06" xml:space="preserve">
@@ -634,5 +636,32 @@ Die Turingmaschine kann auf folgende Arten transformiert werden:
   </data>
   <data name="TEXT_HelpWindow_Menu_TuringMachine_Explanation2" xml:space="preserve">
     <value>Turingmaschine erklärt (Teil _2)</value>
+  </data>
+  <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
+    <value>Bei allen bestehenden Zustandsübergängen, die das (Band-)Leerzeichen schreiben, wird das Schreibsymbol mit dem Ersatzsymbol überschrieben.</value>
+  </data>
+  <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
+    <value>Das gewählte Zeichen ist bereits im Bandalphabet enthalten.</value>
+  </data>
+  <data name="TEXT_Warn_Transformation3" xml:space="preserve">
+    <value>Tranformation 3 nicht ausführbar, da bei keinem Übergang ein Leerzeichen geschrieben wird.</value>
+  </data>
+  <data name="TEXT_SaveAs" xml:space="preserve">
+    <value>Speichern _unter</value>
+  </data>
+  <data name="TEXT_Info_T1_Executed" xml:space="preserve">
+    <value>Transformation 1 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T2_Executed" xml:space="preserve">
+    <value>Transformation 2 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T3_Executed" xml:space="preserve">
+    <value>Transformation 3 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T4_Executed" xml:space="preserve">
+    <value>Transformation 4 wurde erfolgreich durchgeführt</value>
+  </data>
+  <data name="TEXT_Info_T5_Executed" xml:space="preserve">
+    <value>Transformation 5 wurde erfolgreich durchgeführt</value>
   </data>
 </root>

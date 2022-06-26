@@ -23,6 +23,8 @@ namespace TMSim.UI
             ClearTableEvent?.Invoke();
 
             LoadTableEvent?.Invoke(TM);
+
+            RefreshTableHighlightEvent?.Invoke(TM);
         }
 
         private void RefreshTableData()

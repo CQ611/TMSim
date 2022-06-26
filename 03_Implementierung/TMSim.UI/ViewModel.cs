@@ -52,6 +52,7 @@ namespace TMSim.UI
         public RelayCommand NextHelpPage { get; set; }
         public RelayCommand PreviousHelpPage { get; set; }
         public RelayCommand HelpWindowMenuItemChanged { get; set; }
+        public RelayCommand ExportToCurrentTextFile { get; set; }
 
         #endregion
 
@@ -66,7 +67,7 @@ namespace TMSim.UI
             set
             {
                 _startVisibility = value;
-                OnPropertyChanged("StartVisibility");
+                OnPropertyChanged(nameof(StartVisibility));
             }
         }
 
@@ -80,7 +81,7 @@ namespace TMSim.UI
             set
             {
                 _stopVisibility = value;
-                OnPropertyChanged("StopVisibility");
+                OnPropertyChanged(nameof(StopVisibility));
             }
         }
 
@@ -94,7 +95,7 @@ namespace TMSim.UI
             set
             {
                 _singleViewVisibility = value;
-                OnPropertyChanged("SingleViewVisibility");
+                OnPropertyChanged(nameof(SingleViewVisibility));
             }
         }
 
@@ -108,7 +109,7 @@ namespace TMSim.UI
             set
             {
                 _multiViewVisibility = value;
-                OnPropertyChanged("MultiViewVisibility");
+                OnPropertyChanged(nameof(MultiViewVisibility));
             }
         }
 
@@ -122,7 +123,7 @@ namespace TMSim.UI
             set
             {
                 _germanLanguageIsChecked = value;
-                OnPropertyChanged("GermanLanguageIsChecked");
+                OnPropertyChanged(nameof(GermanLanguageIsChecked));
             }
         }
 
@@ -136,7 +137,7 @@ namespace TMSim.UI
             set
             {
                 _englishLanguageIsChecked = value;
-                OnPropertyChanged("EnglishLanguageIsChecked");
+                OnPropertyChanged(nameof(EnglishLanguageIsChecked));
             }
         }
 
@@ -210,7 +211,7 @@ namespace TMSim.UI
             set
             {
                 _tapeWordInput = value;
-                OnPropertyChanged("TapeWordInput");
+                OnPropertyChanged(nameof(TapeWordInput));
             }
         }
 
@@ -256,7 +257,7 @@ namespace TMSim.UI
             }
         }
 
-        private bool _uploadTextEnabled = false;
+        private bool _uploadTextEnabled = true;
         public bool UploadTextEnabled
         {
             get
@@ -281,6 +282,36 @@ namespace TMSim.UI
             {
                 _menuElementEnabled = value;
                 OnPropertyChanged(nameof(MenuElementEnabled));
+            }
+        }
+
+        private string _transformation3Blank = String.Empty;
+        public string Transformation3Blank
+        {
+            get
+            {
+                return _transformation3Blank;
+            }
+            set
+            {
+                _transformation3Blank = value;
+                AllowedToSetNewBlank = _transformation3Blank != String.Empty ? true : false;
+
+                OnPropertyChanged(nameof(Transformation3Blank));
+            }
+        }
+
+        private bool _allowedToSetNewBlank = false;
+        public bool AllowedToSetNewBlank
+        {
+            get
+            {
+                return _allowedToSetNewBlank;
+            }
+            set
+            {
+                _allowedToSetNewBlank = value;
+                OnPropertyChanged(nameof(AllowedToSetNewBlank));
             }
         }
         #endregion
@@ -358,8 +389,13 @@ namespace TMSim.UI
         public string SimulationIsStoppedText { get => Translator.GetString("TEXT_Info_SimulationIsStopped"); set { OnPropertyChanged(nameof(SimulationIsStoppedText)); } }
         public string SimulationSingleStepText { get => Translator.GetString("TEXT_Info_SimulationSingleStep"); set { OnPropertyChanged(nameof(SimulationSingleStepText)); } }
         public string DefaultMessageText { get => Translator.GetString("TEXT_Info_DefaultMessage"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
-        public string DefinitionTabelle { get => Translator.GetString("TEXT_DefinitionTabelle"); set { OnPropertyChanged(nameof(DefinitionTabelle)); } }
-        public string DefinitionDiagramm { get => Translator.GetString("TEXT_DefinitionDiagramm"); set { OnPropertyChanged(nameof(DefinitionDiagramm)); } }
+        public string TransformationOneExecuted { get => Translator.GetString("TEXT_Info_T1_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationTwoExecuted { get => Translator.GetString("TEXT_Info_T2_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationThreeExecuted { get => Translator.GetString("TEXT_Info_T3_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationFourExecuted { get => Translator.GetString("TEXT_Info_T4_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string TransformationFiveExecuted { get => Translator.GetString("TEXT_Info_T5_Executed"); set { TranslateCurrentInfo(); OnPropertyChanged(nameof(DefaultMessageText)); } }
+        public string DefinitionTable { get => Translator.GetString("TEXT_DefinitionTable"); set { OnPropertyChanged(nameof(DefinitionTable)); } }
+        public string DefinitionDiagram { get => Translator.GetString("TEXT_DefinitionDiagram"); set { OnPropertyChanged(nameof(DefinitionDiagram)); } }
         public string InputWordWrittenOnTapeText { get => Translator.GetString("TEXT_Info_InputWordWrittenOnTape"); set { OnPropertyChanged(nameof(InputWordWrittenOnTapeText)); } }
         public string WarnTransformation1Text { get => Translator.GetString("TEXT_Warn_Transformation1"); set { OnPropertyChanged(nameof(WarnTransformation1Text)); } }
         public string WarnTransformation4Text { get => Translator.GetString("TEXT_Warn_Transformation4"); set { OnPropertyChanged(nameof(WarnTransformation4Text)); } }
@@ -403,6 +439,10 @@ namespace TMSim.UI
         public string HelpWindowTableDiagramResultText { get => Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result"); set { OnPropertyChanged(nameof(HelpWindowTableDiagramResultText)); } }
         public string HelpWindowDiagramText { get => Translator.GetString("TEXT_HelpWindow_Menu_Diagram"); set { OnPropertyChanged(nameof(HelpWindowDiagramText)); } }
         public string HelpText { get => Translator.GetString("TEXT_HelpText"); set { OnPropertyChanged(nameof(HelpText)); } }
+        public string Transformation3DialogNoteText { get => Translator.GetString("TEXT_Transformation3DialogNote"); set { OnPropertyChanged(nameof(Transformation3DialogNoteText)); } }
+        public string WarnTransformation3Text { get => Translator.GetString("TEXT_Warn_Transformation3"); set { OnPropertyChanged(nameof(WarnTransformation3Text)); } }
+        public string InvalidNewBlankCharText { get => Translator.GetString("TEXT_Warn_NewBlankAlreadyExists"); set { OnPropertyChanged(nameof(InvalidNewBlankCharText)); } }
+        public string SaveAsText { get => Translator.GetString("TEXT_SaveAs"); set { OnPropertyChanged(nameof(SaveAsText)); } }
 
         private void RefreshTextFromUi()
         {
@@ -466,8 +506,13 @@ namespace TMSim.UI
             SimulationIsStoppedText = Translator.GetString("TEXT_Info_SimulationIsStopped");
             SimulationSingleStepText = Translator.GetString("TEXT_Info_SimulationSingleStep");
             DefaultMessageText = Translator.GetString("TEXT_Info_DefaultMessage");
-            DefinitionTabelle = Translator.GetString("TEXT_DefinitionTabelle");
-            DefinitionDiagramm = Translator.GetString("TEXT_DefinitionDiagramm");
+            TransformationOneExecuted = Translator.GetString("TEXT_Info_T1_Executed");
+            TransformationTwoExecuted = Translator.GetString("TEXT_Info_T2_Executed");
+            TransformationThreeExecuted = Translator.GetString("TEXT_Info_T3_Executed");
+            TransformationFourExecuted = Translator.GetString("TEXT_Info_T4_Executed");
+            TransformationFiveExecuted = Translator.GetString("TEXT_Info_T5_Executed");
+            DefinitionTable = Translator.GetString("TEXT_DefinitionTable");
+            DefinitionDiagram = Translator.GetString("TEXT_DefinitionDiagram");
             InputWordWrittenOnTapeText = Translator.GetString("TEXT_Info_InputWordWrittenOnTape");
             WarnTransformation1Text = Translator.GetString("TEXT_Warn_Transformation1");
             WarnTransformation4Text = Translator.GetString("TEXT_Warn_Transformation4");
@@ -510,9 +555,13 @@ namespace TMSim.UI
             HelpWindowTableDiagramAddTransitionText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_AddTransition");
             HelpWindowTableDiagramResultText = Translator.GetString("TEXT_HelpWindow_Menu_TableDiagram_Result");
             HelpWindowDiagramText = Translator.GetString("TEXT_HelpWindow_Menu_Diagram");
-            HelpText =  Translator.GetString("TEXT_HelpText");
+            HelpText = Translator.GetString("TEXT_HelpText");
+            Transformation3DialogNoteText = Translator.GetString("TEXT_Transformation3DialogNote");
+            WarnTransformation3Text = Translator.GetString("TEXT_Warn_Transformation3");
+            InvalidNewBlankCharText = Translator.GetString("TEXT_Warn_NewBlankAlreadyExists");
+            SaveAsText = Translator.GetString("TEXT_SaveAs");
 
-                TranslateHelpWindow();
+            TranslateHelpWindow();
             TranslateCurrentInfo();
         }
         #endregion
@@ -570,6 +619,7 @@ namespace TMSim.UI
             NextHelpPage = new RelayCommand((o) => { OnNextHelpPage(); });
             PreviousHelpPage = new RelayCommand((o) => { OnPreviousHelpPage(); });
             HelpWindowMenuItemChanged = new RelayCommand((o) => { OnHelpWindowMenuItemChanged(o); });
+            ExportToCurrentTextFile = new RelayCommand((o) => { OnExportToCurrentTextFile(); });
 
             TM = new TuringMachine();
 
@@ -586,22 +636,37 @@ namespace TMSim.UI
 
         private void InitResoureManager()
         {
+            string language;
+            CultureInfo culture;
+
             Translator = new ResourceManager("TMSim.UI.Resources.Strings", Assembly.GetExecutingAssembly());
+
             if (CultureInfo.CurrentCulture.Name == "de-DE")
             {
                 GermanLanguageIsChecked = true;
+                CurrentImageLanguage = "de-DE";
+                language = "de-DE";
+                culture = new CultureInfo("de-DE");
             }
-            else if (CultureInfo.CurrentCulture.Name == "en-US")
+            else
             {
                 EnglishLanguageIsChecked = true;
+                CurrentImageLanguage = "en-US";
+                language = "en-US";
+                culture = new CultureInfo("en-US");
             }
+
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
 
             try
             {
                 FrameworkElement.LanguageProperty.OverrideMetadata(
                         typeof(FrameworkElement),
                         new FrameworkPropertyMetadata(
-                            XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+                            XmlLanguage.GetLanguage(language)));
             }
             catch (Exception)
             {
@@ -614,11 +679,6 @@ namespace TMSim.UI
             UpdateDiagramData();
             UpdateTapeData();
             UpdateTableData();
-
-            if (TM.InputSymbols.Count > 0)
-                UploadTextEnabled = true;
-            else
-                UploadTextEnabled = false;
 
             OnPropertyChanged(nameof(TM));
         }
@@ -770,7 +830,16 @@ namespace TMSim.UI
         {
             if (new Transformation1().IsExecutable(TM))
             {
-                TM = new Transformation1().Execute(TM);
+                try
+                {
+                    TM = new Transformation1().Execute(TM);
+                }
+                catch (StateAlreadyExistsException)
+                {
+                    QuickWarning(StateExistsText);
+                }
+
+                UpdateInfo(MessageIdentification.T1Executed, TransformationOneExecuted);
                 OnTMChanged();
             }
             else
@@ -782,32 +851,38 @@ namespace TMSim.UI
         private void OnTransformation2()
         {
             TM = new Transformation2().Execute(TM);
+            UpdateInfo(MessageIdentification.T2Executed, TransformationTwoExecuted);
             OnTMChanged();
         }
 
         private void OnTransformation3()
         {
+            var T3 = new Transformation3();
             Transformation3Dialog t3d = new Transformation3Dialog();
+
             if (t3d.ShowDialog() == true)
             {
-                char newBlank = t3d.Blank;
                 try
                 {
-                    TM = new Transformation3().Execute(TM, newBlank);
+                    TM = T3.Execute(TM, Transformation3Blank[0]);
                 }
-                catch (SymbolAlreadyExistsException)
+                catch (InvalidNewBlankCharException)
                 {
-                    QuickWarning(WarnSymbolAlreadyExistsText);
+                    QuickWarning(InvalidNewBlankCharText);
                 }
+
+                UpdateInfo(MessageIdentification.T3Executed, TransformationThreeExecuted);
                 OnTMChanged();
             }
         }
+
 
         private void OnTransformation4()
         {
             if (new Transformation4().IsExecutable(TM))
             {
                 TM = new Transformation4().Execute(TM);
+                UpdateInfo(MessageIdentification.T4Executed, TransformationFourExecuted);
                 OnTMChanged();
             }
             else
@@ -821,6 +896,7 @@ namespace TMSim.UI
             if (new Transformation5().IsExecutable(TM))
             {
                 TM = new Transformation5().Execute(TM);
+                UpdateInfo(MessageIdentification.T5Executed, TransformationFiveExecuted);
                 OnTMChanged();
             }
             else
@@ -828,6 +904,8 @@ namespace TMSim.UI
                 QuickWarning(WarnTransformation5Text);
             }
         }
+
+        string currentTextFilePath = String.Empty;
 
         private void OnImportFromTextFile()
         {
@@ -896,11 +974,34 @@ namespace TMSim.UI
                 {
                     QuickWarning(WarnSymbolDoesNotExistText);
                 }
-
+                
                 DeleteTapeContent();
                 DData.ArangeFlag = true;
                 OnTMChanged();
                 UploadTextEnabled = true;
+                Transformation3Blank = String.Empty;
+                currentTextFilePath = importFileDialog.FileName;
+            }
+        }
+
+        private void OnExportToCurrentTextFile()
+        {
+            if (currentTextFilePath != String.Empty)
+            {
+                try
+                {
+                    TM.ExportToTextFile(currentTextFilePath);
+                }
+
+                catch (SystemException)
+                {
+                    QuickWarning(WarnMemoryText);
+                }
+            } 
+
+            else
+            {
+                OnExportToTextFile();
             }
         }
 
@@ -923,6 +1024,8 @@ namespace TMSim.UI
                 {
                     QuickWarning(WarnMemoryText);
                 }
+
+                currentTextFilePath = exportFileDialog.FileName;
             }
         }
 
@@ -930,6 +1033,7 @@ namespace TMSim.UI
         {
             TM = new TuringMachine();
             OnTMChanged();
+            currentTextFilePath = String.Empty;
         }
 
         private void OnLoadExample(object o)
@@ -995,6 +1099,7 @@ namespace TMSim.UI
             DData.ArangeFlag = true;
             OnTMChanged();
             UploadTextEnabled = true;
+            Transformation3Blank = String.Empty;
         }
 
         private void UpdateDiagramData()

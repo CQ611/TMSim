@@ -1,0 +1,107 @@
+{
+  "States": [
+    {
+      "Identifier": "Start",
+      "Comment": "Startzustand"
+    },
+    {
+      "Identifier": "q1",
+      "Comment": ""
+    },
+    {
+      "Identifier": "Ende",
+      "Comment": "Endzustand"
+    },
+    {
+      "Identifier": "q2",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q3",
+      "Comment": ""
+    },
+    {
+      "Identifier": "q4",
+      "Comment": ""
+    }
+  ],
+  "InputAlphabet": "",
+  "TapeAlphabet": "Helo_",
+  "Transitions": [
+    {
+      "SourceState": "Start",
+      "TargetState": "q1",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "H"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q2",
+      "TargetState": "q3",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "l"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q1",
+      "TargetState": "q2",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "e"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q3",
+      "TargetState": "q4",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "l"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    },
+    {
+      "SourceState": "q4",
+      "TargetState": "Ende",
+      "SymbolsRead": [
+        "_"
+      ],
+      "SymbolsWrite": [
+        "o"
+      ],
+      "MoveDirections": [
+        "Right"
+      ],
+      "Comment": ""
+    }
+  ],
+  "StartState": "Start",
+  "Blank": "_",
+  "EndStates": [
+    "Ende"
+  ]
+}
