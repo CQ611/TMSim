@@ -126,13 +126,20 @@ namespace TMSim.UI
             if (highlightedRow != null)
                 highlightedRow.Highlight = false;
 
-            if(TM.CurrentTransition != null)
+            if (TM.CurrentTransition != null)
             {
                 var cellForHighlight = tableCells.Find(x => x.SourceState == TM.CurrentTransition.Source.Identifier && TM.CurrentTransition.SymbolsRead.Contains(x.SymbolRead[0]) && x.TargetState != null);
                 if (cellForHighlight != null && vm.HighlightCurrentState)
                     cellForHighlight.Highlight = true;
 
                 var rowForHighlight = rowHeaders.Find(x => x.Identifier == TM.CurrentTransition.Target.Identifier);
+                if (rowForHighlight != null && vm.HighlightCurrentState)
+                    rowForHighlight.Highlight = true;
+            }
+
+            if (TM.CurrentState != null && TM.CurrentState.IsStart)
+            {
+                var rowForHighlight = rowHeaders.Find(x => x.Identifier == TM.CurrentState.Identifier);
                 if (rowForHighlight != null && vm.HighlightCurrentState)
                     rowForHighlight.Highlight = true;
             }

@@ -137,6 +137,12 @@
     <None Update="Examples\asdf_to_Tobi.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Examples\Empty Input Word Examples\AcceptEmptyInputWord.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Examples\Empty Input Word Examples\RejectIEmptynputWord.tmsim">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\Error Examples\BlankCharMustBeSet.tmsim">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

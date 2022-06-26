@@ -151,7 +151,7 @@
     <value>Accepting</value>
   </data>
   <data name="TEXT_PopupBlank" xml:space="preserve">
-    <value>New Blank Symbol:</value>
+    <value>Replacement symbol for written blank character:</value>
   </data>
   <data name="TEXT_PopupAddSymbol" xml:space="preserve">
     <value>Add Symbol</value>
@@ -190,19 +190,19 @@
     <value>_Transform</value>
   </data>
   <data name="TEXT_Transformation1" xml:space="preserve">
-    <value>transformation No. _1</value>
+    <value>Transformation No. _1</value>
   </data>
   <data name="TEXT_Transformation2" xml:space="preserve">
-    <value>transformation No. _2</value>
+    <value>Transformation No. _2</value>
   </data>
   <data name="TEXT_Transformation3" xml:space="preserve">
-    <value>transformation No. _3</value>
+    <value>Transformation No. _3</value>
   </data>
   <data name="TEXT_Transformation4" xml:space="preserve">
-    <value>transformation No. _4</value>
+    <value>Transformation No. _4</value>
   </data>
   <data name="TEXT_Transformation5" xml:space="preserve">
-    <value>transformation No. _5</value>
+    <value>Transformation No. _5</value>
   </data>
   <data name="TEXT_Upload" xml:space="preserve">
     <value>_Load</value>
@@ -259,19 +259,19 @@
     <value>No transition leads to the start state and none of the transitions begin in an accepting state</value>
   </data>
   <data name="TOOLTIP_Transformation2" xml:space="preserve">
-    <value>There are no state transitions with unmoved read/write head</value>
+    <value>There are no state transitions with an unmoved read-/writehead</value>
   </data>
   <data name="TOOLTIP_Transformation3" xml:space="preserve">
-    <value>The space character is never written</value>
+    <value>The blank character is never written</value>
   </data>
   <data name="TOOLTIP_Transformation4" xml:space="preserve">
-    <value>The state set is divided into a right and left half</value>
+    <value>The state set is divided into a left and right half</value>
   </data>
   <data name="TOOLTIP_Transformation5" xml:space="preserve">
     <value>There is exactly one accepting state</value>
   </data>
   <data name="TOOLTIP_Upload" xml:space="preserve">
-    <value>insert and upload text to tape</value>
+    <value>Write input word on tape</value>
   </data>
   <data name="TEXT_DiagramView" xml:space="preserve">
     <value>_Diagram</value>
@@ -337,22 +337,22 @@
     <value>Simulation was aborted</value>
   </data>
   <data name="TEXT_Info_SimulationSingleStep" xml:space="preserve">
-    <value>Single Step executed</value>
+    <value>Single step executed</value>
   </data>
-  <data name="TEXT_DefinitionDiagramm" xml:space="preserve">
+  <data name="TEXT_DefinitionDiagram" xml:space="preserve">
     <value>Definition as diagram</value>
   </data>
-  <data name="TEXT_DefinitionTabelle" xml:space="preserve">
+  <data name="TEXT_DefinitionTable" xml:space="preserve">
     <value>Definition as table</value>
   </data>
   <data name="TEXT_Info_InputWordWrittenOnTape" xml:space="preserve">
     <value>Input word written on tape</value>
   </data>
   <data name="TEXT_ImportFileIsNotValid" xml:space="preserve">
-    <value>The imported file is not valid</value>
+    <value>The imported file is not valid!</value>
   </data>
   <data name="TEXT_InputAlphabetIsNoSubsetOfTapeAlphabet" xml:space="preserve">
-    <value>Input alphabet has to be a subset of tape alphabet</value>
+    <value>Input alphabet has to be a subset of tape alphabet!</value>
   </data>
   <data name="TEXT_HelpWindow_00" xml:space="preserve">
     <value>This introduction is meant to familiarize you with using the application and turing machines.</value>
@@ -360,7 +360,7 @@
   <data name="TEXT_HelpWindow_05" xml:space="preserve">
     <value>Start state: State of the turing machine before it starts computing.
 End state: State in which the turing machine halts and checks if your input word is part of the language of the turing machine or not.
-Transition: Depending on the character below the read-/writehead and the state the machine is currently in. Replaces the character under the read-/writehead, moves the head either right, left or not at all and the machine then either enters a new state or stays in the old one.</value>
+Transition: Depending on the character below the read-/writehead and the state the machine is currently in. Replaces the character under the read-/writehead, moves the head either right, left or not at all and the machine then either enters a new state or stays in the current one.</value>
   </data>
   <data name="TEXT_HelpWindow_Heading_00" xml:space="preserve">
     <value>Welcome to TMSim</value>
@@ -390,6 +390,7 @@ You can edit or remove characters later by rightclicking on them.</value>
   <data name="TEXT_HelpWindow_09" xml:space="preserve">
     <value>The checkbox at (1) decides if the turing machine should start in that state. There can only be one start state at a time. The first state added will always be the start state.
 With the checkbox at (2) you can decide if the state should be an end state. There can be multiple end states.
+The red triangle signals that the state has a comment. Positioning your mouse above the state will display it.
 You can edit or remove states later by rightclicking on them.</value>
   </data>
   <data name="TEXT_HelpWindow_10" xml:space="preserve">
@@ -398,9 +399,10 @@ You can edit or remove states later by rightclicking on them.</value>
   <data name="TEXT_HelpWindow_11" xml:space="preserve">
     <value>With a rightclick on a cell you can add a transition (does not work with the topmost and leftmost cells).
 How to read the now open popup:
-The turing machine is in state "Start" and the read-/writehead is currently above the character "0" on the tape.
-The turing machine replaces "0" with "0" and moves the read-/writehead on cell to the right.
-The turing machine is now in state "q1".</value>
+The turing machine is in the state "Start" and the read-/writehead is currently above the character "0" on the tape.
+The turing machine replaces "0" with "0" and moves the read-/writehead one cell to the right.
+The turing machine is now in the state "q1".
+The red triangle signals that the transition has a comment. Positioning your mouse above the transition will display it.</value>
   </data>
   <data name="TEXT_HelpWindow_12" xml:space="preserve">
     <value>If your table looks exactly like this then your turing machine is able to determine whether or not your input word contains an even amount of zeros. If the amount is even then the turing machine reaches an accepting state, otherwise it does not.
@@ -448,13 +450,13 @@ You can edit or remove characters later using this menu.</value>
     <value>Adding a character</value>
   </data>
   <data name="TEXT_Warn_Memory" xml:space="preserve">
-    <value>The saving process could not be executed properly.</value>
+    <value>The saving process could not be executed properly!</value>
   </data>
   <data name="TEXT_Warn_Transformation4" xml:space="preserve">
-    <value>Transformation 4 can not be executed currently. Please check, that the startstate is not an endstate and the RWH is never neutral.</value>
+    <value>Transformation 4 can not be executed currently. Please check, that the start state is not an end state and that the read-/writehead is never unmoved!</value>
   </data>
   <data name="TEXT_Warn_Transformation5" xml:space="preserve">
-    <value>Transformation 4 can not be executed currently. Please check, that there is at least one accepting state.</value>
+    <value>Transformation 4 can not be executed currently. Please check, that there is at least one end state!</value>
   </data>
   <data name="TEXT_AddTransition" xml:space="preserve">
     <value>Add Transition</value>
@@ -487,10 +489,10 @@ You can edit or remove characters later using this menu.</value>
     <value>Blank character</value>
   </data>
   <data name="TEXT_Warn_BlankCharMustBeSet" xml:space="preserve">
-    <value>The blank character must be set</value>
+    <value>The blank character must be set!</value>
   </data>
   <data name="TEXT_Warn_SymbolIsInputAndBlank" xml:space="preserve">
-    <value>The symbol can't be in the input alphabet while also being the blank character</value>
+    <value>The symbol cannot be in the input alphabet while also being the blank character!</value>
   </data>
   <data name="TEXT_Warn_NoStartState" xml:space="preserve">
     <value>There is no start state!</value>
@@ -559,7 +561,7 @@ You can edit or remove characters later using this menu.</value>
     <value>Transformations _explained</value>
   </data>
   <data name="TEXT_Warn_Transformation1" xml:space="preserve">
-    <value>Transformation 1 can not be executed currently. Please check if there is at least an startstate and/or endstate</value>
+    <value>Transformation 1 can not be executed currently. Please check if there is at least a start state and/or an end state!</value>
   </data>
   <data name="TEXT_HelpWindow_Menu_Program_FunctionKeys" xml:space="preserve">
     <value>_Function keys</value>
@@ -590,9 +592,9 @@ You can edit or remove characters later using this menu.</value>
   </data>
   <data name="TEXT_HelpWindow_04" xml:space="preserve">
     <value>A turing machine is an abstract machine that can determine whether or not your input word is part of the language of the machine.
-Language: Determines to order in which characters follow each other.
+Language: Determines the order in which characters follow each other.
 Tape alphabet: All characters that the turing machine can read from and write on the tape.
-Blank character: Special character that symbolizes the an empty cell on the tape.
+Blank character: Special character that symbolizes an empty cell on the tape.
 Input alphabet: All characters that can appear in the input word (subset of the tape alphabet).
 Input word: The word that is written on the tape before the turing machine starts computing.
 Read-/writehead: Reads characters from and writes them on the tape.</value>
@@ -600,10 +602,10 @@ Read-/writehead: Reads characters from and writes them on the tape.</value>
   <data name="TEXT_HelpWindow_06" xml:space="preserve">
     <value>A transformation adds extra constraints for the turing machine to follow. This has no effect on whether or not a certain input word is part of the language of the machine.
 This turing machine can be transformed in the following ways:
-1) A transition can never lead into the start state and the start state cannot be an accepting state.
+1) A transition can never lead into the start state, the start state cannot be an end state and end states cannot be exited with transitions (also counts for transitions that are loops on the end state).
 2) Every transition has to move the read-/writehead either left or right.
 3) You can set a new blank character. This character will be placed on the tape instead of the old one. Only affects transitions and not the content of the empty cells left and right of your input word.
-4) All transitions are split into a left and a right half. The left half only contains transitions where the read-/writehead moves left. (Prerequisits: transformation 1 and 2)
+4) All transitions are split into a left and a right half. The left half only contains transitions where the read-/writehead moves left. The same applies to the right half. (Prerequisits: transformation 1 and 2)
 5) There is exactly one end state. (Prerequisits: There has to at least one end state already)</value>
   </data>
   <data name="TEXT_HelpWindow_17" xml:space="preserve">
@@ -634,5 +636,32 @@ If you want to get some inspiration then you can check out the available example
   </data>
   <data name="TEXT_HelpWindow_Menu_TuringMachine_Explanation2" xml:space="preserve">
     <value>Turing Machine explained (part _2)</value>
+  </data>
+  <data name="TEXT_Transformation3DialogNote" xml:space="preserve">
+    <value>All existing transitions, that write the (tape-) blank character, will write the replacement symbol instead.</value>
+  </data>
+  <data name="TEXT_Warn_NewBlankAlreadyExists" xml:space="preserve">
+    <value>The chosen character already exists in the tape alphabet.</value>
+  </data>
+  <data name="TEXT_Warn_Transformation3" xml:space="preserve">
+    <value>Tranformation 3 is not excecutable, because no transition writes the blank character.</value>
+  </data>
+  <data name="TEXT_SaveAs" xml:space="preserve">
+    <value>Save _as</value>
+  </data>
+  <data name="TEXT_Info_T1_Executed" xml:space="preserve">
+    <value>Transformation 1 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T2_Executed" xml:space="preserve">
+    <value>Transformation 2 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T3_Executed" xml:space="preserve">
+    <value>Transformation 3 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T4_Executed" xml:space="preserve">
+    <value>Transformation 4 has been executed successfully</value>
+  </data>
+  <data name="TEXT_Info_T5_Executed" xml:space="preserve">
+    <value>Transformation 5 has been executed successfully</value>
   </data>
 </root>

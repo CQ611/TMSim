@@ -17,10 +17,11 @@ namespace TMSim.UI.PopupWindows
     /// </summary>
     public partial class Transformation3Dialog : Window
     {
+        ViewModel vm;
         public Transformation3Dialog()
         {
             InitializeComponent();
-            var vm = (ViewModel)DataContext;
+            vm = (ViewModel)DataContext;
         }
 
         private void Window_ContentRendered(object sender, EventArgs e)
@@ -33,19 +34,9 @@ namespace TMSim.UI.PopupWindows
             this.DialogResult = true;
         }
 
-        public char Blank
-        {
-            get { return blank_txt.Text[0]; }
-        }
-
         private void blank_txt_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             if (e.Text.Length != 1) e.Handled = true;
-        }
-
-        private void blank_txt_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ok_cmd.IsEnabled = blank_txt.Text != "";
         }
     }
 }
